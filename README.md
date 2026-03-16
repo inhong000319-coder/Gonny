@@ -145,33 +145,67 @@ Docker Compose / GitHub Actions (CI/CD) / Railway
 
 ## 🏗️ 시스템 아키텍처
 
-```
-┌─────────────────────────────────────────────────────┐
-│                    Client (React)                    │
-│         카테고리 선택 UI + 자연어 입력창              │
-└──────────────────────┬──────────────────────────────┘
-                       │ HTTPS
-┌──────────────────────▼──────────────────────────────┐
-│                 FastAPI Backend                      │
-│  ┌─────────────┐  ┌──────────────┐  ┌────────────┐  │
-│  │ Auth Router │  │ Trip Router  │  │PDF Router  │  │
-│  │ (JWT+OAuth) │  │(일정 생성·수정)│  │(ReportLab) │  │
-│  └─────────────┘  └──────┬───────┘  └────────────┘  │
-│                          │                           │
-│  ┌───────────────────────▼─────────────────────────┐ │
-│  │              LLM Agent Layer                    │ │
-│  │   Claude API / GPT-4o mini + 프롬프트 엔진      │ │
-│  └───────────────────────┬─────────────────────────┘ │
-│                          │                           │
-│  ┌──────────┐  ┌─────────▼────────┐  ┌───────────┐  │
-│  │  Redis   │  │   PostgreSQL     │  │외부 API   │  │
-│  │  Cache   │  │   (메인 DB)      │  │TourAPI 등 │  │
-│  └──────────┘  └──────────────────┘  └───────────┘  │
-└─────────────────────────────────────────────────────┘
-                       │
-         ┌─────────────▼─────────────┐
-         │     Railway (배포)         │
-         └───────────────────────────┘
+```mermaid
+graph TB
+    subgraph Client["🖥️ Client (React + TailwindCSS)"]
+        UI["카테고리 선택 UI\n자연어 입력창\n일정 카드·지도"]
+    end
+
+    subgraph Backend["⚙️ FastAPI Backend"]
+        Auth["Auth Router\nJWT + OAuth"]
+        Trip["Trip Router\n일정 생성·수정"]
+        Weather["Weather Router\n날씨 재추천"]
+        Season["Season Router\n계절별 추천"]
+        Report["Report Router\nPDF + 회고"]
+
+        subgraph LLM["🤖 LLM Agent Layer"]
+            Claude["Claude API\nclaude-haiku"]
+            GPT["GPT-4o mini"]
+        end
+
+        subgraph Storage["💾 Storage"]
+            PG["PostgreSQL\n메인 DB"]
+            Redis["Redis\n캐시·Rate Limit"]
+        end
+    end
+
+    subgraph ExternalAPI["🌐 외부 API"]
+        TourAPI["한국관광공사\nTourAPI"]
+        OWM["OpenWeatherMap\n날씨 예보"]
+        GMaps["Google Maps\nPlaces API"]
+        ODSay["ODSay\n대중교통"]
+        Kakao["카카오\n로그인·공유"]
+        Exchange["ExchangeRate\n환율"]
+    end
+
+    subgraph Deploy["🚀 배포"]
+        Railway["Railway\nDocker 컨테이너"]
+        GH["GitHub Actions\nCI/CD"]
+    end
+
+    UI -->|HTTPS| Auth
+    UI -->|HTTPS| Trip
+    UI -->|HTTPS| Weather
+    UI -->|HTTPS| Season
+    UI -->|HTTPS| Report
+
+    Trip --> LLM
+    Report --> LLM
+    Weather --> LLM
+
+    Trip --> Storage
+    Auth --> Storage
+    Report --> Storage
+
+    Trip --> TourAPI
+    Trip --> GMaps
+    Trip --> ODSay
+    Weather --> OWM
+    Season --> TourAPI
+    Auth --> Kakao
+    Report --> Exchange
+
+    GH -->|push to main| Railway
 ```
 
 ---
@@ -342,58 +376,79 @@ http://localhost:8000/redoc      # ReDoc
 ### 주요 엔드포인트
 
 ```
-POST   /api/v1/auth/kakao              카카오 OAuth 로그인
-POST   /api/v1/auth/google             구글 OAuth 로그인
+POST   /api/v1/auth/kakao                              카카오 OAuth 로그인
+POST   /api/v1/auth/google                             구글 OAuth 로그인
 
-POST   /api/v1/trips                   여행 일정 생성
-GET    /api/v1/trips                   내 여행 목록 조회
-GET    /api/v1/trips/{trip_id}         여행 상세 조회
-PATCH  /api/v1/trips/{trip_id}/items/{item_id}   장소 단위 수정
+POST   /api/v1/trips                                   여행 일정 생성
+GET    /api/v1/trips                                   내 여행 목록 조회
+GET    /api/v1/trips/{trip_id}                         여행 상세 조회
+PATCH  /api/v1/trips/{trip_id}/items/{item_id}         장소 단위 수정
 POST   /api/v1/trips/{trip_id}/items/{item_id}/alternatives   대안 장소 추천
 
-GET    /api/v1/weather/{destination}   여행지 날씨 예보 조회
+GET    /api/v1/weather/{destination}                   여행지 날씨 예보 조회
 
-GET    /api/v1/seasons/recommend       계절별 여행지 추천
-GET    /api/v1/seasons/festivals       이번 달 축제 캘린더
+GET    /api/v1/seasons/recommend                       계절별 여행지 추천
+GET    /api/v1/seasons/festivals                       이번 달 축제 캘린더
 
-POST   /api/v1/trips/{trip_id}/expenses        지출 입력
-GET    /api/v1/trips/{trip_id}/expenses/summary  예산 요약
+POST   /api/v1/trips/{trip_id}/expenses                지출 입력
+GET    /api/v1/trips/{trip_id}/expenses/summary        예산 요약
 
-GET    /api/v1/trips/{trip_id}/report  AI 회고 리포트 조회
-GET    /api/v1/trips/{trip_id}/pdf     일정 PDF 다운로드
+GET    /api/v1/trips/{trip_id}/report                  AI 회고 리포트 조회
+GET    /api/v1/trips/{trip_id}/pdf                     일정 PDF 다운로드
 
-POST   /api/v1/trips/{trip_id}/share  공유 링크 생성
+POST   /api/v1/trips/{trip_id}/share                   공유 링크 생성
 ```
 
----
-
-## 👨‍💻 팀원 소개
-
-| 이름 | 역할 | 담당 기능 | GitHub |
-|---|---|---|---|
-| OOO | BE 리드 | FastAPI 서버·DB 설계·LLM 연동·인증 | [@username](https://github.com) |
-| OOO | BE / AI | 날씨 API·동행자 조율·회고 리포트·PDF | [@username](https://github.com) |
-| OOO | FE 리드 | React UI·지도 시각화·배포·CI/CD | [@username](https://github.com) |
-
----
 
 ## 📅 개발 일정
 
-```
-1주차 (1~7일)   기반 구축 — FastAPI 셋업, OAuth 인증, 카테고리 UI, LLM 기본 일정 생성
-2주차 (8~14일)  핵심 기능 — 날씨 재추천, 동행자 조율, 숙박·이동수단·식당 정보, 예산 트래킹
-3주차 (15~21일) 차별 기능 — 장소별 수정, 수동 체크인, PDF 생성, 카카오 공유, 환율 연동
-4주차 (22~30일) 통합·배포 — 회고 리포트, 통합 테스트, Redis 최적화, Railway 배포, README
+```mermaid
+gantt
+    title 1개월 개발 스프린트
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+
+    section 1주차 · 기반 구축
+    프로젝트 셋업 (FastAPI + Docker)     :done, w1-1, 2026-04-01, 2d
+    OAuth 로그인 + JWT 인증              :done, w1-2, 2026-04-02, 2d
+    카테고리 선택 UI                     :done, w1-3, 2026-04-03, 2d
+    Claude API + TourAPI 연동           :done, w1-4, 2026-04-05, 2d
+
+    section 2주차 · 핵심 기능
+    날씨 API + 일정 재추천               :active, w2-1, 2026-04-08, 2d
+    동행자 취향 통합 알고리즘             :active, w2-2, 2026-04-09, 2d
+    숙박·이동수단·식당 정보 카드          :active, w2-3, 2026-04-10, 2d
+    예상 소요 시간 + 예산 트래킹          :active, w2-4, 2026-04-12, 2d
+
+    section 3주차 · 차별 기능
+    장소별 핀포인트 수정·재추천           :w3-1, 2026-04-15, 2d
+    수동 체크인 로직                     :w3-2, 2026-04-16, 2d
+    PDF 생성 + 카카오 공유              :w3-3, 2026-04-17, 2d
+    계절별 여행지 추천 + 환율 연동        :w3-4, 2026-04-19, 2d
+
+    section 4주차 · 통합 & 배포
+    AI 회고 리포트                       :w4-1, 2026-04-22, 2d
+    Redis 캐싱 최적화                    :w4-2, 2026-04-23, 2d
+    통합 테스트 + 버그 수정              :w4-3, 2026-04-24, 3d
+    Railway 배포 + CI/CD + README       :w4-4, 2026-04-28, 2d
 ```
 
 ---
 
 ## 🗺️ 향후 계획 (글로벌 확장 로드맵)
 
-```
-v1.0  (2026 Q2)  ✅ 국내 전 지역
-v2.0  (2026 Q4)  🔜 아시아 (일본·태국·베트남·싱가포르·홍콩)
-v3.0  (2027 Q2)  📋 유럽·아메리카·오세아니아·중동
+```mermaid
+graph LR
+    V1["✅ v1.0\n2026 Q2\n국내 전 지역"]
+    V2["🔜 v2.0\n2026 Q4\n아시아\n일본·태국·베트남\n싱가포르·홍콩"]
+    V3["📋 v3.0\n2027 Q2\n유럽·아메리카\n오세아니아·중동"]
+    APP["📱 모바일 앱\nReact Native\n자동 위치 추적"]
+    SOCIAL["👥 소셜 피드\n일정 탐색·복제\n다국어 지원"]
+
+    V1 -->|Google Places 글로벌| V2
+    V2 -->|Booking.com API 연동| V3
+    V1 -.->|앱 전환| APP
+    V3 -.->|커뮤니티 확장| SOCIAL
 ```
 
 - [ ] 모바일 앱 (React Native) 전환 → 백그라운드 위치 자동 추적
@@ -406,6 +461,7 @@ v3.0  (2027 Q2)  📋 유럽·아메리카·오세아니아·중동
 ## 💬 커밋 컨벤션
 
 ### 커밋 메시지 구조
+
 ```
 <태그>: <제목>
 
@@ -470,21 +526,55 @@ docs: README 최종 정리 및 데모 영상 링크 추가
 
 ### 브랜치 전략
 
-```
-main         ── 배포용 브랜치 (직접 push 금지)
-develop      ── 개발 통합 브랜치
-feat/기능명  ── 기능 개발 브랜치 (예: feat/weather-recommend)
-fix/이슈명   ── 버그 수정 브랜치 (예: fix/jwt-refresh-bug)
+```mermaid
+gitGraph
+    commit id: "초기 설정"
+    branch develop
+    checkout develop
+
+    branch feat/oauth-login
+    commit id: "카카오 로그인 구현"
+    commit id: "구글 로그인 구현"
+    checkout develop
+    merge feat/oauth-login id: "PR 머지"
+
+    branch feat/ai-itinerary
+    commit id: "Claude API 연동"
+    commit id: "TourAPI 장소 검증"
+    checkout develop
+    merge feat/ai-itinerary id: "PR 머지 "
+
+    branch feat/weather-recommend
+    commit id: "날씨 API 연동"
+    commit id: "재추천 알림 로직"
+    checkout develop
+    merge feat/weather-recommend id: "PR 머지  "
+
+    checkout main
+    merge develop id: "🚀 v1.0 배포"
 ```
 
 ```
+main         ── 배포용 브랜치 (직접 push 금지, PR만 허용)
+develop      ── 개발 통합 브랜치
+feat/기능명  ── 기능 개발 브랜치 (예: feat/weather-recommend)
+fix/이슈명   ── 버그 수정 브랜치 (예: fix/jwt-refresh-bug)
+
 [흐름]
 feat/기능명 → develop (PR + 코드 리뷰) → main (배포)
 ```
 
 ---
 
-# 작업 루틴
+## 📄 라이선스
+
+```
+MIT License — 자유롭게 사용, 수정, 배포 가능
+```
+
+---
+
+## 작업 루틴
 
 ```bash
 # main 직접 push 금지, 작업은 반드시 브랜치 + PR로 진행

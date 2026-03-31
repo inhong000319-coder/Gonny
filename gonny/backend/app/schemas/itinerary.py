@@ -19,7 +19,3 @@ class ItineraryItemResponse(BaseModel):
     notes: str | None
 
     model_config = ConfigDict(from_attributes=True)
-
-
-class GenerateItineraryRequest(BaseModel):
-    itinerary_items: list[ItineraryItemCreate]

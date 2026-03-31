@@ -4,14 +4,17 @@ from __future__ import annotations
 
 from collections import Counter
 from datetime import date
-from typing import Iterable
+from typing import Iterable, cast
 
 from app.schemas.context import (
     AccommodationOption,
     AccommodationRecommendRequest,
     AccommodationRecommendResponse,
+    AccommodationType,
+    CuisineType,
     DurationEstimateRequest,
     DurationEstimateResponse,
+    PreferenceTag,
     PreferenceMergeRequest,
     PreferenceMergeResponse,
     PreferenceWeight,
@@ -51,7 +54,7 @@ TRANSPORT_SPEED_KMH = {
     "mixed": 18.0,
 }
 
-ACCOMMODATION_SEED = [
+ACCOMMODATION_SEED: list[tuple[str, AccommodationType, int, float, list[str], str]] = [
     ("Blue Coast Hotel", "hotel", 150000, 1.2, ["seaview", "breakfast"], "https://example.com/hotel/blue"),
     ("Namu Stay House", "guesthouse", 70000, 2.5, ["quiet", "kitchen"], "https://example.com/hotel/namu"),
     ("Harbor Pension", "pension", 130000, 3.2, ["family-room", "parking"], "https://example.com/hotel/harbor"),
@@ -60,7 +63,7 @@ ACCOMMODATION_SEED = [
     ("Pine Camp", "camping", 60000, 5.5, ["nature", "bbq"], "https://example.com/hotel/pine"),
 ]
 
-RESTAURANT_SEED = [
+RESTAURANT_SEED: list[tuple[str, CuisineType, int, float, bool]] = [
     ("Hanok Kitchen", "korean", 18000, 4.5, True),
     ("Sunny Brunch Lab", "brunch", 22000, 4.4, False),
     ("Umi Sushi", "japanese", 26000, 4.6, True),
@@ -69,6 +72,15 @@ RESTAURANT_SEED = [
     ("Night Taproom", "pub", 30000, 4.2, True),
     ("Red Dragon", "chinese", 21000, 4.1, False),
 ]
+
+PREFERENCE_TAG_SET: set[PreferenceTag] = {
+    "food",
+    "nature",
+    "culture",
+    "shopping",
+    "healing",
+    "activity",
+}
 
 SEASONAL_FEED = {
     "spring": [
@@ -203,8 +215,9 @@ def merge_companion_preferences(request: PreferenceMergeRequest) -> PreferenceMe
 
     total = sum(counts.values())
     weighted = [
-        PreferenceWeight(tag=tag, weight_percent=round((value / total) * 100, 2))
+        PreferenceWeight(tag=cast(PreferenceTag, tag), weight_percent=round((value / total) * 100, 2))
         for tag, value in counts.most_common()
+        if tag in PREFERENCE_TAG_SET
     ]
 
     top_tags = ", ".join([item.tag for item in weighted[:3]])

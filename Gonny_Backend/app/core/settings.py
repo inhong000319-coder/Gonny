@@ -21,6 +21,9 @@ class Settings:
     )
     odsay_api_key: str | None = os.getenv("ODSAY_API_KEY")
     odsay_api_base_url: str = os.getenv("ODSAY_API_BASE_URL", "https://api.odsay.com/v1/api")
+    database_url: str = os.getenv("DATABASE_URL", "")
+    openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
+    openai_model: str = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
 
 
 settings = Settings()

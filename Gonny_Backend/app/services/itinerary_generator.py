@@ -4,7 +4,7 @@ from datetime import timedelta
 from openai import OpenAI
 from pydantic import ValidationError
 
-from app.core.config import settings
+from app.core.settings import settings
 from app.schemas.generator import (
     GeneratedItineraryDay,
     GeneratedItineraryItem,

@@ -29,7 +29,3 @@ class GeneratedItineraryDay(BaseModel):
 
 class GeneratedItineraryResponse(BaseModel):
     days: list[GeneratedItineraryDay]
-
-
-class PlaceholderLLMResponse(BaseModel):
-    days: list[GeneratedItineraryDay]

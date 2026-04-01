@@ -1,17 +1,52 @@
 services:
+  frontend:
+    build:
+      context: ./Gonny_Frontend
+    container_name: gonny-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Gonny_Frontend:/app
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:5173 > /dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    depends_on:
+      backend:
+        condition: service_healthy
+
   backend:
     build:
       context: ./Gonny_Backend
     container_name: gonny-backend
+    restart: unless-stopped
     env_file:
       - .env
     ports:
       - "8000:8000"
     volumes:
       - ./Gonny_Backend:/app
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
   db:
     image: postgres:16
@@ -23,6 +58,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   redis:
     image: redis:7
@@ -30,6 +71,12 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
 
 volumes:
   postgres_data:

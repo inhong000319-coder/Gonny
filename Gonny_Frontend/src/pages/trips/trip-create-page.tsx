@@ -1,10 +1,10 @@
 import { AppShell } from "../../app/layouts/app-shell";
-import { TripCreateForm } from "../../features/trip-create/components/trip-create-form";
+import { AiTripCreateForm } from "../../features/ai-trip-create/components/ai-trip-create-form";
 
 export function TripCreatePage() {
   return (
     <AppShell>
-      <TripCreateForm />
+      <AiTripCreateForm />
     </AppShell>
   );
 }

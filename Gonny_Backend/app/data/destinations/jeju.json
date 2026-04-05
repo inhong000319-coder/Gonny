@@ -2,176 +2,681 @@
   "continent": "asia",
   "country": "korea",
   "city": "jeju",
-  "aliases": ["jeju", "jejudo", "제주", "제주도"],
+  "aliases": [
+    "jeju",
+    "jejudo",
+    "제주",
+    "제주도"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "hamdeok-beach",
       "name": "함덕해수욕장",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
-      "area": "제주시 동쪽",
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "제주 동쪽",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "맑은 바다 풍경을 가볍게 즐기기 좋은 제주 동부 대표 해변이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "맑은 바다 풍경을 가볍게 즐기기 좋은 제주 동쪽 대표 해변이다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "제주다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "woljeongri",
       "name": "월정리 해변",
-      "category": ["relax", "food", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "evening"],
-      "area": "제주시 동쪽",
+      "category": [
+        "relax",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
+      "area": "제주 동쪽",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "카페와 바다 산책을 함께 넣기 좋아 여유로운 일정에 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "카페와 바다 산책을 함께 묶기 좋아 여유로운 일정에 잘 맞는다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "제주다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "seongsan-ilchulbong",
       "name": "성산일출봉",
-      "category": ["sightseeing", "nature", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
-      "area": "서귀포 동쪽",
+      "category": [
+        "sightseeing",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "성산",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "제주를 대표하는 자연 명소로 관광형 일정의 중심축이 된다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "제주를 대표하는 자연 명소로 관광형 일정의 중심축이 된다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "제주다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "seopjikoji",
       "name": "섭지코지",
-      "category": ["nature", "photo", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon"],
-      "area": "서귀포 동쪽",
+      "category": [
+        "nature",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
+      "area": "성산",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "해안 풍경이 시원하게 펼쳐져 동부 코스와 함께 묶기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "해안 풍경을 시원하게 즐길 수 있어 동부 코스를 함께 묶기 좋다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "제주다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "bijarim",
       "name": "비자림",
-      "category": ["nature", "relax", "sightseeing"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning"],
-      "area": "제주시 동쪽",
+      "category": [
+        "nature",
+        "relax",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
+      "area": "제주 동쪽",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "숲길 산책이 중심이라 널널한 제주 일정에 자연스럽게 들어간다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "숲길 산책이 중심이라 제주 일정에 자연을 부드럽게 넣어가기 좋다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "제주다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "aewol-cafe",
       "name": "애월 카페거리",
-      "category": ["food", "relax", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
-      "area": "제주시 서쪽",
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "제주 서쪽",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "오션뷰 카페와 여유로운 분위기를 함께 누리기 좋은 제주 서쪽 명소다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "오션뷰 카페와 여유로운 분위기를 함께 누리기 좋은 제주 서쪽 명소다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "제주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "hallim-park",
       "name": "한림공원",
-      "category": ["nature", "family", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["family", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
-      "area": "제주시 서쪽",
+      "category": [
+        "nature",
+        "family",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "family",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "제주 서쪽",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "여러 정원과 산책 코스가 있어 가족형 일정에 특히 무리가 없다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "여러 정원과 산책 코스가 있어 가족형 일정에도 크게 무리가 없다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "제주다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "hyeopjae-beach",
       "name": "협재해수욕장",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
-      "area": "제주시 서쪽",
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "제주 서쪽",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "노을 시간대와 잘 어울려 제주 서쪽 해변 코스를 완성하기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "맑은 시간대에 특히 예쁜 제주 서쪽 해변 코스를 완성하기 좋다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "제주다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "camellia-hill",
       "name": "카멜리아힐",
-      "category": ["photo", "nature", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "photo",
+        "nature",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "서귀포 서쪽",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "사진과 산책 중심의 코스로 감성적인 제주 분위기를 만들기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "사진과 산책 중심의 코스로 감성적인 제주 분위기를 만들기 좋다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "제주다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "jungmun-saekdal",
       "name": "중문색달해변",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "서귀포 서쪽",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "서귀포 쪽에서 바다 풍경과 여유로운 마무리를 넣기에 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "서귀포 쪽에서 바다 풍경과 여유로운 마무리를 함께 담기 좋다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "제주다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "osulloc",
       "name": "오설록 티뮤지엄",
-      "category": ["food", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family", "solo"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family",
+        "solo"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "서귀포 서쪽",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "차와 디저트, 풍경을 함께 즐길 수 있어 감성적인 일정에 적합하다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "차 문화와 풍경을 함께 즐길 수 있어 감성적인 일정과 잘 맞는다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "제주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "dongmun-market",
       "name": "동문시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "제주시",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "제주 먹거리와 간단한 쇼핑을 함께 즐길 수 있는 저녁 코스다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "제주 먹거리와 간단한 쇼핑을 함께 즐기기 좋은 대표 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "제주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "aqua-planet-jeju",
+      "name": "Aqua Planet Jeju",
+      "category": [
+        "activity",
+        "local_experience",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "seongsan",
+      "duration_hours": 3,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "제주 바다를 실내에서 깊이 있게 만나볼 수 있는 대표 체험 공간이에요.",
+      "official_url": "https://www.aquaplanet.co.kr/jeju/index.do",
+      "booking_hint": "공연 시간과 생태설명회 시간을 함께 보면 훨씬 알차게 둘러볼 수 있어요.",
+      "slot_bias": {
+        "morning": 8,
+        "afternoon": 4,
+        "evening": -8
+      },
+      "mood_keywords": [
+        "시원한",
+        "몰입감 있는",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "제주 바다 체험",
+        "실내 코스",
+        "날씨 영향 적은 일정"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 자연을 조금 다른 방식으로 체험하고 싶을 때 넣기 좋아요."
+      ]
+    },
+    {
+      "id": "jeju-rail-bike",
+      "name": "Jeju Rail Bike",
+      "category": [
+        "activity",
+        "local_experience",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gujwa",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "제주 동쪽 풍경을 바람 맞으며 가볍게 즐기기 좋은 체험형 코스예요.",
+      "official_url": "http://www.jejurailpark.com/m/index.php",
+      "booking_hint": "동선이 동부권에 있을 때 묶어두면 이동 효율이 좋아요.",
+      "slot_bias": {
+        "morning": 8,
+        "afternoon": 5,
+        "evening": -10
+      },
+      "mood_keywords": [
+        "경쾌한",
+        "바람이 느껴지는",
+        "가볍게 즐기는"
+      ],
+      "highlight_tags": [
+        "제주 동부 체험",
+        "레일바이크",
+        "풍경과 체험 동시 만족"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주에서 구경만 하지 않고 직접 움직이며 풍경을 즐기고 싶을 때 잘 맞아요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "OWaQI-3pefA",
+    "title": "Ultimate Guide to JEJU Island (72HRS)",
+    "channel": "Doobydobap",
+    "view_count_text": "조회수 1,127,731회",
+    "published": "1년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=OWaQI-3pefA",
+    "embed_url": "https://www.youtube.com/embed/OWaQI-3pefA",
+    "thumbnail_url": "https://i.ytimg.com/vi/OWaQI-3pefA/hqdefault.jpg"
+  }
 }

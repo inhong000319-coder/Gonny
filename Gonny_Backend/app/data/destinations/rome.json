@@ -2,176 +2,675 @@
   "continent": "europe",
   "country": "italy",
   "city": "rome",
-  "aliases": ["rome", "roma", "로마"],
+  "aliases": [
+    "rome",
+    "roma",
+    "로마"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "colosseum",
       "name": "콜로세움",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "고대유적지구",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "로마를 대표하는 랜드마크로 고대 유적 중심 일정의 핵심이 된다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "로마를 대표하는 랜드마크로 고대 유적 중심 일정의 핵심이 된다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "로마다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "roman-forum",
       "name": "로마 포로",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "고대유적지구",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "콜로세움과 함께 묶으면 로마다운 유적 코스를 촘촘하게 만들기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "콜로세움과 함께 묶으면 로마다운 유적 코스를 촘촘하게 만들기 좋다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "로마다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "trevi-fountain",
       "name": "트레비 분수",
-      "category": ["photo", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "중심지",
       "duration_hours": 1,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "짧게 들르기 좋고 로마 중심 산책 동선에 자연스럽게 녹아든다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "짧게 들르기 좋고 로마 중심 산책 동선에 자연스럽게 녹아든다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "로마다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "pantheon",
       "name": "판테온",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "중심지",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "트레비 분수나 나보나 광장과 함께 묶기 좋은 대표 명소다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "트레비 분수나 나보나 광장과 함께 묶기 좋은 대표 명소다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "로마다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "piazza-navona",
       "name": "나보나 광장",
-      "category": ["relax", "photo", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "중심지",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "광장 분위기와 주변 카페를 함께 즐기기 좋아 로마 감성을 살리기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광장 분위기와 주변 카페를 함께 즐기기 좋아 로마 감성을 살리기 좋다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "로마다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "trastevere",
       "name": "트라스테베레",
-      "category": ["food", "culture", "nightlife"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "culture",
+        "nightlife"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "트라스테베레",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "로마 저녁 식사와 골목 분위기를 동시에 즐기기 좋은 지역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "로마 저녁 식사와 골목 분위기를 동시에 즐기기 좋은 지역이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "로마다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "vatican-museum",
       "name": "바티칸 박물관",
-      "category": ["culture", "sightseeing", "family"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "바티칸",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "미술과 역사 비중을 높이고 싶을 때 빠지기 어려운 핵심 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "미술과 역사 비중을 높이고 싶을 때 빠지기 어려운 핵심 코스다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "로마다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "st-peters",
       "name": "성베드로 대성당",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "바티칸",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "바티칸 박물관과 함께 보면 로마 문화 일정의 완성도가 높아진다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "바티칸 박물관과 함께 보면 로마 문화 일정의 완성도가 높아진다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "로마다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "borghese-garden",
       "name": "보르게세 공원",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "북부 중심",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "유적 중심 일정 중간에 여유를 주는 산책 코스로 활용하기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "유적 중심 일정 중간에 여유를 주는 산책 코스로 활용하기 좋다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "로마다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "spanish-steps",
       "name": "스페인 광장",
-      "category": ["photo", "shopping", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "shopping",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "북부 중심",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "명소와 쇼핑 동선을 함께 묶기 좋아 도심 산책 코스로 적합하다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "명소와 쇼핑 동선을 함께 묶기 좋아 도심 산책 코스로 적합하다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "로마다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "campo-de-fiori",
       "name": "캄포 데 피오리",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "중심지",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "시장과 가벼운 식사 코스를 넣고 싶을 때 로마 중심지에서 쓰기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "시장과 가벼운 식사 코스를 넣고 싶을 때 로마 중심지에서 쓰기 좋다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "로마다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "janiculum-hill",
       "name": "자니콜로 언덕",
-      "category": ["photo", "relax", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["evening"],
+      "category": [
+        "photo",
+        "relax",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "트라스테베레",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "노을과 시내 전망을 함께 보기 좋아 저녁 마무리 코스로 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "노을과 시내 전망을 함께 보기 좋아 저녁 마무리 코스로 잘 맞는다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "로마다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
+    },
+    {
+      "id": "bioparco-di-roma",
+      "name": "Bioparco di Roma",
+      "category": [
+        "activity",
+        "nature",
+        "family"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "villa-borghese",
+      "duration_hours": 3,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "유적 중심 일정 사이에서 한숨 돌리며 즐기기 좋은 로마의 체험형 공원 코스예요.",
+      "official_url": "https://www.bioparco.it/",
+      "booking_hint": "보르게세 공원 동선과 함께 묶으면 하루 흐름이 훨씬 자연스러워요.",
+      "mood_keywords": [
+        "한결 편안한",
+        "가족과 가기 좋은",
+        "초록이 있는"
+      ],
+      "highlight_tags": [
+        "보르게세 코스",
+        "체험형 공원",
+        "가벼운 변주"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마에서 유적만 계속 보는 흐름을 잠깐 환기해주기에 좋아요."
+      ]
+    },
+    {
+      "id": "cinecitta-world",
+      "name": "Cinecitta World",
+      "category": [
+        "activity",
+        "theme_park",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "castel-romano",
+      "duration_hours": 5,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "영화 스튜디오 콘셉트가 살아 있는 로마 근교 테마파크예요.",
+      "official_url": "https://www.cinecittaworld.it/en/",
+      "booking_hint": "도심 유적 코스와는 거리가 있어서 하루를 분리해서 쓰는 편이 좋아요.",
+      "mood_keywords": [
+        "활기찬",
+        "색다른",
+        "하루를 크게 쓰는"
+      ],
+      "highlight_tags": [
+        "로마 근교 테마파크",
+        "영화 콘셉트",
+        "체험형 하루 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 로마 일정에 예상 밖의 재미를 넣고 싶을 때 꽤 좋은 선택이에요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "DEJx0CYrDHk",
+    "title": "Rome Vacation Travel Guide | Expedia",
+    "channel": "Expedia",
+    "view_count_text": "조회수 2,240,503회",
+    "published": "12년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=DEJx0CYrDHk",
+    "embed_url": "https://www.youtube.com/embed/DEJx0CYrDHk",
+    "thumbnail_url": "https://i.ytimg.com/vi/DEJx0CYrDHk/hqdefault.jpg"
+  }
 }

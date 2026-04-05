@@ -2,176 +2,675 @@
   "continent": "asia",
   "country": "japan",
   "city": "kyoto",
-  "aliases": ["kyoto", "교토"],
+  "aliases": [
+    "kyoto",
+    "교토"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "fushimi-inari",
       "name": "후시미 이나리 신사",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "후시미",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "교토를 대표하는 명소로 문화와 사진 포인트를 함께 담기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "교토를 대표하는 명소로 문화와 사진 포인트를 함께 담기 좋다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "교토다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "kiyomizu-dera",
       "name": "기요미즈데라",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "히가시야마",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "교토 전통 풍경을 상징하는 대표 사찰로 관광 일정의 중심이 된다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "교토 전통 풍경을 상징하는 대표 사찰로 관광 일정의 중심이 된다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "교토다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "sannenzaka",
       "name": "산넨자카와 니넨자카",
-      "category": ["shopping", "culture", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "shopping",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "히가시야마",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "전통 골목과 기념품 가게가 이어져 교토다운 분위기를 살리기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전통 골목과 기념품 가게가 이어져 교토다운 분위기를 살리기 좋다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "교토다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "gion",
       "name": "기온 거리",
-      "category": ["food", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "기온",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "교토 특유의 골목 분위기와 식사 코스를 함께 넣기 좋은 지역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "교토 특유의 골목 분위기와 식사 코스를 함께 넣기 좋은 지역이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "교토다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "yasaka-shrine",
       "name": "야사카 신사",
-      "category": ["culture", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "기온",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "기온과 함께 가볍게 묶기 좋아 저녁 산책 코스로 자연스럽다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "기온과 함께 가볍게 묶기 좋아 저녁 산책 코스로 자연스럽다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "교토다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "arashiyama-bamboo",
       "name": "아라시야마 대나무숲",
-      "category": ["nature", "photo", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "아라시야마",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "train-friendly"],
-      "summary": "자연과 사진 중심 코스로 교토의 다른 분위기를 느끼기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "train-friendly"
+      ],
+      "summary": "자연과 사진 중심 코스로 교토의 다른 분위기를 느끼기 좋다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "교토다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "togetsukyo",
       "name": "도게츠교",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "아라시야마",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "아라시야마 일대와 함께 묶어 풍경 중심으로 즐기기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "아라시야마 일대와 함께 묶어 풍경 중심으로 즐기기 좋다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "교토다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "nishiki-market",
       "name": "니시키 시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "시조",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "교토 먹거리와 소소한 시장 구경을 한 번에 넣기 좋은 코스다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "교토 먹거리와 소소한 시장 구경을 한 번에 넣기 좋은 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "교토다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "pontocho",
       "name": "폰토초",
-      "category": ["food", "nightlife", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "nightlife",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "시조",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "교토 저녁 식사와 분위기 있는 골목 산책을 묶기 좋은 지역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "교토 저녁 식사와 분위기 있는 골목 산책을 묶기 좋은 지역이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "교토다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "kyoto-imperial",
       "name": "교토 교엔",
-      "category": ["relax", "nature", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning"],
+      "category": [
+        "relax",
+        "nature",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "교엔",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "복잡한 일정 사이에 여유를 주기 좋은 넓은 산책 공간이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "복잡한 일정 사이에 여유를 주기 좋은 넓은 산책 공간이다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "교토다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "philosophers-path",
       "name": "철학의 길",
-      "category": ["nature", "relax", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "동쪽 산책권",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "조용한 분위기로 교토의 차분한 면을 느끼고 싶을 때 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "조용한 분위기로 교토의 차분한 면을 느끼고 싶을 때 잘 맞는다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "교토다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "kinkakuji",
       "name": "금각사",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "기타야마",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["bus-friendly"],
-      "summary": "교토 상징 명소 중 하나로 문화 중심 일정에 안정적으로 어울린다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "bus-friendly"
+      ],
+      "summary": "교토 상징 명소 중 하나로 문화 중심 일정에 안정적으로 어울린다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "교토다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
+    },
+    {
+      "id": "toei-kyoto-studio-park",
+      "name": "Toei Kyoto Studio Park",
+      "category": [
+        "activity",
+        "theme_park",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "uzumasa",
+      "duration_hours": 4,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "에도 시대 세트장을 직접 걷고 즐길 수 있어서 교토 일정에 확실한 변화를 줘요.",
+      "official_url": "https://global.toei-eigamura.com/",
+      "booking_hint": "쇼 일정이 있는 날이면 체류 시간을 조금 넉넉하게 잡는 편이 좋아요.",
+      "mood_keywords": [
+        "색다른",
+        "몰입감 있는",
+        "사진 남기기 좋은"
+      ],
+      "highlight_tags": [
+        "교토 테마파크",
+        "시대극 세트장",
+        "체험형 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사찰 위주 일정 사이에 색다른 체험을 넣고 싶을 때 특히 잘 어울려요."
+      ]
+    },
+    {
+      "id": "sagano-romantic-train",
+      "name": "Sagano Romantic Train",
+      "category": [
+        "activity",
+        "local_experience",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "arashiyama",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "아라시야마 풍경을 열차 위에서 천천히 즐길 수 있는 교토 대표 체험이에요.",
+      "official_url": "https://www.sagano-kanko.co.jp/en/",
+      "booking_hint": "단풍철이나 벚꽃철에는 좌석 예약을 먼저 확인하는 편이 좋아요.",
+      "mood_keywords": [
+        "차분한",
+        "풍경이 살아나는",
+        "계절감 있는"
+      ],
+      "highlight_tags": [
+        "아라시야마 체험",
+        "열차 코스",
+        "계절 풍경"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 교토의 풍경을 걷는 것과는 또 다른 방식으로 느끼고 싶을 때 추천하기 좋아요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "2G0Hh8f9Cc8",
+    "title": "Top 5 Things to do in Kyoto",
+    "channel": "Japan Guide",
+    "view_count_text": "조회수 2,150,580회",
+    "published": "8년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=2G0Hh8f9Cc8",
+    "embed_url": "https://www.youtube.com/embed/2G0Hh8f9Cc8",
+    "thumbnail_url": "https://i.ytimg.com/vi/2G0Hh8f9Cc8/hqdefault.jpg"
+  }
 }

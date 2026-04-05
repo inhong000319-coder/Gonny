@@ -2,274 +2,882 @@
   "continent": "asia",
   "country": "russia",
   "city": "vladivostok",
-  "aliases": ["vladivostok", "블라디보스토크"],
+  "aliases": [
+    "vladivostok",
+    "블라디보스토크"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "arbat-street",
       "name": "Arbat Street",
-      "category": ["sightseeing", "shopping", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "shopping",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "city-center",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "Compact central walking street for casual local browsing."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Compact central walking street for casual local browsing요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "sportivnaya-embankment",
       "name": "Sportivnaya Embankment",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "seaside",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Good for a sea-view walk without a packed schedule."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Good for a sea-view walk without a packed schedule요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "블라디보스토크다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "tokarevsky-lighthouse",
       "name": "Tokarevsky Lighthouse",
-      "category": ["sightseeing", "nature", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "tokarevsky",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Popular landmark with open sea views and a memorable walk."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Popular landmark with open sea views and a memorable walk요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "revolution-square",
       "name": "Revolution Square",
-      "category": ["sightseeing", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "city-center",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "Quick central stop that fits a practical downtown route."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Quick central stop that fits a practical downtown route요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "railway-station",
       "name": "Vladivostok Railway Station",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "city-center",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable"],
-      "summary": "Historic station stop that works well with nearby downtown spots."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Historic station stop that works well with nearby downtown spots요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "svetlanskaya-street",
       "name": "Svetlanskaya Street",
-      "category": ["sightseeing", "shopping", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "shopping",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "city-center",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "Useful main street for linking central sightseeing and meals."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Useful main street for linking central sightseeing and meals요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "eagle-nest",
       "name": "Eagle's Nest Viewpoint",
-      "category": ["photo", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "viewpoint",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Classic city panorama stop, especially toward sunset."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Classic city panorama stop, especially toward sunset요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "블라디보스토크다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "millionka",
       "name": "Millionka District",
-      "category": ["food", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "city-center",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Historic quarter with cafes and a more local atmosphere."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Historic quarter with cafes and a more local atmosphere요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "블라디보스토크다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "cafe-tour-center",
       "name": "Central Cafe Route",
-      "category": ["food", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning"],
+      "category": [
+        "food",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "city-center",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Simple cafe-focused option for a lighter last morning."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Simple cafe-focused option for a lighter last morning요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "블라디보스토크다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "golden-bridge-view",
       "name": "골든브리지 전망 포인트",
-      "category": ["photo", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "viewpoint",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Additional city-view option that helps vary sunset-focused routes."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Additional city-view option that helps vary sunset-focused routes요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "블라디보스토크다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "russky-oceanarium",
       "name": "루스키섬 아쿠아리움",
-      "category": ["family", "activity", "sightseeing"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["family", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "family",
+        "activity",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "family",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "russky-island",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Useful option for family-friendly or activity-leaning Vladivostok plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Useful option for family-friendly or activity-leaning Vladivostok plans요.",
+      "mood_keywords": [
+        "가족 친화적인",
+        "편안한",
+        "무난한"
+      ],
+      "highlight_tags": [
+        "가족 일정",
+        "블라디보스토크다운 분위기",
+        "편안한 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 여러 연령대가 함께 움직이는 일정에도 비교적 부담 없이 넣기 좋아요."
+      ]
     },
     {
       "id": "pokrovsky-park",
       "name": "포크롭스키 공원",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "family"],
-      "time_fit": ["morning"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "city-center",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Simple green stop that helps the city-center route feel less repetitive."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Simple green stop that helps the city-center route feel less repetitive요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "블라디보스토크다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "marine-terminal",
       "name": "블라디보스토크 해양터미널",
-      "category": ["sightseeing", "photo", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "city-center",
       "duration_hours": 1,
       "priority": 6,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "Compact harbor stop that pairs well with downtown sightseeing."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Compact harbor stop that pairs well with downtown sightseeing요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "seafood-market-lane",
       "name": "해산물 시장 골목",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "couple", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "city-center",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Good local-food option that adds more variety to daytime city-center plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Good local-food option that adds more variety to daytime city-center plans요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "블라디보스토크다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "funicular",
       "name": "블라디보스토크 푸니쿨라",
-      "category": ["sightseeing", "photo", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "viewpoint",
       "duration_hours": 1,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Short but memorable stop that adds a classic local transport experience."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Short but memorable stop that adds a classic local transport experience요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "블라디보스토크다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "zarya-center",
       "name": "자랴 현대미술관",
-      "category": ["culture", "photo", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "suburb",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Good optional stop for travelers wanting a more modern cultural layer."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Good optional stop for travelers wanting a more modern cultural layer요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "블라디보스토크다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "primorsky-stage",
       "name": "프리모르스키 극장",
-      "category": ["culture", "photo", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "solo", "friend"],
-      "time_fit": ["evening"],
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "solo",
+        "friend"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "seaside",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Stronger evening culture option for travelers who want a quieter finish."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Stronger evening culture option for travelers who want a quieter finish요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "블라디보스토크다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 블라디보스토크의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "university-embankment",
       "name": "대학가 해안 산책길",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "russky-island",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "A broader open-water walk that helps Russky Island plans feel less single-purpose."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "A broader open-water walk that helps Russky Island plans feel less single-purpose요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "블라디보스토크다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "sport-harbor",
       "name": "스포르티브 항구 야경 구역",
-      "category": ["food", "photo", "nightlife"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["friend", "couple", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "photo",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "seaside",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Easy evening waterfront option for dinner, lights, and a casual walk."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Easy evening waterfront option for dinner, lights, and a casual walk요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "블라디보스토크다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "bB6DGkrIVZk",
+    "title": "4K Walking Tour with City Sounds - Trip to Vladivostok, Russia",
+    "channel": "4K Urban Life",
+    "view_count_text": "조회수 128,143회",
+    "published": "5년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=bB6DGkrIVZk",
+    "embed_url": "https://www.youtube.com/embed/bB6DGkrIVZk",
+    "thumbnail_url": "https://i.ytimg.com/vi/bB6DGkrIVZk/hqdefault.jpg"
+  }
 }

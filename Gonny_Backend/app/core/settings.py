@@ -24,6 +24,8 @@ class Settings:
     database_url: str = os.getenv("DATABASE_URL", "")
     openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
     openai_model: str = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+    rule_note_generation_mode: str = os.getenv("RULE_NOTE_GENERATION_MODE", "template")
+    rule_note_model: str = os.getenv("RULE_NOTE_MODEL", "")
 
 
 settings = Settings()

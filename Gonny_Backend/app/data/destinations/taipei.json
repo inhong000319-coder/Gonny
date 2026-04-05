@@ -2,176 +2,685 @@
   "continent": "asia",
   "country": "taiwan",
   "city": "taipei",
-  "aliases": ["taipei", "타이베이"],
+  "aliases": [
+    "taipei",
+    "타이베이"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "taipei-101",
       "name": "타이베이 101",
-      "category": ["sightseeing", "photo", "shopping"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "신이",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "타이베이를 대표하는 랜드마크로 쇼핑과 야경을 묶기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "타이베이를 대표하는 랜드마크로 쇼핑과 야경을 묶기 좋다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "타이베이다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "elephant-mountain",
       "name": "샹산(코끼리산)",
-      "category": ["nature", "photo", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "nature",
+        "photo",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "신이",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "타이베이 101 야경을 보기 좋은 대표 전망 코스다."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "타이베이 101 야경을 보기 좋은 대표 전망 코스다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "타이베이다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "chiang-kai-shek",
       "name": "중정기념당",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "중정",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "넓은 광장과 건축물 덕분에 관광형 일정의 중심으로 안정적이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "넓은 광장과 건축물 덕분에 관광형 일정의 중심으로 안정적이다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "타이베이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "yongkang-street",
       "name": "융캉제",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "다안",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "맛집과 디저트, 골목 분위기를 함께 즐기기 좋은 타이베이 대표 거리다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "맛집과 디저트, 골목 분위기를 함께 즐기기 좋은 타이베이 대표 거리다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "타이베이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "daan-park",
       "name": "다안삼림공원",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "다안",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "도심에서 가볍게 산책하며 하루를 시작하기 좋은 공원이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "도심에서 가볍게 산책하며 하루를 시작하기 좋은 공원이다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "타이베이다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "ximending",
       "name": "시먼딩",
-      "category": ["shopping", "food", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "완화",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "활기 있는 쇼핑과 길거리 음식이 강한 타이베이 도심 지역이다."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "활기 있는 쇼핑과 길거리 음식이 강한 타이베이 도심 지역이다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "타이베이다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "longshan",
       "name": "용산사",
-      "category": ["culture", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "완화",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "시먼딩과 함께 묶기 좋고 타이베이 전통 분위기를 느끼기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "시먼딩과 함께 묶기 좋고 타이베이 전통 분위기를 느끼기 좋다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "타이베이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "raohe-night-market",
       "name": "라오허 야시장",
-      "category": ["food", "shopping", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "solo", "couple", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "shopping",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "solo",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "송산",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "야시장 음식 중심 일정에 가장 잘 어울리는 저녁 코스 중 하나다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "야시장 음식 중심 일정에 가장 잘 어울리는 저녁 코스 중 하나다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "타이베이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "songshan-cultural",
       "name": "송산문창원구",
-      "category": ["culture", "shopping", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "culture",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "송산",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "디자인 상점과 전시가 있어 감성적인 도심 코스로 쓰기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "디자인 상점과 전시가 있어 감성적인 도심 코스로 쓰기 좋다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "타이베이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "beitou-hot-spring",
       "name": "베이터우 온천지구",
-      "category": ["relax", "culture", "nature"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "family", "solo", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "relax",
+        "culture",
+        "nature"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "family",
+        "solo",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "베이터우",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly"],
-      "summary": "도심 여행에 여유를 더해주는 타이베이 대표 힐링 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "도심 여행에 여유를 더해주는 타이베이 대표 힐링 코스다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "타이베이다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "national-palace",
       "name": "국립고궁박물원",
-      "category": ["culture", "sightseeing", "family"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "스린",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "문화 중심 일정에서 빠지기 어려운 대표 박물관이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "문화 중심 일정에서 빠지기 어려운 대표 박물관이다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "타이베이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "shilin-night-market",
       "name": "스린 야시장",
-      "category": ["food", "shopping", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "solo", "family", "couple"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "shopping",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "solo",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "스린",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "먹거리와 활기 있는 분위기를 좋아하면 만족도가 높은 야시장이다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "먹거리와 활기 있는 분위기를 좋아하면 만족도가 높은 야시장이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "타이베이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "maokong-gondola",
+      "name": "Maokong Gondola",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "wenshan",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "타이베이에서 산쪽 풍경과 차 문화를 함께 느끼기 좋은 대표 체험이에요.",
+      "official_url": "https://english.gondola.taipei/",
+      "booking_hint": "날씨 영향을 받을 수 있어서 비 예보가 있으면 먼저 운행 여부를 확인하는 편이 좋아요.",
+      "slot_bias": {
+        "afternoon": 10,
+        "evening": 6,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "여유로운",
+        "풍경이 살아나는",
+        "타이베이다운"
+      ],
+      "highlight_tags": [
+        "마오콩 곤돌라",
+        "타이베이 전망",
+        "차 문화 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 도심 관광만으로는 아쉬울 때 타이베이의 다른 결을 느끼기 좋아요."
+      ]
+    },
+    {
+      "id": "taipei-childrens-amusement-park",
+      "name": "Taipei Children's Amusement Park",
+      "category": [
+        "activity",
+        "theme_park",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "shilin",
+      "duration_hours": 3,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "타이베이에서 가볍게 놀이공원 분위기를 즐기기 좋은 가족형 테마파크예요.",
+      "official_url": "https://travel.taipei/en/attraction/details/671",
+      "booking_hint": "스린 야시장이나 과학관 동선과 함께 묶으면 반나절 코스로 쓰기 좋아요.",
+      "slot_bias": {
+        "morning": 7,
+        "afternoon": 5,
+        "evening": -2
+      },
+      "mood_keywords": [
+        "경쾌한",
+        "가볍게 즐기는",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "타이베이 놀이공원",
+        "스린 코스",
+        "반나절 액티비티"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 타이베이 일정에 부담 없이 넣을 수 있는 밝은 분위기의 체험 코스예요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "r_nCj1X_Hhw",
+    "title": "Best Things to do in Taipei - Overnight City Guide",
+    "channel": "FEATR",
+    "view_count_text": "조회수 892,799회",
+    "published": "10년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=r_nCj1X_Hhw",
+    "embed_url": "https://www.youtube.com/embed/r_nCj1X_Hhw",
+    "thumbnail_url": "https://i.ytimg.com/vi/r_nCj1X_Hhw/hqdefault.jpg"
+  }
 }

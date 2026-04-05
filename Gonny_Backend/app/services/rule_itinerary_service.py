@@ -10,9 +10,14 @@ from app.schemas.rule_itinerary import (
     RuleItineraryRequest,
     RuleItineraryResponse,
 )
+from app.services.rule_note_generator import RuleNoteContext, build_rule_note_generator
 
 
 TIME_SLOTS = ["morning", "afternoon", "evening"]
+ACTIVITY_CATEGORIES = {"activity", "theme_park", "local_experience"}
+ARRIVAL_DAY_CATEGORIES = {"food", "shopping", "relax", "culture", "photo", "cafe"}
+MIDDLE_DAY_CATEGORIES = {"activity", "theme_park", "local_experience", "nature", "sightseeing"}
+DEPARTURE_DAY_CATEGORIES = {"food", "shopping", "relax", "culture", "photo", "sightseeing"}
 DEFAULT_CONCEPTS = ["sightseeing"]
 DEFAULT_STYLE = "easy"
 DEFAULT_COMPANION = "friend"
@@ -25,9 +30,9 @@ DEFAULT_CITY_BY_COUNTRY = {
     "thailand": "bangkok",
 }
 SLOT_CATEGORY_PREFERENCE = {
-    "morning": {"relax", "nature", "cafe", "sightseeing", "culture"},
-    "afternoon": {"sightseeing", "shopping", "culture", "activity", "nature"},
-    "evening": {"food", "shopping", "relax", "photo", "nightlife"},
+    "morning": {"relax", "nature", "cafe", "sightseeing", "culture", "activity", "local_experience"},
+    "afternoon": {"sightseeing", "shopping", "culture", "activity", "nature", "theme_park", "local_experience"},
+    "evening": {"food", "shopping", "relax", "photo", "nightlife", "activity", "theme_park", "local_experience"},
 }
 PLACE_NAME_KO = {
     "gyeongbokgung": "경복궁",
@@ -83,6 +88,34 @@ PLACE_NAME_KO = {
     "orsay": "오르세 미술관",
     "luxembourg": "뤽상부르 공원",
     "saint-germain": "생제르맹",
+    "lotte-world-adventure": "롯데월드 어드벤처",
+    "e-land-hangang-cruise": "이랜드 한강 크루즈",
+    "aqua-planet-jeju": "아쿠아플라넷 제주",
+    "jeju-rail-bike": "제주레일바이크",
+    "jeonju-hanok-hanbok-experience": "전주한옥마을 한복 체험",
+    "hanbyeok-traditional-play": "한벽문화관 전통놀이 체험",
+    "toei-kyoto-studio-park": "도에이 교토 스튜디오 파크",
+    "sagano-romantic-train": "사가노 로맨틱 트레인",
+    "disneyland-paris": "디즈니랜드 파리",
+    "vedettes-du-pont-neuf-cruise": "베데트 뒤 퐁네프 센강 크루즈",
+    "bioparco-di-roma": "비오파르코 디 로마",
+    "cinecitta-world": "치네치타 월드",
+    "tibidabo-amusement-park": "티비다보 놀이공원",
+    "montjuic-cable-car": "몬주익 케이블카",
+    "tokyo-disneysea": "도쿄 디즈니씨",
+    "universal-studios-japan": "유니버설 스튜디오 재팬",
+    "universal-studios-singapore": "유니버설 스튜디오 싱가포르",
+    "maokong-gondola": "마오콩 곤돌라",
+    "taipei-childrens-amusement-park": "타이베이 어린이 놀이공원",
+    "marine-world-uminonakamichi": "마린월드 우미노나카미치",
+    "fukuoka-open-top-bus": "후쿠오카 오픈톱버스",
+    "chiang-mai-night-safari": "치앙마이 나이트 사파리",
+    "chiang-mai-celadon-workshop": "치앙마이 셀라돈 워크숍",
+    "skyline-luge-busan": "스카이라인 루지 부산",
+    "haslla-art-world": "하슬라아트월드",
+    "gyeongju-expo-grand-park": "경주엑스포대공원",
+    "mahanakhon-skywalk": "마하나콘 스카이워크",
+    "night-safari-singapore": "싱가포르 나이트 사파리",
 }
 AREA_LABEL_KO = {
     "jongno": "종로",
@@ -127,6 +160,7 @@ AREA_LABEL_KO = {
     "ari": "아리",
     "asok": "아속",
     "city-center": "도심",
+    "sentosa": "센토사",
     "seaside": "해안가",
     "tokarevsky": "토카레브스키",
     "russky-island": "루스키섬",
@@ -134,6 +168,24 @@ AREA_LABEL_KO = {
     "suburb": "외곽",
     "canal": "운하 주변",
     "bercy": "베르시",
+    "seongsan": "성산",
+    "gujwa": "구좌",
+    "hanok-village": "전주한옥마을",
+    "jeonjucheon": "전주천",
+    "uzumasa": "우즈마사",
+    "arashiyama": "아라시야마",
+    "marne-la-vallee": "마른라발레",
+    "ile-de-la-cite": "시테섬",
+    "villa-borghese": "빌라 보르게세",
+    "castel-romano": "카스텔 로마노",
+    "tibidabo": "티비다보",
+    "montjuic": "몬주익",
+    "wenshan": "원산",
+    "shilin": "스린",
+    "osiria": "오시리아",
+    "gangdong": "강동",
+    "bomun": "보문",
+    "mandai": "만다이",
 }
 CONCEPT_LABEL_KO = {
     "food": "식사",
@@ -142,6 +194,7 @@ CONCEPT_LABEL_KO = {
     "sightseeing": "관광",
     "culture": "문화",
     "nature": "자연",
+    "activity": "액티비티",
 }
 COMPANION_REASON_KO = {
     "solo": "혼자서도 부담 없이 움직이기 좋습니다.",
@@ -164,6 +217,7 @@ BUDGET_REASON_KO = {
 class RuleItineraryService:
     def __init__(self, catalog_provider: LocalJsonPlaceCatalogProvider | None = None):
         self.catalog_provider = catalog_provider or LocalJsonPlaceCatalogProvider()
+        self.note_generator = build_rule_note_generator()
 
     def list_catalog_options(self) -> list[CatalogCityOption]:
         return self.catalog_provider.list_city_options()
@@ -188,6 +242,7 @@ class RuleItineraryService:
             concepts=normalized.concepts,
             style=normalized.style,
             companion_type=normalized.companion_type,
+            featured_video=city_catalog.featured_video,
             items=items,
         )
 
@@ -266,7 +321,7 @@ class RuleItineraryService:
         city_catalog: CityPlaceCatalog,
     ) -> list[RuleItineraryItem]:
         scored_places = sorted(
-            city_catalog.places,
+            [place for place in city_catalog.places if place.is_active],
             key=lambda place: self._base_score(place, request),
             reverse=True,
         )
@@ -275,15 +330,48 @@ class RuleItineraryService:
         preferred_areas = [area for area, _ in sorted(area_scores.items(), key=lambda item: item[1], reverse=True)]
         used_ids: set[str] = set()
         items: list[RuleItineraryItem] = []
+        full_day_used = False
 
         for day_number in range(1, request.days + 1):
+            full_day_place = self._pick_full_day_place(
+                scored_places=scored_places,
+                request=request,
+                used_ids=used_ids,
+                day_number=day_number,
+                allow_full_day=not full_day_used,
+            )
+            if full_day_place is not None:
+                for slot in TIME_SLOTS:
+                    items.append(
+                        RuleItineraryItem(
+                            day_number=day_number,
+                            time_slot=slot,
+                            place_name=self._localize_place_name(full_day_place),
+                            category=full_day_place.category[0] if full_day_place.category else "activity",
+                            area=self._localize_area(full_day_place.area),
+                            notes=self._build_note(
+                                place=full_day_place,
+                                request=request,
+                                time_slot=slot,
+                                day_number=day_number,
+                                day_area=full_day_place.area,
+                                previous_place=full_day_place if slot != "morning" else None,
+                            ),
+                        )
+                    )
+                used_ids.add(full_day_place.id)
+                full_day_used = True
+                continue
+
             day_area = self._pick_day_area(preferred_areas, scored_places, used_ids, day_number)
+            day_places: list[PlaceData] = []
 
             for slot in TIME_SLOTS:
                 chosen = self._pick_place_for_slot(
                     scored_places=scored_places,
                     request=request,
                     time_slot=slot,
+                    day_number=day_number,
                     used_ids=used_ids,
                     preferred_area=day_area,
                 )
@@ -291,7 +379,8 @@ class RuleItineraryService:
                     continue
 
                 used_ids.add(chosen.id)
-                main_category = chosen.category[0] if chosen.category else "sightseeing"
+                previous_place = day_places[-1] if day_places else None
+                main_category = self._resolve_item_category(chosen, request)
                 items.append(
                     RuleItineraryItem(
                         day_number=day_number,
@@ -304,11 +393,39 @@ class RuleItineraryService:
                             request=request,
                             time_slot=slot,
                             day_number=day_number,
+                            day_area=day_area,
+                            previous_place=previous_place,
                         ),
                     )
                 )
+                day_places.append(chosen)
 
         return items
+
+    def _pick_full_day_place(
+        self,
+        *,
+        scored_places: list[PlaceData],
+        request: NormalizedRuleRequest,
+        used_ids: set[str],
+        day_number: int,
+        allow_full_day: bool,
+    ) -> PlaceData | None:
+        if not allow_full_day or "activity" not in request.concepts:
+            return None
+        if self._day_phase(request, day_number) != "middle":
+            return None
+
+        candidates = [
+            place
+            for place in scored_places
+            if place.id not in used_ids and place.full_day_recommended and set(place.category) & ACTIVITY_CATEGORIES
+        ]
+        if not candidates:
+            return None
+
+        ranked = sorted(candidates, key=lambda place: self._base_score(place, request) + 20, reverse=True)
+        return ranked[0]
 
     def _group_area_scores(self, places: list[PlaceData], request: NormalizedRuleRequest) -> dict[str, int]:
         area_scores: dict[str, int] = defaultdict(int)
@@ -330,12 +447,19 @@ class RuleItineraryService:
                     return candidate_area
         return None
 
+    def _resolve_item_category(self, place: PlaceData, request: NormalizedRuleRequest) -> str:
+        categories = set(place.category)
+        if "activity" in request.concepts and categories & ACTIVITY_CATEGORIES:
+            return "activity"
+        return place.category[0] if place.category else "sightseeing"
+
     def _pick_place_for_slot(
         self,
         *,
         scored_places: list[PlaceData],
         request: NormalizedRuleRequest,
         time_slot: str,
+        day_number: int,
         used_ids: set[str],
         preferred_area: str | None,
     ) -> PlaceData | None:
@@ -349,11 +473,21 @@ class RuleItineraryService:
                 place=place,
                 request=request,
                 time_slot=time_slot,
+                day_number=day_number,
                 preferred_area=preferred_area,
             ),
             reverse=True,
         )
         return ranked_candidates[0] if ranked_candidates else None
+
+    def _day_phase(self, request: NormalizedRuleRequest, day_number: int) -> str:
+        if request.days <= 1:
+            return "arrival"
+        if day_number == 1:
+            return "arrival"
+        if day_number == request.days:
+            return "departure"
+        return "middle"
 
     def _localize_place_name(self, place: PlaceData) -> str:
         return PLACE_NAME_KO.get(place.id, place.name)
@@ -364,6 +498,14 @@ class RuleItineraryService:
     def _base_score(self, place: PlaceData, request: NormalizedRuleRequest) -> int:
         score = place.priority * 10
         score += len(set(place.category) & set(request.concepts)) * 8
+        if "activity" in request.concepts and set(place.category) & ACTIVITY_CATEGORIES:
+            score += 28
+        elif "activity" in request.concepts:
+            score -= 6
+        if place.mvp_tier == "core":
+            score += 10
+        elif place.mvp_tier == "hidden":
+            score -= 20
 
         if request.budget_band in place.budget_level:
             score += 6
@@ -386,16 +528,21 @@ class RuleItineraryService:
         place: PlaceData,
         request: NormalizedRuleRequest,
         time_slot: str,
+        day_number: int,
         preferred_area: str | None,
     ) -> int:
         score = self._base_score(place, request)
+        score += self._phase_score(place=place, request=request, day_number=day_number, time_slot=time_slot)
 
         if time_slot in place.time_fit:
             score += 12
+        score += place.slot_bias.get(time_slot, 0)
         if preferred_area and place.area == preferred_area:
             score += 9
         if set(place.category) & SLOT_CATEGORY_PREFERENCE[time_slot]:
             score += 5
+        if "activity" in request.concepts and set(place.category) & ACTIVITY_CATEGORIES:
+            score += 10
         if time_slot == "evening" and "food" in place.category:
             score += 4
         if time_slot == "morning" and ("relax" in place.category or "cafe" in place.category):
@@ -403,6 +550,67 @@ class RuleItineraryService:
         if request.style == "near-stay" and place.area == preferred_area:
             score += 3
 
+        return score
+
+    def _phase_score(
+        self,
+        *,
+        place: PlaceData,
+        request: NormalizedRuleRequest,
+        day_number: int,
+        time_slot: str,
+    ) -> int:
+        phase = self._day_phase(request, day_number)
+        categories = set(place.category)
+        score = 0
+
+        if phase == "arrival":
+            if categories & ARRIVAL_DAY_CATEGORIES:
+                score += 12
+            if categories & ACTIVITY_CATEGORIES:
+                score -= 34
+            if time_slot == "morning" and categories & ACTIVITY_CATEGORIES:
+                score -= 16
+            if place.full_day_recommended:
+                score -= 40
+            if place.duration_hours >= 4:
+                score -= 12
+            if time_slot == "morning" and categories & {"relax", "culture", "sightseeing"}:
+                score += 6
+            if time_slot == "evening" and "food" in categories:
+                score += 8
+            if "taxi-needed" in place.mobility or "train-friendly" in place.mobility:
+                score -= 4
+            return score
+
+        if phase == "middle":
+            if categories & MIDDLE_DAY_CATEGORIES:
+                score += 10
+            if "activity" in request.concepts and categories & ACTIVITY_CATEGORIES:
+                score += 12
+            if "activity" in request.concepts and time_slot in {"morning", "afternoon"}:
+                if categories & ACTIVITY_CATEGORIES:
+                    score += 12
+                else:
+                    score -= 8
+            return score
+
+        if categories & DEPARTURE_DAY_CATEGORIES:
+            score += 12
+        if categories & ACTIVITY_CATEGORIES:
+            score -= 44
+        if place.full_day_recommended:
+            score -= 36
+        if place.duration_hours >= 4:
+            score -= 14
+        elif place.duration_hours <= 2:
+            score += 8
+        if "taxi-needed" in place.mobility or "train-friendly" in place.mobility:
+            score -= 6
+        if time_slot == "morning" and ("shopping" in categories or "food" in categories or "culture" in categories):
+            score += 4
+        if time_slot == "evening" and "food" in categories:
+            score += 6
         return score
 
     def _build_note(
@@ -425,6 +633,29 @@ class RuleItineraryService:
             f"{place_name}은(는) {slot_reason} {concept_text} 중심 여행의 분위기와 잘 맞습니다. "
             f"{area_name} 주변으로 동선을 묶기 좋아 이동이 단순하고, {budget_reason} "
             f"{companion_reason}"
+        )
+    def _build_note(
+        self,
+        *,
+        place: PlaceData,
+        request: NormalizedRuleRequest,
+        time_slot: str,
+        day_number: int,
+        day_area: str | None = None,
+        previous_place: PlaceData | None = None,
+    ) -> str:
+        return self.note_generator.generate(
+            RuleNoteContext(
+                place=place,
+                request=request,
+                time_slot=time_slot,
+                day_number=day_number,
+                localized_place_name=self._localize_place_name(place),
+                localized_area_name=self._localize_area(place.area),
+                day_area_name=self._localize_area(day_area) if day_area else None,
+                previous_place_name=self._localize_place_name(previous_place) if previous_place else None,
+                previous_area_name=self._localize_area(previous_place.area) if previous_place else None,
+            )
         )
 
 

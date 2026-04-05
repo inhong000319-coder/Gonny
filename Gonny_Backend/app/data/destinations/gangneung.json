@@ -2,176 +2,587 @@
   "continent": "asia",
   "country": "korea",
   "city": "gangneung",
-  "aliases": ["gangneung", "kangnung", "강릉"],
+  "aliases": [
+    "gangneung",
+    "kangnung",
+    "강릉"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "gyeongpo-beach",
       "name": "경포해변",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "경포",
       "duration_hours": 2,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "taxi-needed"],
-      "summary": "강릉을 대표하는 해변으로 산책과 풍경 감상에 안정적으로 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "taxi-needed"
+      ],
+      "summary": "강릉을 대표하는 해변으로 산책과 바다 풍경 감상에 안정적으로 잘 맞아요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "강릉다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "gyeongpo-lake",
       "name": "경포호 산책길",
-      "category": ["nature", "relax", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "경포",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "바다와 다른 잔잔한 풍경을 더해줘 널널한 강릉 일정에 잘 어울린다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "바다와 다른 호수 풍경을 함께 넣고 싶을 때 여유롭게 들르기 좋아요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "강릉다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강릉 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "anmok-coffee",
       "name": "안목 커피거리",
-      "category": ["food", "relax", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon", "evening"],
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
       "area": "안목",
       "duration_hours": 2,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "강릉다운 카페 분위기를 가장 쉽게 느낄 수 있는 대표 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "강릉다운 카페 분위기를 가장 쉽게 느낄 수 있는 대표 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "강릉다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "jeongdongjin",
       "name": "정동진 해변",
-      "category": ["photo", "sightseeing", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "photo",
+        "sightseeing",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "정동진",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "바다와 철길 풍경이 함께 있어 강릉 외곽 코스로 인기가 높다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "바다와 기차 풍경을 함께 볼 수 있어 강릉 근교 코스로 넣기 좋아요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "강릉다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "arte-museum-gangneung",
       "name": "아르떼뮤지엄 강릉",
-      "category": ["photo", "activity", "culture"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "photo",
+        "activity",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "강릉 북쪽",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "실내형 체험과 사진 포인트가 많아 날씨 영향을 덜 받는 편이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "실내 체험과 사진 포인트가 많아서 분위기를 바꾸고 싶을 때 잘 맞아요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "강릉다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "haslla-art-world",
-      "name": "하슬라아트월드",
-      "category": ["photo", "culture", "nature"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon"],
-      "area": "정동진",
+      "name": "Haslla Art World",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gangdong",
       "duration_hours": 3,
-      "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "바다 풍경과 전시 공간을 함께 즐길 수 있어 감성적인 코스로 좋다."
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "강릉 바다 풍경과 예술 공간을 함께 즐기기 좋은 체험형 미술공원이에요.",
+      "official_url": "https://www.haslla.kr/web2018/sub3/3_sub1.php",
+      "booking_hint": "실내 전시와 야외 조각공원을 같이 보려면 오전이나 낮 시간대로 여유 있게 잡는 편이 좋아요.",
+      "slot_bias": {
+        "morning": 7,
+        "afternoon": 8,
+        "evening": -8
+      },
+      "mood_keywords": [
+        "감각적인",
+        "사진 남기기 좋은",
+        "강릉다운"
+      ],
+      "highlight_tags": [
+        "바다와 예술",
+        "강릉 체험 코스",
+        "포토 스폿"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강릉에서 바다와 전시를 한 번에 즐기고 싶을 때 만족도가 높은 편이에요."
+      ]
     },
     {
       "id": "ojukheon",
       "name": "오죽헌",
-      "category": ["culture", "sightseeing", "family"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "강릉 시내",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "강릉의 역사적 분위기를 느끼고 싶을 때 넣기 좋은 문화 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "강릉의 역사와 분위기를 조금 더 차분하게 느끼고 싶을 때 잘 맞아요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "강릉다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강릉의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "seongyojang",
       "name": "선교장",
-      "category": ["culture", "photo", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "경포",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "전통 가옥 풍경이 차분해 강릉 여행의 분위기를 부드럽게 만든다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "전통 가옥 풍경을 천천히 보고 싶을 때 부담 없이 넣기 좋은 코스예요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "강릉다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강릉의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "central-market-gangneung",
       "name": "강릉중앙시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "family", "solo", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "family",
+        "solo",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "강릉 시내",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "먹거리 위주로 강릉의 분위기를 느끼기 좋은 실속형 코스다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "먹거리 위주로 강릉 분위기를 빠르게 느끼고 싶을 때 좋은 실속 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "강릉다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "sacheon-beach",
       "name": "사천해변",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "강릉 북쪽",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "조금 더 한적한 바다 풍경을 원할 때 대안으로 좋은 해변이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "조금 더 한적한 바다 풍경을 보고 싶을 때 만족도가 높은 편이에요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "강릉다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "chodang-sundubu",
       "name": "초당순두부마을",
-      "category": ["food", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "family", "couple", "solo"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "family",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "경포",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["nearby", "taxi-needed"],
-      "summary": "강릉 대표 음식을 일정에 자연스럽게 넣기 좋은 식사 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "nearby",
+        "taxi-needed"
+      ],
+      "summary": "강릉 대표 음식을 일정에 자연스럽게 넣기 좋은 식사 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "강릉다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "terarosa-main",
       "name": "테라로사 본점",
-      "category": ["food", "photo", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "강릉 남쪽",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "커피 여행 느낌을 더 진하게 만들 수 있는 강릉 대표 카페 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "커피 시간을 조금 더 제대로 즐기고 싶을 때 만족도가 높은 강릉 카페 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "강릉다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "pQwnc-50uMg",
+    "title": "Recommended travel destinations in Korea✨Gangneung Travel Guide‼️Korea Travel Vlog🇰🇷",
+    "channel": "유일랜드 Uiland",
+    "view_count_text": "조회수 497,858회",
+    "published": "4년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=pQwnc-50uMg",
+    "embed_url": "https://www.youtube.com/embed/pQwnc-50uMg",
+    "thumbnail_url": "https://i.ytimg.com/vi/pQwnc-50uMg/hqdefault.jpg"
+  }
 }

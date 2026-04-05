@@ -62,7 +62,7 @@ const initialForm = {
 };
 
 const STEP_COUNT = 4;
-const conceptOptions = ["food", "shopping", "relax", "sightseeing", "culture", "nature"];
+const conceptOptions = ["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity"];
 const budgetOptions = ["low", "medium", "high"];
 const styleOptions = ["tight", "easy", "near-stay", "mobility-first"];
 const companionOptions = ["solo", "couple", "friend", "family"];
@@ -73,6 +73,7 @@ function labelConcept(value) {
   if (value === "relax") return "\ud734\uc591";
   if (value === "sightseeing") return "\uad00\uad11";
   if (value === "culture") return "\ubb38\ud654";
+  if (value === "activity") return "\uc561\ud2f0\ube44\ud2f0";
   return "\uc790\uc5f0";
 }
 

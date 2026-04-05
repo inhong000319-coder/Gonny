@@ -2,274 +2,967 @@
   "continent": "asia",
   "country": "japan",
   "city": "tokyo",
-  "aliases": ["tokyo", "도쿄"],
+  "aliases": [
+    "tokyo",
+    "도쿄"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "asakusa-sensoji",
       "name": "Senso-ji and Nakamise Street",
-      "category": ["sightseeing", "culture", "food"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "asakusa",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Classic Tokyo introduction with temple views and local snacks."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Classic Tokyo introduction with temple views and local snacks요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "도쿄다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 도쿄에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "ueno-park",
       "name": "Ueno Park",
-      "category": ["relax", "nature", "sightseeing"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "nature",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "ueno",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Large park area suited for a softer start to the day."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Large park area suited for a softer start to the day요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "도쿄다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "ameyoko",
       "name": "Ameyoko Shopping Street",
-      "category": ["shopping", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "ueno",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable"],
-      "summary": "Market-like street with casual food and budget shopping."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Market-like street with casual food and budget shopping요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "shibuya",
       "name": "Shibuya Crossing and Center-Gai",
-      "category": ["shopping", "food", "nightlife"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "nightlife"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "shibuya",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "High-energy Tokyo area for food, shopping, and city atmosphere."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "High-energy Tokyo area for food, shopping, and city atmosphere요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "meiji-jingu",
       "name": "Meiji Jingu",
-      "category": ["sightseeing", "culture", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "harajuku",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Calm shrine setting that balances a busier Tokyo itinerary."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Calm shrine setting that balances a busier Tokyo itinerary요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "도쿄다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 도쿄에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "harajuku",
       "name": "Takeshita Street and Harajuku",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "harajuku",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["tight"],
-      "mobility": ["walkable"],
-      "summary": "Youth shopping district with trendy snacks and visual appeal."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Youth shopping district with trendy snacks and visual appeal요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "tsukiji",
       "name": "Tsukiji Outer Market",
-      "category": ["food", "shopping", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "ginza",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Strong food-focused stop for sushi bowls and market browsing."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Strong food-focused stop for sushi bowls and market browsing요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "도쿄다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "ginza",
       "name": "Ginza",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "ginza",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Polished district suited for higher-comfort dining and shopping."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Polished district suited for higher-comfort dining and shopping요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "odaiba",
       "name": "Odaiba Seaside Area",
-      "category": ["relax", "shopping", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "relax",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "odaiba",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "subway-friendly"],
-      "summary": "Waterfront district with spacious movement and city views."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "subway-friendly"
+      ],
+      "summary": "Waterfront district with spacious movement and city views요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "도쿄다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "kappabashi",
       "name": "갓파바시 도구거리",
-      "category": ["shopping", "culture", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "shopping",
+        "culture",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "asakusa",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Interesting kitchenware street that adds a more local Tokyo shopping angle."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Interesting kitchenware street that adds a more local Tokyo shopping angle요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "yanaka-ginza",
       "name": "야나카 긴자",
-      "category": ["relax", "culture", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "culture",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "yanaka",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Slower old-neighborhood street for snacks and a softer Tokyo pace."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Slower old-neighborhood street for snacks and a softer Tokyo pace요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "도쿄다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "shimokitazawa",
       "name": "시모키타자와",
-      "category": ["shopping", "food", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "shibuya",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Independent shops and cafes make this a good alternative to busier core districts."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Independent shops and cafes make this a good alternative to busier core districts요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "roppongi-hills",
       "name": "롯폰기 힐즈 전망대",
-      "category": ["photo", "sightseeing", "nightlife"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "sightseeing",
+        "nightlife"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "roppongi",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly"],
-      "summary": "High-floor city view spot that works especially well near sunset."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "High-floor city view spot that works especially well near sunset요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "도쿄다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "kagurazaka",
       "name": "가구라자카",
-      "category": ["food", "culture", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "ginza",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Refined side streets and restaurants help create a quieter Tokyo evening."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Refined side streets and restaurants help create a quieter Tokyo evening요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "도쿄다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "akihabara",
       "name": "아키하바라",
-      "category": ["shopping", "culture", "activity"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "culture",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "akihabara",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Tech and pop-culture district that adds a more playful Tokyo experience."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Tech and pop-culture district that adds a more playful Tokyo experience요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "kiyosumi-shirakawa",
       "name": "기요스미시라카와 카페 거리",
-      "category": ["food", "relax", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "kiyosumi",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Coffee-focused neighborhood suited to slower Tokyo mornings."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Coffee-focused neighborhood suited to slower Tokyo mornings요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "도쿄다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "kichijoji",
       "name": "기치조지와 이노카시라 공원",
-      "category": ["relax", "shopping", "food"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "shopping",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "kichijoji",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly"],
-      "summary": "Well-balanced district with park time, casual shopping, and a softer local feel."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Well-balanced district with park time, casual shopping, and a softer local feel요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "도쿄다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "daikanyama",
       "name": "다이칸야마",
-      "category": ["shopping", "food", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "shibuya",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Stylish but calmer area that works well for a polished Tokyo date-like route."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Stylish but calmer area that works well for a polished Tokyo date-like route요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "도쿄다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "ebisu",
       "name": "에비스 가든플레이스와 맛집 골목",
-      "category": ["food", "photo", "nightlife"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "photo",
+        "nightlife"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "ebisu",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "Comfortable dinner and evening atmosphere option away from the busiest core streets."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Comfortable dinner and evening atmosphere option away from the busiest core streets요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "도쿄다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "tokyo-disneysea",
+      "name": "Tokyo DisneySea",
+      "category": [
+        "activity",
+        "theme_park",
+        "photo"
+      ],
+      "budget_level": [
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "bay-area",
+      "duration_hours": 8,
+      "priority": 9,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "train-friendly"
+      ],
+      "summary": "도쿄에서만 경험할 수 있는 대표 테마파크라 하루를 통째로 써도 아깝지 않아요.",
+      "official_url": "https://www.tokyodisneyresort.jp/en/tds/",
+      "booking_hint": "입장권과 인기 어트랙션 우선 이용 방법을 미리 확인해두면 훨씬 수월해요.",
+      "full_day_recommended": true,
+      "full_day_notes": {
+        "morning": [
+          "도쿄 디즈니씨, 오전부터 인기 어트랙션 중심으로 시작하기 좋아요!",
+          "입장 직후에는 대기 줄이 길어지기 전에 대표 놀이기구를 먼저 공략해두면 하루 흐름이 훨씬 편해져요.",
+          "파크 자체 분위기가 특별해서 처음 들어가는 순간부터 도쿄에서만 가능한 하루를 시작하는 느낌이 분명해요.",
+          "점심은 이동 동선 안에서 가볍게 해결해두면 오후 쇼나 어트랙션으로 자연스럽게 이어가기 좋아요."
+        ],
+        "afternoon": [
+          "도쿄 디즈니씨, 오후에는 구역별 분위기를 넓게 즐기기 좋아요!",
+          "놀이기구만 몰아서 타기보다 쇼, 산책, 포토 스폿을 함께 섞으면 디즈니씨만의 매력이 훨씬 잘 살아나요.",
+          "친구끼리나 커플 일정이라면 중간중간 사진 남기기 좋은 구역을 여유 있게 보는 편이 만족도가 높아요.",
+          "오후 간식까지 파크 안에서 챙기면 이동 없이 리듬을 유지하면서 저녁 시간대로 넘어가기 편해요."
+        ],
+        "evening": [
+          "도쿄 디즈니씨, 저녁에는 야경과 퍼포먼스까지 보고 마무리하기 좋아요!",
+          "조명이 켜진 뒤 분위기가 한층 더 살아나서 낮보다 더 기억에 남는 장면이 많아져요.",
+          "마지막에는 아쉬운 어트랙션을 한두 개 더 타거나 기념품 구경까지 천천히 묶어두면 하루가 깔끔하게 정리돼요.",
+          "저녁 식사도 파크 안에서 해결하면 늦은 시간까지 도쿄 디즈니씨의 흐름을 끊기지 않게 즐길 수 있어요."
+        ]
+      },
+      "mood_keywords": [
+        "특별한",
+        "하루를 크게 쓰는",
+        "설레는"
+      ],
+      "highlight_tags": [
+        "도쿄 대표 테마파크",
+        "현지 인기 체험",
+        "하루 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 도쿄에서만 가능한 체험을 일정에 넣고 싶을 때 가장 강한 선택지 중 하나예요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "HYSMJ-lM2t0",
+    "title": "100 Things to do in TOKYO, JAPAN | Japan Travel Guide",
+    "channel": "kimdao",
+    "view_count_text": "조회수 6,280,060회",
+    "published": "8년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=HYSMJ-lM2t0",
+    "embed_url": "https://www.youtube.com/embed/HYSMJ-lM2t0",
+    "thumbnail_url": "https://i.ytimg.com/vi/HYSMJ-lM2t0/hqdefault.jpg"
+  }
 }

@@ -2,274 +2,1031 @@
   "continent": "asia",
   "country": "korea",
   "city": "seoul",
-  "aliases": ["seoul", "서울"],
+  "aliases": [
+    "seoul",
+    "서울"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "gyeongbokgung",
       "name": "Gyeongbokgung Palace",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "jongno",
       "duration_hours": 2,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Major palace complex and a strong first-stop sightseeing landmark."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Major palace complex and a strong first-stop sightseeing landmark요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "서울다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "bukchon",
       "name": "Bukchon Hanok Village",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "jongno",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Traditional neighborhood with scenic alleys and easy walking."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Traditional neighborhood with scenic alleys and easy walking요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "서울다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "insadong",
       "name": "Insadong Street",
-      "category": ["shopping", "culture", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "culture",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "jongno",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "Popular culture street with tea houses, snacks, and small shops."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Popular culture street with tea houses, snacks, and small shops요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "myeongdong",
       "name": "Myeongdong",
-      "category": ["shopping", "food", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "myeongdong",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Busy shopping district with street food and beauty stores."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Busy shopping district with street food and beauty stores요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "namsan-tower",
       "name": "N Seoul Tower",
-      "category": ["sightseeing", "photo", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "namsan",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "subway-friendly"],
-      "summary": "Classic view spot for skyline scenery and evening atmosphere."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "subway-friendly"
+      ],
+      "summary": "Classic view spot for skyline scenery and evening atmosphere요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "서울다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "hongdae",
       "name": "Hongdae",
-      "category": ["shopping", "food", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "hongdae",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Youth district good for casual shopping, cafes, and late dinner."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Youth district good for casual shopping, cafes, and late dinner요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "yeouido-hangang",
       "name": "Yeouido Hangang Park",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "yeouido",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Riverside park for a relaxed walk and simple city views."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Riverside park for a relaxed walk and simple city views요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "서울다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "gangnam",
       "name": "Gangnam Station Area",
-      "category": ["shopping", "food", "nightlife"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "nightlife"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "gangnam",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["tight"],
-      "mobility": ["subway-friendly"],
-      "summary": "Busy modern district with shopping and restaurant choices."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Busy modern district with shopping and restaurant choices요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "coex",
       "name": "COEX Mall and Starfield Library",
-      "category": ["shopping", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "shopping",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "gangnam",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "nearby"],
-      "summary": "Indoor option that works well for comfortable urban sightseeing."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "nearby"
+      ],
+      "summary": "Indoor option that works well for comfortable urban sightseeing요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "changdeokgung",
       "name": "창덕궁과 후원",
-      "category": ["sightseeing", "culture", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "jongno",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Historic palace stop that adds a calmer cultural layer to Seoul sightseeing."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Historic palace stop that adds a calmer cultural layer to Seoul sightseeing요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "서울다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "ikseon-dong",
       "name": "익선동 한옥거리",
-      "category": ["food", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "jongno",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Compact hanok alley full of cafes and small restaurants for a stylish stop."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Compact hanok alley full of cafes and small restaurants for a stylish stop요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "서울다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "seongsu",
       "name": "성수동 카페거리",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "seongsu",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Trendy area for cafe hopping, select shops, and a more current Seoul mood."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Trendy area for cafe hopping, select shops, and a more current Seoul mood요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "mangwon-market",
       "name": "망원시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "hongdae",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Neighborhood market that fits budget-friendly food and local browsing."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Neighborhood market that fits budget-friendly food and local browsing요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "서울다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "yeonnam-forest",
       "name": "연남동 경의선숲길",
-      "category": ["relax", "food", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "hongdae",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Light walking route with cafes that helps make Hongdae plans feel less hectic."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Light walking route with cafes that helps make Hongdae plans feel less hectic요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "서울다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "itaewon",
       "name": "이태원 경리단길",
-      "category": ["food", "culture", "nightlife"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "nightlife"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "itaewon",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Good choice for international dining, evening atmosphere, and a more cosmopolitan Seoul mood."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Good choice for international dining, evening atmosphere, and a more cosmopolitan Seoul mood요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "서울다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "apgujeong-rodeo",
       "name": "압구정 로데오 거리",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "gangnam",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "nearby"],
-      "summary": "Refined shopping and cafe area that works well for higher-comfort city plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "nearby"
+      ],
+      "summary": "Refined shopping and cafe area that works well for higher-comfort city plans요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "서울다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "seokchon-lake",
       "name": "석촌호수 산책로",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "jamsil",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Simple lakeside route that adds a calmer Jamsil option for couples or families."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Simple lakeside route that adds a calmer Jamsil option for couples or families요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "서울다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "ddp",
       "name": "동대문디자인플라자",
-      "category": ["culture", "photo", "shopping"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "dongdaemun",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "Visual landmark and indoor-friendly stop that helps diversify central Seoul routes."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Visual landmark and indoor-friendly stop that helps diversify central Seoul routes요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "서울다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "euljiro",
       "name": "을지로 노포 골목",
-      "category": ["food", "culture", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "solo", "couple"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "culture",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "solo",
+        "couple"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "euljiro",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Retro alleys and casual dining make this a good evening pick for a more local feel."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Retro alleys and casual dining make this a good evening pick for a more local feel요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "서울다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "lotte-world-adventure",
+      "name": "Lotte World Adventure",
+      "category": [
+        "activity",
+        "theme_park",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 4,
+      "priority": 8,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "서울에서 하루를 통째로 써도 아깝지 않은 대표 실내 놀이공원이에요.",
+      "official_url": "https://adventure.lotteworld.com/eng/main/index.do",
+      "booking_hint": "주말이나 성수기에는 입장권과 매직패스를 미리 확인해두는 편이 좋아요.",
+      "full_day_recommended": true,
+      "full_day_notes": {
+        "morning": [
+          "롯데월드 어드벤처, 오전부터 대표 어트랙션을 중심으로 시작하기 좋아요!",
+          "입장 직후에는 대기 시간이 길어지기 전에 인기 놀이기구를 먼저 타두면 하루 흐름이 훨씬 편해져요.",
+          "실내 동선이 잘 잡혀 있어서 날씨 영향을 덜 받고 신나는 분위기로 텐션을 올리기 좋아요.",
+          "점심은 파크 안에서 간단하게 해결해두면 오후 어트랙션과 퍼레이드 동선을 끊기지 않게 이어가기 좋아요."
+        ],
+        "afternoon": [
+          "롯데월드 어드벤처, 오후에는 공연과 어트랙션을 같이 묶어서 즐기기 좋아요!",
+          "한창 활기가 올라오는 시간대라 사진 포인트나 시즌 퍼레이드까지 함께 챙기면 만족도가 높아요.",
+          "오전에 강한 놀이기구를 탔다면 오후에는 실내 포토존이나 비교적 가벼운 어트랙션으로 리듬을 조절하기 좋아요.",
+          "중간에 디저트나 간식을 한 번 넣어두면 저녁까지 지치지 않고 오래 즐기기 편해요."
+        ],
+        "evening": [
+          "롯데월드 어드벤처, 저녁에는 야간 분위기까지 보고 마무리하기 좋아요!",
+          "조명이 켜진 뒤에는 같은 공간도 분위기가 달라져서 낮과는 또 다른 재미가 살아나요.",
+          "마지막에는 아쉬웠던 어트랙션을 한두 개 더 타거나 기념품 구경까지 묶어서 천천히 정리하면 좋아요.",
+          "저녁 식사도 파크 안이나 바로 주변에서 해결할 수 있어서 하루를 한 장소에서 안정감 있게 마무리하기 좋아요."
+        ]
+      },
+      "mood_keywords": [
+        "활기찬",
+        "신나는",
+        "함께 즐기기 좋은"
+      ],
+      "highlight_tags": [
+        "대표 놀이공원",
+        "실내 액티비티",
+        "가족·친구 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울 일정에 확실한 체험 요소를 넣고 싶을 때 만족도가 높은 장소예요."
+      ]
+    },
+    {
+      "id": "e-land-hangang-cruise",
+      "name": "Eland Hangang Cruise",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "한강 위에서 서울 스카이라인을 다른 각도로 볼 수 있는 체험이에요.",
+      "official_url": "https://elandcruise.com/",
+      "booking_hint": "석양 시간대나 야경 시간대를 노리면 분위기가 더 좋아요.",
+      "slot_bias": {
+        "afternoon": 4,
+        "evening": 10
+      },
+      "mood_keywords": [
+        "여유로운",
+        "야경이 어울리는",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "한강 체험",
+        "서울 야경",
+        "기분 전환 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울 풍경을 걷는 대신 물 위에서 한 번 더 느껴보고 싶을 때 잘 어울려요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "sr3O7ArQTYY",
+    "title": "SEOUL VACATION TRAVEL GUIDE | Expedia",
+    "channel": "Expedia",
+    "view_count_text": "조회수 3,516,149회",
+    "published": "8년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=sr3O7ArQTYY",
+    "embed_url": "https://www.youtube.com/embed/sr3O7ArQTYY",
+    "thumbnail_url": "https://i.ytimg.com/vi/sr3O7ArQTYY/hqdefault.jpg"
+  }
 }

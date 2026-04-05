@@ -11,6 +11,8 @@ import { TripDetailPage } from "../../pages/trips/trip-detail-page";
 import { ProfilePage } from "../../pages/profile/profile-page";
 import { InspirationPage } from "../../pages/inspiration/inspiration-page";
 import { SharedTripPage } from "../../pages/shared/shared-trip-page";
+import { AdminDataPage } from "../../pages/admin/admin-data-page";
+import { AdminPlaceEditPage } from "../../pages/admin/admin-place-edit-page";
 
 export const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -27,6 +29,9 @@ export const router = createBrowserRouter([
       { path: "/trips/recommend", element: <TripRecommendPage /> },
       { path: "/trips/:tripId", element: <TripDetailPage /> },
       { path: "/profile", element: <ProfilePage /> },
+      { path: "/admin/data", element: <AdminDataPage /> },
+      { path: "/admin/data/:city/new", element: <AdminPlaceEditPage /> },
+      { path: "/admin/data/:city/:placeId/edit", element: <AdminPlaceEditPage /> },
     ],
   },
 ]);

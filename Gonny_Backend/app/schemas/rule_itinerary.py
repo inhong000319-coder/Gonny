@@ -2,9 +2,11 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.schemas.place_catalog import FeaturedVideoData
+
 
 BudgetBand = Literal["low", "medium", "high"]
-TripConcept = Literal["food", "shopping", "relax", "sightseeing", "culture", "nature"]
+TripConcept = Literal["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity"]
 TripStyle = Literal["tight", "easy", "near-stay", "mobility-first"]
 CompanionType = Literal["solo", "couple", "friend", "family"]
 TimeSlot = Literal["morning", "afternoon", "evening"]
@@ -64,6 +66,7 @@ class RuleItineraryResponse(BaseModel):
     concepts: list[TripConcept]
     style: TripStyle
     companion_type: CompanionType
+    featured_video: FeaturedVideoData | None = None
     items: list[RuleItineraryItem]
 
     model_config = ConfigDict(str_strip_whitespace=True)

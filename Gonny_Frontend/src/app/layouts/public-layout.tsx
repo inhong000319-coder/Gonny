@@ -8,9 +8,17 @@ export function PublicLayout({ children }: PropsWithChildren) {
         <Link className="brand" to="/">
           Gonny
         </Link>
-        <Link className="nav-link" to="/login">
-          로그인
-        </Link>
+        <nav className="nav">
+          <Link className="nav-link" to="/planner">
+            플래너
+          </Link>
+          <Link className="nav-link" to="/admin/data">
+            데이터 관리
+          </Link>
+          <Link className="nav-link" to="/login">
+            로그인
+          </Link>
+        </nav>
       </header>
       <main className="page-container">{children}</main>
     </div>

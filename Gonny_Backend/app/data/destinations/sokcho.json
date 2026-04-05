@@ -2,176 +2,576 @@
   "continent": "asia",
   "country": "korea",
   "city": "sokcho",
-  "aliases": ["sokcho", "속초"],
+  "aliases": [
+    "sokcho",
+    "속초"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "seoraksan",
       "name": "설악산 국립공원",
-      "category": ["nature", "sightseeing", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "sightseeing",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "설악산",
       "duration_hours": 4,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["taxi-needed"],
-      "summary": "속초 여행의 핵심 자연 코스로 일정의 중심축이 되기 좋다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "속초 여행의 중심을 잡아 주는 대표 자연 코스로 반나절 축으로 쓰기 좋아요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "속초다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 속초 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "sinheungsa",
       "name": "신흥사",
-      "category": ["culture", "nature", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "nature",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "설악산",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["nearby", "taxi-needed"],
-      "summary": "설악산과 함께 묶기 좋은 차분한 문화 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "nearby",
+        "taxi-needed"
+      ],
+      "summary": "설악산과 함께 묶으면 조금 더 차분한 문화 코스를 더할 수 있어요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "속초다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 속초의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "sokcho-beach",
       "name": "속초해변",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "해변권",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "속초의 바다 풍경을 가장 편하게 즐길 수 있는 기본 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "속초 바다 풍경을 가장 편하게 즐길 수 있는 기본 코스예요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "속초다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "yeonggeumjeong",
       "name": "영금정",
-      "category": ["photo", "relax", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "photo",
+        "relax",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "해변권",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "바다와 야경이 잘 어우러져 속초 저녁 코스로 만족도가 높다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "바다와 야경을 함께 보기 좋아 속초 저녁 코스로 만족도가 높아요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "속초다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "abai-village",
       "name": "아바이마을",
-      "category": ["food", "culture", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "청호동",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "속초만의 음식과 분위기를 함께 즐기기 좋은 지역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "속초만의 식사와 분위기를 함께 즐기기 좋은 지역이에요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "속초다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "gaetbae",
       "name": "갯배 체험",
-      "category": ["activity", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "family", "couple", "solo"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "activity",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "family",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "청호동",
       "duration_hours": 1,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "짧게 체험 요소를 넣고 싶을 때 아바이마을과 함께 보기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "짧게 체험 요소를 넣고 싶을 때 아바이마을과 함께 보기 좋아요.",
+      "mood_keywords": [
+        "경쾌한",
+        "재미 있는",
+        "체험 중심의"
+      ],
+      "highlight_tags": [
+        "체험 요소",
+        "속초다운 분위기",
+        "경쾌한 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "jungang-market-sokcho",
       "name": "속초중앙시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "시내권",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "닭강정과 분식 등 속초 먹거리를 중심으로 즐기기 좋은 코스다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "닭강정과 분식 등 속초 먹거리를 한 번에 즐기기 좋은 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "속초다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "cheongcho-lake",
-      "name": "청초호 산책로",
-      "category": ["relax", "photo", "nature"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "name": "청초호 산책길",
+      "category": [
+        "relax",
+        "photo",
+        "nature"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "시내권",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "속초 시내에서 무리 없이 여유를 줄 수 있는 산책 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "속초 시내에서 무리 없이 쉬어 갈 수 있는 호수 산책 코스예요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "속초다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "daepho-port",
       "name": "대포항",
-      "category": ["food", "photo", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["friend", "family", "couple", "solo"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "friend",
+        "family",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "항구권",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "해산물 식사와 항구 풍경을 함께 넣기 좋은 속초 대표 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "해산물 식사와 항구 풍경을 함께 넣기 좋은 속초 대표 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "속초다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "oeongchi-badahangil",
       "name": "외옹치 바다향기로",
-      "category": ["nature", "photo", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "해변권",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "해안 산책로 풍경이 좋아 속초의 바다 느낌을 천천히 즐기기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해안 산책로 풍경이 좋아 속초 바다를 천천히 즐기기 좋은 코스예요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "속초다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 속초 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "seorak-waterpia",
       "name": "설악 워터피아",
-      "category": ["family", "activity", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["family", "friend", "couple"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "family",
+        "activity",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "family",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "설악산",
       "duration_hours": 3,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "체험과 휴양을 함께 넣고 싶을 때 선택할 수 있는 실내형 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "체험과 휴식을 함께 넣고 싶을 때 선택하기 좋은 실내형 코스예요.",
+      "mood_keywords": [
+        "가족 친화적인",
+        "편안한",
+        "무난한"
+      ],
+      "highlight_tags": [
+        "가족 일정",
+        "속초다운 분위기",
+        "편안한 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 여러 연령대가 함께 움직이는 일정에도 비교적 부담 없이 넣기 좋아요."
+      ]
     },
     {
       "id": "dongmyeong-port",
       "name": "동명항",
-      "category": ["food", "photo", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "couple", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "photo",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "항구권",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "가볍게 저녁 식사와 항구 야경을 묶기 좋은 속초의 밤 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "가볍게 저녁 식사와 항구 야경을 함께 즐기기 좋은 속초 밤 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "속초다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "5UwwZo4_t08",
+    "title": "속초여행 BEST 8곳 속초맛집 추천 5곳/ Sokcho Travel Course in Gangwon-do,South Korea",
+    "channel": "GoGoMong 고고몽",
+    "view_count_text": "조회수 205,794회",
+    "published": "3년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=5UwwZo4_t08",
+    "embed_url": "https://www.youtube.com/embed/5UwwZo4_t08",
+    "thumbnail_url": "https://i.ytimg.com/vi/5UwwZo4_t08/hqdefault.jpg"
+  }
 }

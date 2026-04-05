@@ -17,7 +17,7 @@ type TimeSlot = "morning" | "afternoon" | "evening";
 type BudgetBand = "low" | "medium" | "high";
 type TripStyle = "tight" | "easy" | "near-stay" | "mobility-first";
 type CompanionType = "solo" | "couple" | "friend" | "family";
-type TripConcept = "food" | "shopping" | "relax" | "sightseeing" | "culture" | "nature";
+type TripConcept = "food" | "shopping" | "relax" | "sightseeing" | "culture" | "nature" | "activity";
 
 type RuleItineraryItem = {
   day_number: number;
@@ -26,6 +26,17 @@ type RuleItineraryItem = {
   category: string;
   area: string;
   notes: string;
+};
+
+type FeaturedVideo = {
+  video_id: string;
+  title: string;
+  channel: string;
+  view_count_text: string;
+  published?: string | null;
+  youtube_url?: string | null;
+  embed_url?: string | null;
+  thumbnail_url?: string | null;
 };
 
 type RuleItineraryResponse = {
@@ -39,6 +50,7 @@ type RuleItineraryResponse = {
   concepts: TripConcept[];
   style: TripStyle;
   companion_type: CompanionType;
+  featured_video?: FeaturedVideo | null;
   items: RuleItineraryItem[];
 };
 
@@ -56,7 +68,7 @@ type PlannerFormState = {
 };
 
 const STEP_COUNT = 4;
-const conceptOptions: TripConcept[] = ["food", "shopping", "relax", "sightseeing", "culture", "nature"];
+const conceptOptions: TripConcept[] = ["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity"];
 const budgetOptions: BudgetBand[] = ["low", "medium", "high"];
 const styleOptions: TripStyle[] = ["tight", "easy", "near-stay", "mobility-first"];
 const companionOptions: CompanionType[] = ["solo", "couple", "friend", "family"];
@@ -152,6 +164,16 @@ function labelConcept(value: TripConcept) {
   if (value === "relax") return "휴양";
   if (value === "sightseeing") return "관광";
   if (value === "culture") return "문화";
+  return "자연";
+}
+
+function labelTripConcept(value: TripConcept) {
+  if (value === "food") return "미식";
+  if (value === "shopping") return "쇼핑";
+  if (value === "relax") return "휴양";
+  if (value === "sightseeing") return "관광";
+  if (value === "culture") return "문화";
+  if (value === "activity") return "액티비티";
   return "자연";
 }
 
@@ -302,6 +324,8 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     concepts: Array.isArray(data.concepts) ? (data.concepts as TripConcept[]) : [],
     style: (data.style as TripStyle) ?? "easy",
     companion_type: (data.companion_type as CompanionType) ?? "friend",
+    featured_video:
+      data.featured_video && typeof data.featured_video === "object" ? (data.featured_video as FeaturedVideo) : null,
     items,
   };
 }
@@ -332,6 +356,26 @@ function summarizeRoute(items: RuleItineraryItem[]) {
   return highlights.join(" · ");
 }
 
+function splitNoteLines(note: string) {
+  const lines = note
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  return {
+    headline: lines[0] ?? "",
+    details: lines.slice(1),
+  };
+}
+
+function buildEmbedUrl(video: FeaturedVideo) {
+  if (video.embed_url) {
+    return `${video.embed_url}${video.embed_url.includes("?") ? "&" : "?"}autoplay=1&rel=0`;
+  }
+
+  return `https://www.youtube.com/embed/${video.video_id}?autoplay=1&rel=0`;
+}
+
 export function TripCreateForm() {
   const [form, setForm] = useState<PlannerFormState>(initialForm);
   const [catalog, setCatalog] = useState<CatalogCityOption[]>([]);
@@ -341,6 +385,7 @@ export function TripCreateForm() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [result, setResult] = useState<RuleItineraryResponse | null>(null);
+  const [playingVideoId, setPlayingVideoId] = useState("");
   const hasResult = result !== null;
 
   useEffect(() => {
@@ -487,6 +532,7 @@ export function TripCreateForm() {
 
       const nextResult = normalizeGenerateResponse(response.data);
       setResult(nextResult);
+      setPlayingVideoId("");
       setCurrentStep(STEP_COUNT);
       setMessage(`${toCityLabel(nextResult.city)} 기준으로 ${nextResult.items.length}개의 일정이 생성되었습니다.`);
     } catch (generateError) {
@@ -501,6 +547,7 @@ export function TripCreateForm() {
 
   const handleEditAgain = () => {
     setResult(null);
+    setPlayingVideoId("");
     setMessage("");
     setError("");
     setCurrentStep(STEP_COUNT);
@@ -900,7 +947,7 @@ export function TripCreateForm() {
                         onClick={() => toggleConcept(concept)}
                         type="button"
                       >
-                        {labelConcept(concept)}
+                        {labelTripConcept(concept)}
                       </button>
                     ))}
                   </div>
@@ -981,7 +1028,7 @@ export function TripCreateForm() {
                   <article className="metric">
                     <strong>스타일</strong>
                     <p>{labelStyle(form.style)}</p>
-                    <span>{form.concepts.map(labelConcept).join(", ")}</span>
+                    <span>{form.concepts.map(labelTripConcept).join(", ")}</span>
                   </article>
                 </div>
 
@@ -1042,7 +1089,7 @@ export function TripCreateForm() {
                   <span className="badge">{labelBudget(result.budget_band)}</span>
                   {result.concepts.map((concept) => (
                     <span key={concept} className="badge">
-                      {labelConcept(concept)}
+                      {labelTripConcept(concept)}
                     </span>
                   ))}
                 </div>
@@ -1063,6 +1110,49 @@ export function TripCreateForm() {
               </div>
             </div>
 
+            {result.featured_video ? (
+              <section className="planner-video-card">
+                <div className="planner-video-copy">
+                  <span className="section-kicker">City Video</span>
+                  <strong>{toCityLabel(result.city)} 분위기를 영상으로 먼저 볼 수 있어요</strong>
+                  <p>
+                    {result.featured_video.title}
+                    <br />
+                    {result.featured_video.channel} · {result.featured_video.view_count_text}
+                  </p>
+                </div>
+                <div className="planner-video-player">
+                  {playingVideoId === result.featured_video.video_id ? (
+                    <div className="planner-video-frame-wrap">
+                      <iframe
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="planner-video-frame"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        src={buildEmbedUrl(result.featured_video)}
+                        title={result.featured_video.title}
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      className="planner-video-thumb"
+                      onClick={() => setPlayingVideoId(result.featured_video?.video_id ?? "")}
+                      type="button"
+                    >
+                      <img
+                        alt={result.featured_video.title}
+                        src={
+                          result.featured_video.thumbnail_url ??
+                          `https://i.ytimg.com/vi/${result.featured_video.video_id}/hqdefault.jpg`
+                        }
+                      />
+                      <span className="planner-video-play">영상 재생</span>
+                    </button>
+                  )}
+                </div>
+              </section>
+            ) : null}
+
             <div className="planner-result-summary">
               <article className="metric">
                 <strong>여행지</strong>
@@ -1081,7 +1171,7 @@ export function TripCreateForm() {
               <article className="metric">
                 <strong>예산</strong>
                 <p>{labelBudget(result.budget_band)}</p>
-                <span>{result.concepts.map(labelConcept).join(", ")}</span>
+                <span>{result.concepts.map(labelTripConcept).join(", ")}</span>
               </article>
               <article className="metric">
                 <strong>동행 유형</strong>
@@ -1110,7 +1200,10 @@ export function TripCreateForm() {
                     <p>{summarizeRoute(group.items)}</p>
                   </div>
                   <div className="planner-day-timeline">
-                    {group.items.map((item) => (
+                    {group.items.map((item) => {
+                      const note = splitNoteLines(item.notes);
+
+                      return (
                       <article key={`${group.day}-${item.time_slot}-${item.place_name}`} className="planner-stop-card">
                         <div className="planner-stop-time">
                           <span>{labelTimeSlot(item.time_slot)}</span>
@@ -1121,10 +1214,22 @@ export function TripCreateForm() {
                             <span className="badge">{item.category}</span>
                           </div>
                           <p className="planner-slot-area">{item.area}</p>
-                          <p className="planner-slot-note">{item.notes}</p>
+                          <div className="planner-slot-note">
+                            {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
+                            {note.details.length > 0 ? (
+                              <div className="planner-slot-note-body">
+                                {note.details.map((line, index) => (
+                                  <p key={`${item.place_name}-note-${index}`} className="planner-slot-note-line">
+                                    {line}
+                                  </p>
+                                ))}
+                              </div>
+                            ) : null}
+                          </div>
                         </div>
                       </article>
-                    ))}
+                      );
+                    })}
                   </div>
                 </article>
               ))}

@@ -2,176 +2,671 @@
   "continent": "europe",
   "country": "spain",
   "city": "barcelona",
-  "aliases": ["barcelona", "바르셀로나"],
+  "aliases": [
+    "barcelona",
+    "바르셀로나"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "sagrada-familia",
       "name": "사그라다 파밀리아",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "에이샴플라",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "바르셀로나를 대표하는 건축 명소로 첫 방문 일정의 중심이 된다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "바르셀로나를 대표하는 건축 명소로 첫 방문 일정의 중심이 된다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "바르셀로나다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 바르셀로나에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "passeig-de-gracia",
       "name": "파세이그 데 그라시아",
-      "category": ["shopping", "photo", "culture"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "에이샴플라",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "건축물 감상과 쇼핑 동선을 함께 묶기 좋은 바르셀로나 핵심 거리다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "건축물 감상과 쇼핑 동선을 함께 묶기 좋은 바르셀로나 핵심 거리다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "바르셀로나다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "casa-batllo",
       "name": "카사 바트요",
-      "category": ["culture", "photo", "sightseeing"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "에이샴플라",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "가우디 건축을 일정에 녹이기 좋은 대표 포인트다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "가우디 건축을 일정에 녹이기 좋은 대표 포인트다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "바르셀로나다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 바르셀로나의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "gothic-quarter",
       "name": "고딕 지구",
-      "category": ["culture", "food", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "culture",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "구시가지",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "골목 산책과 식사, 구시가지 분위기를 한 번에 담기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "골목 산책과 식사, 구시가지 분위기를 한 번에 담기 좋다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "바르셀로나다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 바르셀로나의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "barceloneta",
       "name": "바르셀로네타 해변",
-      "category": ["relax", "food", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "relax",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "해변권",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "도심 관광과 다른 해변 분위기를 일정에 넣고 싶을 때 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "도심 관광과 다른 해변 분위기를 일정에 넣고 싶을 때 잘 맞는다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "바르셀로나다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "la-boqueria",
       "name": "보케리아 시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "람블라스",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "먹거리 중심 일정에 활기를 더해주는 대표 시장 코스다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "먹거리 중심 일정에 활기를 더해주는 대표 시장 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "바르셀로나다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "la-rambla",
       "name": "람블라스 거리",
-      "category": ["shopping", "food", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "람블라스",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "시장과 거리 산책을 함께 묶기 좋은 중심 동선이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "시장과 거리 산책을 함께 묶기 좋은 중심 동선이다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "바르셀로나다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "park-guell",
       "name": "구엘 공원",
-      "category": ["photo", "culture", "sightseeing"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "photo",
+        "culture",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "그라시아",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "가우디 감성과 전망을 함께 즐기기 좋은 바르셀로나 대표 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "가우디 감성과 전망을 함께 즐기기 좋은 바르셀로나 대표 코스다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "바르셀로나다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "bunker-del-carmel",
       "name": "벙커 델 카르멜",
-      "category": ["photo", "relax", "sightseeing"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["evening"],
+      "category": [
+        "photo",
+        "relax",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "그라시아",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "노을과 시내 전망을 보고 싶을 때 만족도가 높은 전망 포인트다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "노을과 시내 전망을 보고 싶을 때 만족도가 높은 전망 포인트다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "바르셀로나다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "el-born",
       "name": "엘 보른",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "구시가지",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "조금 더 세련된 골목 분위기와 식사 코스를 원할 때 알맞다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "조금 더 세련된 골목 분위기와 식사 코스를 원할 때 알맞다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "바르셀로나다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "montjuic",
       "name": "몬주익 언덕",
-      "category": ["nature", "photo", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "nature",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "몬주익",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "도심과 항구를 내려다보는 풍경을 넣고 싶을 때 좋은 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "도심과 항구를 내려다보는 풍경을 넣고 싶을 때 좋은 코스다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "바르셀로나다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 바르셀로나 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "magic-fountain",
       "name": "몬주익 분수 일대",
-      "category": ["photo", "relax", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["couple", "friend", "family", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "photo",
+        "relax",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "몬주익",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "몬주익 저녁 코스를 조금 더 분위기 있게 마무리하기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "몬주익 저녁 코스를 조금 더 분위기 있게 마무리하기 좋다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "바르셀로나다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
+    },
+    {
+      "id": "tibidabo-amusement-park",
+      "name": "Tibidabo Amusement Park",
+      "category": [
+        "activity",
+        "theme_park",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "tibidabo",
+      "duration_hours": 4,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "놀이기구와 전망을 함께 즐길 수 있어서 바르셀로나 일정에 재미를 더해줘요.",
+      "official_url": "https://tibidabo.cat/en/amusement-park",
+      "booking_hint": "시내 관광과 묶기보다 반나절 이상 따로 잡아두는 편이 좋아요.",
+      "mood_keywords": [
+        "경쾌한",
+        "전망이 좋은",
+        "사진 남기기 좋은"
+      ],
+      "highlight_tags": [
+        "언덕 위 놀이공원",
+        "전망 포인트",
+        "반나절 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 바르셀로나에서 풍경과 액티비티를 한 번에 챙기고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "montjuic-cable-car",
+      "name": "Montjuic Cable Car",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "montjuic",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "몬주익 언덕 풍경을 편하게 올려다보고 내려다볼 수 있는 대표 체험이에요.",
+      "official_url": "https://www.telefericdemontjuic.cat/en/",
+      "booking_hint": "몬주익 성이나 주변 미술관 동선과 함께 붙이면 효율이 좋아요.",
+      "mood_keywords": [
+        "시원한",
+        "가볍게 즐기는",
+        "풍경 중심의"
+      ],
+      "highlight_tags": [
+        "케이블카 체험",
+        "몬주익 코스",
+        "도시 풍경"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 바르셀로나를 평지에서만 보지 않고 입체적으로 느끼고 싶을 때 좋아요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "Y9qZf_imVTs",
+    "title": "BARCELONA TRAVEL GUIDE 🏖️ Top 25 Things to Do, See, Eat, Drink & Experience in Barcelona, Spain 🇪🇸✨",
+    "channel": "Samuel and Audrey - Travel and Food Videos",
+    "view_count_text": "조회수 1,593,195회",
+    "published": "10년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=Y9qZf_imVTs",
+    "embed_url": "https://www.youtube.com/embed/Y9qZf_imVTs",
+    "thumbnail_url": "https://i.ytimg.com/vi/Y9qZf_imVTs/hqdefault.jpg"
+  }
 }

@@ -2,176 +2,695 @@
   "continent": "asia",
   "country": "singapore",
   "city": "singapore",
-  "aliases": ["singapore", "싱가포르"],
+  "aliases": [
+    "singapore",
+    "싱가포르"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "marina-bay",
       "name": "마리나베이 샌즈 일대",
-      "category": ["sightseeing", "photo", "shopping"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "마리나베이",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "싱가포르를 대표하는 중심 지역으로 야경과 쇼핑을 함께 넣기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "싱가포르를 대표하는 중심 지역으로 야경과 쇼핑을 함께 넣기 좋다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "싱가포르다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 싱가포르에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "gardens-bay",
       "name": "가든스 바이 더 베이",
-      "category": ["photo", "nature", "sightseeing"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "nature",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "마리나베이",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "싱가포르다운 미래적인 풍경을 가장 잘 보여주는 대표 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "싱가포르다운 미래적인 풍경을 가장 잘 보여주는 대표 코스다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "싱가포르다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "merlion",
       "name": "멀라이언 파크",
-      "category": ["photo", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "photo",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "마리나베이",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "짧게 들르기 좋고 주변 중심지와 자연스럽게 이어진다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "짧게 들르기 좋고 주변 중심지와 자연스럽게 이어진다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "싱가포르다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "orchard-road",
       "name": "오차드 로드",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "오차드",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "쇼핑 중심 싱가포르 일정에 가장 강한 선택지 중 하나다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "쇼핑 중심 싱가포르 일정에 가장 강한 선택지 중 하나다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "싱가포르다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "fort-canning",
       "name": "포트 캐닝 파크",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "오차드",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "도심 속에서 한 템포 쉬어가기 좋은 녹지 공간이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "도심 속에서 한 템포 쉬어가기 좋은 녹지 공간이다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "싱가포르다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "chinatown",
       "name": "차이나타운",
-      "category": ["food", "culture", "shopping"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "차이나타운",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "먹거리와 골목 분위기를 함께 느끼기 좋은 싱가포르 대표 문화 구역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "먹거리와 골목 분위기를 함께 느끼기 좋은 싱가포르 대표 문화 구역이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "싱가포르다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "maxwell",
       "name": "맥스웰 푸드센터",
-      "category": ["food", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "차이나타운",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "호커센터 식문화를 일정에 자연스럽게 넣기 좋은 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "호커센터 식문화를 일정에 자연스럽게 넣기 좋은 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "싱가포르다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "little-india",
       "name": "리틀 인디아",
-      "category": ["culture", "food", "shopping"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "culture",
+        "food",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "리틀인디아",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "싱가포르 안에서도 색다른 분위기를 느낄 수 있는 지역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "싱가포르 안에서도 색다른 분위기를 느낄 수 있는 지역이다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "싱가포르다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 싱가포르의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "kampong-glam",
       "name": "캄퐁글램",
-      "category": ["culture", "photo", "food"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "culture",
+        "photo",
+        "food"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "캄퐁글램",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "감성적인 골목과 카페 분위기가 살아 있어 커플이나 친구 여행에 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "감성적인 골목과 카페 분위기가 살아 있어 커플이나 친구 여행에 잘 맞는다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "싱가포르다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 싱가포르의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "sentosa",
       "name": "센토사",
-      "category": ["activity", "relax", "family"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["family", "friend", "couple"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "activity",
+        "relax",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "family",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "센토사",
       "duration_hours": 4,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["train-friendly"],
-      "summary": "체험과 휴양 요소를 함께 넣고 싶을 때 좋은 섬 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "train-friendly"
+      ],
+      "summary": "체험과 휴양 요소를 함께 넣고 싶을 때 좋은 섬 코스다요.",
+      "mood_keywords": [
+        "경쾌한",
+        "재미 있는",
+        "체험 중심의"
+      ],
+      "highlight_tags": [
+        "체험 요소",
+        "싱가포르다운 분위기",
+        "경쾌한 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "clarke-quay",
       "name": "클락키",
-      "category": ["food", "nightlife", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["friend", "couple", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "nightlife",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "강변",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "강변 야경과 식사를 함께 즐기기 좋은 저녁 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "강변 야경과 식사를 함께 즐기기 좋은 저녁 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "싱가포르다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "botanic-garden",
       "name": "싱가포르 보타닉 가든",
-      "category": ["nature", "relax", "family"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning"],
+      "category": [
+        "nature",
+        "relax",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "오차드",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly"],
-      "summary": "조용하고 넓은 산책 공간이라 하루를 가볍게 열기에 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "조용하고 넓은 산책 공간이라 하루를 가볍게 열기에 좋다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "싱가포르다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 싱가포르 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "universal-studios-singapore",
+      "name": "Universal Studios Singapore",
+      "category": [
+        "activity",
+        "theme_park",
+        "photo"
+      ],
+      "budget_level": [
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "sentosa",
+      "duration_hours": 8,
+      "priority": 8,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "train-friendly"
+      ],
+      "summary": "싱가포르에서 하루를 꽉 채워 즐기기 좋은 대표 테마파크예요.",
+      "official_url": "https://www.rwsentosa.com/en/attractions/universal-studios-singapore",
+      "booking_hint": "센토사 일정과 섞기보다 하루를 분리해서 잡는 편이 훨씬 자연스러워요.",
+      "full_day_recommended": true,
+      "full_day_notes": {
+        "morning": [
+          "유니버설 스튜디오 싱가포르, 오전부터 인기 어트랙션 중심으로 시작하기 좋아요!",
+          "입장 초반에는 대기 시간이 짧은 편이라 대표 놀이기구를 먼저 타두면 하루 전체가 훨씬 여유로워져요.",
+          "센토사에서 가장 확실한 액티비티 하루를 만들고 싶을 때 시작부터 분위기를 올리기 좋아요.",
+          "점심은 파크 안에서 해결해두면 더운 시간대에도 이동 부담 없이 다음 존으로 이어가기 편해요."
+        ],
+        "afternoon": [
+          "유니버설 스튜디오 싱가포르, 오후에는 존별 분위기를 넓게 즐기기 좋아요!",
+          "한낮에는 실내 어트랙션이나 공연형 콘텐츠를 섞어두면 체력 분배가 훨씬 자연스러워요.",
+          "테마 구역이 또렷해서 사진 포인트와 굿즈 구경을 함께 넣었을 때 만족도가 높아요.",
+          "중간에 시원한 음료나 간식을 챙기면 저녁까지 지치지 않고 오래 즐기기 좋아요."
+        ],
+        "evening": [
+          "유니버설 스튜디오 싱가포르, 저녁에는 남은 어트랙션과 기념품 구경으로 마무리하기 좋아요!",
+          "해가 기울면 낮보다 한결 편안하게 돌아볼 수 있어서 마지막 동선을 정리하기 수월해요.",
+          "아쉬웠던 구역을 한 번 더 보거나 사진을 정리하면서 천천히 하루를 닫아주면 만족감이 커요.",
+          "저녁 식사도 센토사 안에서 이어가기 쉬워서 하루 코스를 끊지 않고 마무리하기 좋아요."
+        ]
+      },
+      "mood_keywords": [
+        "휴양지와 잘 어울리는",
+        "화려한",
+        "하루형 체험"
+      ],
+      "highlight_tags": [
+        "싱가포르 대표 테마파크",
+        "센토사 하루 코스",
+        "강한 액티비티"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 싱가포르 일정에 하루를 통째로 써서 노는 날을 만들고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "night-safari-singapore",
+      "name": "Night Safari Singapore",
+      "category": [
+        "activity",
+        "local_experience",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "mandai",
+      "duration_hours": 3,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "싱가포르에서 밤 시간을 가장 특별하게 써볼 수 있는 대표 야간 체험이에요.",
+      "official_url": "https://www.mandai.com/en/night-safari.html",
+      "booking_hint": "완전히 어두워진 뒤 분위기가 살아나서 저녁 전후 동선으로 붙이는 편이 좋아요.",
+      "slot_bias": {
+        "evening": 14,
+        "afternoon": 2,
+        "morning": -14
+      },
+      "mood_keywords": [
+        "이색적인",
+        "밤이 살아나는",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "싱가포르 야간 체험",
+        "만다이 코스",
+        "트램 체험"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 싱가포르에서 저녁 시간을 뻔하지 않게 보내고 싶을 때 가장 먼저 보기 좋은 코스예요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "P_q3BdrFsLI",
+    "title": "Singapore Vacation Travel Guide | Expedia",
+    "channel": "Expedia",
+    "view_count_text": "조회수 3,923,935회",
+    "published": "12년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=P_q3BdrFsLI",
+    "embed_url": "https://www.youtube.com/embed/P_q3BdrFsLI",
+    "thumbnail_url": "https://i.ytimg.com/vi/P_q3BdrFsLI/hqdefault.jpg"
+  }
 }

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 const navItems = [
   { to: "/trips", label: "여행" },
   { to: "/inspiration", label: "영감" },
+  { to: "/admin/data", label: "데이터 관리" },
   { to: "/profile", label: "프로필" },
 ];
 

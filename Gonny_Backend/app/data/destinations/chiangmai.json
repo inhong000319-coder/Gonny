@@ -2,176 +2,675 @@
   "continent": "asia",
   "country": "thailand",
   "city": "chiangmai",
-  "aliases": ["chiangmai", "chiang mai", "치앙마이"],
+  "aliases": [
+    "chiangmai",
+    "chiang mai",
+    "치앙마이"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "old-city-moat",
       "name": "올드시티 해자 산책",
-      "category": ["relax", "culture", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "culture",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "올드시티",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "치앙마이의 차분한 분위기를 느끼며 하루를 시작하기 좋은 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "치앙마이의 차분한 분위기를 느끼며 하루를 시작하기 좋은 코스다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "치앙마이다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "wat-chedi-luang",
       "name": "왓 체디 루앙",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "올드시티",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "치앙마이 문화 코스에서 중심 역할을 하는 대표 사원이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "치앙마이 문화 코스에서 중심 역할을 하는 대표 사원이다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "치앙마이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 치앙마이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "wat-phra-singh",
       "name": "왓 프라싱",
-      "category": ["culture", "sightseeing", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "올드시티",
       "duration_hours": 1,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "올드시티 일정과 함께 묶어 보기 좋은 대표 사찰이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "올드시티 일정과 함께 묶어 보기 좋은 대표 사찰이다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "치앙마이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 치앙마이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "nimmanhaemin",
       "name": "님만해민 거리",
-      "category": ["food", "shopping", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "님만",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "카페와 감성적인 상점이 많아 치앙마이의 현대적인 면을 느끼기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "카페와 감성적인 상점이 많아 치앙마이의 현대적인 면을 느끼기 좋다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "치앙마이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "maya-mall",
       "name": "마야 몰 일대",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["friend", "couple", "family", "solo"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "family",
+        "solo"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "님만",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "님만해민과 함께 묶기 좋은 실내형 쇼핑·식사 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "님만해민과 함께 묶기 좋은 실내형 쇼핑·식사 코스다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "치앙마이다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "doi-suthep",
       "name": "도이수텝 사원",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "도이수텝",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "치앙마이 전경과 문화 분위기를 함께 즐길 수 있는 대표 명소다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "치앙마이 전경과 문화 분위기를 함께 즐길 수 있는 대표 명소다요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "치앙마이다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 치앙마이의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "doi-suthep-view",
       "name": "도이수텝 전망 포인트",
-      "category": ["photo", "nature", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "nature",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "도이수텝",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "산 위 풍경을 보며 치앙마이의 넓은 풍경을 담기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "산 위 풍경을 보며 치앙마이의 넓은 풍경을 담기 좋다요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "치앙마이다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "night-bazaar",
       "name": "치앙마이 나이트 바자",
-      "category": ["shopping", "food", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "solo", "couple", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "shopping",
+        "food",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "solo",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "나이트 바자",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "저녁 쇼핑과 길거리 음식 중심 일정에 잘 어울리는 활기 있는 지역이다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "저녁 쇼핑과 길거리 음식 중심 일정에 잘 어울리는 활기 있는 지역이다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "치앙마이다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "warorot-market",
       "name": "와로롯 시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "시장권",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "로컬 시장 분위기를 느끼고 싶을 때 안정적으로 추천하기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "로컬 시장 분위기를 느끼고 싶을 때 안정적으로 추천하기 좋다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "치앙마이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "jing-jai-market",
       "name": "징짜이 마켓",
-      "category": ["food", "photo", "shopping"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "시장권",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "주말 감성 시장 느낌으로 조금 더 세련된 치앙마이 코스를 만들기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "주말 감성 시장 느낌으로 조금 더 세련된 치앙마이 코스를 만들기 좋다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "치앙마이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "huay-kaew-waterfall",
       "name": "후아이깨우 폭포",
-      "category": ["nature", "relax", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "relax",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "도이수텝",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "사원 중심 일정에 자연 코스를 더해 조금 더 다양한 하루를 만들기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "사원 중심 일정에 자연 코스를 더해 조금 더 다양한 하루를 만들기 좋다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "치앙마이다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 치앙마이 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "riverfront-chiangmai",
       "name": "핑강 리버프런트",
-      "category": ["food", "relax", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "강변",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "조용한 저녁 식사와 분위기 있는 마무리에 잘 맞는 강변 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "조용한 저녁 식사와 분위기 있는 마무리에 잘 맞는 강변 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "치앙마이다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "chiang-mai-night-safari",
+      "name": "Chiang Mai Night Safari",
+      "category": [
+        "activity",
+        "local_experience",
+        "family"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "suburb",
+      "duration_hours": 3,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "치앙마이에서 낮과 밤 사파리 트램을 즐길 수 있는 대표 체험형 공원이에요.",
+      "official_url": "https://chiangmainightsafari.com/en/",
+      "booking_hint": "영어 트램 시간과 야간 프로그램 시간을 미리 보고 가면 훨씬 알차게 즐길 수 있어요.",
+      "slot_bias": {
+        "afternoon": 4,
+        "evening": 12,
+        "morning": -10
+      },
+      "mood_keywords": [
+        "이색적인",
+        "저녁이 살아나는",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "나이트 사파리",
+        "트램 체험",
+        "치앙마이 이색 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 치앙마이에서 평범한 야시장 대신 색다른 저녁 체험을 넣고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "chiang-mai-celadon-workshop",
+      "name": "Chiang Mai Celadon Workshop",
+      "category": [
+        "activity",
+        "local_experience",
+        "culture"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "suburb",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "란나 지역 공예 분위기를 손으로 직접 느껴볼 수 있는 도자 워크숍 체험이에요.",
+      "official_url": "https://tourismproduct.tourismthailand.org/en/2025/09/01/%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-%E0%B9%80%E0%B8%8B%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%AD%E0%B8%99/",
+      "booking_hint": "체험 가능 시간과 예약 여부를 먼저 확인하고 넣으면 동선이 훨씬 깔끔해져요.",
+      "slot_bias": {
+        "morning": 10,
+        "afternoon": 4,
+        "evening": -8
+      },
+      "mood_keywords": [
+        "차분한",
+        "직접 만들어보는",
+        "치앙마이다운"
+      ],
+      "highlight_tags": [
+        "란나 공예",
+        "워크숍 체험",
+        "지역색 있는 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 치앙마이에서 구경보다 손으로 직접 해보는 체험을 넣고 싶을 때 잘 어울려요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "tH3Y-0i5jR8",
+    "title": "CHIANG MAI, THAILAND | 10 BEST Things To Do In & Around Chiang Mai",
+    "channel": "World Wild Hearts",
+    "view_count_text": "조회수 531,099회",
+    "published": "3년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=tH3Y-0i5jR8",
+    "embed_url": "https://www.youtube.com/embed/tH3Y-0i5jR8",
+    "thumbnail_url": "https://i.ytimg.com/vi/tH3Y-0i5jR8/hqdefault.jpg"
+  }
 }

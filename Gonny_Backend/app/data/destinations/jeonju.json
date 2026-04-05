@@ -2,176 +2,676 @@
   "continent": "asia",
   "country": "korea",
   "city": "jeonju",
-  "aliases": ["jeonju", "전주"],
+  "aliases": [
+    "jeonju",
+    "전주"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "hanok-village",
       "name": "전주한옥마을",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "한옥마을",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "전주를 대표하는 핵심 지역으로 전통 분위기를 가장 잘 느낄 수 있다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전주를 대표하는 중심 지역으로 전통 분위기를 가장 쉽게 느낄 수 있어요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "전주다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "gyeonggijeon",
       "name": "경기전",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "한옥마을",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "한옥마을과 함께 묶으면 문화 중심 전주 일정이 단단해진다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "한옥마을과 함께 묶으면 문화 중심 전주 일정이 더 단단해져요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "전주다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "jeondong-cathedral",
       "name": "전동성당",
-      "category": ["culture", "photo", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "culture",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "한옥마을",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "짧게 들르기 좋고 한옥마을과 다른 분위기를 더해주는 명소다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "짧게 들르기 좋고 한옥마을과 다른 분위기를 주는 포인트예요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "전주다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "nambu-market",
       "name": "남부시장",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "시장권",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "전주 먹거리와 시장 분위기를 함께 즐기기에 좋은 실속 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전주 먹거리와 시장 분위기를 함께 즐기기에 좋은 실속 코스예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "전주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "gaekridan-gil",
       "name": "객리단길",
-      "category": ["food", "shopping", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "객사",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "전주에서 조금 더 트렌디한 카페와 식사 코스를 원할 때 잘 맞는다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전주에서 조금 더 트렌디한 카페와 식사 코스를 보고 싶을 때 좋아요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "전주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "deokjin-park",
       "name": "덕진공원",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "덕진",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "전주 여행에 여유를 주는 산책 코스로 가족 여행에도 무리가 적다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "전주 일정에 한 번쯤 쉬어 가는 호수 공원 코스를 넣고 싶을 때 좋아요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "전주다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "deokjin-art",
       "name": "전주국립박물관",
-      "category": ["culture", "family", "sightseeing"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "family", "friend", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "family",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "family",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "덕진",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "실내 문화 코스를 넣고 싶을 때 안정적으로 활용할 수 있다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "실내에서 문화 코스를 넣고 싶을 때 무난하게 선택하기 좋아요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "전주다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "makgeolli-town",
       "name": "전주 막걸리 골목",
-      "category": ["food", "culture", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "couple", "solo"],
-      "time_fit": ["evening"],
-      "area": "삼천동",
+      "category": [
+        "food",
+        "culture",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "서신권",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "전주다운 저녁 식사 경험을 만들고 싶을 때 좋은 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "전주다운 저녁 식사 분위기를 만들고 싶을 때 확실한 선택지예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "전주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "jaman-mural",
       "name": "자만벽화마을",
-      "category": ["photo", "culture", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "couple"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "photo",
+        "culture",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "한옥마을",
       "duration_hours": 1,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "가볍게 사진 포인트를 추가하고 싶을 때 한옥마을과 함께 보기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "가볍게 사진 포인트를 더하고 싶을 때 한옥마을과 함께 보기 좋아요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "전주다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "wansan-park",
       "name": "완산공원",
-      "category": ["nature", "photo", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "nature",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "완산",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "도심과 조금 다른 풍경으로 전주 일정을 차분하게 열거나 마무리하기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "도심과는 다른 풍경으로 전주 일정을 차분하게 열거나 마무리하기 좋아요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "전주다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "hanbyeokdang",
       "name": "한벽당",
-      "category": ["culture", "photo", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "한옥마을",
       "duration_hours": 1,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "전주천과 함께 사진과 산책을 넣기 좋은 조용한 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전주천과 함께 조용히 사진을 찍고 싶을 때 넣기 좋은 코스예요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "전주다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "bibimbap-street",
       "name": "비빔밥 골목",
-      "category": ["food", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "객사",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "전주 대표 음식을 일정에 자연스럽게 넣기 좋은 식사 포인트다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전주 대표 음식을 일정에 자연스럽게 넣기 좋은 식사 포인트예요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "전주다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "jeonju-hanok-hanbok-experience",
+      "name": "Jeonju Hanok Hanbok Experience",
+      "category": [
+        "activity",
+        "local_experience",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "hanok-village",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전주한옥마을 분위기를 가장 직접적으로 즐길 수 있는 대표 체험이에요.",
+      "official_url": "https://hanok.jeonju.go.kr/contents/exp10",
+      "booking_hint": "한옥마을 산책 코스와 함께 붙이면 사진 남기기에도 좋아요.",
+      "slot_bias": {
+        "morning": 8,
+        "afternoon": 5,
+        "evening": -6
+      },
+      "mood_keywords": [
+        "전주다운",
+        "사진 남기기 좋은",
+        "가볍게 즐기는"
+      ],
+      "highlight_tags": [
+        "한복 체험",
+        "한옥마을 코스",
+        "전주 감성"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주 분위기를 눈으로만 보는 대신 직접 입고 걸어보는 재미가 있어요."
+      ]
+    },
+    {
+      "id": "hanbyeok-traditional-play",
+      "name": "Hanbyeok Traditional Play Experience",
+      "category": [
+        "activity",
+        "local_experience",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
+      "area": "jeonjucheon",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "전통놀이를 직접 해보면서 전주다운 체험 요소를 더하기 좋아요.",
+      "official_url": "https://hanok.jeonju.go.kr/contents/exp9",
+      "booking_hint": "단체 체험 위주라 운영 조건을 먼저 확인하고 넣는 편이 좋아요.",
+      "slot_bias": {
+        "afternoon": 9,
+        "morning": 2,
+        "evening": -10
+      },
+      "mood_keywords": [
+        "정겨운",
+        "함께 웃기 좋은",
+        "전통적인"
+      ],
+      "highlight_tags": [
+        "전통놀이",
+        "전주 체험",
+        "가족·친구 일정"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 전주에서 조금 더 생활감 있는 체험을 하고 싶을 때 만족도가 높아요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "btjvJ4MCmtg",
+    "title": "Recommend a must-visit destination in Korea ✨Jeonju Travel Guide ‼️ Korea Travel Vlog 🇰🇷",
+    "channel": "유일랜드 Uiland",
+    "view_count_text": "조회수 329,837회",
+    "published": "4년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=btjvJ4MCmtg",
+    "embed_url": "https://www.youtube.com/embed/btjvJ4MCmtg",
+    "thumbnail_url": "https://i.ytimg.com/vi/btjvJ4MCmtg/hqdefault.jpg"
+  }
 }

@@ -2,274 +2,946 @@
   "continent": "asia",
   "country": "thailand",
   "city": "bangkok",
-  "aliases": ["bangkok", "방콕"],
+  "aliases": [
+    "bangkok",
+    "방콕"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "grand-palace",
       "name": "Grand Palace",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "old-city",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["taxi-needed"],
-      "summary": "Flagship historic landmark for a Bangkok first visit."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Flagship historic landmark for a Bangkok first visit요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "방콕다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "wat-pho",
       "name": "Wat Pho",
-      "category": ["culture", "sightseeing", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "old-city",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["nearby", "walkable"],
-      "summary": "Easy pairing with the Grand Palace in the same area."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "nearby",
+        "walkable"
+      ],
+      "summary": "Easy pairing with the Grand Palace in the same area요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "방콕다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "wat-arun",
       "name": "Wat Arun",
-      "category": ["sightseeing", "photo", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "riverside",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed", "nearby"],
-      "summary": "Strong river-view stop that works well later in the day."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "Strong river-view stop that works well later in the day요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "방콕다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "yaowarat",
       "name": "Yaowarat Road",
-      "category": ["food", "shopping", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "shopping",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "chinatown",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable", "taxi-needed"],
-      "summary": "Best known for Bangkok street food at night."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "taxi-needed"
+      ],
+      "summary": "Best known for Bangkok street food at night요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "방콕다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "chatuchak",
       "name": "Chatuchak Market",
-      "category": ["shopping", "food", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "solo", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "shopping",
+        "food",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "solo",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "chatuchak",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["tight"],
-      "mobility": ["subway-friendly"],
-      "summary": "Large market best for shopping-heavy or casual food plans."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Large market best for shopping-heavy or casual food plans요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "방콕다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "iconsiam",
       "name": "ICONSIAM",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "riverside",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "nearby"],
-      "summary": "Comfortable riverside mall with varied dining options."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "nearby"
+      ],
+      "summary": "Comfortable riverside mall with varied dining options요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "방콕다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "lumpini",
       "name": "Lumpini Park",
-      "category": ["relax", "nature", "family"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning"],
+      "category": [
+        "relax",
+        "nature",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning"
+      ],
       "area": "silom",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Useful for a gentle morning before busier city movement."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Useful for a gentle morning before busier city movement요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "방콕다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "siam",
       "name": "Siam Square",
-      "category": ["shopping", "food", "activity"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "friend", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "activity"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "siam",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["tight"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "Good central pick for active urban plans and easy transit."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Good central pick for active urban plans and easy transit요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "방콕다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "asiatique",
       "name": "Asiatique The Riverfront",
-      "category": ["shopping", "food", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "shopping",
+        "food",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "riverside",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Relaxed riverside evening stop with dinner options."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Relaxed riverside evening stop with dinner options요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "방콕다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "benjakitti",
       "name": "벤자키티 공원",
-      "category": ["relax", "nature", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "silom",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Comfortable green space that softens a busier Bangkok plan."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Comfortable green space that softens a busier Bangkok plan요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "방콕다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "jim-thompson-house",
       "name": "짐 톰슨 하우스",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "siam",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "Well-known design and history stop that diversifies shopping-heavy Bangkok days."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Well-known design and history stop that diversifies shopping-heavy Bangkok days요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "방콕다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "talad-noi",
       "name": "탈랏노이",
-      "category": ["culture", "photo", "food"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "culture",
+        "photo",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "chinatown",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Creative old quarter that pairs well with Chinatown food plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Creative old quarter that pairs well with Chinatown food plans요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "방콕다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "erawan-shrine",
       "name": "에라완 사원",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "siam",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Quick central stop that fits naturally into Siam-area movement."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Quick central stop that fits naturally into Siam-area movement요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "방콕다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "khao-san-road",
       "name": "카오산 로드",
-      "category": ["food", "nightlife", "shopping"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "nightlife",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "old-city",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["tight"],
-      "mobility": ["taxi-needed"],
-      "summary": "Lively budget-friendly night stop suited to social plans with friends."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Lively budget-friendly night stop suited to social plans with friends요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "방콕다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "bang-krachao",
       "name": "방 크라차오",
-      "category": ["nature", "relax", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "relax",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "green-zone",
       "duration_hours": 3,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Greener, slower outing that contrasts nicely with dense central Bangkok."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Greener, slower outing that contrasts nicely with dense central Bangkok요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "방콕다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "ari-cafe",
       "name": "아리 카페 거리",
-      "category": ["food", "relax", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "ari",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Good neighborhood for calmer cafe hopping and a softer start to the day."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Good neighborhood for calmer cafe hopping and a softer start to the day요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "방콕다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "terminal21",
       "name": "터미널21 아속",
-      "category": ["shopping", "food", "activity"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "family", "couple"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "asok",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy", "tight"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "Practical indoor option with food court value and easy transit access."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Practical indoor option with food court value and easy transit access요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "방콕다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "flower-market",
       "name": "빡클롱 탈랏 꽃시장",
-      "category": ["culture", "photo", "shopping"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "old-city",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "nearby"],
-      "summary": "Quick colorful stop that makes old-city routes feel more varied."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "nearby"
+      ],
+      "summary": "Quick colorful stop that makes old-city routes feel more varied요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "방콕다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "baan-silapin",
       "name": "반실라핀 예술 마을",
-      "category": ["culture", "photo", "relax"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "riverside",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "Art-focused canal-side stop that adds a less touristy Bangkok texture."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Art-focused canal-side stop that adds a less touristy Bangkok texture요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "방콕다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "mahanakhon-skywalk",
+      "name": "Mahanakhon SkyWalk",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo"
+      ],
+      "budget_level": [
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "silom",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "방콕 스카이라인을 가장 강하게 체감할 수 있는 전망형 액티비티예요.",
+      "official_url": "https://kingpowermahanakhon.co.th/about/",
+      "booking_hint": "노을 직전이나 야경 시간대로 맞추면 만족도가 훨씬 높아요.",
+      "slot_bias": {
+        "afternoon": 8,
+        "evening": 11,
+        "morning": -10
+      },
+      "mood_keywords": [
+        "화려한",
+        "도시 야경이 살아나는",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "방콕 전망 명소",
+        "스카이워크",
+        "야경 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 방콕의 높은 에너지를 한 번에 느끼고 싶을 때 잘 어울리는 체험이에요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "KyC_mKy7Zf8",
+    "title": "BANGKOK, THAILAND | 10 BEST Things To Do In & Around Bangkok (+ Travel Tips!)",
+    "channel": "World Wild Hearts",
+    "view_count_text": "조회수 1,423,195회",
+    "published": "3년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=KyC_mKy7Zf8",
+    "embed_url": "https://www.youtube.com/embed/KyC_mKy7Zf8",
+    "thumbnail_url": "https://i.ytimg.com/vi/KyC_mKy7Zf8/hqdefault.jpg"
+  }
 }

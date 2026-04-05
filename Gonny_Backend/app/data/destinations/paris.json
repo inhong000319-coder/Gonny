@@ -2,274 +2,999 @@
   "continent": "europe",
   "country": "france",
   "city": "paris",
-  "aliases": ["paris", "파리"],
+  "aliases": [
+    "paris",
+    "파리"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "eiffel-tower",
       "name": "Eiffel Tower Area",
-      "category": ["sightseeing", "photo", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
       "area": "7th-arrondissement",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Core Paris landmark and an easy anchor for nearby walking."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Core Paris landmark and an easy anchor for nearby walking요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "파리다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 파리에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "louvre",
       "name": "Louvre Museum Exterior and Courtyard",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "louvre",
       "duration_hours": 3,
       "priority": 10,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "High-priority cultural stop in central Paris."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "High-priority cultural stop in central Paris요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "파리다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 파리에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "tuileries",
       "name": "Tuileries Garden",
-      "category": ["relax", "nature", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "nature",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "louvre",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Useful nearby stop for a softer pace around the Louvre area."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Useful nearby stop for a softer pace around the Louvre area요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "파리다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "montmartre",
       "name": "Montmartre and Sacre-Coeur",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "montmartre",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Scenic hill district with a strong Paris atmosphere."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Scenic hill district with a strong Paris atmosphere요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "파리다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 파리에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "latin-quarter",
       "name": "Latin Quarter",
-      "category": ["food", "culture", "shopping"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "culture",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "left-bank",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable"],
-      "summary": "Good mixed area for food, streetscape, and easy wandering."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Good mixed area for food, streetscape, and easy wandering요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "파리다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "seine-walk",
       "name": "Seine Riverside Walk",
-      "category": ["relax", "photo", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "river",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Simple scenic route that helps keep the itinerary practical."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Simple scenic route that helps keep the itinerary practical요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "파리다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "marais",
       "name": "Le Marais",
-      "category": ["shopping", "food", "culture"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "marais",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Stylish district for boutique browsing and cafe stops."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Stylish district for boutique browsing and cafe stops요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "파리다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "luxembourg",
       "name": "Luxembourg Gardens",
-      "category": ["relax", "nature", "family"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "nature",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "left-bank",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Useful morning or family-friendly green stop in central Paris."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Useful morning or family-friendly green stop in central Paris요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "파리다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "galeries-lafayette",
       "name": "Galeries Lafayette Area",
-      "category": ["shopping", "photo", "food"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "photo",
+        "food"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "opera",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["tight"],
-      "mobility": ["subway-friendly"],
-      "summary": "Strong option for shopping-focused or higher-budget plans."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Strong option for shopping-focused or higher-budget plans요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "파리다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "orsay",
       "name": "오르세 미술관",
-      "category": ["culture", "sightseeing", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "left-bank",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Major museum stop that adds stronger art focus to Paris plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Major museum stop that adds stronger art focus to Paris plans요.",
+      "mood_keywords": [
+        "차분한",
+        "정돈된",
+        "깊이 있는"
+      ],
+      "highlight_tags": [
+        "문화 포인트",
+        "파리다운 분위기",
+        "차분한 관람"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 파리의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "saint-germain",
       "name": "생제르맹 거리",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "left-bank",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Classic left bank area for cafes, browsing, and a polished Paris mood."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Classic left bank area for cafes, browsing, and a polished Paris mood요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "파리다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "pont-alexandre",
       "name": "알렉상드르 3세 다리",
-      "category": ["photo", "relax", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "photo",
+        "relax",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "river",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Short scenic stop that fits sunset photos and river-side walks."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Short scenic stop that fits sunset photos and river-side walks요.",
+      "mood_keywords": [
+        "사진이 잘 나오는",
+        "감성적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "사진 포인트",
+        "파리다운 분위기",
+        "시각적인 재미"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
+      ]
     },
     {
       "id": "champs-elysees",
       "name": "샹젤리제 거리",
-      "category": ["shopping", "food", "photo"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "solo"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "solo"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "opera",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "Famous boulevard that works well for polished shopping-heavy routes."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Famous boulevard that works well for polished shopping-heavy routes요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "파리다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "ile-de-la-cite",
       "name": "시테 섬 산책",
-      "category": ["sightseeing", "culture", "relax"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "river",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Central historic walking zone that keeps Paris sightseeing practical."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Central historic walking zone that keeps Paris sightseeing practical요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "파리다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 파리에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "canal-saint-martin",
       "name": "생마르탱 운하",
-      "category": ["relax", "photo", "food"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "food"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "canal",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Good for a more local-feeling walk with cafes and waterside atmosphere."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Good for a more local-feeling walk with cafes and waterside atmosphere요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "파리다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "rue-cler",
       "name": "뤼 클레르 시장 거리",
-      "category": ["food", "shopping", "culture"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "solo", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "shopping",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "solo",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "7th-arrondissement",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Refined market street that strengthens food-oriented Paris daytime plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Refined market street that strengthens food-oriented Paris daytime plans요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "파리다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "palais-royal",
       "name": "팔레 루아얄 정원",
-      "category": ["relax", "culture", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "louvre",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Compact elegant stop that pairs well with Louvre-side routes."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Compact elegant stop that pairs well with Louvre-side routes요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "파리다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "place-des-vosges",
       "name": "보주 광장",
-      "category": ["relax", "photo", "culture"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "relax",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "marais",
       "duration_hours": 1,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "Short but charming square that fits naturally into Le Marais plans."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Short but charming square that fits naturally into Le Marais plans요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "파리다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "bercy-village",
       "name": "베르시 빌리지",
-      "category": ["shopping", "food", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "shopping",
+        "food",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "bercy",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["subway-friendly", "walkable"],
-      "summary": "Comfortable semi-open retail area that gives longer Paris trips more variety."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Comfortable semi-open retail area that gives longer Paris trips more variety요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "파리다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
+    },
+    {
+      "id": "disneyland-paris",
+      "name": "Disneyland Paris",
+      "category": [
+        "activity",
+        "theme_park",
+        "family"
+      ],
+      "budget_level": [
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "area": "marne-la-vallee",
+      "duration_hours": 6,
+      "priority": 8,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "train-friendly"
+      ],
+      "summary": "파리 근교에서 하루를 크게 써서 즐기기 좋은 대표 테마파크예요.",
+      "official_url": "https://www.disneylandparis.com/",
+      "booking_hint": "도심 일정과 섞기보다 하루를 통째로 비우는 편이 더 자연스러워요.",
+      "mood_keywords": [
+        "화려한",
+        "하루를 크게 쓰는",
+        "설레는"
+      ],
+      "highlight_tags": [
+        "파리 근교 테마파크",
+        "하루 코스",
+        "가족·커플 일정"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 박물관과 거리 산책 중심 일정에서 완전히 다른 리듬을 만들고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "vedettes-du-pont-neuf-cruise",
+      "name": "Vedettes du Pont Neuf Cruise",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "ile-de-la-cite",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "센강 위에서 파리의 대표 풍경을 한 번에 담기 좋은 클래식한 체험이에요.",
+      "official_url": "https://www.vedettesdupontneuf.com/cruises/",
+      "booking_hint": "노을 무렵이나 야경 시간대로 맞추면 만족도가 더 높아요.",
+      "mood_keywords": [
+        "우아한",
+        "파리다운",
+        "야경이 어울리는"
+      ],
+      "highlight_tags": [
+        "센강 크루즈",
+        "파리 야경",
+        "대표 체험"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 파리 풍경을 걷는 대신 물 위에서 한 번 정리해보고 싶을 때 잘 맞아요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "AQ6GmpMu5L8",
+    "title": "Paris Vacation Travel Guide | Expedia",
+    "channel": "Expedia",
+    "view_count_text": "조회수 4,965,047회",
+    "published": "13년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=AQ6GmpMu5L8",
+    "embed_url": "https://www.youtube.com/embed/AQ6GmpMu5L8",
+    "thumbnail_url": "https://i.ytimg.com/vi/AQ6GmpMu5L8/hqdefault.jpg"
+  }
 }

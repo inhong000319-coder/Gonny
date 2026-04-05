@@ -2,176 +2,624 @@
   "continent": "asia",
   "country": "korea",
   "city": "busan",
-  "aliases": ["busan", "pusan", "부산"],
+  "aliases": [
+    "busan",
+    "pusan",
+    "부산"
+  ],
   "default_days": 3,
   "places": [
     {
       "id": "haeundae-beach",
       "name": "해운대 해수욕장",
-      "category": ["relax", "photo", "sightseeing"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "evening"],
+      "category": [
+        "relax",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
       "area": "해운대",
       "duration_hours": 2,
       "priority": 10,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "부산을 대표하는 해변으로 여유로운 산책과 야경 감상에 잘 어울린다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "부산을 대표하는 해변으로 여유로운 산책과 야경 감상에 잘 어울린다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "부산다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "dongbaek-island",
       "name": "동백섬 산책로",
-      "category": ["nature", "relax", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "해운대",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "가볍게 바다 풍경을 보며 걸을 수 있는 해운대 대표 산책 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "가볍게 바다 풍경을 보며 걸을 수 있는 해운대 대표 산책 코스다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "부산다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "blue-line-park",
       "name": "해운대 블루라인파크",
-      "category": ["activity", "photo", "sightseeing"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "activity",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "해운대",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["nearby"],
-      "summary": "바다를 따라 이동하며 풍경을 즐길 수 있어 부산다운 체험을 만들기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "nearby"
+      ],
+      "summary": "바다를 따라 이동하며 풍경을 즐길 수 있어 부산다운 체험을 만들기 좋다요.",
+      "mood_keywords": [
+        "경쾌한",
+        "재미 있는",
+        "체험 중심의"
+      ],
+      "highlight_tags": [
+        "체험 요소",
+        "부산다운 분위기",
+        "경쾌한 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "gwangalli-beach",
       "name": "광안리 해변",
-      "category": ["relax", "food", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["evening"],
+      "category": [
+        "relax",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "광안리",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "광안대교 야경과 식사 동선을 함께 묶기 좋은 저녁 명소다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안대교 야경과 식사 동선을 함께 묶기 좋은 저녁 명소다요.",
+      "mood_keywords": [
+        "여유로운",
+        "편안한",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "여유로운 흐름",
+        "부산다운 분위기",
+        "부드러운 템포"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
     },
     {
       "id": "millak-waterfront",
       "name": "민락수변공원",
-      "category": ["food", "relax", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "couple", "solo"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "relax",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "couple",
+        "solo"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "광안리",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["walkable"],
-      "summary": "야경을 보며 간단한 먹거리와 함께 부산 밤 분위기를 즐기기 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "야경을 보며 간단한 먹거리와 함께 부산 밤 분위기를 즐기기 좋다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "부산다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "gamcheon-culture-village",
       "name": "감천문화마을",
-      "category": ["sightseeing", "culture", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "사하",
       "duration_hours": 3,
       "priority": 9,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "부산의 색다른 골목 풍경을 느낄 수 있어 관광형 일정에 잘 어울린다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "부산의 색다른 골목 풍경을 느낄 수 있어 관광형 일정에 잘 어울린다요.",
+      "mood_keywords": [
+        "상징적인",
+        "안정적인",
+        "만족도 높은"
+      ],
+      "highlight_tags": [
+        "대표 명소",
+        "부산다운 분위기",
+        "핵심 관광 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 부산에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
+      ]
     },
     {
       "id": "jagalchi-market",
       "name": "자갈치시장",
-      "category": ["food", "culture", "shopping"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "friend", "family", "couple"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "culture",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family",
+        "couple"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "남포",
       "duration_hours": 2,
       "priority": 9,
-      "pace": ["easy", "tight"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "부산다운 해산물 분위기를 느끼기 좋은 대표 시장이다."
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "부산다운 해산물 분위기를 느끼기 좋은 대표 시장이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "부산다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "gukje-market",
       "name": "국제시장",
-      "category": ["shopping", "food", "culture"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "friend", "family"],
-      "time_fit": ["afternoon"],
+      "category": [
+        "shopping",
+        "food",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon"
+      ],
       "area": "남포",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["tight", "easy"],
-      "mobility": ["walkable"],
-      "summary": "시장 구경과 군것질을 함께 즐길 수 있어 실속형 일정에 적합하다."
+      "pace": [
+        "tight",
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "시장 구경과 군것질을 함께 즐길 수 있어 실속형 일정에 적합하다요.",
+      "mood_keywords": [
+        "가볍게 구경하기 좋은",
+        "활기 있는",
+        "실속 있는"
+      ],
+      "highlight_tags": [
+        "구경하는 재미",
+        "부산다운 분위기",
+        "가벼운 변화"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
     },
     {
       "id": "biff-square",
       "name": "BIFF 광장",
-      "category": ["food", "shopping", "nightlife"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["friend", "solo", "couple"],
-      "time_fit": ["evening"],
+      "category": [
+        "food",
+        "shopping",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "friend",
+        "solo",
+        "couple"
+      ],
+      "time_fit": [
+        "evening"
+      ],
       "area": "남포",
       "duration_hours": 2,
       "priority": 8,
-      "pace": ["tight"],
-      "mobility": ["walkable"],
-      "summary": "길거리 음식과 활기 있는 분위기가 강한 부산 도심 저녁 코스다."
+      "pace": [
+        "tight"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "길거리 음식과 활기 있는 분위기가 강한 부산 도심 저녁 코스다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "부산다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "songdo-cable-car",
       "name": "송도 해상케이블카",
-      "category": ["activity", "photo", "relax"],
-      "budget_level": ["medium", "high"],
-      "suitable_for": ["couple", "friend", "family"],
-      "time_fit": ["afternoon", "evening"],
+      "category": [
+        "activity",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
       "area": "송도",
       "duration_hours": 2,
       "priority": 7,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "부산 바다 풍경을 조금 더 특별하게 즐길 수 있는 체험형 코스다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "부산 바다 풍경을 조금 더 특별하게 즐길 수 있는 체험형 코스다요.",
+      "mood_keywords": [
+        "경쾌한",
+        "재미 있는",
+        "체험 중심의"
+      ],
+      "highlight_tags": [
+        "체험 요소",
+        "부산다운 분위기",
+        "경쾌한 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
+      ]
     },
     {
       "id": "taejongdae",
       "name": "태종대",
-      "category": ["nature", "sightseeing", "photo"],
-      "budget_level": ["low", "medium"],
-      "suitable_for": ["solo", "couple", "friend", "family"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "nature",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "영도",
       "duration_hours": 3,
       "priority": 8,
-      "pace": ["easy"],
-      "mobility": ["taxi-needed"],
-      "summary": "절벽과 바다 풍경이 인상적이라 부산 자연 코스를 넣고 싶을 때 좋다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "절벽과 바다 풍경이 인상적이라 부산 자연 코스를 넣고 싶을 때 좋다요.",
+      "mood_keywords": [
+        "시원한",
+        "상쾌한",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "자연 풍경",
+        "부산다운 분위기",
+        "시원한 장면"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
     },
     {
       "id": "onjeoncheon-cafe",
       "name": "온천천 카페거리",
-      "category": ["food", "relax", "photo"],
-      "budget_level": ["low", "medium", "high"],
-      "suitable_for": ["solo", "couple", "friend"],
-      "time_fit": ["morning", "afternoon"],
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
       "area": "동래",
       "duration_hours": 2,
       "priority": 6,
-      "pace": ["easy"],
-      "mobility": ["walkable", "subway-friendly"],
-      "summary": "한적한 카페와 산책을 묶어 느긋하게 보내기 좋은 지역이다."
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "한적한 카페와 산책을 묶어 느긋하게 보내기 좋은 지역이다요.",
+      "mood_keywords": [
+        "맛있게 즐기기 좋은",
+        "로컬한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "먹거리 동선",
+        "부산다운 분위기",
+        "현지 분위기"
+      ],
+      "note_templates": [
+        "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "skyline-luge-busan",
+      "name": "Skyline Luge Busan",
+      "category": [
+        "activity",
+        "local_experience",
+        "photo"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "osiria",
+      "duration_hours": 3,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "부산 바다 분위기를 보면서 속도감 있는 체험을 즐기기 좋은 액티비티예요.",
+      "official_url": "https://busan.skylineluge.kr/en/",
+      "booking_hint": "해 질 무렵까지 머물면 바다 풍경과 야간 분위기를 함께 챙기기 좋아요.",
+      "slot_bias": {
+        "afternoon": 9,
+        "evening": 6,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "신나는",
+        "속도감 있는",
+        "친구와 가기 좋은"
+      ],
+      "highlight_tags": [
+        "부산 체험형 코스",
+        "오시리아 액티비티",
+        "바다 전망"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 부산에서 풍경만 보는 일정보다 몸으로 즐기는 시간을 넣고 싶을 때 잘 맞아요."
+      ]
     }
-  ]
+  ],
+  "featured_video": {
+    "video_id": "Qh3wrmSUqaI",
+    "title": "Busan Vacation Travel Guide | Expedia",
+    "channel": "Expedia",
+    "view_count_text": "조회수 1,440,681회",
+    "published": "7년 전",
+    "youtube_url": "https://www.youtube.com/watch?v=Qh3wrmSUqaI",
+    "embed_url": "https://www.youtube.com/embed/Qh3wrmSUqaI",
+    "thumbnail_url": "https://i.ytimg.com/vi/Qh3wrmSUqaI/hqdefault.jpg"
+  }
 }

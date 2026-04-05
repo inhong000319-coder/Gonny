@@ -60,12 +60,12 @@ const featureCards = [
   {
     icon: <CalendarIcon />,
     title: "실시간 조율",
-    copy: "날씨나 동행자 조건이 바뀌어도 장소 단위로 일정을 유연하게 수정할 수 있습니다.",
+    copy: "날씨와 동행 조건이 바뀌어도 장소 단위로 일정을 유연하게 수정할 수 있습니다.",
   },
   {
     icon: <PinIcon />,
-    title: "완성형 플로우",
-    copy: "숙소, 예산, 체크인, 공유, 회고까지 하나의 흐름 안에서 자연스럽게 이어집니다.",
+    title: "완성도 높은 흐름",
+    copy: "숙소, 예산, 체크리스트 공유, 회고까지 하나의 여행 흐름 안에서 자연스럽게 이어집니다.",
   },
 ];
 
@@ -85,13 +85,13 @@ export function LandingPage() {
           <h1 className="landing-title">첫 화면부터 취향이 느껴지는 여행 계획</h1>
 
           <p className="landing-description">
-            카테고리 선택으로 빠르게 시작하고, 자연어로 더 섬세하게 다듬어보세요.
-            색감 있고 정리된 흐름 안에서 AI가 여행 일정을 더 선명하게 잡아줍니다.
+            카테고리 선택으로 빠르게 시작하고, 자연어로 더 섬세하게 다듬어보세요. 여행 일정은 무료 추천부터 AI
+            프리미엄 생성까지 원하는 방식으로 이어갈 수 있습니다.
           </p>
 
           <div className="landing-actions">
-            <Link to="/trips/new">
-              <Button>여행 일정 만들기</Button>
+            <Link to="/planner">
+              <Button>무료 일정 추천받기</Button>
             </Link>
             <Link to="/inspiration">
               <Button variant="secondary">영감 둘러보기</Button>
@@ -113,9 +113,9 @@ export function LandingPage() {
           <div className="landing-planner-top">
             <div>
               <span className="landing-card-eyebrow">Smart planner</span>
-              <h2>밝고 직관적인 여행 준비</h2>
+              <h2>가볍게 시작하는 무료 일정 추천</h2>
             </div>
-            <div className="landing-badge">Beta</div>
+            <div className="landing-badge">Free</div>
           </div>
 
           <div className="landing-form-grid">
@@ -171,8 +171,8 @@ export function LandingPage() {
             </div>
           </div>
 
-          <Link className="landing-cta-link" to="/trips/new">
-            <Button className="landing-main-cta">AI 여행 일정 생성하기</Button>
+          <Link className="landing-cta-link" to="/planner">
+            <Button className="landing-main-cta">무료 여행 일정 추천받기</Button>
           </Link>
         </div>
       </section>

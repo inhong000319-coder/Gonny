@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { apiClient } from "../../api/client";
+import {
+  createItineraryDocDownload,
+  createItineraryPrintPreview,
+  revokeItineraryExportUrl,
+} from "../../shared/lib/itinerary-export";
 
 const TEXT = {
   plannerKicker: "\ub2e8\uacc4\ud615 \ud50c\ub798\ub108",
@@ -43,6 +48,8 @@ const TEXT = {
   rawJson: "\uc6d0\ubcf8 \u004a\u0053\u004f\u004e \ubcf4\uae30",
   generate: "\uaddc\uce59\uae30\ubc18 \uc77c\uc815 \uc0dd\uc131",
   generating: "\uc0dd\uc131 \uc911...",
+  downloadDoc: "\ubb38\uc11c \ud30c\uc77c \ub2e4\uc6b4\ub85c\ub4dc",
+  savePdf: "PDF\ub85c \uc800\uc7a5",
   autoSelect: "\uc790\ub3d9 \uc120\ud0dd",
   noDirectBudget: "\uc9c1\uc811 \uc785\ub825 \uc5c6\uc74c",
   enteredBudgetPrefix: "\uc785\ub825\uac12",
@@ -142,6 +149,8 @@ export function RulePlanner() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
+  const [docDownload, setDocDownload] = useState(null);
+  const [printPreview, setPrintPreview] = useState(null);
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -170,6 +179,51 @@ export function RulePlanner() {
       return true;
     });
   }, [catalog, form.continent, form.country]);
+
+  useEffect(() => {
+    const previousDocHref = docDownload?.href;
+    const previousPrintHref = printPreview?.href;
+
+    if (!result) {
+      setDocDownload(null);
+      setPrintPreview(null);
+      return () => {
+        revokeItineraryExportUrl(previousDocHref);
+        revokeItineraryExportUrl(previousPrintHref);
+      };
+    }
+
+    const nextDocDownload = createItineraryDocDownload(result, {
+      cityLabel: result.city,
+      countryLabel: result.country,
+      continentLabel: result.continent,
+      budgetLabel: labelBudget(result.budget_band),
+      styleLabel: labelStyle(result.style),
+      companionLabel: labelCompanion(result.companion_type),
+      conceptLabels: result.concepts.map(labelConcept),
+      timeSlotLabel: labelTimeSlot,
+    });
+    const nextPrintPreview = createItineraryPrintPreview(result, {
+      cityLabel: result.city,
+      countryLabel: result.country,
+      continentLabel: result.continent,
+      budgetLabel: labelBudget(result.budget_band),
+      styleLabel: labelStyle(result.style),
+      companionLabel: labelCompanion(result.companion_type),
+      conceptLabels: result.concepts.map(labelConcept),
+      timeSlotLabel: labelTimeSlot,
+    });
+
+    setDocDownload(nextDocDownload);
+    setPrintPreview(nextPrintPreview);
+
+    return () => {
+      revokeItineraryExportUrl(previousDocHref);
+      revokeItineraryExportUrl(previousPrintHref);
+      revokeItineraryExportUrl(nextDocDownload.href);
+      revokeItineraryExportUrl(nextPrintPreview.href);
+    };
+  }, [result]);
 
   const updateField = (name, value) => setForm((prev) => ({ ...prev, [name]: value }));
 
@@ -201,6 +255,7 @@ export function RulePlanner() {
       setLoading(false);
     }
   };
+
 
   return (
     <section className="feature-shell">
@@ -436,21 +491,35 @@ export function RulePlanner() {
           </div>
 
           {groupedItems.length > 0 ? (
-            <div className="day-grid">
-              {groupedItems.map(([dayNumber, items]) => (
-                <article key={dayNumber} className="day-card">
-                  <h3>{dayNumber}\uc77c\ucc28</h3>
-                  {items.map((item) => (
-                    <div key={`${dayNumber}-${item.time_slot}-${item.place_name}`} className="slot-row">
-                      <strong>{labelTimeSlot(item.time_slot)}</strong>
-                      <span>{item.place_name}</span>
-                      <small>{item.area}</small>
-                      <p>{item.notes}</p>
-                    </div>
-                  ))}
-                </article>
-              ))}
-            </div>
+            <>
+              <div className="planner-export-actions">
+                {docDownload ? (
+                  <a className="ghost-button" download={docDownload.filename} href={docDownload.href}>
+                    {TEXT.downloadDoc}
+                  </a>
+                ) : null}
+                {printPreview ? (
+                  <a className="ghost-button" href={printPreview.href} rel="noreferrer" target="_blank">
+                    {TEXT.savePdf}
+                  </a>
+                ) : null}
+              </div>
+              <div className="day-grid">
+                {groupedItems.map(([dayNumber, items]) => (
+                  <article key={dayNumber} className="day-card">
+                    <h3>{dayNumber}\uc77c\ucc28</h3>
+                    {items.map((item) => (
+                      <div key={`${dayNumber}-${item.time_slot}-${item.place_name}`} className="slot-row">
+                        <strong>{labelTimeSlot(item.time_slot)}</strong>
+                        <span>{item.place_name}</span>
+                        <small>{item.area}</small>
+                        <p>{item.notes}</p>
+                      </div>
+                    ))}
+                  </article>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="empty-state">
               <h3>{TEXT.emptyTitle}</h3>

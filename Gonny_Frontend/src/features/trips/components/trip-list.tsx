@@ -3,9 +3,11 @@ import { TripSummaryItem } from "../../../shared/types/domain";
 
 type TripListProps = {
   trips: TripSummaryItem[];
+  onToggleFavorite: (tripId: string, nextFavorite: boolean) => void;
+  pendingTripId?: string | null;
 };
 
-export function TripList({ trips }: TripListProps) {
+export function TripList({ trips, onToggleFavorite, pendingTripId }: TripListProps) {
   return (
     <div className="card card-tinted">
       <div className="section-header">
@@ -20,7 +22,12 @@ export function TripList({ trips }: TripListProps) {
 
       <div className="trip-list">
         {trips.map((trip) => (
-          <TripCard key={trip.id} trip={trip} />
+          <TripCard
+            key={trip.id}
+            pending={pendingTripId === trip.id}
+            trip={trip}
+            onToggleFavorite={onToggleFavorite}
+          />
         ))}
       </div>
     </div>

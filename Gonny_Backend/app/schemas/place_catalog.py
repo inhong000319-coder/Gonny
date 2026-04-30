@@ -45,6 +45,9 @@ class CityPlaceCatalog(BaseModel):
     continent: str
     country: str
     city: str
+    continent_label: str | None = None
+    country_label: str | None = None
+    city_label: str | None = None
     aliases: list[str] = []
     default_days: int = 3
     featured_video: FeaturedVideoData | None = None

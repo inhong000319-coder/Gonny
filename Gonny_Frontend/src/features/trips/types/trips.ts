@@ -1,45 +1,36 @@
 export type TripsListItemDto = {
-  trip_id: number;
+  id: number;
   title: string;
   destination: string;
   start_date: string;
   end_date: string;
-  status: "upcoming" | "ongoing" | "completed";
-  thumbnail_url?: string;
-};
-
-export type TripsListResponseDto = {
-  trips: TripsListItemDto[];
-  total: number;
-  page: number;
+  budget: number;
+  travel_style: string;
+  companion_type: string;
+  is_favorite: boolean;
+  created_at: string;
 };
 
 export type TripDetailItemDto = {
   id: number;
-  order: number;
-  place_name: string;
-  place_type: string;
-  start_time: string;
-  duration_min: number;
-  move_time_min: number;
-  transport: string;
-  address: string;
-  estimated_cost: number;
-  ai_tip: string;
-};
-
-export type TripDetailDayDto = {
+  trip_id: number;
   day_number: number;
-  date: string;
-  weather_forecast: string;
-  items: TripDetailItemDto[];
+  time_slot: string;
+  place_name: string;
+  category: string;
+  notes?: string | null;
 };
 
 export type TripDetailResponseDto = {
-  trip_id: number;
+  id: number;
   title: string;
-  destination?: string;
-  start_date?: string;
-  end_date?: string;
-  days: TripDetailDayDto[];
+  destination: string;
+  start_date: string;
+  end_date: string;
+  budget: number;
+  travel_style: string;
+  companion_type: string;
+  is_favorite: boolean;
+  itinerary_items: TripDetailItemDto[];
+  created_at: string;
 };

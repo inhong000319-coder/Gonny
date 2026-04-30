@@ -34,6 +34,31 @@ SLOT_CATEGORY_PREFERENCE = {
     "afternoon": {"sightseeing", "shopping", "culture", "activity", "nature", "theme_park", "local_experience"},
     "evening": {"food", "shopping", "relax", "photo", "nightlife", "activity", "theme_park", "local_experience"},
 }
+SEOUL_AREA_ROUTE_ORDER = [
+    "jongno",
+    "euljiro",
+    "myeongdong",
+    "dongdaemun",
+    "seongsu",
+    "hongdae",
+    "yeouido",
+    "gangnam",
+    "jamsil",
+    "itaewon",
+]
+SEOUL_AREA_NEIGHBORS = {
+    "jongno": {"euljiro", "myeongdong", "dongdaemun"},
+    "euljiro": {"jongno", "myeongdong", "dongdaemun"},
+    "myeongdong": {"jongno", "euljiro", "namsan", "dongdaemun"},
+    "dongdaemun": {"jongno", "euljiro", "myeongdong"},
+    "seongsu": {"gangnam", "jamsil"},
+    "hongdae": {"yeouido"},
+    "yeouido": {"hongdae"},
+    "gangnam": {"seongsu", "jamsil", "itaewon"},
+    "jamsil": {"gangnam", "seongsu"},
+    "itaewon": {"gangnam", "namsan"},
+    "namsan": {"myeongdong", "itaewon"},
+}
 PLACE_NAME_KO = {
     "gyeongbokgung": "경복궁",
     "bukchon": "북촌한옥마을",
@@ -327,8 +352,9 @@ class RuleItineraryService:
         )
 
         area_scores = self._group_area_scores(scored_places, request)
-        preferred_areas = [area for area, _ in sorted(area_scores.items(), key=lambda item: item[1], reverse=True)]
+        preferred_areas = self._preferred_area_order(request=request, area_scores=area_scores)
         used_ids: set[str] = set()
+        used_day_areas: set[str] = set()
         items: list[RuleItineraryItem] = []
         full_day_used = False
 
@@ -363,10 +389,13 @@ class RuleItineraryService:
                 full_day_used = True
                 continue
 
-            day_area = self._pick_day_area(preferred_areas, scored_places, used_ids, day_number)
+            day_area = self._pick_day_area(preferred_areas, scored_places, used_ids, used_day_areas, day_number)
+            if day_area:
+                used_day_areas.add(day_area)
             day_places: list[PlaceData] = []
 
             for slot in TIME_SLOTS:
+                previous_place = day_places[-1] if day_places else None
                 chosen = self._pick_place_for_slot(
                     scored_places=scored_places,
                     request=request,
@@ -374,12 +403,12 @@ class RuleItineraryService:
                     day_number=day_number,
                     used_ids=used_ids,
                     preferred_area=day_area,
+                    previous_place=previous_place,
                 )
                 if chosen is None:
                     continue
 
                 used_ids.add(chosen.id)
-                previous_place = day_places[-1] if day_places else None
                 main_category = self._resolve_item_category(chosen, request)
                 items.append(
                     RuleItineraryItem(
@@ -433,16 +462,50 @@ class RuleItineraryService:
             area_scores[place.area] += self._base_score(place, request)
         return area_scores
 
+    def _preferred_area_order(self, *, request: NormalizedRuleRequest, area_scores: dict[str, int]) -> list[str]:
+        ranked_areas = [area for area, _ in sorted(area_scores.items(), key=lambda item: item[1], reverse=True)]
+        if request.city != "seoul":
+            return ranked_areas
+
+        concept_weights: dict[str, int] = defaultdict(int)
+        if "culture" in request.concepts:
+            for area in ("jongno", "euljiro", "dongdaemun"):
+                concept_weights[area] += 18
+        if "food" in request.concepts:
+            for area in ("euljiro", "hongdae", "seongsu", "itaewon", "jongno"):
+                concept_weights[area] += 16
+        if "relax" in request.concepts:
+            for area in ("yeouido", "jamsil", "seongsu", "jongno"):
+                concept_weights[area] += 12
+        if "shopping" in request.concepts:
+            for area in ("seongsu", "gangnam", "myeongdong", "hongdae"):
+                concept_weights[area] += 10
+        if request.companion_type == "friend":
+            for area in ("euljiro", "hongdae", "seongsu", "itaewon"):
+                concept_weights[area] += 8
+
+        seoul_ranked = sorted(
+            area_scores.keys(),
+            key=lambda area: (
+                area_scores[area] + concept_weights[area] + (6 if area in SEOUL_AREA_ROUTE_ORDER else 0),
+                -SEOUL_AREA_ROUTE_ORDER.index(area) if area in SEOUL_AREA_ROUTE_ORDER else 0,
+            ),
+            reverse=True,
+        )
+        return seoul_ranked
+
     def _pick_day_area(
         self,
         preferred_areas: list[str],
         places: list[PlaceData],
         used_ids: set[str],
+        used_day_areas: set[str],
         day_number: int,
     ) -> str | None:
         if preferred_areas:
-            for offset in range(len(preferred_areas)):
-                candidate_area = preferred_areas[(day_number - 1 + offset) % len(preferred_areas)]
+            fresh_areas = [area for area in preferred_areas if area not in used_day_areas]
+            area_pool = fresh_areas or preferred_areas
+            for candidate_area in area_pool:
                 if any(place.area == candidate_area and place.id not in used_ids for place in places):
                     return candidate_area
         return None
@@ -462,6 +525,7 @@ class RuleItineraryService:
         day_number: int,
         used_ids: set[str],
         preferred_area: str | None,
+        previous_place: PlaceData | None,
     ) -> PlaceData | None:
         available_places = [place for place in scored_places if place.id not in used_ids]
         slot_fitting_places = [place for place in available_places if time_slot in place.time_fit]
@@ -475,6 +539,7 @@ class RuleItineraryService:
                 time_slot=time_slot,
                 day_number=day_number,
                 preferred_area=preferred_area,
+                previous_place=previous_place,
             ),
             reverse=True,
         )
@@ -530,27 +595,130 @@ class RuleItineraryService:
         time_slot: str,
         day_number: int,
         preferred_area: str | None,
+        previous_place: PlaceData | None,
     ) -> int:
         score = self._base_score(place, request)
         score += self._phase_score(place=place, request=request, day_number=day_number, time_slot=time_slot)
+        score += self._duration_slot_score(place=place, request=request, time_slot=time_slot)
+        score += self._style_slot_score(place=place, request=request, time_slot=time_slot)
 
         if time_slot in place.time_fit:
             score += 12
-        score += place.slot_bias.get(time_slot, 0)
+        score += self._slot_bias_score(place=place, time_slot=time_slot)
         if preferred_area and place.area == preferred_area:
-            score += 9
+            score += 14 if request.city == "seoul" else 9
+        if previous_place and place.area == previous_place.area:
+            score += 18 if request.city == "seoul" else 10
+        elif (
+            request.city == "seoul"
+            and previous_place
+            and place.area in SEOUL_AREA_NEIGHBORS.get(previous_place.area, set())
+        ):
+            score += 8
         if set(place.category) & SLOT_CATEGORY_PREFERENCE[time_slot]:
             score += 5
         if "activity" in request.concepts and set(place.category) & ACTIVITY_CATEGORIES:
             score += 10
         if time_slot == "evening" and "food" in place.category:
             score += 4
+        if request.city == "seoul" and time_slot == "evening" and {"food", "nightlife"} & set(place.category):
+            score += 6
         if time_slot == "morning" and ("relax" in place.category or "cafe" in place.category):
             score += 3
         if request.style == "near-stay" and place.area == preferred_area:
             score += 3
 
         return score
+
+    def _duration_slot_score(
+        self,
+        *,
+        place: PlaceData,
+        request: NormalizedRuleRequest,
+        time_slot: str,
+    ) -> int:
+        duration = place.duration_hours
+        categories = set(place.category)
+
+        if time_slot == "morning":
+            if duration <= 2:
+                score = 6
+            elif duration <= 4:
+                score = 3
+            elif duration >= 6:
+                score = -10
+            else:
+                score = -4
+
+            if categories & ACTIVITY_CATEGORIES and duration >= 4 and "activity" in request.concepts:
+                score += 4
+            return score
+
+        if time_slot == "afternoon":
+            if duration <= 1:
+                score = -2
+            elif duration <= 4:
+                score = 4
+            else:
+                score = 2
+
+            if categories & ACTIVITY_CATEGORIES and duration >= 4:
+                score += 6
+            return score
+
+        if duration <= 2:
+            score = 8
+        elif duration == 3:
+            score = 3
+        elif duration == 4:
+            score = -3
+        else:
+            score = -12
+
+        if categories & {"food", "photo", "shopping", "nightlife"} and duration <= 3:
+            score += 3
+        return score
+
+    def _style_slot_score(
+        self,
+        *,
+        place: PlaceData,
+        request: NormalizedRuleRequest,
+        time_slot: str,
+    ) -> int:
+        duration = place.duration_hours
+        score = 0
+
+        if request.style == "tight":
+            if time_slot in {"morning", "afternoon"} and duration >= 3:
+                score += 3
+            if time_slot == "evening" and duration <= 2:
+                score += 2
+        elif request.style == "easy":
+            if duration <= 3:
+                score += 3
+            elif duration >= 5:
+                score -= 4
+        elif request.style == "near-stay":
+            if duration <= 3:
+                score += 2
+        elif request.style == "mobility-first":
+            if duration <= 3:
+                score += 2
+            if "taxi-needed" in place.mobility:
+                score -= 3
+
+        return score
+
+    def _slot_bias_score(
+        self,
+        *,
+        place: PlaceData,
+        time_slot: str,
+    ) -> int:
+        raw_bias = place.slot_bias.get(time_slot, 0)
+        normalized_bias = max(min(raw_bias, 8), -8)
+        return normalized_bias * 3
 
     def _phase_score(
         self,

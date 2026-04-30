@@ -45,27 +45,27 @@ function CompassIcon() {
 }
 
 const styleCards = [
-  { emoji: "🏖", title: "휴양", copy: "바다와 여유 중심" },
-  { emoji: "🗼", title: "관광", copy: "대표 스팟 위주" },
-  { emoji: "⛰", title: "모험", copy: "액티브한 동선" },
-  { emoji: "🍜", title: "미식", copy: "맛집과 카페 우선" },
+  { emoji: "해변", title: "휴양", copy: "여유롭고 편안한 동선" },
+  { emoji: "도시", title: "관광", copy: "대표 명소 중심 코스" },
+  { emoji: "활동", title: "액티비티", copy: "움직임이 많은 체험형 일정" },
+  { emoji: "미식", title: "맛집", copy: "식당과 카페 중심 코스" },
 ];
 
 const featureCards = [
   {
     icon: <SparkIcon />,
-    title: "AI 맞춤 추천",
-    copy: "취향, 예산, 여행 스타일을 조합해 일정 초안을 빠르게 생성합니다.",
+    title: "빠른 일정 초안",
+    copy: "여행지, 분위기, 예산을 조합해 일정 초안을 빠르게 만들 수 있습니다.",
   },
   {
     icon: <CalendarIcon />,
-    title: "실시간 조율",
-    copy: "날씨와 동행 조건이 바뀌어도 장소 단위로 일정을 유연하게 수정할 수 있습니다.",
+    title: "유연한 수정",
+    copy: "날씨나 여행 상황이 바뀌어도 일정 흐름을 쉽게 다시 맞출 수 있습니다.",
   },
   {
     icon: <PinIcon />,
-    title: "완성도 높은 흐름",
-    copy: "숙소, 예산, 체크리스트 공유, 회고까지 하나의 여행 흐름 안에서 자연스럽게 이어집니다.",
+    title: "한 번에 관리",
+    copy: "계획부터 관리, 정리까지 한 흐름 안에서 이어서 진행할 수 있습니다.",
   },
 ];
 
@@ -79,22 +79,21 @@ export function LandingPage() {
         <div className="landing-copy">
           <div className="landing-pill">
             <SparkIcon />
-            <span>AI 기반 여행 플래너</span>
+            <span>AI 여행 플래너</span>
           </div>
 
-          <h1 className="landing-title">첫 화면부터 취향이 느껴지는 여행 계획</h1>
+          <h1 className="landing-title">내 여행 스타일에 맞는 일정을 더 쉽게</h1>
 
           <p className="landing-description">
-            카테고리 선택으로 빠르게 시작하고, 자연어로 더 섬세하게 다듬어보세요. 여행 일정은 무료 추천부터 AI
-            프리미엄 생성까지 원하는 방식으로 이어갈 수 있습니다.
+            여행지, 예산, 기간, 분위기를 가볍게 정하고 원하는 흐름에 맞춰 일정을 자연스럽게 다듬어보세요.
           </p>
 
           <div className="landing-actions">
             <Link to="/planner">
-              <Button>무료 일정 추천받기</Button>
+              <Button>일정 만들기</Button>
             </Link>
             <Link to="/inspiration">
-              <Button variant="secondary">영감 둘러보기</Button>
+              <Button variant="secondary">아이디어 둘러보기</Button>
             </Link>
           </div>
 
@@ -112,10 +111,10 @@ export function LandingPage() {
         <div className="landing-planner-card">
           <div className="landing-planner-top">
             <div>
-              <span className="landing-card-eyebrow">Smart planner</span>
-              <h2>가볍게 시작하는 무료 일정 추천</h2>
+              <span className="landing-card-eyebrow">스마트 플래너</span>
+              <h2>가볍게 시작하는 여행 일정 초안</h2>
             </div>
-            <div className="landing-badge">Free</div>
+            <div className="landing-badge">무료</div>
           </div>
 
           <div className="landing-form-grid">
@@ -131,7 +130,7 @@ export function LandingPage() {
           </div>
 
           <label className="landing-input-group">
-            <span>1인 기준 예산</span>
+            <span>예산 구간</span>
             <select defaultValue="budget-1">
               <option value="budget-1">50만원 이하</option>
               <option value="budget-2">50만원 ~ 100만원</option>
@@ -172,7 +171,7 @@ export function LandingPage() {
           </div>
 
           <Link className="landing-cta-link" to="/planner">
-            <Button className="landing-main-cta">무료 여행 일정 추천받기</Button>
+            <Button className="landing-main-cta">여행 일정 추천받기</Button>
           </Link>
         </div>
       </section>

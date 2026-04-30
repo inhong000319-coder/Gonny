@@ -9,6 +9,14 @@ class ItineraryItemCreate(BaseModel):
     notes: str | None = None
 
 
+class ItineraryItemUpdate(BaseModel):
+    day_number: int | None = None
+    time_slot: str | None = None
+    place_name: str | None = None
+    category: str | None = None
+    notes: str | None = None
+
+
 class ItineraryItemResponse(BaseModel):
     id: int
     trip_id: int

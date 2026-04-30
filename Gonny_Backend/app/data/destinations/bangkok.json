@@ -41,6 +41,21 @@
         "taxi-needed"
       ],
       "summary": "Flagship historic landmark for a Bangkok first visit요.",
+      "official_url": null,
+      "booking_hint": null,
+      "is_active": true,
+      "mvp_tier": "standard",
+      "full_day_recommended": false,
+      "full_day_notes": {
+        "morning": [],
+        "afternoon": [],
+        "evening": []
+      },
+      "slot_bias": {
+        "morning": 0,
+        "afternoon": 0,
+        "evening": 0
+      },
       "mood_keywords": [
         "상징적인",
         "안정적인",

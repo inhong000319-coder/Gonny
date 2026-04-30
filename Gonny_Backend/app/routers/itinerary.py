@@ -5,7 +5,7 @@ from app.db.session import get_db
 from app.models.itinerary import ItineraryItem
 from app.models.trip import Trip
 from app.schemas.generator import ItineraryGenerationRequest
-from app.schemas.itinerary import ItineraryItemCreate, ItineraryItemResponse
+from app.schemas.itinerary import ItineraryItemCreate, ItineraryItemResponse, ItineraryItemUpdate
 from app.schemas.trip import TripDetailResponse
 from app.services.itinerary_generator import generate_itinerary as generate_itinerary_service
 
@@ -40,6 +40,49 @@ def create_itinerary_item(
     db.commit()
     db.refresh(db_item)
     return db_item
+
+
+@router.patch("/itinerary-items/{item_id}", response_model=ItineraryItemResponse)
+def update_itinerary_item(
+    trip_id: int,
+    item_id: int,
+    itinerary_item: ItineraryItemUpdate,
+    db: Session = Depends(get_db),
+):
+    get_trip_or_404(trip_id, db)
+    db_item = db.query(ItineraryItem).filter(ItineraryItem.trip_id == trip_id, ItineraryItem.id == item_id).first()
+    if db_item is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Itinerary item not found")
+
+    if itinerary_item.day_number is not None:
+        db_item.day_number = itinerary_item.day_number
+    if itinerary_item.time_slot is not None:
+        db_item.time_slot = itinerary_item.time_slot
+    if itinerary_item.place_name is not None:
+        db_item.place_name = itinerary_item.place_name
+    if itinerary_item.category is not None:
+        db_item.category = itinerary_item.category
+    if itinerary_item.notes is not None:
+        db_item.notes = itinerary_item.notes
+
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+
+@router.delete("/itinerary-items/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_itinerary_item(
+    trip_id: int,
+    item_id: int,
+    db: Session = Depends(get_db),
+):
+    get_trip_or_404(trip_id, db)
+    db_item = db.query(ItineraryItem).filter(ItineraryItem.trip_id == trip_id, ItineraryItem.id == item_id).first()
+    if db_item is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Itinerary item not found")
+
+    db.delete(db_item)
+    db.commit()
 
 
 @router.get("/itinerary-items", response_model=list[ItineraryItemResponse])

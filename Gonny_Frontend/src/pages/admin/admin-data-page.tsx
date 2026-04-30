@@ -5,27 +5,41 @@ import { apiClient } from "../../shared/api/client";
 import {
   CityCatalog,
   DestinationSummary,
+  displayCity,
+  displayContinent,
+  displayCountry,
+  getApiErrorMessage,
   labelCategory,
-  labelCity,
-  labelContinent,
-  labelCountry,
+  labelVisibilityLevel,
 } from "./admin-data-shared";
+
+type PlaceListItem = CityCatalog["places"][number] & {
+  city: string;
+  cityLabel: string;
+};
 
 export function AdminDataPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [destinations, setDestinations] = useState<DestinationSummary[]>([]);
-  const [catalog, setCatalog] = useState<CityCatalog | null>(null);
-  const [statusText, setStatusText] = useState("도시와 장소를 고른 뒤 수정 페이지로 이동하면 더 편하게 관리할 수 있어요.");
+  const [catalogs, setCatalogs] = useState<CityCatalog[]>([]);
+  const [statusText, setStatusText] = useState(
+    "여행지를 고르거나 장소를 검색해서 바로 수정 화면으로 이동해보세요.",
+  );
 
   const selectedContinent = searchParams.get("continent") ?? "";
   const selectedCountry = searchParams.get("country") ?? "";
   const selectedCity = searchParams.get("city") ?? "";
   const searchKeyword = searchParams.get("q") ?? "";
+  const selectedView = searchParams.get("view") ?? "all";
 
   useEffect(() => {
     async function loadDestinations() {
-      const response = await apiClient.get<{ destinations: DestinationSummary[] }>("/admin/destinations");
-      setDestinations(response.data.destinations ?? []);
+      try {
+        const response = await apiClient.get<{ destinations: DestinationSummary[] }>("/admin/destinations");
+        setDestinations(response.data.destinations ?? []);
+      } catch (error) {
+        setStatusText(getApiErrorMessage(error, "여행지 목록을 불러오지 못했습니다."));
+      }
     }
 
     void loadDestinations();
@@ -38,9 +52,9 @@ export function AdminDataPage() {
         destination.continent,
         destination.country,
         destination.city,
-        labelContinent(destination.continent),
-        labelCountry(destination.country),
-        labelCity(destination.city),
+        displayContinent(destination),
+        displayCountry(destination),
+        displayCity(destination),
       ]
         .join(" ")
         .toLowerCase();
@@ -48,12 +62,15 @@ export function AdminDataPage() {
     });
   }, [destinations, searchKeyword]);
 
-  const continentOptions = useMemo(() => {
-    return Array.from(new Set(filteredDestinations.map((destination) => destination.continent)));
-  }, [filteredDestinations]);
+  const continentOptions = useMemo(
+    () => Array.from(new Set(filteredDestinations.map((destination) => destination.continent))),
+    [filteredDestinations],
+  );
 
   const countryOptions = useMemo(() => {
-    if (!selectedContinent) return [];
+    if (!selectedContinent) {
+      return Array.from(new Set(filteredDestinations.map((destination) => destination.country)));
+    }
     return Array.from(
       new Set(
         filteredDestinations
@@ -64,99 +81,141 @@ export function AdminDataPage() {
   }, [filteredDestinations, selectedContinent]);
 
   const cityOptions = useMemo(() => {
-    if (!selectedContinent || !selectedCountry) return [];
-    return filteredDestinations.filter(
-      (destination) => destination.continent === selectedContinent && destination.country === selectedCountry,
-    );
+    return filteredDestinations.filter((destination) => {
+      if (selectedContinent && destination.continent !== selectedContinent) return false;
+      if (selectedCountry && destination.country !== selectedCountry) return false;
+      return true;
+    });
   }, [filteredDestinations, selectedContinent, selectedCountry]);
 
   useEffect(() => {
-    if (!continentOptions.length) return;
+    async function loadCatalogs() {
+      const targetCities = cityOptions
+        .filter((destination) => !selectedCity || destination.city === selectedCity)
+        .map((destination) => destination.city);
 
-    const nextContinent = continentOptions.includes(selectedContinent) ? selectedContinent : continentOptions[0];
-    const nextCountryOptions = Array.from(
-      new Set(
-        filteredDestinations
-          .filter((destination) => destination.continent === nextContinent)
-          .map((destination) => destination.country),
-      ),
-    );
-    const nextCountry = nextCountryOptions.includes(selectedCountry) ? selectedCountry : nextCountryOptions[0] ?? "";
-    const nextCityOptions = filteredDestinations.filter(
-      (destination) => destination.continent === nextContinent && destination.country === nextCountry,
-    );
-    const nextCity = nextCityOptions.some((destination) => destination.city === selectedCity)
-      ? selectedCity
-      : nextCityOptions[0]?.city ?? "";
+      if (!targetCities.length) {
+        setCatalogs([]);
+        return;
+      }
 
-    const nextParams = new URLSearchParams(searchParams);
-    nextParams.set("continent", nextContinent);
-    if (nextCountry) nextParams.set("country", nextCountry);
-    if (nextCity) nextParams.set("city", nextCity);
-
-    if (nextParams.toString() !== searchParams.toString()) {
-      setSearchParams(nextParams, { replace: true });
-    }
-  }, [
-    continentOptions,
-    filteredDestinations,
-    searchParams,
-    selectedCity,
-    selectedContinent,
-    selectedCountry,
-    setSearchParams,
-  ]);
-
-  useEffect(() => {
-    async function loadCatalog() {
-      if (!selectedCity) return;
-      const response = await apiClient.get<CityCatalog>(`/admin/destinations/${selectedCity}`);
-      setCatalog(response.data);
+      try {
+        const responses = await Promise.all(
+          targetCities.map((city) => apiClient.get<CityCatalog>(`/admin/destinations/${city}`)),
+        );
+        setCatalogs(responses.map((response) => response.data));
+      } catch (error) {
+        setStatusText(getApiErrorMessage(error, "장소 목록을 불러오지 못했습니다."));
+      }
     }
 
-    void loadCatalog();
-  }, [selectedCity]);
+    void loadCatalogs();
+  }, [cityOptions, selectedCity]);
+
+  const activeCatalog = useMemo(() => {
+    if (!selectedCity) return null;
+    return catalogs.find((catalog) => catalog.city === selectedCity) ?? null;
+  }, [catalogs, selectedCity]);
 
   const placeList = useMemo(() => {
-    if (!catalog) return [];
+    if (!catalogs.length) return [];
     const keyword = searchKeyword.trim().toLowerCase();
-    return catalog.places.filter((place) => {
-      const searchTarget = [place.name, place.id, place.area, place.summary, ...place.category].join(" ").toLowerCase();
-      return keyword ? searchTarget.includes(keyword) : true;
-    });
-  }, [catalog, searchKeyword]);
+    return catalogs
+      .flatMap((catalog) =>
+        catalog.places.map((place) => ({
+          ...place,
+          city: catalog.city,
+          cityLabel: catalog.city_label?.trim() || displayCity(catalog),
+        })),
+      )
+      .filter((place) => {
+        const searchTarget = [place.name, place.id, place.area, place.summary, place.cityLabel, ...place.category]
+          .join(" ")
+          .toLowerCase();
+        if (keyword && !searchTarget.includes(keyword)) {
+          return false;
+        }
+
+        if (selectedView === "active") return (place.is_active ?? true) === true;
+        if (selectedView === "inactive") return (place.is_active ?? true) === false;
+        if (selectedView === "activity") {
+          return place.category.some((category) => ["activity", "theme_park", "local_experience"].includes(category));
+        }
+        if (selectedView === "core") return (place.mvp_tier ?? "standard") === "core";
+        return true;
+      })
+      .sort((left, right) => {
+        const activeGap = Number(right.is_active ?? true) - Number(left.is_active ?? true);
+        if (activeGap !== 0) return activeGap;
+        return right.priority - left.priority;
+      });
+  }, [catalogs, searchKeyword, selectedView]);
 
   function updateParam(key: string, value: string) {
     const nextParams = new URLSearchParams(searchParams);
-    if (value) {
-      nextParams.set(key, value);
-    } else {
+    const currentValue = searchParams.get(key) ?? "";
+
+    if (!value || currentValue === value) {
       nextParams.delete(key);
+      if (key === "continent") {
+        nextParams.delete("country");
+        nextParams.delete("city");
+      }
+      if (key === "country") {
+        nextParams.delete("city");
+      }
+    } else {
+      nextParams.set(key, value);
+      if (key === "continent") {
+        nextParams.delete("country");
+        nextParams.delete("city");
+      }
+      if (key === "country") {
+        nextParams.delete("city");
+      }
     }
     setSearchParams(nextParams);
   }
 
   async function toggleActive(placeId: string, nextActive: boolean, placeName: string) {
-    if (!selectedCity) return;
-    await apiClient.patch(`/admin/destinations/${selectedCity}/places/${placeId}/active`, {
-      is_active: nextActive,
-    });
-    const response = await apiClient.get<CityCatalog>(`/admin/destinations/${selectedCity}`);
-    setCatalog(response.data);
-    setStatusText(`${placeName}의 활성 상태를 변경했어요.`);
+    const targetPlace = placeList.find((place) => place.id === placeId);
+    if (!targetPlace) return;
+
+    try {
+      await apiClient.patch(`/admin/destinations/${targetPlace.city}/places/${placeId}/active`, {
+        is_active: nextActive,
+      });
+      const responses = await Promise.all(
+        catalogs.map((catalog) => apiClient.get<CityCatalog>(`/admin/destinations/${catalog.city}`)),
+      );
+      setCatalogs(responses.map((response) => response.data));
+      setStatusText(`${placeName} 장소를 ${nextActive ? "활성" : "비활성"} 상태로 변경했습니다.`);
+    } catch (error) {
+      setStatusText(getApiErrorMessage(error, "장소 상태를 변경하지 못했습니다."));
+    }
   }
 
-  const selectedQuery = `?continent=${selectedContinent}&country=${selectedCountry}&city=${selectedCity}&q=${searchKeyword}`;
+  const selectedQuery = `?${new URLSearchParams(
+    Object.fromEntries(
+      Object.entries({
+        continent: selectedContinent,
+        country: selectedCountry,
+        city: selectedCity,
+        q: searchKeyword,
+        view: selectedView,
+      }).filter(([, value]) => value),
+    ),
+  ).toString()}`;
 
   return (
     <AppShell>
       <section className="admin-page">
         <div className="admin-header">
           <div>
-            <p className="planner-kicker">데이터 운영</p>
-            <h1 className="planner-title">여행 데이터 관리</h1>
+            <p className="planner-kicker">데이터 관리</p>
+            <h1 className="planner-title">여행지 및 장소 관리</h1>
             <p className="planner-description">
-              목록에서는 빠르게 찾고 고르고, 수정이 필요할 때만 별도 화면으로 들어가도록 나눠서 더 가볍게 운영할 수 있어요.
+              지역별로 빠르게 찾고, 필요한 여행지나 장소를 바로 수정할 수 있습니다.
             </p>
           </div>
           <p className="admin-status">{statusText}</p>
@@ -166,7 +225,7 @@ export function AdminDataPage() {
           <label className="admin-search">
             <span>검색</span>
             <input
-              placeholder="도시명, 장소명, 카테고리로 찾아보세요."
+              placeholder="도시, 장소명, 지역, 카테고리로 검색"
               value={searchKeyword}
               onChange={(event) => updateParam("q", event.target.value)}
             />
@@ -182,7 +241,12 @@ export function AdminDataPage() {
                   onClick={() => updateParam("continent", continent)}
                   type="button"
                 >
-                  {labelContinent(continent)}
+                  {displayContinent(
+                    filteredDestinations.find((destination) => destination.continent === continent) ?? {
+                      continent,
+                      continent_label: null,
+                    },
+                  )}
                 </button>
               ))}
             </div>
@@ -198,7 +262,11 @@ export function AdminDataPage() {
                   onClick={() => updateParam("country", country)}
                   type="button"
                 >
-                  {labelCountry(country)}
+                  {displayCountry(
+                    filteredDestinations.find(
+                      (destination) => destination.continent === selectedContinent && destination.country === country,
+                    ) ?? { country, country_label: null },
+                  )}
                 </button>
               ))}
             </div>
@@ -214,7 +282,7 @@ export function AdminDataPage() {
                   onClick={() => updateParam("city", destination.city)}
                   type="button"
                 >
-                  {labelCity(destination.city)}
+                  {displayCity(destination)}
                 </button>
               ))}
             </div>
@@ -223,20 +291,19 @@ export function AdminDataPage() {
 
         <div className="admin-summary-bar">
           <div className="admin-summary-card">
-            <strong>{catalog ? labelCity(catalog.city) : "-"}</strong>
-            <span>전체 장소 {catalog?.places.length ?? 0}개</span>
+            <strong>{selectedCity && activeCatalog ? activeCatalog.city_label?.trim() || displayCity(activeCatalog) : "전체 도시"}</strong>
+            <span>{placeList.length}개 장소</span>
           </div>
           <div className="admin-summary-card">
             <strong>활성 장소</strong>
-            <span>{catalog?.places.filter((place) => place.is_active ?? true).length ?? 0}개</span>
+            <span>{placeList.filter((place) => place.is_active ?? true).length}</span>
           </div>
           <div className="admin-summary-card">
-            <strong>체험 장소</strong>
+            <strong>액티비티 중심 장소</strong>
             <span>
-              {catalog?.places.filter((place) =>
+              {placeList.filter((place) =>
                 place.category.some((category) => ["activity", "theme_park", "local_experience"].includes(category)),
-              ).length ?? 0}
-              개
+              ).length}
             </span>
           </div>
         </div>
@@ -244,36 +311,78 @@ export function AdminDataPage() {
         <section className="admin-panel admin-list-panel">
           <div className="admin-panel-head">
             <h2>장소 목록</h2>
-            <Link className="admin-primary-link" to={`/admin/data/${selectedCity}/new${selectedQuery}`}>
-              {selectedCity ? `${labelCity(selectedCity)}에 새 장소 추가` : "새 장소 추가"}
-            </Link>
+            <div className="admin-editor-actions">
+              <Link className="admin-secondary-link" to="/admin/data/new-destination">
+                여행지 추가
+              </Link>
+              <Link
+                className={selectedCity ? "admin-primary-link" : "admin-primary-link disabled"}
+                to={selectedCity ? `/admin/data/${selectedCity}/new${selectedQuery}` : "/admin/data"}
+              >
+                {selectedCity
+                  ? `${displayCity(
+                      cityOptions.find((destination) => destination.city === selectedCity) ?? {
+                        city: selectedCity,
+                        city_label: null,
+                      },
+                    )}에 장소 추가`
+                  : "먼저 도시를 선택해주세요"}
+              </Link>
+            </div>
+          </div>
+
+          <div className="admin-sub-filter-row">
+            {[
+              { value: "all", label: "전체" },
+              { value: "active", label: "활성만" },
+              { value: "inactive", label: "비활성만" },
+              { value: "activity", label: "액티비티만" },
+              { value: "core", label: "대표 장소만" },
+            ].map((filter) => (
+              <button
+                key={filter.value}
+                className={selectedView === filter.value ? "admin-chip active" : "admin-chip"}
+                onClick={() => updateParam("view", filter.value)}
+                type="button"
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
 
           <div className="admin-place-list admin-place-list-scroll compact">
-            {placeList.map((place) => (
-              <article key={place.id} className="admin-place-card">
-                <div className="admin-place-main">
-                  <strong>{place.name}</strong>
-                  <span>{place.category.map(labelCategory).join(", ")}</span>
-                  <span>
-                    추천 우선순위 {place.priority} · MVP {place.mvp_tier ?? "standard"} ·{" "}
-                    {(place.is_active ?? true) ? "활성" : "비활성"}
-                  </span>
-                </div>
-                <div className="admin-card-actions">
-                  <Link className="admin-secondary-link" to={`/admin/data/${selectedCity}/${place.id}/edit${selectedQuery}`}>
-                    수정하기
-                  </Link>
-                  <button
-                    className="admin-toggle-button"
-                    onClick={() => void toggleActive(place.id, !(place.is_active ?? true), place.name)}
-                    type="button"
-                  >
-                    {(place.is_active ?? true) ? "비활성화" : "활성화"}
-                  </button>
-                </div>
+            {placeList.length ? (
+              placeList.map((place) => (
+                <article key={place.id} className="admin-place-card">
+                  <div className="admin-place-main">
+                    <strong>{place.name}</strong>
+                    <span className="admin-place-city">{place.cityLabel}</span>
+                    <span>{place.category.map(labelCategory).join(", ")}</span>
+                    <span>
+                      우선순위 {place.priority} - {labelVisibilityLevel(place.mvp_tier ?? "standard")} -{" "}
+                      {(place.is_active ?? true) ? "활성" : "비활성"}
+                    </span>
+                  </div>
+                  <div className="admin-card-actions">
+                    <Link className="admin-secondary-link" to={`/admin/data/${place.city}/${place.id}/edit${selectedQuery}`}>
+                      수정
+                    </Link>
+                    <button
+                      className="admin-toggle-button"
+                      onClick={() => void toggleActive(place.id, !(place.is_active ?? true), place.name)}
+                      type="button"
+                    >
+                      {(place.is_active ?? true) ? "비활성화" : "활성화"}
+                    </button>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <article className="admin-empty-card">
+                <strong>현재 조건에 맞는 장소가 없습니다.</strong>
+                <p>검색어나 필터를 바꾸거나, 선택한 도시에 새 장소를 추가해보세요.</p>
               </article>
-            ))}
+            )}
           </div>
         </section>
       </section>

@@ -15,6 +15,7 @@ export type TripSummaryItem = {
   status: TripStatus;
   budget: number;
   companionCount: number;
+  isFavorite: boolean;
 };
 
 export type TripOverview = {

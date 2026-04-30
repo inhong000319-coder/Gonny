@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { Button } from "../../../shared/components/ui/button";
+import { createItineraryItem } from "../../itinerary/api/create-itinerary-item";
+import { createTrip } from "../../trips/api/create-trip";
+import {
+  createItineraryDocDownload,
+  createItineraryPrintPreview,
+  revokeItineraryExportUrl,
+} from "../../../shared/lib/itinerary-export";
 
 type CatalogCityOption = {
   continent: string;
@@ -59,6 +67,7 @@ type PlannerFormState = {
   country: string;
   city: string;
   travelers: number;
+  start_date: string;
   duration_label: string;
   budget_value: string;
   budget_band: BudgetBand;
@@ -90,6 +99,7 @@ const initialForm: PlannerFormState = {
   country: "",
   city: "",
   travelers: 2,
+  start_date: new Date().toISOString().slice(0, 10),
   duration_label: "2박 3일",
   budget_value: "",
   budget_band: "medium",
@@ -246,6 +256,15 @@ function buildDurationLabel(nights: number) {
   return `${nights}박 ${nights + 1}일`;
 }
 
+function buildEndDate(startDate: string, nights: number) {
+  const parsed = new Date(startDate);
+  if (Number.isNaN(parsed.getTime())) {
+    return startDate;
+  }
+  parsed.setDate(parsed.getDate() + nights);
+  return parsed.toISOString().slice(0, 10);
+}
+
 function parseNights(value: string) {
   const match = value.match(/(\d+)\s*박/);
   if (!match) {
@@ -377,15 +396,19 @@ function buildEmbedUrl(video: FeaturedVideo) {
 }
 
 export function TripCreateForm() {
+  const navigate = useNavigate();
   const [form, setForm] = useState<PlannerFormState>(initialForm);
   const [catalog, setCatalog] = useState<CatalogCityOption[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSavingTrip, setIsSavingTrip] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [result, setResult] = useState<RuleItineraryResponse | null>(null);
   const [playingVideoId, setPlayingVideoId] = useState("");
+  const [docDownload, setDocDownload] = useState<{ href: string; filename: string } | null>(null);
+  const [printPreview, setPrintPreview] = useState<{ href: string; filename: string } | null>(null);
   const hasResult = result !== null;
 
   useEffect(() => {
@@ -488,6 +511,7 @@ export function TripCreateForm() {
   const selectedBudgetValue = parseBudgetValue(form.budget_value);
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
+  const endDate = buildEndDate(form.start_date, selectedNights);
 
   useEffect(() => {
     if (!form.city) {
@@ -499,6 +523,44 @@ export function TripCreateForm() {
       setForm((prev) => ({ ...prev, city: "" }));
     }
   }, [cities, form.city]);
+
+  useEffect(() => {
+    const previousDocHref = docDownload?.href;
+    const previousPrintHref = printPreview?.href;
+
+    if (!result) {
+      setDocDownload(null);
+      setPrintPreview(null);
+      return () => {
+        revokeItineraryExportUrl(previousDocHref);
+        revokeItineraryExportUrl(previousPrintHref);
+      };
+    }
+
+    const labels = {
+      cityLabel: toCityLabel(result.city),
+      countryLabel: toCountryLabel(result.country),
+      continentLabel: toContinentLabel(result.continent),
+      budgetLabel: labelBudget(result.budget_band),
+      styleLabel: labelStyle(result.style),
+      companionLabel: labelCompanion(result.companion_type),
+      conceptLabels: result.concepts.map(labelTripConcept),
+      timeSlotLabel: (value: string) => labelTimeSlot(value as TimeSlot),
+    };
+
+    const nextDocDownload = createItineraryDocDownload(result, labels);
+    const nextPrintPreview = createItineraryPrintPreview(result, labels);
+
+    setDocDownload(nextDocDownload);
+    setPrintPreview(nextPrintPreview);
+
+    return () => {
+      revokeItineraryExportUrl(previousDocHref);
+      revokeItineraryExportUrl(previousPrintHref);
+      revokeItineraryExportUrl(nextDocDownload.href);
+      revokeItineraryExportUrl(nextPrintPreview.href);
+    };
+  }, [result]);
 
   const updateField = <K extends keyof PlannerFormState>(key: K, value: PlannerFormState[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -556,6 +618,44 @@ export function TripCreateForm() {
   const handleBudgetStep = (amount: number) => {
     const nextValue = Math.min(50000000, selectedBudgetValue + amount);
     updateField("budget_value", String(nextValue));
+  };
+
+  const handleSaveTrip = async () => {
+    if (!result) {
+      return;
+    }
+
+    setIsSavingTrip(true);
+    setError("");
+
+    try {
+      const createdTrip = await createTrip({
+        title: `${toCityLabel(result.city)} ${form.duration_label} 일정`,
+        destination: result.city,
+        start_date: form.start_date,
+        end_date: endDate,
+        budget: selectedBudgetValue,
+        travel_style: result.style,
+        companion_type: result.companion_type,
+      });
+
+      for (const item of result.items) {
+        await createItineraryItem(String(createdTrip.id), {
+          day_number: item.day_number,
+          time_slot: item.time_slot,
+          place_name: item.place_name,
+          category: item.category,
+          notes: item.notes,
+        });
+      }
+
+      navigate(`/trips/${createdTrip.id}`);
+    } catch (saveError) {
+      const nextError = saveError instanceof Error ? saveError.message : "여행 저장에 실패했습니다.";
+      setError(nextError);
+    } finally {
+      setIsSavingTrip(false);
+    }
   };
 
   return (
@@ -836,6 +936,14 @@ export function TripCreateForm() {
 
                 <div className="planner-input-panel">
                   <div className="field">
+                    <span>여행 시작일</span>
+                    <input
+                      onChange={(event) => updateField("start_date", event.target.value)}
+                      type="date"
+                      value={form.start_date}
+                    />
+                  </div>
+                  <div className="field">
                     <span>여행 인원</span>
                     <div className="planner-chip-grid planner-chip-grid-travelers">
                       {travelerOptions.map((option) => (
@@ -865,7 +973,9 @@ export function TripCreateForm() {
                         </button>
                       ))}
                     </div>
-                    <p className="planner-inline-note">현재 선택: {form.duration_label}</p>
+                    <p className="planner-inline-note">
+                      현재 선택: {form.duration_label} · {form.start_date} ~ {endDate}
+                    </p>
                   </div>
 
                   <div className="field">
@@ -1236,6 +1346,19 @@ export function TripCreateForm() {
             </div>
 
             <div className="planner-result-actions">
+              <Button disabled={isSavingTrip} onClick={handleSaveTrip} type="button">
+                {isSavingTrip ? "여행 저장 중..." : "이 일정으로 여행 저장"}
+              </Button>
+              {docDownload ? (
+                <a className="button ghost" download={docDownload.filename} href={docDownload.href}>
+                  문서 파일 다운로드
+                </a>
+              ) : null}
+              {printPreview ? (
+                <a className="button ghost" href={printPreview.href} rel="noreferrer" target="_blank">
+                  PDF로 저장
+                </a>
+              ) : null}
               <Button onClick={handleEditAgain} type="button" variant="secondary">
                 조건 다시 수정하기
               </Button>

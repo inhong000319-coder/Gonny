@@ -17,6 +17,7 @@ export const mockTrips: TripSummaryItem[] = [
     status: "upcoming",
     budget: 500000,
     companionCount: 2,
+    isFavorite: false,
   },
   {
     id: "102",
@@ -27,6 +28,7 @@ export const mockTrips: TripSummaryItem[] = [
     status: "completed",
     budget: 420000,
     companionCount: 1,
+    isFavorite: false,
   },
 ];
 

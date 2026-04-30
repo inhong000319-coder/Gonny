@@ -1,11 +1,21 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
+import { updateTripFavorite } from "../../features/trips/api/update-trip-favorite";
 import { TripList } from "../../features/trips/components/trip-list";
 import { useTripsQuery } from "../../features/trips/hooks/use-trips-query";
+import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
 
 export function TripsPage() {
+  const queryClient = useQueryClient();
   const { data: trips = [] } = useTripsQuery();
+  const favoriteMutation = useMutation({
+    mutationFn: ({ tripId, isFavorite }: { tripId: string; isFavorite: boolean }) => updateTripFavorite(tripId, isFavorite),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.trips });
+    },
+  });
 
   return (
     <AppShell>
@@ -28,8 +38,17 @@ export function TripsPage() {
             </Link>
           </div>
         </div>
+        {favoriteMutation.error ? (
+          <p className="section-subtitle" style={{ margin: "12px 0 0", color: "#b42318" }}>
+            {favoriteMutation.error instanceof Error ? favoriteMutation.error.message : "즐겨찾기 변경 중 문제가 생겼어요."}
+          </p>
+        ) : null}
       </section>
-      <TripList trips={trips} />
+      <TripList
+        pendingTripId={favoriteMutation.isPending ? ((favoriteMutation.variables?.tripId as string | undefined) ?? null) : null}
+        trips={trips}
+        onToggleFavorite={(tripId, nextFavorite) => favoriteMutation.mutate({ tripId, isFavorite: nextFavorite })}
+      />
     </AppShell>
   );
 }

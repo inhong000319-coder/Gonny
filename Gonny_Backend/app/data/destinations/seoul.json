@@ -80,7 +80,7 @@
       ],
       "area": "jongno",
       "duration_hours": 2,
-      "priority": 9,
+      "priority": 7,
       "pace": [
         "easy"
       ],
@@ -126,7 +126,7 @@
       ],
       "area": "jongno",
       "duration_hours": 2,
-      "priority": 8,
+      "priority": 9,
       "pace": [
         "easy",
         "tight"
@@ -362,7 +362,7 @@
       ],
       "area": "gangnam",
       "duration_hours": 3,
-      "priority": 7,
+      "priority": 6,
       "pace": [
         "tight"
       ],
@@ -408,7 +408,7 @@
       ],
       "area": "gangnam",
       "duration_hours": 2,
-      "priority": 8,
+      "priority": 7,
       "pace": [
         "easy"
       ],
@@ -502,7 +502,7 @@
       ],
       "area": "jongno",
       "duration_hours": 2,
-      "priority": 8,
+      "priority": 9,
       "pace": [
         "easy"
       ],
@@ -594,7 +594,7 @@
       ],
       "area": "hongdae",
       "duration_hours": 2,
-      "priority": 7,
+      "priority": 9,
       "pace": [
         "easy"
       ],

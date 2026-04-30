@@ -17,6 +17,8 @@ function TripCardIcon() {
 
 type TripCardProps = {
   trip: TripSummaryItem;
+  pending?: boolean;
+  onToggleFavorite: (tripId: string, nextFavorite: boolean) => void;
 };
 
 const statusLabelMap = {
@@ -25,9 +27,9 @@ const statusLabelMap = {
   completed: "완료",
 } as const;
 
-export function TripCard({ trip }: TripCardProps) {
+export function TripCard({ trip, pending = false, onToggleFavorite }: TripCardProps) {
   return (
-    <Link className="trip-card trip-card-polished" to={`/trips/${trip.id}`}>
+    <article className="trip-card trip-card-polished">
       <div className="trip-card-main">
         <div className="trip-card-icon-wrap">
           <TripCardIcon />
@@ -36,7 +38,17 @@ export function TripCard({ trip }: TripCardProps) {
         <div className="trip-card-copy">
           <div className="row" style={{ justifyContent: "space-between" }}>
             <strong className="trip-card-title">{trip.title}</strong>
-            <Badge>{statusLabelMap[trip.status]}</Badge>
+            <div className="row">
+              <button
+                className={`chip trip-favorite-chip ${trip.isFavorite ? "active" : ""}`}
+                disabled={pending}
+                onClick={() => onToggleFavorite(trip.id, !trip.isFavorite)}
+                type="button"
+              >
+                {trip.isFavorite ? "즐겨찾기 해제" : "즐겨찾기"}
+              </button>
+              <Badge>{statusLabelMap[trip.status]}</Badge>
+            </div>
           </div>
           <p className="section-subtitle" style={{ margin: "8px 0 0" }}>
             {trip.startDate} - {trip.endDate}
@@ -46,8 +58,21 @@ export function TripCard({ trip }: TripCardProps) {
             <span>예산 {trip.budget.toLocaleString()}원</span>
             <span>동행 {trip.companionCount}명</span>
           </div>
+          <div className="row" style={{ marginTop: 12 }}>
+            <Link to={`/trips/${trip.id}`}>
+              <button className="button secondary" type="button">
+                여행 상세 보기
+              </button>
+            </Link>
+            <Link to={`/trips/${trip.id}/memory`}>
+              <button className="button secondary" type="button">
+                기록관리 보기
+              </button>
+            </Link>
+            {trip.isFavorite ? <span className="chip active">프로필에 표시 중</span> : null}
+          </div>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

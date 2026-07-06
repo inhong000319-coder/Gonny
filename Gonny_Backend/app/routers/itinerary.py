@@ -2,22 +2,15 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
+from app.domains.trips.schemas import TripDetailResponse
+from app.domains.trips.services.service import trip_service
 from app.models.itinerary import ItineraryItem
-from app.models.trip import Trip
 from app.schemas.generator import ItineraryGenerationRequest
 from app.schemas.itinerary import ItineraryItemCreate, ItineraryItemResponse, ItineraryItemUpdate
-from app.schemas.trip import TripDetailResponse
 from app.services.itinerary_generator import generate_itinerary as generate_itinerary_service
 
 
 router = APIRouter(prefix="/trips/{trip_id}", tags=["itinerary-items"])
-
-
-def get_trip_or_404(trip_id: int, db: Session) -> Trip:
-    trip = db.query(Trip).filter(Trip.id == trip_id).first()
-    if trip is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Trip not found")
-    return trip
 
 
 @router.post("/itinerary-items", response_model=ItineraryItemResponse)
@@ -26,7 +19,7 @@ def create_itinerary_item(
     itinerary_item: ItineraryItemCreate,
     db: Session = Depends(get_db),
 ):
-    get_trip_or_404(trip_id, db)
+    trip_service.get_trip_or_404(db=db, trip_id=trip_id)
 
     db_item = ItineraryItem(
         trip_id=trip_id,
@@ -49,7 +42,7 @@ def update_itinerary_item(
     itinerary_item: ItineraryItemUpdate,
     db: Session = Depends(get_db),
 ):
-    get_trip_or_404(trip_id, db)
+    trip_service.get_trip_or_404(db=db, trip_id=trip_id)
     db_item = db.query(ItineraryItem).filter(ItineraryItem.trip_id == trip_id, ItineraryItem.id == item_id).first()
     if db_item is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Itinerary item not found")
@@ -76,7 +69,7 @@ def delete_itinerary_item(
     item_id: int,
     db: Session = Depends(get_db),
 ):
-    get_trip_or_404(trip_id, db)
+    trip_service.get_trip_or_404(db=db, trip_id=trip_id)
     db_item = db.query(ItineraryItem).filter(ItineraryItem.trip_id == trip_id, ItineraryItem.id == item_id).first()
     if db_item is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Itinerary item not found")
@@ -87,7 +80,7 @@ def delete_itinerary_item(
 
 @router.get("/itinerary-items", response_model=list[ItineraryItemResponse])
 def list_itinerary_items(trip_id: int, db: Session = Depends(get_db)):
-    get_trip_or_404(trip_id, db)
+    trip_service.get_trip_or_404(db=db, trip_id=trip_id)
 
     itinerary_items = (
         db.query(ItineraryItem)
@@ -100,7 +93,7 @@ def list_itinerary_items(trip_id: int, db: Session = Depends(get_db)):
 
 @router.post("/generate-itinerary", response_model=TripDetailResponse)
 def generate_itinerary(trip_id: int, db: Session = Depends(get_db)):
-    trip = get_trip_or_404(trip_id, db)
+    trip = trip_service.get_trip_or_404(db=db, trip_id=trip_id)
 
     request_data = ItineraryGenerationRequest(
         destination=trip.destination,

@@ -5,7 +5,7 @@ import { createPlaceReviewReaction } from "../../features/community/api/create-p
 import { useCommunityPlaceCitiesQuery } from "../../features/community/hooks/use-community-place-cities-query";
 import { useCommunityPlaceDetailQuery } from "../../features/community/hooks/use-community-place-detail-query";
 import { useCommunityPlacesQuery } from "../../features/community/hooks/use-community-places-query";
-import { formatRegionLabel } from "../../features/community/lib/region-label";
+import { formatRegionLabel } from "../../features/community/region-label";
 import { CommunityPlaceReviewItem } from "../../features/community/types/community";
 import { Button } from "../../shared/components/ui/button";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";

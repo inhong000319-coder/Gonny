@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useCommunityJournalDetailQuery } from "../hooks/use-community-journal-detail-query";
-import { formatRegionLabel } from "../lib/region-label";
+import { formatRegionLabel } from "../region-label";
 import {
   CreateTravelJournalCommentPayload,
   TravelJournalComment,

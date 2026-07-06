@@ -2,7 +2,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { AppShell } from "../../app/layouts/app-shell";
 import { CommunityJournalModal } from "../../features/community/components/community-journal-modal";
 import { useCommunityJournalsQuery } from "../../features/community/hooks/use-community-journals-query";
-import { formatRegionLabel } from "../../features/community/lib/region-label";
+import { formatRegionLabel } from "../../features/community/region-label";
 import { Button } from "../../shared/components/ui/button";
 
 function formatDate(value: string) {

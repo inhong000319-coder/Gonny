@@ -8,7 +8,7 @@ import {
   createItineraryDocDownload,
   createItineraryPrintPreview,
   revokeItineraryExportUrl,
-} from "../../../shared/lib/itinerary-export";
+} from "../../../shared/itinerary-export";
 
 type CatalogCityOption = {
   continent: string;

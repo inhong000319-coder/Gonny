@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "../lib/token";
+import { getAccessToken } from "./token";
 
 function resolveApiBaseUrl() {
   const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL;

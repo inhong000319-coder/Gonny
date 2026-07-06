@@ -5,7 +5,7 @@ import {
   createItineraryDocDownload,
   createItineraryPrintPreview,
   revokeItineraryExportUrl,
-} from "../../shared/lib/itinerary-export";
+} from "../../shared/itinerary-export";
 
 const TEXT = {
   plannerKicker: "\ub2e8\uacc4\ud615 \ud50c\ub798\ub108",

@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { clearAuthTokens, getAccessToken, saveAccessToken } from "../../shared/lib/token";
+import { clearAuthTokens, getAccessToken, saveAccessToken } from "../../shared/api/token";
 
 type AuthUser = {
   id: number;

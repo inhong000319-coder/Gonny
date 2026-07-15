@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from app.providers.place_catalog.local_json_catalog import LocalJsonPlaceCatalogProvider
 from app.schemas.rule_itinerary import RuleItineraryRequest
 from app.services.rule_itinerary_service import RuleItineraryService
@@ -9,17 +11,24 @@ def test_rule_itinerary_request_accepts_activity_concept() -> None:
     assert request.concepts == ["activity", "food"]
 
 
-def test_local_catalog_includes_added_activity_places() -> None:
+def test_local_catalog_preserves_overseas_data_in_storage() -> None:
     provider = LocalJsonPlaceCatalogProvider()
     seoul = provider.get_city_catalog(continent="asia", country="korea", city="seoul")
     tokyo = provider.get_city_catalog(continent="asia", country="japan", city="tokyo")
 
-    place_ids = {place.id for place in seoul.places}
+    seoul_place_ids = {place.id for place in seoul.places}
     tokyo_place_ids = {place.id for place in tokyo.places}
 
-    assert "lotte-world-adventure" in place_ids
-    assert "e-land-hangang-cruise" in place_ids
+    assert "lotte-world-adventure" in seoul_place_ids
+    assert "e-land-hangang-cruise" in seoul_place_ids
     assert "tokyo-disneysea" in tokyo_place_ids
+
+
+def test_public_catalog_options_only_include_korean_focus_cities() -> None:
+    service = RuleItineraryService()
+    options = service.list_catalog_options()
+
+    assert {option.city for option in options} == {"seoul", "busan", "jeju"}
 
 
 def test_activity_concept_prefers_activity_places_in_middle_of_trip() -> None:
@@ -107,44 +116,24 @@ def test_departure_day_avoids_activity_heavy_schedule_for_seoul() -> None:
     assert "activity" not in [item.category for item in last_day]
 
 
-def test_half_day_activity_time_bias_for_chiangmai() -> None:
+def test_hidden_foreign_city_is_unavailable_in_rule_itinerary_service() -> None:
     service = RuleItineraryService()
-    response = service.generate(
-        RuleItineraryRequest(
-            continent="asia",
-            country="thailand",
-            city="chiangmai",
-            nights=2,
-            days=3,
-            budget_band="medium",
-            concepts=["activity"],
-            style="easy",
-            companion_type="friend",
-        )
+    request = RuleItineraryRequest(
+        continent="asia",
+        country="thailand",
+        city="chiangmai",
+        nights=2,
+        days=3,
+        budget_band="medium",
+        concepts=["activity"],
+        style="easy",
+        companion_type="friend",
     )
 
-    second_day = {item.time_slot: item.place_name for item in response.items if item.day_number == 2}
-
-    assert second_day["morning"] == "치앙마이 셀라돈 워크숍"
-    assert second_day["afternoon"] == "치앙마이 나이트 사파리"
-
-
-def test_activity_places_are_exposed_as_activity_category_when_selected() -> None:
-    service = RuleItineraryService()
-    response = service.generate(
-        RuleItineraryRequest(
-            continent="asia",
-            country="taiwan",
-            city="taipei",
-            nights=2,
-            days=3,
-            budget_band="medium",
-            concepts=["activity"],
-            style="easy",
-            companion_type="friend",
-        )
-    )
-
-    second_day = [item for item in response.items if item.day_number == 2]
-
-    assert any(item.category == "activity" for item in second_day[:2])
+    try:
+        service.generate(request)
+    except HTTPException as error:
+        assert error.status_code == 404
+        assert error.detail == "Destination is currently unavailable."
+    else:
+        raise AssertionError("Expected hidden foreign city request to be rejected.")

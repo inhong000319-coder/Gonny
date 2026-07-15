@@ -56,9 +56,9 @@ const TEXT = {
 };
 
 const initialForm = {
-  continent: "",
-  country: "",
-  city: "vladivostok",
+  continent: "asia",
+  country: "korea",
+  city: "seoul",
   travelers: 2,
   duration_label: "\u0032\ubc153\uc77c",
   budget_value: "",

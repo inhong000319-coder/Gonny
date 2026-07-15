@@ -39,7 +39,7 @@ class RuleItineraryService:
         self.note_generator = build_rule_note_generator()
 
     def list_catalog_options(self) -> list[CatalogCityOption]:
-        return self.catalog_provider.list_city_options()
+        return self.catalog_provider.list_city_options(visible_only=True)
 
     def generate(self, request: RuleItineraryRequest) -> RuleItineraryResponse:
         normalized = self._normalize_request(request)
@@ -47,6 +47,7 @@ class RuleItineraryService:
             continent=normalized.continent,
             country=normalized.country,
             city=normalized.city,
+            visible_only=True,
         )
         items = self._build_items(normalized, city_catalog)
 

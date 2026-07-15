@@ -16,18 +16,22 @@ from app.domains.destination_catalog.schemas import (
 
 DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "destinations"
 ACTIVITY_CATEGORIES = {"activity", "theme_park", "local_experience"}
+VISIBLE_CITY_CODES = {"seoul", "busan", "jeju"}
 
 
 class DestinationCatalogRepository:
     def __init__(self, data_dir: Path | None = None):
         self.data_dir = data_dir or DATA_DIR
 
-    def load_catalogs(self) -> list[CityPlaceCatalog]:
+    def load_catalogs(self, *, visible_only: bool = False) -> list[CityPlaceCatalog]:
         catalogs: list[CityPlaceCatalog] = []
         for file_path in sorted(self.data_dir.glob("*.json")):
             with file_path.open("r", encoding="utf-8") as file:
                 raw_data = json.load(file)
-            catalogs.append(CityPlaceCatalog.model_validate(raw_data))
+            catalog = CityPlaceCatalog.model_validate(raw_data)
+            if visible_only and not self._is_visible_catalog(catalog.city):
+                continue
+            catalogs.append(catalog)
         return catalogs
 
     def get_city_catalog(
@@ -36,8 +40,9 @@ class DestinationCatalogRepository:
         continent: str | None,
         country: str | None,
         city: str | None,
+        visible_only: bool = False,
     ) -> CityPlaceCatalog:
-        catalogs = self.load_catalogs()
+        catalogs = self.load_catalogs(visible_only=visible_only)
 
         normalized_continent = (continent or "").strip().lower()
         normalized_country = (country or "").strip().lower()
@@ -48,11 +53,21 @@ class DestinationCatalogRepository:
                 aliases = {catalog.city.lower(), *[alias.lower() for alias in catalog.aliases]}
                 if normalized_city in aliases:
                     return catalog
+            if visible_only:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Destination is currently unavailable.",
+                )
 
         if normalized_country:
             for catalog in catalogs:
                 if catalog.country.lower() == normalized_country:
                     return catalog
+            if visible_only:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Destination is currently unavailable.",
+                )
 
         if normalized_continent:
             for catalog in catalogs:
@@ -67,7 +82,7 @@ class DestinationCatalogRepository:
             detail="No local destination catalog is available.",
         )
 
-    def list_city_options(self) -> list[CatalogCityOption]:
+    def list_city_options(self, *, visible_only: bool = False) -> list[CatalogCityOption]:
         return [
             CatalogCityOption(
                 continent=catalog.continent,
@@ -75,12 +90,14 @@ class DestinationCatalogRepository:
                 city=catalog.city,
                 aliases=catalog.aliases,
             )
-            for catalog in self.load_catalogs()
+            for catalog in self.load_catalogs(visible_only=visible_only)
         ]
 
-    def list_destination_summaries(self) -> list[DestinationSummary]:
+    def list_destination_summaries(self, *, visible_only: bool = False) -> list[DestinationSummary]:
         destinations: list[DestinationSummary] = []
         for path in sorted(self.data_dir.glob("*.json")):
+            if visible_only and not self._is_visible_catalog(path.stem):
+                continue
             with path.open("r", encoding="utf-8") as file:
                 payload = json.load(file)
             places = payload.get("places", [])
@@ -100,6 +117,9 @@ class DestinationCatalogRepository:
                 )
             )
         return destinations
+
+    def _is_visible_catalog(self, city: str) -> bool:
+        return city.strip().lower() in VISIBLE_CITY_CODES
 
     def create_destination(self, request: CreateDestinationRequest) -> CityPlaceCatalog:
         continent = self._normalize_code(request.continent, field_name="Continent code")

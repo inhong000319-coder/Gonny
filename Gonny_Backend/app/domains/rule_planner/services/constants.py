@@ -9,10 +9,6 @@ DEFAULT_COMPANION = "friend"
 DEFAULT_CITY_BY_COUNTRY = {
     "korea": "seoul",
     "south korea": "seoul",
-    "japan": "tokyo",
-    "russia": "vladivostok",
-    "france": "paris",
-    "thailand": "bangkok",
 }
 SLOT_CATEGORY_PREFERENCE = {
     "morning": {"relax", "nature", "cafe", "sightseeing", "culture", "activity", "local_experience"},

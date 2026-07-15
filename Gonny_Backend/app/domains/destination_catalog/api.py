@@ -19,7 +19,7 @@ router = APIRouter(prefix="/admin/destinations", tags=["admin-destinations"])
 @router.get("", response_model=DestinationListResponse)
 def list_destinations() -> DestinationListResponse:
     return DestinationListResponse(
-        destinations=destination_catalog_repository.list_destination_summaries()
+        destinations=destination_catalog_repository.list_destination_summaries(visible_only=True)
     )
 
 

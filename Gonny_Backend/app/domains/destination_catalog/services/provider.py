@@ -18,11 +18,12 @@ class PlaceCatalogProvider(ABC):
         continent: str | None,
         country: str | None,
         city: str | None,
+        visible_only: bool = False,
     ) -> CityPlaceCatalog:
         raise NotImplementedError
 
     @abstractmethod
-    def list_city_options(self) -> list[CatalogCityOption]:
+    def list_city_options(self, *, visible_only: bool = False) -> list[CatalogCityOption]:
         raise NotImplementedError
 
 
@@ -40,12 +41,14 @@ class LocalJsonPlaceCatalogProvider(PlaceCatalogProvider):
         continent: str | None,
         country: str | None,
         city: str | None,
+        visible_only: bool = False,
     ) -> CityPlaceCatalog:
         return self.repository.get_city_catalog(
             continent=continent,
             country=country,
             city=city,
+            visible_only=visible_only,
         )
 
-    def list_city_options(self) -> list[CatalogCityOption]:
-        return self.repository.list_city_options()
+    def list_city_options(self, *, visible_only: bool = False) -> list[CatalogCityOption]:
+        return self.repository.list_city_options(visible_only=visible_only)

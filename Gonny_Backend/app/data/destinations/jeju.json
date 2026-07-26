@@ -33,7 +33,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "제주 동쪽",
+      "area": "east-jeju",
       "duration_hours": 2,
       "priority": 9,
       "pace": [
@@ -42,7 +42,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "맑은 바다 풍경을 가볍게 즐기기 좋은 제주 동쪽 대표 해변이다요.",
+      "summary": "맑은 바다 풍경을 가볍게 즐기기 좋은 제주 동부 대표 해변이다요.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -79,7 +79,7 @@
         "morning",
         "evening"
       ],
-      "area": "제주 동쪽",
+      "area": "east-jeju",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -125,7 +125,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "성산",
+      "area": "seongsan",
       "duration_hours": 3,
       "priority": 10,
       "pace": [
@@ -171,7 +171,7 @@
       "time_fit": [
         "afternoon"
       ],
-      "area": "성산",
+      "area": "seongsan",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -217,7 +217,7 @@
       "time_fit": [
         "morning"
       ],
-      "area": "제주 동쪽",
+      "area": "east-jeju",
       "duration_hours": 2,
       "priority": 7,
       "pace": [
@@ -262,7 +262,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "제주 서쪽",
+      "area": "west-jeju",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -271,7 +271,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "오션뷰 카페와 여유로운 분위기를 함께 누리기 좋은 제주 서쪽 명소다요.",
+      "summary": "오션뷰 카페와 여유로운 분위기를 함께 누리기 좋은 제주 서부 명소다요.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -307,7 +307,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "제주 서쪽",
+      "area": "west-jeju",
       "duration_hours": 3,
       "priority": 7,
       "pace": [
@@ -354,7 +354,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "제주 서쪽",
+      "area": "west-jeju",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -364,7 +364,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "맑은 시간대에 특히 예쁜 제주 서쪽 해변 코스를 완성하기 좋다요.",
+      "summary": "맑은 시간대에 특히 예쁜 제주 서부 해변 코스를 완성하기 좋다요.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -400,7 +400,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "서귀포 서쪽",
+      "area": "seogwipo-west",
       "duration_hours": 2,
       "priority": 7,
       "pace": [
@@ -447,7 +447,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "서귀포 서쪽",
+      "area": "seogwipo-west",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -493,7 +493,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "서귀포 서쪽",
+      "area": "seogwipo-west",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -538,7 +538,7 @@
       "time_fit": [
         "evening"
       ],
-      "area": "제주시",
+      "area": "east-jeju",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -637,7 +637,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "gujwa",
+      "area": "east-jeju",
       "duration_hours": 2,
       "priority": 7,
       "pace": [
@@ -646,7 +646,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "제주 동쪽 풍경을 바람 맞으며 가볍게 즐기기 좋은 체험형 코스예요.",
+      "summary": "제주 동부 풍경을 바람 맞으며 가볍게 즐기기 좋은 체험형 코스예요.",
       "official_url": "http://www.jejurailpark.com/m/index.php",
       "booking_hint": "동선이 동부권에 있을 때 묶어두면 이동 효율이 좋아요.",
       "slot_bias": {
@@ -666,6 +666,642 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주에서 구경만 하지 않고 직접 움직이며 풍경을 즐기고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "arte-museum-jeju",
+      "name": "ARTE Museum Jeju",
+      "category": [
+        "culture",
+        "photo",
+        "family"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Immersive indoor media art space that gives West Jeju a strong rainy-day backup card요.",
+      "official_url": "https://artemuseum.com/JEJU",
+      "booking_hint": "입장 마감 시간이 비교적 이른 편이라 해 질 무렵에 넣을 때는 마지막 입장 시간을 먼저 확인하면 좋아요.",
+      "slot_bias": {
+        "afternoon": 7,
+        "evening": 4,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "몰입감 있는",
+        "실내 대안",
+        "사진 찍기 좋은"
+      ],
+      "highlight_tags": [
+        "미디어 아트",
+        "우천 대안",
+        "가족 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 서부 일정에 실내 체험과 사진 포인트를 함께 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "jeju-glass-castle",
+      "name": "제주 유리의성",
+      "category": [
+        "culture",
+        "photo",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Theme-style exhibition spot that adds another family-friendly indoor option on the west side of Jeju요.",
+      "booking_hint": "테마형 전시 성격이 강해서 가족 코스나 우천 대안으로 넣으면 활용도가 높아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 5,
+        "evening": -6
+      },
+      "mood_keywords": [
+        "가볍게 보기 좋은",
+        "실내 대안",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "테마 전시",
+        "서부 실내 코스",
+        "가족 일정"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 서부에서 날씨 영향을 덜 받는 코스를 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "yeomiji-botanical-garden",
+      "name": "여미지식물원",
+      "category": [
+        "nature",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Large greenhouse-and-garden stop that gives Seogwipo West a stronger indoor-friendly nature card요.",
+      "official_url": "https://www.yeomiji.or.kr/",
+      "booking_hint": "실내 온실과 야외 정원을 같이 보게 돼서 햇볕이 강한 날이나 비 오는 날에도 비교적 안정적으로 넣기 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -5
+      },
+      "mood_keywords": [
+        "차분한",
+        "초록이 느껴지는",
+        "실내 대안"
+      ],
+      "highlight_tags": [
+        "중문 실내 코스",
+        "정원 산책",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서귀포 서부 일정에 자연과 실내 관람을 함께 묶고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "jeju-teddy-bear-museum",
+      "name": "제주 테디베어뮤지엄",
+      "category": [
+        "culture",
+        "family",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Indoor theme museum that adds an easy family-friendly backup around Jungmun-side sightseeing routes요.",
+      "booking_hint": "가족 단위 방문이 많은 편이라 주말 한낮보다는 오전이나 늦은 오후가 비교적 덜 붐비는 편이에요.",
+      "slot_bias": {
+        "morning": 3,
+        "afternoon": 6,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "가볍게 보기 좋은",
+        "가족과 가기 좋은",
+        "실내 대안"
+      ],
+      "highlight_tags": [
+        "테마 박물관",
+        "중문 가족 코스",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서귀포 서부 일정에서 날씨 영향을 덜 받는 가족형 코스를 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "gwangchigi-beach",
+      "name": "광치기해변",
+      "category": [
+        "nature",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "seongsan",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "Scenic shoreline that broadens Seongsan beyond peak hiking with an easier sunrise-friendly photo stop요.",
+      "booking_hint": "해 뜨는 시간이나 맑은 날에 일출봉 실루엣이 잘 보여서 성산일출봉 전후로 묶기 좋아요.",
+      "slot_bias": {
+        "morning": 7,
+        "afternoon": 4,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "시원한",
+        "일출이 어울리는",
+        "산책하기 좋은"
+      ],
+      "highlight_tags": [
+        "성산 해안 포인트",
+        "일출봉 뷰",
+        "가벼운 휴식"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 성산 쪽에서 조금 더 편하게 바다 풍경을 즐기고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "seongeup-folk-village",
+      "name": "성읍민속마을",
+      "category": [
+        "culture",
+        "local_experience",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "seongsan",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Traditional village stop that adds a calmer culture-and-family backup to the Seongsan-side route요.",
+      "booking_hint": "전통 체험이나 상점 구성이 계절마다 조금 달라질 수 있어서, 문화 체험 쪽에 관심이 있으면 현장 운영을 먼저 보는 편이 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 5,
+        "evening": -6
+      },
+      "mood_keywords": [
+        "전통적인",
+        "로컬한",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "제주 전통 마을",
+        "문화 체험",
+        "가족 백업 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 성산 동선에 제주 전통 분위기와 문화 체험 결을 하나 더 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "jeju-stone-park",
+      "name": "제주돌문화공원",
+      "category": [
+        "culture",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "제주의 돌과 신화 문화를 함께 보여줘 동부 일정에 전시형 문화 카드와 산책형 볼거리를 더해줘요.",
+      "official_url": "https://jeju.go.kr/jejustonepark/index.htm",
+      "booking_hint": "실내 전시와 야외 동선이 함께 있어서 흐린 날에도 무난하고, 오전이나 이른 오후에 가면 걷기 체감이 더 편해요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -5
+      },
+      "mood_keywords": [
+        "차분한",
+        "제주스러운",
+        "실내 대안"
+      ],
+      "highlight_tags": [
+        "제주 로컬 문화",
+        "전시와 산책",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 동부 일정에 바다와 시장 말고도 조금 더 제주다운 문화 결을 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "haenyeo-museum",
+      "name": "해녀박물관",
+      "category": [
+        "culture",
+        "local_experience",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "해녀 문화를 깊게 보여줘 동부 일정에 로컬 전시형 백업 코스와 가족 친화적인 실내 카드를 더해줘요.",
+      "official_url": "https://www.jeju.go.kr/haenyeo/index.htm",
+      "booking_hint": "전시 관람 비중이 높아 비 오거나 바람이 강한 날에도 안정적이고, 구좌 쪽 동선 중간에 묶으면 리듬이 좋아요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "로컬한",
+        "차분한",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "제주 해녀 문화",
+        "실내 박물관",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 동부 일정에 풍경 위주 코스만 두기보다 지역 문화와 이야기를 한 번 더 담고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "snoopy-garden-jeju",
+      "name": "스누피가든",
+      "category": [
+        "culture",
+        "family",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Indoor-and-garden themed stop that adds a stronger family-friendly exhibition card to East Jeju routes요.",
+      "official_url": "https://www.snoopygarden.com/jeju",
+      "booking_hint": "실내 전시와 야외 정원이 함께 있어 오전이나 이른 오후에 가면 동선이 편하고, 비 오는 날에도 비교적 안정적으로 보기 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "가볍게 보기 좋은",
+        "가족과 가기 좋은",
+        "감성적인"
+      ],
+      "highlight_tags": [
+        "동제주 전시 카드",
+        "가족형 실내 스팟",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 동제주 일정에 바다와 자연 코스만이 아니라 조금 더 감성적인 전시형 공간을 하나 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "delmoondo-gimnyeong",
+      "name": "델문도 김녕",
+      "category": [
+        "food",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "Scenic cafe stop that adds a clearer ocean-view rest card to the East Jeju route요.",
+      "official_url": "https://www.delmoondo.com/service/company",
+      "booking_hint": "김녕 해안 동선과 묶기 좋고, 해 질 무렵에도 분위기가 좋아서 자연 스팟 뒤에 여유 있게 붙이면 만족도가 높아요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 5,
+        "morning": -2
+      },
+      "mood_keywords": [
+        "여유로운",
+        "바다 보며 쉬기 좋은",
+        "감성적인"
+      ],
+      "highlight_tags": [
+        "동제주 카페 카드",
+        "오션뷰 휴식",
+        "마무리 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 동제주 일정 끝에 너무 바쁘지 않게 쉬어가면서 바다 풍경을 즐기고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "9-81-park-jeju",
+      "name": "9.81 파크 제주",
+      "category": [
+        "activity",
+        "family",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 3,
+      "priority": 8,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "서부 일정에 몸으로 즐기는 체험 카드와 우천 대응형 액티비티를 더해줘요.",
+      "official_url": "https://www.981park.com/",
+      "booking_hint": "체험 예약이나 대기 시간이 생길 수 있어서 오후 메인 코스로 두면 좋고, 실내외를 함께 쓰는 날씨 대응 카드로도 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 7,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "활기 있는",
+        "신나는",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "제주 액티비티",
+        "실내외 체험",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 서부 일정에 카페나 해변만이 아니라 몸으로 즐기는 시간을 하나 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "saebyeol-oreum",
+      "name": "새별오름",
+      "category": [
+        "nature",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "노을과 탁 트인 풍경이 강해서 서부 일정의 마무리 포인트이자 저녁 전 포토 카드로 잘 맞아요.",
+      "booking_hint": "바람이 강한 날은 체감이 크게 달라질 수 있어서 해 질 무렵 기상만 체크하면 좋고, 애월·한림 동선 끝에 붙이면 흐름이 자연스러워요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 7,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "시원한",
+        "노을이 예쁜",
+        "가볍게 걷기 좋은"
+      ],
+      "highlight_tags": [
+        "서부 노을 포인트",
+        "오름 산책",
+        "마무리 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 제주 서부 일정 끝에 풍경을 조금 더 크게 보고 싶을 때 마무리 카드로 잘 어울려요."
       ]
     }
   ],

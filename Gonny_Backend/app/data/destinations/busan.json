@@ -32,7 +32,7 @@
         "morning",
         "evening"
       ],
-      "area": "해운대",
+      "area": "haeundae",
       "duration_hours": 2,
       "priority": 10,
       "pace": [
@@ -80,7 +80,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "해운대",
+      "area": "haeundae",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -124,7 +124,7 @@
       "time_fit": [
         "afternoon"
       ],
-      "area": "해운대",
+      "area": "haeundae",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -170,7 +170,7 @@
       "time_fit": [
         "evening"
       ],
-      "area": "광안리",
+      "area": "gwangalli",
       "duration_hours": 2,
       "priority": 9,
       "pace": [
@@ -214,7 +214,7 @@
       "time_fit": [
         "evening"
       ],
-      "area": "광안리",
+      "area": "gwangalli",
       "duration_hours": 2,
       "priority": 7,
       "pace": [
@@ -260,7 +260,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "사하",
+      "area": "songdo",
       "duration_hours": 3,
       "priority": 9,
       "pace": [
@@ -307,7 +307,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "남포",
+      "area": "nampo",
       "duration_hours": 2,
       "priority": 9,
       "pace": [
@@ -353,7 +353,7 @@
       "time_fit": [
         "afternoon"
       ],
-      "area": "남포",
+      "area": "nampo",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -398,7 +398,7 @@
       "time_fit": [
         "evening"
       ],
-      "area": "남포",
+      "area": "nampo",
       "duration_hours": 2,
       "priority": 8,
       "pace": [
@@ -443,7 +443,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "송도",
+      "area": "songdo",
       "duration_hours": 2,
       "priority": 7,
       "pace": [
@@ -489,7 +489,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "영도",
+      "area": "nampo",
       "duration_hours": 3,
       "priority": 8,
       "pace": [
@@ -535,7 +535,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "동래",
+      "area": "gwangalli",
       "duration_hours": 2,
       "priority": 6,
       "pace": [
@@ -580,7 +580,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "osiria",
+      "area": "haeundae",
       "duration_hours": 3,
       "priority": 8,
       "pace": [
@@ -609,6 +609,755 @@
       ],
       "note_templates": [
         "{place_name}은(는) 부산에서 풍경만 보는 일정보다 몸으로 즐기는 시간을 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "songdo-beach",
+      "name": "송도해수욕장",
+      "category": [
+        "relax",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Representative beach stop that gives Songdo a stronger seaside identity and simple scenic flow요.",
+      "booking_hint": "해 질 무렵 사진이 잘 나오는 편이라, 더운 계절엔 오전이나 해질 무렵 시간대로 잡으면 좋아요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 2,
+        "evening": 6
+      },
+      "mood_keywords": [
+        "여유로운",
+        "바다를 느끼는",
+        "산책하기 좋은"
+      ],
+      "highlight_tags": [
+        "송도 대표 스팟",
+        "해안 산책",
+        "사진 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "amnam-park",
+      "name": "암남공원",
+      "category": [
+        "nature",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "songdo",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Coastal park route that adds a softer nature card to Songdo-centered Busan plans요.",
+      "booking_hint": "해안 산책 비중이 있어서 날씨가 좋은 날 체감이 더 좋고, 이동은 택시나 차량 기준으로 잡으면 편해요.",
+      "slot_bias": {
+        "morning": 6,
+        "afternoon": 4,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "시원한",
+        "자연적인",
+        "바다 풍경"
+      ],
+      "highlight_tags": [
+        "해안 공원",
+        "자연 풍경",
+        "산책 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "millac-the-market",
+      "name": "Millac The Market",
+      "category": [
+        "food",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Indoor market-style stop that adds weather-safe food and browsing energy to Gwangalli plans요.",
+      "booking_hint": "식사와 카페를 같이 묶기 좋아서 바닷가 산책 전후로 붙이면 동선이 자연스럽고, 주말 저녁은 조금 붐빌 수 있어요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 7,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "활기 있는",
+        "실내에 강한",
+        "가볍게 즐기기 좋은"
+      ],
+      "highlight_tags": [
+        "광안리 실내 카드",
+        "식음 연계",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 광안리 쪽에서 날씨 영향을 덜 받으면서도 먹거리와 구경할 재미를 챙기고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "f1963",
+      "name": "F1963",
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Cultural complex stop that gives Gwangalli a calmer indoor art and bookstore-style option요.",
+      "booking_hint": "전시나 행사 구성이 바뀌는 편이라 방문 전 현재 운영 공간을 확인하면 더 알차게 보기 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -2
+      },
+      "mood_keywords": [
+        "차분한",
+        "감각적인",
+        "실내 대안"
+      ],
+      "highlight_tags": [
+        "광안리 문화 공간",
+        "우천 대안",
+        "전시 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 광안리 일정에 바다 풍경과는 다른 실내 문화 결을 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "sea-life-busan-aquarium",
+      "name": "SEA LIFE Busan Aquarium",
+      "category": [
+        "activity",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "haeundae",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Indoor aquarium stop that gives Haeundae a strong family-friendly backup for rainy or hot days요.",
+      "official_url": "https://www.visitsealife.com/busan/en/",
+      "booking_hint": "주말 오후는 가족 단위 방문이 많은 편이라, 조금 이른 시간대나 오전에 가면 더 여유 있게 보기 좋아요.",
+      "slot_bias": {
+        "morning": 6,
+        "afternoon": 7,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "실내에 강한",
+        "가족과 가기 좋은",
+        "차분하게 즐기기 좋은"
+      ],
+      "highlight_tags": [
+        "해운대 실내 카드",
+        "가족 코스",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 해운대 쪽에서 날씨 영향을 덜 받으면서도 만족도 높은 체험을 넣고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "busan-x-the-sky",
+      "name": "BUSAN X the SKY",
+      "category": [
+        "sightseeing",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "High observatory stop that adds a weather-safe skyline and ocean-view landmark to Haeundae plans요.",
+      "official_url": "https://www.busanxthesky.com/",
+      "booking_hint": "맑은 날은 시야가 훨씬 좋고, 해 질 무렵에 맞추면 낮 풍경과 야경 분위기를 함께 챙기기 좋아요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 8,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "전망이 좋은",
+        "도시적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "해운대 전망 포인트",
+        "실내 랜드마크",
+        "야경 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 해운대 쪽에서 바다와 도시 풍경을 한 번에 담고 싶을 때 만족도가 높은 장소예요."
+      ]
+    },
+    {
+      "id": "yongdusan-park",
+      "name": "용두산공원",
+      "category": [
+        "sightseeing",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Harbor-view hill park that gives Nampo a clearer city-view and evening landmark card요.",
+      "official_url": "https://www.bisco.or.kr/yongdusanpark/",
+      "booking_hint": "해가 질 무렵이나 저녁에 가면 항구 야경 분위기가 살아나고, 시장 동선 앞뒤로 가볍게 묶기 좋아요.",
+      "slot_bias": {
+        "afternoon": 4,
+        "evening": 7,
+        "morning": -2
+      },
+      "mood_keywords": [
+        "전망이 좋은",
+        "도심적인",
+        "가볍게 걷기 좋은"
+      ],
+      "highlight_tags": [
+        "남포 야경 포인트",
+        "도심 전망",
+        "가벼운 산책"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 남포 동선에 시장 분위기 말고도 부산 항구 쪽 풍경을 하나 더 담고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "bosu-book-street",
+      "name": "보수동 책방골목",
+      "category": [
+        "culture",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "nampo",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Old book alley that adds a more local and nostalgic culture card to Nampo routes요.",
+      "booking_hint": "큰 상업 공간보다 조용한 골목 구경에 가까워서, 시장이나 카페 동선 사이에 짧게 넣으면 리듬이 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 5,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "레트로한",
+        "로컬한",
+        "천천히 보기 좋은"
+      ],
+      "highlight_tags": [
+        "원도심 문화 골목",
+        "책방 산책",
+        "현지 감성"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 남포 일정에 조금 더 로컬하고 차분한 문화 결을 섞고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "songdo-yonggung-suspension-bridge",
+      "name": "송도용궁구름다리",
+      "category": [
+        "activity",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "songdo",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Short bridge walk that gives Songdo a more direct sea-cliff viewpoint and light activity card요.",
+      "booking_hint": "바람이 강한 날은 체감이 크게 달라질 수 있어서, 케이블카나 해변 코스와 같은 날씨 좋은 시간대에 묶는 편이 좋아요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "시원한",
+        "짜릿한",
+        "사진 찍기 좋은"
+      ],
+      "highlight_tags": [
+        "송도 전망 포인트",
+        "가벼운 체험",
+        "해안 뷰"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 송도 쪽에서 바다 풍경을 조금 더 가까이 체감하고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "songdo-sky-park",
+      "name": "송도스카이파크",
+      "category": [
+        "relax",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "Elevated seaside stop that adds another easy viewpoint and sunset-friendly backup to Songdo plans요.",
+      "booking_hint": "해 질 무렵 풍경이 좋아서 케이블카, 해변, 공원 코스 중 마지막 카드로 붙이면 마무리가 자연스러워요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 6,
+        "morning": -2
+      },
+      "mood_keywords": [
+        "여유로운",
+        "전망이 좋은",
+        "부드러운"
+      ],
+      "highlight_tags": [
+        "송도 야경 포인트",
+        "해안 전망",
+        "마무리 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 송도 일정 끝에 바다 풍경을 조금 더 여유 있게 보고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "busan-tower",
+      "name": "부산타워",
+      "category": [
+        "sightseeing",
+        "photo",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Classic observation landmark that gives Nampo a clearer elevated night-view card beyond the park itself요.",
+      "booking_hint": "해 질 무렵부터 야경 체감이 좋아서 용두산공원이나 시장 동선 뒤쪽 마무리 카드로 붙이면 흐름이 자연스러워요.",
+      "slot_bias": {
+        "afternoon": 4,
+        "evening": 8,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "전망이 좋은",
+        "도시적인",
+        "야경에 어울리는"
+      ],
+      "highlight_tags": [
+        "남포 전망 포인트",
+        "야경 카드",
+        "랜드마크 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 남포 일정 마무리에 부산 도심과 항구 풍경을 조금 더 높게 담고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "busan-modern-history-museum",
+      "name": "부산근현대역사관",
+      "category": [
+        "culture",
+        "photo",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "nampo",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Indoor history stop that adds a stronger modern-city culture card and rainy-day backup to Nampo routes요.",
+      "booking_hint": "시장이나 골목 동선 사이에 넣으면 리듬이 좋아지고, 비 오는 날 남포 일정의 실내 문화 카드로 특히 안정적이에요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "차분한",
+        "로컬한",
+        "실내에 강한"
+      ],
+      "highlight_tags": [
+        "남포 실내 문화",
+        "근대 도시 이야기",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 남포 일정에 먹거리와 시장 분위기만이 아니라 부산 도시의 역사 결을 함께 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "busan-moca",
+      "name": "부산현대미술관",
+      "category": [
+        "culture",
+        "photo",
+        "family"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "songdo",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed"
+      ],
+      "summary": "Indoor museum stop that adds a stronger exhibition-and-rainy-day backup to Songdo-centered west Busan routes요.",
+      "booking_hint": "전시 구성이 바뀌는 편이라 방문 전 현재 전시를 확인하면 좋고, 날씨가 좋지 않은 날 오후 카드로 넣기 특히 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "차분한",
+        "전시 보기 좋은",
+        "실내에 강한"
+      ],
+      "highlight_tags": [
+        "송도권 실내 전시",
+        "우천 대안",
+        "문화 카드"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 송도 일정에 바다 풍경만이 아니라 실내 전시형 문화 코스를 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "huinnyeoul-culture-village",
+      "name": "흰여울문화마을",
+      "category": [
+        "relax",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "taxi-needed",
+        "nearby"
+      ],
+      "summary": "Cliffside village walk that gives Songdo a more atmospheric photo-and-cafe-view backup toward sunset요.",
+      "booking_hint": "해 질 무렵 분위기가 특히 좋아서 송도 해안 코스 뒤쪽에 붙이면 좋고, 계단과 경사가 있어 너무 빡빡한 날보단 여유 있는 일정에 잘 맞아요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 7,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "감성적인",
+        "사진 찍기 좋은",
+        "여유로운"
+      ],
+      "highlight_tags": [
+        "송도권 감성 산책",
+        "바다 전망 골목",
+        "노을 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 송도 일정 끝에 바다와 골목 풍경을 조금 더 감성적으로 담고 싶을 때 잘 어울려요."
       ]
     }
   ],

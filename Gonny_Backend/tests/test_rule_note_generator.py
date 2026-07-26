@@ -59,8 +59,8 @@ def test_template_rule_note_generator_returns_four_lines() -> None:
         time_slot="morning",
         day_number=1,
         localized_place_name="함덕해수욕장",
-        localized_area_name="제주 동쪽",
-        day_area_name="제주 동쪽",
+        localized_area_name="제주 동부",
+        day_area_name="제주 동부",
     )
 
     note = generator.generate(context)
@@ -81,10 +81,10 @@ def test_template_rule_note_generator_prefers_same_area_route_hint() -> None:
         time_slot="afternoon",
         day_number=1,
         localized_place_name="월정리해변",
-        localized_area_name="제주 동쪽",
-        day_area_name="제주 동쪽",
+        localized_area_name="제주 동부",
+        day_area_name="제주 동부",
         previous_place_name="함덕해수욕장",
-        previous_area_name="제주 동쪽",
+        previous_area_name="제주 동부",
     )
 
     note = generator.generate(context)
@@ -108,11 +108,11 @@ def test_template_rule_note_generator_resolves_particles_in_note_template() -> N
         time_slot="afternoon",
         day_number=2,
         localized_place_name="한림공원",
-        localized_area_name="제주 서쪽",
-        day_area_name="제주 서쪽",
+        localized_area_name="제주 서부",
+        day_area_name="제주 서부",
     )
 
     note = generator.generate(context)
 
     assert note.splitlines()[0] == "한림공원, 오후 일정에 자연스럽게 넣기 좋아요!"
-    assert "한림공원은 2일차 일정에서 제주 서쪽 권역 분위기를 더해주기 좋은 코스예요." in note
+    assert "한림공원은 2일차 일정에서 제주 서부 권역 분위기를 더해주기 좋은 코스예요." in note

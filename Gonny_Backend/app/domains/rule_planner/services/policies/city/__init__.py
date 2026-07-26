@@ -4,10 +4,12 @@ from types import ModuleType
 
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
-from . import seoul
+from . import busan, jeju, seoul
 
 
 CITY_POLICIES: dict[str, ModuleType] = {
+    "busan": busan,
+    "jeju": jeju,
     "seoul": seoul,
 }
 

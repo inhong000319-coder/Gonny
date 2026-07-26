@@ -1017,6 +1017,1619 @@
       "note_templates": [
         "{place_name}은(는) 서울 풍경을 걷는 대신 물 위에서 한 번 더 느껴보고 싶을 때 잘 어울려요."
       ]
+    },
+    {
+      "id": "sewoon-plaza",
+      "name": "세운상가",
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Retro commercial complex that adds industrial mood and city-view photo points to Euljiro plans요.",
+      "booking_hint": "전시나 상점 운영 구성이 자주 바뀌는 편이라, 방문 전 현재 운영 공간을 한 번 확인하면 좋아요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 3,
+        "morning": -2
+      },
+      "mood_keywords": [
+        "레트로한",
+        "도시적인",
+        "골목 감성"
+      ],
+      "highlight_tags": [
+        "을지로 감성",
+        "도심 전망",
+        "복합 상가"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 을지로 특유의 공업 감성과 도시 풍경을 함께 묶고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "cheonggyecheon-museum",
+      "name": "청계천박물관",
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "euljiro",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Indoor museum stop that works well as a calmer culture card around central Seoul요.",
+      "official_url": "https://museum.seoul.go.kr/eng/index.do",
+      "booking_hint": "실내 관람 위주 코스라 우천일 대안으로 좋고, 휴관일과 전시 운영 시간을 먼저 확인하면 편해요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 4,
+        "evening": -6
+      },
+      "mood_keywords": [
+        "차분한",
+        "도시적인",
+        "실내 대안"
+      ],
+      "highlight_tags": [
+        "실내 문화",
+        "중심권 코스",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 서울의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "seoul-forest",
+      "name": "서울숲",
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "seongsu",
+      "duration_hours": 2,
+      "priority": 9,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Large urban park that gives Seongsu a calmer walking option beyond cafes and shops요.",
+      "official_url": "https://parks.seoul.go.kr/template/sub/seoulforest.do",
+      "booking_hint": "주말에는 주차장이 협소한 편이라 대중교통으로 가는 쪽이 편하고, 일부 시설은 월요일 휴관 여부를 먼저 확인하면 좋아요.",
+      "slot_bias": {
+        "morning": 7,
+        "afternoon": 4,
+        "evening": -2
+      },
+      "mood_keywords": [
+        "여유로운",
+        "산책하기 좋은",
+        "자연적인"
+      ],
+      "highlight_tags": [
+        "도심 공원",
+        "산책 코스",
+        "사진 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "s-factory",
+      "name": "S-Factory",
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Exhibition and pop-up style venue that fits Seongsu's trend-driven mood well요.",
+      "booking_hint": "행사와 팝업 구성이 바뀌는 편이라 방문 전 현재 운영 전시나 입장 방식을 확인하면 좋아요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 2,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "트렌디한",
+        "가볍게 보기 좋은",
+        "사진 찍기 좋은"
+      ],
+      "highlight_tags": [
+        "팝업 공간",
+        "성수 감성",
+        "전시 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 성수 쪽에서 구경과 사진 포인트를 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
+    },
+    {
+      "id": "myeongdong-cathedral",
+      "name": "명동성당",
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Historic cathedral that balances Myeongdong's busy shopping mood with a calmer landmark stop요.",
+      "official_url": "https://www.mdsd.or.kr/",
+      "booking_hint": "예배 시간대에는 내부 분위기와 동선이 달라질 수 있어서, 조용히 둘러보고 싶다면 시간대를 먼저 확인하면 좋아요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 3,
+        "evening": -2
+      },
+      "mood_keywords": [
+        "차분한",
+        "상징적인",
+        "도심 속 고요함"
+      ],
+      "highlight_tags": [
+        "명동 랜드마크",
+        "건축 포인트",
+        "실내외 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 명동 동선에서 쇼핑 일변도의 흐름을 조금 차분하게 풀어주기 좋아요."
+      ]
+    },
+    {
+      "id": "bank-of-korea-money-museum",
+      "name": "한국은행 화폐박물관",
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Indoor museum stop in a historic building that adds a dependable culture backup near Myeongdong요.",
+      "official_url": "https://museum.bok.or.kr/",
+      "booking_hint": "실내 관람 위주 코스라 날씨 영향을 덜 받고, 휴관일과 운영 시간을 먼저 확인하면 동선 짜기가 편해요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 4,
+        "evening": -6
+      },
+      "mood_keywords": [
+        "실내 대안",
+        "역사적인",
+        "차분한"
+      ],
+      "highlight_tags": [
+        "실내 문화",
+        "우천 대안",
+        "도심 역사"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 명동 근처에서 실내 문화 코스를 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "heunginjimun-gate",
+      "name": "흥인지문",
+      "category": [
+        "sightseeing",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Historic city gate that gives Dongdaemun a clearer landmark stop beyond design and shopping요.",
+      "booking_hint": "주변 보행 동선이 넓은 편은 아니라, DDP나 쇼핑 동선과 묶어 짧게 보는 식으로 잡으면 편해요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 4,
+        "evening": -2
+      },
+      "mood_keywords": [
+        "상징적인",
+        "전통적인",
+        "도심 속 역사"
+      ],
+      "highlight_tags": [
+        "동대문 랜드마크",
+        "성곽 포인트",
+        "역사 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 동대문 동선에서 서울의 오래된 결을 한 번 더 느끼고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "dongdaemun-shopping-town",
+      "name": "동대문 쇼핑타운",
+      "category": [
+        "shopping",
+        "food",
+        "nightlife"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Dense shopping zone that reinforces Dongdaemun's late-day energy and browsing flow요.",
+      "booking_hint": "상가마다 영업 시간이 달라서, 저녁 위주로 묶을 때는 너무 이른 시간보다 해 진 뒤 쪽이 더 자연스러워요.",
+      "slot_bias": {
+        "afternoon": 4,
+        "evening": 7,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "활기 있는",
+        "둘러보기 좋은",
+        "야간 분위기"
+      ],
+      "highlight_tags": [
+        "쇼핑 동선",
+        "저녁 코스",
+        "동대문 감성"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 동대문 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
+      ]
+    },
+    {
+      "id": "war-memorial-korea",
+      "name": "전쟁기념관",
+      "category": [
+        "culture",
+        "sightseeing",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "itaewon",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Large museum complex that gives Itaewon a dependable indoor culture option beyond dining streets요.",
+      "official_url": "https://www.warmemo.or.kr/Eng/index",
+      "booking_hint": "실내 전시 비중이 큰 편이라 우천일 대안으로 좋고, 야외 전시까지 보면 생각보다 시간이 더 걸릴 수 있어요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 4,
+        "evening": -6
+      },
+      "mood_keywords": [
+        "차분한",
+        "의미 있는",
+        "실내 대안"
+      ],
+      "highlight_tags": [
+        "실내 문화",
+        "우천 대안",
+        "용산 역사"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 이태원 근처에서 먹거리 중심 일정에 문화 코스를 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "itaewon-antique-furniture-street",
+      "name": "이태원 앤틱가구거리",
+      "category": [
+        "shopping",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "itaewon",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Characterful street that adds browsing and design-oriented texture to Itaewon plans요.",
+      "booking_hint": "상점마다 쉬는 날과 운영 시간이 달라서, 식사 동선 앞뒤로 가볍게 붙이는 식이 가장 무난해요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 2,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "취향 타는",
+        "감각적인",
+        "천천히 보기 좋은"
+      ],
+      "highlight_tags": [
+        "이태원 쇼핑",
+        "디자인 감성",
+        "거리 산책"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 이태원 동선에 분위기와 취향 요소를 조금 더 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "namsan-cable-car",
+      "name": "남산 케이블카",
+      "category": [
+        "activity",
+        "photo",
+        "sightseeing"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "namsan",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Compact ride that adds a stronger scenic experience to Namsan without making the route too heavy요.",
+      "booking_hint": "해 질 무렵 대기 줄이 길어질 수 있어서, 야경을 노린다면 시간을 조금 여유 있게 잡는 편이 좋아요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 7,
+        "morning": -5
+      },
+      "mood_keywords": [
+        "경쾌한",
+        "전망이 좋은",
+        "야경 포인트"
+      ],
+      "highlight_tags": [
+        "남산 체험",
+        "도심 전망",
+        "야경 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 남산 풍경을 조금 더 입체적으로 즐기고 싶을 때 넣기 좋아요."
+      ]
+    },
+    {
+      "id": "namsan-park-trail",
+      "name": "남산공원 산책로",
+      "category": [
+        "relax",
+        "nature",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "namsan",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "Simple forested trail that helps Namsan work as a calmer walking area, not only a tower stop요.",
+      "booking_hint": "경사가 있는 구간이 있으니, 빡빡한 일정이라면 타워만 보기보다 산책로 길이를 짧게 조절하는 편이 좋아요.",
+      "slot_bias": {
+        "morning": 6,
+        "afternoon": 4,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "여유로운",
+        "초록이 느껴지는",
+        "산책하기 좋은"
+      ],
+      "highlight_tags": [
+        "도심 산책",
+        "남산 풍경",
+        "가벼운 휴식"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 도심 속에서 조금 더 천천히 호흡을 가다듬고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "seoul-sky",
+      "name": "Seoul Sky",
+      "category": [
+        "sightseeing",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "High observatory stop that gives Jamsil a strong indoor skyline card beyond the park and lake요.",
+      "official_url": "https://seoulsky.lotteworld.com/eng/main/index.do",
+      "booking_hint": "일몰 직전이나 야경 시간대가 가장 만족도가 높고, 주말 저녁은 대기 시간을 조금 여유 있게 잡는 편이 좋아요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 8,
+        "morning": -5
+      },
+      "mood_keywords": [
+        "전망이 좋은",
+        "도시적인",
+        "기억에 남는"
+      ],
+      "highlight_tags": [
+        "잠실 전망 포인트",
+        "실내 랜드마크",
+        "야경 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 잠실 쪽에서 서울 스카이라인을 한 번에 담고 싶을 때 만족도가 높은 장소예요."
+      ]
+    },
+    {
+      "id": "lotte-world-mall",
+      "name": "롯데월드몰",
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Large mall stop that gives Jamsil a dependable indoor shopping and meal card around major attractions요.",
+      "official_url": "http://www.lwt.co.kr",
+      "booking_hint": "쇼핑, 식사, 카페를 한 번에 묶기 좋아서 우천일이나 출발일 보강 카드로도 무난해요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 5,
+        "morning": -2
+      },
+      "mood_keywords": [
+        "편하게 둘러보기 좋은",
+        "실내에 강한",
+        "활기 있는"
+      ],
+      "highlight_tags": [
+        "잠실 쇼핑",
+        "실내 대안",
+        "식음 연계"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 잠실 동선에서 쇼핑과 식사를 안정감 있게 묶고 싶을 때 잘 들어가요."
+      ]
+    },
+    {
+      "id": "the-hyundai-seoul",
+      "name": "더현대 서울",
+      "category": [
+        "shopping",
+        "food",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "walkable"
+      ],
+      "summary": "Large indoor mall that gives Yeouido a weather-proof shopping and food card beyond outdoor Han River plans요.",
+      "official_url": "https://www.thehyundaiseoul.com/",
+      "booking_hint": "팝업 행사와 식당 대기 줄이 있는 편이라, 주말 오후라면 조금 이른 시간대가 더 편해요.",
+      "slot_bias": {
+        "afternoon": 7,
+        "evening": 5,
+        "morning": -1
+      },
+      "mood_keywords": [
+        "트렌디한",
+        "실내에 강한",
+        "둘러보기 좋은"
+      ],
+      "highlight_tags": [
+        "여의도 쇼핑",
+        "우천 대안",
+        "팝업 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 여의도 일정에서 날씨 영향을 덜 받으면서도 구경할 재미를 챙기고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "63-square",
+      "name": "63 Square",
+      "category": [
+        "sightseeing",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "Riverside tower landmark that adds an indoor skyline and observatory-style stop to Yeouido plans요.",
+      "official_url": "http://www.63.co.kr/en/",
+      "booking_hint": "날씨가 맑은 날 시야가 더 좋고, 해 질 무렵 시간대가 풍경 변화까지 같이 보기 좋아요.",
+      "slot_bias": {
+        "afternoon": 5,
+        "evening": 7,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "전망이 좋은",
+        "차분한",
+        "도시적인"
+      ],
+      "highlight_tags": [
+        "여의도 랜드마크",
+        "실내 전망",
+        "야경 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 여의도 쪽에서 한강 풍경을 조금 더 높고 넓게 보고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "ktng-sangsangmadang-hongdae",
+      "name": "KT&G 상상마당 홍대",
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Multi-purpose culture venue that gives Hongdae a stronger indoor exhibition and event card요.",
+      "official_url": "https://www.sangsangmadang.com/",
+      "booking_hint": "전시, 공연, 팝업 구성이 자주 바뀌는 편이라 방문 전에 현재 프로그램을 확인하면 동선 짜기가 더 좋아요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 4,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "트렌디한",
+        "실내에 강한",
+        "구경할 거리 많은"
+      ],
+      "highlight_tags": [
+        "홍대 문화 공간",
+        "우천 대안",
+        "전시·공연 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 홍대 일정에 실내 문화 코스와 트렌디한 분위기를 함께 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "trick-eye-museum-seoul",
+      "name": "트릭아이미술관",
+      "category": [
+        "activity",
+        "photo",
+        "culture"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Interactive indoor photo spot that adds a playful rainy-day option to Hongdae routes요.",
+      "booking_hint": "사진 찍는 시간이 생각보다 길어질 수 있어서, 카페나 저녁 식사 전후로 여유 있게 넣는 편이 좋아요.",
+      "slot_bias": {
+        "afternoon": 7,
+        "evening": 3,
+        "morning": -2
+      },
+      "mood_keywords": [
+        "재미 있는",
+        "사진 찍기 좋은",
+        "가볍게 즐기기 좋은"
+      ],
+      "highlight_tags": [
+        "홍대 실내 놀거리",
+        "우천 대안",
+        "친구 여행 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 홍대 쪽에서 날씨 영향을 덜 받으면서도 사진과 체험 요소를 챙기고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "bongeunsa-temple",
+      "name": "봉은사",
+      "category": [
+        "culture",
+        "relax",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gangnam",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Historic temple stop that gives Gangnam a calmer cultural counterpoint to malls and city crowds요.",
+      "official_url": "http://www.bongeunsa.org/",
+      "booking_hint": "예불이나 템플스테이 운영 시간이 있는 편이라, 조용히 둘러보고 싶다면 오전이나 이른 오후가 더 편해요.",
+      "slot_bias": {
+        "morning": 6,
+        "afternoon": 4,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "차분한",
+        "전통적인",
+        "도심 속 쉼"
+      ],
+      "highlight_tags": [
+        "강남 문화 포인트",
+        "도심 사찰",
+        "가벼운 휴식"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강남 일정에서 쇼핑과 도심 템포를 조금 차분하게 풀어주고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "seonjeongneung",
+      "name": "선정릉",
+      "category": [
+        "relax",
+        "nature",
+        "culture"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gangnam",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Tree-lined royal tomb park that adds a light walk and heritage stop to Gangnam-centered plans요.",
+      "booking_hint": "산책 중심 코스라 날씨가 좋은 날 체감이 좋고, COEX나 봉은사와 묶으면 이동 효율이 좋아요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -5
+      },
+      "mood_keywords": [
+        "여유로운",
+        "초록이 느껴지는",
+        "역사적인"
+      ],
+      "highlight_tags": [
+        "강남 산책 코스",
+        "왕릉 풍경",
+        "도심 속 휴식"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강남 쪽에서 바쁜 도심 일정 사이에 산책과 역사 분위기를 조금 섞고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "euljiro-nogari-alley",
+      "name": "을지로 노가리골목",
+      "category": [
+        "food",
+        "nightlife",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Retro alley stop that gives Euljiro a stronger late-evening food-and-drinks card with local atmosphere요.",
+      "booking_hint": "저녁 시간대 체감이 가장 좋고, 노포나 카페 동선 사이에 넣으면 을지로 특유의 분위기를 자연스럽게 살리기 좋아요.",
+      "slot_bias": {
+        "afternoon": 3,
+        "evening": 8,
+        "morning": -5
+      },
+      "mood_keywords": [
+        "레트로한",
+        "활기 있는",
+        "친구와 가기 좋은"
+      ],
+      "highlight_tags": [
+        "을지로 야간 포인트",
+        "노포 감성",
+        "저녁 코스"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 을지로 일정에 저녁 분위기와 로컬 감성을 조금 더 진하게 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "daelim-sangga",
+      "name": "대림상가",
+      "category": [
+        "culture",
+        "shopping",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Old commercial arcade that adds a more layered indoor browsing and photo card around the Sewoon-Euljiro route요.",
+      "booking_hint": "세운상가와 함께 묶으면 흐름이 좋고, 카페나 저녁 식사 전에 가볍게 둘러보는 코스로 넣기 좋아요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 4,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "로컬한",
+        "차분한",
+        "가볍게 구경하기 좋은"
+      ],
+      "highlight_tags": [
+        "을지로 상가 산책",
+        "실내 보조 카드",
+        "사진 포인트"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 을지로 일정에 골목 감성만이 아니라 조금 더 실내형 구경거리를 함께 묶고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "lotte-world-aquarium",
+      "name": "롯데월드 아쿠아리움",
+      "category": [
+        "activity",
+        "family",
+        "photo"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "jamsil",
+      "duration_hours": 2,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Strong indoor family spot that gives Jamsil a weather-safe activity card beyond rides and shopping요.",
+      "official_url": "https://aquarium.lotteworld.com/",
+      "booking_hint": "주말 오후에는 가족 방문이 많은 편이라 오전이나 이른 오후에 가면 조금 더 여유 있고, 몰 동선과 묶기 쉬워요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 7,
+        "evening": -4
+      },
+      "mood_keywords": [
+        "실내에 강한",
+        "가족과 가기 좋은",
+        "차분하게 즐기기 좋은"
+      ],
+      "highlight_tags": [
+        "잠실 실내 카드",
+        "가족 코스",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 잠실 일정에 날씨 영향을 덜 받으면서도 만족도 높은 가족형 체험을 넣고 싶을 때 좋아요."
+      ]
+    },
+    {
+      "id": "seoul-baekje-museum",
+      "name": "한성백제박물관",
+      "category": [
+        "culture",
+        "family",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "jamsil",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly",
+        "nearby"
+      ],
+      "summary": "History museum stop that adds a calmer culture-and-family backup near the Jamsil and Olympic Park route요.",
+      "official_url": "https://baekjemuseum.seoul.go.kr/eng/",
+      "booking_hint": "전시 관람 위주라 무더운 날이나 비 오는 날에도 안정적이고, 잠실 메인 동선 사이에 호흡을 조절하는 카드로 넣기 좋아요.",
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      },
+      "mood_keywords": [
+        "차분한",
+        "역사적인",
+        "가족과 가기 좋은"
+      ],
+      "highlight_tags": [
+        "잠실 문화 카드",
+        "실내 박물관",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 잠실 일정에 놀이·쇼핑 위주 흐름만 두지 않고 조금 더 차분한 문화 결을 섞고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "rolling-hall",
+      "name": "롤링홀",
+      "category": [
+        "nightlife",
+        "culture",
+        "activity"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Live music venue that gives Hongdae a clearer performance-driven night card beyond casual bars and cafes요.",
+      "booking_hint": "공연 일정에 따라 분위기가 크게 달라져서 방문 전 라인업을 확인하면 좋고, 저녁 식사 뒤 메인 카드로 붙이기 좋아요.",
+      "slot_bias": {
+        "afternoon": 2,
+        "evening": 8,
+        "morning": -5
+      },
+      "mood_keywords": [
+        "에너지 있는",
+        "라이브 분위기",
+        "친구와 가기 좋은"
+      ],
+      "highlight_tags": [
+        "홍대 공연장",
+        "야간 메인 카드",
+        "라이브 음악"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 홍대 일정에 저녁 라이브 분위기와 공연형 체험을 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "ak-plaza-hongdae",
+      "name": "AK플라자 홍대",
+      "category": [
+        "shopping",
+        "culture",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Indoor retail-and-pop-up stop that adds a weather-safe browsing card to Hongdae-centered routes요.",
+      "booking_hint": "팝업이나 캐릭터 스토어 구성이 수시로 바뀌는 편이라, 카페·공연 전후에 가볍게 넣으면 동선이 자연스러워요.",
+      "slot_bias": {
+        "afternoon": 6,
+        "evening": 5,
+        "morning": -3
+      },
+      "mood_keywords": [
+        "트렌디한",
+        "실내에 강한",
+        "구경할 거리 많은"
+      ],
+      "highlight_tags": [
+        "홍대 실내 쇼핑",
+        "팝업 스토어",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 홍대 일정에 날씨 영향을 덜 받으면서도 트렌디한 실내 구경거리를 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "hyundai-motorstudio-seoul",
+      "name": "현대 모터스튜디오 서울",
+      "category": [
+        "culture",
+        "photo",
+        "shopping"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gangnam",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Design-forward brand space that adds a stronger exhibition-style indoor culture card to Gangnam routes요.",
+      "booking_hint": "전시와 브랜드 체험 구성이 함께 있어 압구정 동선과 묶기 좋고, 한낮 더위를 피하는 실내 카드로도 안정적이에요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -2
+      },
+      "mood_keywords": [
+        "도시적인",
+        "감각적인",
+        "실내에 강한"
+      ],
+      "highlight_tags": [
+        "강남 전시형 공간",
+        "브랜드 체험",
+        "실내 문화 카드"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강남 일정에 쇼핑과 식음만이 아니라 조금 더 감각적인 전시형 실내 공간을 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "kmca-seoul",
+      "name": "K현대미술관",
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gangnam",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Contemporary art museum stop that gives Gangnam a clearer exhibition and rainy-day backup card요.",
+      "booking_hint": "전시 주제가 자주 바뀌는 편이라 방문 전 현재 전시를 확인하면 좋고, 압구정·도산공원권 동선과도 잘 어울려요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "차분한",
+        "전시 보기 좋은",
+        "감각적인"
+      ],
+      "highlight_tags": [
+        "강남 미술관",
+        "실내 전시",
+        "우천 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 강남 일정에 도심 쇼핑 흐름 사이로 전시형 문화 결을 부드럽게 넣고 싶을 때 잘 어울려요."
+      ]
+    },
+    {
+      "id": "kbs-hall",
+      "name": "KBS홀",
+      "category": [
+        "culture",
+        "nightlife",
+        "photo"
+      ],
+      "budget_level": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 2,
+      "priority": 7,
+      "pace": [
+        "easy",
+        "tight"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Performance venue stop that gives Yeouido a clearer concert-and-evening culture card beyond river views and malls요.",
+      "booking_hint": "공연 스케줄에 따라 경험이 달라지니 일정 전 라인업을 확인하면 좋고, 저녁 메인 카드로 붙이면 분위기가 확실해져요.",
+      "slot_bias": {
+        "afternoon": 3,
+        "evening": 8,
+        "morning": -4
+      },
+      "mood_keywords": [
+        "공연 보기 좋은",
+        "도시적인",
+        "저녁에 어울리는"
+      ],
+      "highlight_tags": [
+        "여의도 공연장",
+        "야간 문화 카드",
+        "실내 대안"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 여의도 일정에 한강 풍경 말고도 저녁 문화 결을 하나 더 넣고 싶을 때 잘 맞아요."
+      ]
+    },
+    {
+      "id": "sema-bunker",
+      "name": "세마벙커",
+      "category": [
+        "culture",
+        "photo",
+        "relax"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "yeouido",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable",
+        "subway-friendly"
+      ],
+      "summary": "Compact exhibition stop that adds an unusual indoor art-and-history backup to Yeouido plans요.",
+      "booking_hint": "전시 규모는 크지 않지만 여의도공원이나 더현대 동선 사이에 가볍게 넣기 좋고, 비 오는 날 문화 카드로 특히 좋아요.",
+      "slot_bias": {
+        "morning": 4,
+        "afternoon": 6,
+        "evening": -3
+      },
+      "mood_keywords": [
+        "차분한",
+        "전시 보기 좋은",
+        "실내에 강한"
+      ],
+      "highlight_tags": [
+        "여의도 전시 공간",
+        "우천 대안",
+        "실내 문화 카드"
+      ],
+      "note_templates": [
+        "{place_name}은(는) 여의도 일정에 쇼핑과 전망 사이로 조금 더 차분한 전시형 공간을 섞고 싶을 때 잘 어울려요."
+      ]
     }
   ],
   "featured_video": {

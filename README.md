@@ -399,6 +399,14 @@ GET    /api/v1/trips/{trip_id}/pdf                     일정 PDF 다운로드
 POST   /api/v1/trips/{trip_id}/share                   공유 링크 생성
 ```
 
+## 🧭 백엔드 운영 문서
+
+- `Gonny_Backend/docs/rule_planner_city_policies.md`
+- `Gonny_Backend/docs/rule_planner_city_diagrams.md`
+- `Gonny_Backend/docs/rule_planner_city_place_map.md`
+- `Gonny_Backend/docs/rule_planner_data_priority.md`
+- `Gonny_Backend/docs/rule_planner_phase1_candidates.md`
+
 
 ## 📅 개발 일정
 

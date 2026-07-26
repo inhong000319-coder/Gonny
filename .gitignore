@@ -209,3 +209,7 @@ Gonny_Frontend/dist/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# local_only
+Gonny_Backend/local_only/

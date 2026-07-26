@@ -28,3 +28,11 @@ If Python is not installed globally, use the local runtime created during setup:
 
 - `http://127.0.0.1:8000/docs`
 - `http://127.0.0.1:8000/health`
+
+## Internal docs
+
+- `docs/rule_planner_city_policies.md`
+- `docs/rule_planner_city_diagrams.md`
+- `docs/rule_planner_city_place_map.md`
+- `docs/rule_planner_data_priority.md`
+- `docs/rule_planner_phase1_candidates.md`

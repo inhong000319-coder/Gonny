@@ -40,6 +40,30 @@ SEOUL_AREA_NEIGHBORS = {
     "itaewon": {"gangnam", "namsan"},
     "namsan": {"myeongdong", "itaewon"},
 }
+BUSAN_AREA_ROUTE_ORDER = [
+    "nampo",
+    "songdo",
+    "gwangalli",
+    "haeundae",
+]
+BUSAN_AREA_NEIGHBORS = {
+    "nampo": {"songdo"},
+    "songdo": {"nampo"},
+    "gwangalli": {"haeundae"},
+    "haeundae": {"gwangalli"},
+}
+JEJU_AREA_ROUTE_ORDER = [
+    "east-jeju",
+    "seongsan",
+    "seogwipo-west",
+    "west-jeju",
+]
+JEJU_AREA_NEIGHBORS = {
+    "east-jeju": {"seongsan"},
+    "seongsan": {"east-jeju"},
+    "seogwipo-west": {"west-jeju"},
+    "west-jeju": {"seogwipo-west"},
+}
 PLACE_NAME_KO = {
     "gyeongbokgung": "경복궁",
     "bukchon": "북촌한옥마을",
@@ -135,6 +159,13 @@ AREA_LABEL_KO = {
     "jamsil": "잠실",
     "dongdaemun": "동대문",
     "euljiro": "을지로",
+    "haeundae": "해운대",
+    "gwangalli": "광안리",
+    "nampo": "남포",
+    "songdo": "송도",
+    "east-jeju": "제주 동부",
+    "west-jeju": "제주 서부",
+    "seogwipo-west": "서귀포 서부",
     "asakusa": "아사쿠사",
     "ueno": "우에노",
     "yanaka": "야나카",

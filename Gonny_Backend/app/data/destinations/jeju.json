@@ -46,7 +46,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "맑은 바다 풍경을 가볍게 즐기기 좋은 제주 동부 대표 해변이다요.",
+      "summary": "맑은 바다 풍경을 가볍게 즐기기 좋은 제주 동부 대표 해변이다.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -98,7 +98,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "카페와 바다 산책을 함께 묶기 좋아 여유로운 일정에 잘 맞는다요.",
+      "summary": "카페와 바다 산책을 함께 넣기 좋아 여유로운 일정에 잘 맞는다.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -148,7 +148,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "제주를 대표하는 자연 명소로 관광형 일정의 중심축이 된다요.",
+      "summary": "제주를 대표하는 자연 명소로 관광형 일정의 중심축이 된다.",
       "mood_keywords": [
         "상징적인",
         "안정적인",
@@ -199,7 +199,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "해안 풍경을 시원하게 즐길 수 있어 동부 코스를 함께 묶기 좋다요.",
+      "summary": "해안 풍경이 시원하게 펼쳐져 동부 코스와 함께 묶기 좋다.",
       "mood_keywords": [
         "시원한",
         "상쾌한",
@@ -248,7 +248,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "숲길 산책이 중심이라 제주 일정에 자연을 부드럽게 넣어가기 좋다요.",
+      "summary": "숲길 산책이 중심이라 널널한 제주 일정에 자연스럽게 들어간다.",
       "mood_keywords": [
         "시원한",
         "상쾌한",
@@ -299,7 +299,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "오션뷰 카페와 여유로운 분위기를 함께 누리기 좋은 제주 서부 명소다요.",
+      "summary": "오션뷰 카페와 여유로운 분위기를 함께 누리기 좋은 제주 서쪽 명소다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -350,7 +350,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "여러 정원과 산책 코스가 있어 가족형 일정에도 크게 무리가 없다요.",
+      "summary": "여러 정원과 산책 코스가 있어 가족형 일정에 특히 무리가 없다.",
       "mood_keywords": [
         "시원한",
         "상쾌한",
@@ -403,7 +403,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "맑은 시간대에 특히 예쁜 제주 서부 해변 코스를 완성하기 좋다요.",
+      "summary": "노을 시간대와 잘 어울려 제주 서쪽 해변 코스를 완성하기 좋다.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -452,7 +452,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "사진과 산책 중심의 코스로 감성적인 제주 분위기를 만들기 좋다요.",
+      "summary": "사진과 산책 중심의 코스로 감성적인 제주 분위기를 만들기 좋다.",
       "mood_keywords": [
         "사진이 잘 나오는",
         "감성적인",
@@ -504,7 +504,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "서귀포 쪽에서 바다 풍경과 여유로운 마무리를 함께 담기 좋다요.",
+      "summary": "서귀포 쪽에서 바다 풍경과 여유로운 마무리를 넣기에 좋다.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -557,7 +557,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "차 문화와 풍경을 함께 즐길 수 있어 감성적인 일정과 잘 맞는다요.",
+      "summary": "차와 디저트, 풍경을 함께 즐길 수 있어 감성적인 일정에 적합하다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -606,7 +606,7 @@
       "mobility": [
         "walkable"
       ],
-      "summary": "제주 먹거리와 간단한 쇼핑을 함께 즐기기 좋은 대표 코스다요.",
+      "summary": "제주 먹거리와 간단한 쇼핑을 함께 즐길 수 있는 저녁 코스다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -765,7 +765,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Immersive indoor media art space that gives West Jeju a strong rainy-day backup card요.",
+      "summary": "Immersive indoor media art space that gives West Jeju a strong rainy-day backup card.",
       "official_url": "https://artemuseum.com/JEJU",
       "booking_hint": "입장 마감 시간이 비교적 이른 편이라 해 질 무렵에 넣을 때는 마지막 입장 시간을 먼저 확인하면 좋아요.",
       "slot_bias": {
@@ -819,7 +819,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Theme-style exhibition spot that adds another family-friendly indoor option on the west side of Jeju요.",
+      "summary": "Theme-style exhibition spot that adds another family-friendly indoor option on the west side of Jeju.",
       "booking_hint": "테마형 전시 성격이 강해서 가족 코스나 우천 대안으로 넣으면 활용도가 높아요.",
       "slot_bias": {
         "morning": 4,
@@ -873,7 +873,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Large greenhouse-and-garden stop that gives Seogwipo West a stronger indoor-friendly nature card요.",
+      "summary": "Large greenhouse-and-garden stop that gives Seogwipo West a stronger indoor-friendly nature card.",
       "official_url": "https://www.yeomiji.or.kr/",
       "booking_hint": "실내 온실과 야외 정원을 같이 보게 돼서 햇볕이 강한 날이나 비 오는 날에도 비교적 안정적으로 넣기 좋아요.",
       "slot_bias": {
@@ -927,7 +927,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Indoor theme museum that adds an easy family-friendly backup around Jungmun-side sightseeing routes요.",
+      "summary": "Indoor theme museum that adds an easy family-friendly backup around Jungmun-side sightseeing routes.",
       "booking_hint": "가족 단위 방문이 많은 편이라 주말 한낮보다는 오전이나 늦은 오후가 비교적 덜 붐비는 편이에요.",
       "slot_bias": {
         "morning": 3,
@@ -983,7 +983,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "Scenic shoreline that broadens Seongsan beyond peak hiking with an easier sunrise-friendly photo stop요.",
+      "summary": "Scenic shoreline that broadens Seongsan beyond peak hiking with an easier sunrise-friendly photo stop.",
       "booking_hint": "해 뜨는 시간이나 맑은 날에 일출봉 실루엣이 잘 보여서 성산일출봉 전후로 묶기 좋아요.",
       "slot_bias": {
         "morning": 7,
@@ -1037,7 +1037,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Traditional village stop that adds a calmer culture-and-family backup to the Seongsan-side route요.",
+      "summary": "Traditional village stop that adds a calmer culture-and-family backup to the Seongsan-side route.",
       "booking_hint": "전통 체험이나 상점 구성이 계절마다 조금 달라질 수 있어서, 문화 체험 쪽에 관심이 있으면 현장 운영을 먼저 보는 편이 좋아요.",
       "slot_bias": {
         "morning": 4,
@@ -1200,7 +1200,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Indoor-and-garden themed stop that adds a stronger family-friendly exhibition card to East Jeju routes요.",
+      "summary": "Indoor-and-garden themed stop that adds a stronger family-friendly exhibition card to East Jeju routes.",
       "official_url": "https://www.snoopygarden.com/jeju",
       "booking_hint": "실내 전시와 야외 정원이 함께 있어 오전이나 이른 오후에 가면 동선이 편하고, 비 오는 날에도 비교적 안정적으로 보기 좋아요.",
       "slot_bias": {
@@ -1256,7 +1256,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "Scenic cafe stop that adds a clearer ocean-view rest card to the East Jeju route요.",
+      "summary": "Scenic cafe stop that adds a clearer ocean-view rest card to the East Jeju route.",
       "official_url": "https://www.delmoondo.com/service/company",
       "booking_hint": "김녕 해안 동선과 묶기 좋고, 해 질 무렵에도 분위기가 좋아서 자연 스팟 뒤에 여유 있게 붙이면 만족도가 높아요.",
       "slot_bias": {

@@ -13,7 +13,7 @@ ACTIVITY_TYPE_CODE_MAP = {
 
 VISUAL_FEATURE_CODE_MAP = {
     "포토스팟": "photo",
-    "야경": "photo",
+    "야경": "night_view",
 }
 
 

@@ -49,7 +49,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "부산을 대표하는 해변으로 여유로운 산책과 야경 감상에 잘 어울린다요.",
+      "summary": "부산을 대표하는 해변으로 여유로운 산책과 야경 감상에 잘 어울린다.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -102,7 +102,7 @@
       "mobility": [
         "walkable"
       ],
-      "summary": "가볍게 바다 풍경을 보며 걸을 수 있는 해운대 대표 산책 코스다요.",
+      "summary": "가볍게 바다 풍경을 보며 걸을 수 있는 해운대 대표 산책 코스다.",
       "mood_keywords": [
         "시원한",
         "상쾌한",
@@ -151,7 +151,7 @@
       "mobility": [
         "nearby"
       ],
-      "summary": "바다를 따라 이동하며 풍경을 즐길 수 있어 부산다운 체험을 만들기 좋다요.",
+      "summary": "바다를 따라 이동하며 풍경을 즐길 수 있어 부산다운 체험을 만들기 좋다.",
       "mood_keywords": [
         "경쾌한",
         "재미 있는",
@@ -204,7 +204,7 @@
       "mobility": [
         "walkable"
       ],
-      "summary": "광안대교 야경과 식사 동선을 함께 묶기 좋은 저녁 명소다요.",
+      "summary": "광안대교 야경과 식사 동선을 함께 묶기 좋은 저녁 명소다.",
       "mood_keywords": [
         "여유로운",
         "편안한",
@@ -257,7 +257,7 @@
       "mobility": [
         "walkable"
       ],
-      "summary": "야경을 보며 간단한 먹거리와 함께 부산 밤 분위기를 즐기기 좋다요.",
+      "summary": "야경을 보며 간단한 먹거리와 함께 부산 밤 분위기를 즐기기 좋다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -308,7 +308,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "부산의 색다른 골목 풍경을 느낄 수 있어 관광형 일정에 잘 어울린다요.",
+      "summary": "부산의 색다른 골목 풍경을 느낄 수 있어 관광형 일정에 잘 어울린다.",
       "mood_keywords": [
         "상징적인",
         "안정적인",
@@ -362,7 +362,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "부산다운 해산물 분위기를 느끼기 좋은 대표 시장이다요.",
+      "summary": "부산다운 해산물 분위기를 느끼기 좋은 대표 시장이다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -412,7 +412,7 @@
       "mobility": [
         "walkable"
       ],
-      "summary": "시장 구경과 군것질을 함께 즐길 수 있어 실속형 일정에 적합하다요.",
+      "summary": "시장 구경과 군것질을 함께 즐길 수 있어 실속형 일정에 적합하다.",
       "mood_keywords": [
         "가볍게 구경하기 좋은",
         "활기 있는",
@@ -463,7 +463,7 @@
       "mobility": [
         "walkable"
       ],
-      "summary": "길거리 음식과 활기 있는 분위기가 강한 부산 도심 저녁 코스다요.",
+      "summary": "길거리 음식과 활기 있는 분위기가 강한 부산 도심 저녁 코스다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -512,7 +512,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "부산 바다 풍경을 조금 더 특별하게 즐길 수 있는 체험형 코스다요.",
+      "summary": "부산 바다 풍경을 조금 더 특별하게 즐길 수 있는 체험형 코스다.",
       "mood_keywords": [
         "경쾌한",
         "재미 있는",
@@ -564,7 +564,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "절벽과 바다 풍경이 인상적이라 부산 자연 코스를 넣고 싶을 때 좋다요.",
+      "summary": "절벽과 바다 풍경이 인상적이라 부산 자연 코스를 넣고 싶을 때 좋다.",
       "mood_keywords": [
         "시원한",
         "상쾌한",
@@ -613,7 +613,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "한적한 카페와 산책을 묶어 느긋하게 보내기 좋은 지역이다요.",
+      "summary": "한적한 카페와 산책을 묶어 느긋하게 보내기 좋은 지역이다.",
       "mood_keywords": [
         "맛있게 즐기기 좋은",
         "로컬한",
@@ -719,7 +719,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Representative beach stop that gives Songdo a stronger seaside identity and simple scenic flow요.",
+      "summary": "Representative beach stop that gives Songdo a stronger seaside identity and simple scenic flow.",
       "booking_hint": "해 질 무렵 사진이 잘 나오는 편이라, 더운 계절엔 오전이나 해질 무렵 시간대로 잡으면 좋아요.",
       "slot_bias": {
         "morning": 5,
@@ -774,7 +774,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Coastal park route that adds a softer nature card to Songdo-centered Busan plans요.",
+      "summary": "Coastal park route that adds a softer nature card to Songdo-centered Busan plans.",
       "booking_hint": "해안 산책 비중이 있어서 날씨가 좋은 날 체감이 더 좋고, 이동은 택시나 차량 기준으로 잡으면 편해요.",
       "slot_bias": {
         "morning": 6,
@@ -831,7 +831,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Indoor market-style stop that adds weather-safe food and browsing energy to Gwangalli plans요.",
+      "summary": "Indoor market-style stop that adds weather-safe food and browsing energy to Gwangalli plans.",
       "booking_hint": "식사와 카페를 같이 묶기 좋아서 바닷가 산책 전후로 붙이면 동선이 자연스럽고, 주말 저녁은 조금 붐빌 수 있어요.",
       "slot_bias": {
         "afternoon": 5,
@@ -886,7 +886,7 @@
       "mobility": [
         "subway-friendly"
       ],
-      "summary": "Cultural complex stop that gives Gwangalli a calmer indoor art and bookstore-style option요.",
+      "summary": "Cultural complex stop that gives Gwangalli a calmer indoor art and bookstore-style option.",
       "booking_hint": "전시나 행사 구성이 바뀌는 편이라 방문 전 현재 운영 공간을 확인하면 더 알차게 보기 좋아요.",
       "slot_bias": {
         "morning": 4,
@@ -941,7 +941,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Indoor aquarium stop that gives Haeundae a strong family-friendly backup for rainy or hot days요.",
+      "summary": "Indoor aquarium stop that gives Haeundae a strong family-friendly backup for rainy or hot days.",
       "official_url": "https://www.visitsealife.com/busan/en/",
       "booking_hint": "주말 오후는 가족 단위 방문이 많은 편이라, 조금 이른 시간대나 오전에 가면 더 여유 있게 보기 좋아요.",
       "slot_bias": {
@@ -997,7 +997,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "High observatory stop that adds a weather-safe skyline and ocean-view landmark to Haeundae plans요.",
+      "summary": "High observatory stop that adds a weather-safe skyline and ocean-view landmark to Haeundae plans.",
       "official_url": "https://www.busanxthesky.com/",
       "booking_hint": "맑은 날은 시야가 훨씬 좋고, 해 질 무렵에 맞추면 낮 풍경과 야경 분위기를 함께 챙기기 좋아요.",
       "slot_bias": {
@@ -1054,7 +1054,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Harbor-view hill park that gives Nampo a clearer city-view and evening landmark card요.",
+      "summary": "Harbor-view hill park that gives Nampo a clearer city-view and evening landmark card.",
       "official_url": "https://www.bisco.or.kr/yongdusanpark/",
       "booking_hint": "해가 질 무렵이나 저녁에 가면 항구 야경 분위기가 살아나고, 시장 동선 앞뒤로 가볍게 묶기 좋아요.",
       "slot_bias": {
@@ -1109,7 +1109,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Old book alley that adds a more local and nostalgic culture card to Nampo routes요.",
+      "summary": "Old book alley that adds a more local and nostalgic culture card to Nampo routes.",
       "booking_hint": "큰 상업 공간보다 조용한 골목 구경에 가까워서, 시장이나 카페 동선 사이에 짧게 넣으면 리듬이 좋아요.",
       "slot_bias": {
         "morning": 4,
@@ -1163,7 +1163,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Short bridge walk that gives Songdo a more direct sea-cliff viewpoint and light activity card요.",
+      "summary": "Short bridge walk that gives Songdo a more direct sea-cliff viewpoint and light activity card.",
       "booking_hint": "바람이 강한 날은 체감이 크게 달라질 수 있어서, 케이블카나 해변 코스와 같은 날씨 좋은 시간대에 묶는 편이 좋아요.",
       "slot_bias": {
         "morning": 5,
@@ -1219,7 +1219,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "Elevated seaside stop that adds another easy viewpoint and sunset-friendly backup to Songdo plans요.",
+      "summary": "Elevated seaside stop that adds another easy viewpoint and sunset-friendly backup to Songdo plans.",
       "booking_hint": "해 질 무렵 풍경이 좋아서 케이블카, 해변, 공원 코스 중 마지막 카드로 붙이면 마무리가 자연스러워요.",
       "slot_bias": {
         "afternoon": 5,
@@ -1275,7 +1275,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Classic observation landmark that gives Nampo a clearer elevated night-view card beyond the park itself요.",
+      "summary": "Classic observation landmark that gives Nampo a clearer elevated night-view card beyond the park itself.",
       "booking_hint": "해 질 무렵부터 야경 체감이 좋아서 용두산공원이나 시장 동선 뒤쪽 마무리 카드로 붙이면 흐름이 자연스러워요.",
       "slot_bias": {
         "afternoon": 4,
@@ -1329,7 +1329,7 @@
         "walkable",
         "subway-friendly"
       ],
-      "summary": "Indoor history stop that adds a stronger modern-city culture card and rainy-day backup to Nampo routes요.",
+      "summary": "Indoor history stop that adds a stronger modern-city culture card and rainy-day backup to Nampo routes.",
       "booking_hint": "시장이나 골목 동선 사이에 넣으면 리듬이 좋아지고, 비 오는 날 남포 일정의 실내 문화 카드로 특히 안정적이에요.",
       "slot_bias": {
         "morning": 4,
@@ -1382,7 +1382,7 @@
       "mobility": [
         "taxi-needed"
       ],
-      "summary": "Indoor museum stop that adds a stronger exhibition-and-rainy-day backup to Songdo-centered west Busan routes요.",
+      "summary": "Indoor museum stop that adds a stronger exhibition-and-rainy-day backup to Songdo-centered west Busan routes.",
       "booking_hint": "전시 구성이 바뀌는 편이라 방문 전 현재 전시를 확인하면 좋고, 날씨가 좋지 않은 날 오후 카드로 넣기 특히 좋아요.",
       "slot_bias": {
         "morning": 4,
@@ -1438,7 +1438,7 @@
         "taxi-needed",
         "nearby"
       ],
-      "summary": "Cliffside village walk that gives Songdo a more atmospheric photo-and-cafe-view backup toward sunset요.",
+      "summary": "Cliffside village walk that gives Songdo a more atmospheric photo-and-cafe-view backup toward sunset.",
       "booking_hint": "해 질 무렵 분위기가 특히 좋아서 송도 해안 코스 뒤쪽에 붙이면 좋고, 계단과 경사가 있어 너무 빡빡한 날보단 여유 있는 일정에 잘 맞아요.",
       "slot_bias": {
         "afternoon": 5,

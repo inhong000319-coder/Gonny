@@ -11,11 +11,14 @@
     {
       "id": "arbat-street",
       "name": "Arbat Street",
-      "category": [
+      "activity_type": [
         "sightseeing",
         "shopping",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -58,11 +61,13 @@
     {
       "id": "sportivnaya-embankment",
       "name": "Sportivnaya Embankment",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -105,11 +110,13 @@
     {
       "id": "tokarevsky-lighthouse",
       "name": "Tokarevsky Lighthouse",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -150,10 +157,13 @@
     {
       "id": "revolution-square",
       "name": "Revolution Square",
-      "category": [
+      "activity_type": [
         "sightseeing",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -195,11 +205,13 @@
     {
       "id": "railway-station",
       "name": "Vladivostok Railway Station",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -241,11 +253,14 @@
     {
       "id": "svetlanskaya-street",
       "name": "Svetlanskaya Street",
-      "category": [
+      "activity_type": [
         "sightseeing",
         "shopping",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -287,11 +302,13 @@
     {
       "id": "eagle-nest",
       "name": "Eagle's Nest Viewpoint",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -334,11 +351,13 @@
     {
       "id": "millionka",
       "name": "Millionka District",
-      "category": [
+      "activity_type": [
         "food",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -379,10 +398,13 @@
     {
       "id": "cafe-tour-center",
       "name": "Central Cafe Route",
-      "category": [
+      "activity_type": [
         "food",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -423,11 +445,13 @@
     {
       "id": "golden-bridge-view",
       "name": "골든브리지 전망 포인트",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -469,11 +493,13 @@
     {
       "id": "russky-oceanarium",
       "name": "루스키섬 아쿠아리움",
-      "category": [
-        "family",
+      "activity_type": [
         "activity",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -514,11 +540,13 @@
     {
       "id": "pokrovsky-park",
       "name": "포크롭스키 공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -558,11 +586,13 @@
     {
       "id": "marine-terminal",
       "name": "블라디보스토크 해양터미널",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -603,11 +633,14 @@
     {
       "id": "seafood-market-lane",
       "name": "해산물 시장 골목",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -648,11 +681,13 @@
     {
       "id": "funicular",
       "name": "블라디보스토크 푸니쿨라",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -694,11 +729,13 @@
     {
       "id": "zarya-center",
       "name": "자랴 현대미술관",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -738,11 +775,13 @@
     {
       "id": "primorsky-stage",
       "name": "프리모르스키 극장",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -782,11 +821,13 @@
     {
       "id": "university-embankment",
       "name": "대학가 해안 산책길",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -827,11 +868,13 @@
     {
       "id": "sport-harbor",
       "name": "스포르티브 항구 야경 구역",
-      "category": [
+      "activity_type": [
         "food",
-        "photo",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",

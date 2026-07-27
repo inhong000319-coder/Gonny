@@ -11,11 +11,13 @@
     {
       "id": "yeosu-cable-car",
       "name": "여수 해상케이블카",
-      "category": [
+      "activity_type": [
         "activity",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -56,11 +58,13 @@
     {
       "id": "dolsan-park",
       "name": "돌산공원",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -103,11 +107,13 @@
     {
       "id": "romantic-pocha",
       "name": "낭만포차거리",
-      "category": [
+      "activity_type": [
         "food",
-        "nightlife",
-        "photo"
+        "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -147,11 +153,13 @@
     {
       "id": "odongdo",
       "name": "오동도",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -195,11 +203,13 @@
     {
       "id": "expo-ocean-park",
       "name": "여수엑스포 해양공원",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -242,11 +252,12 @@
     {
       "id": "aqua-planet",
       "name": "아쿠아플라넷 여수",
-      "category": [
-        "family",
-        "activity",
-        "photo"
+      "activity_type": [
+        "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -288,11 +299,13 @@
     {
       "id": "hyangiram",
       "name": "향일암",
-      "category": [
+      "activity_type": [
         "culture",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -334,11 +347,13 @@
     {
       "id": "uncheon-cafe",
       "name": "웅천 카페거리",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -379,11 +394,14 @@
     {
       "id": "jungang-market",
       "name": "여수중앙시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -425,11 +443,13 @@
     {
       "id": "hamel-lighthouse",
       "name": "하멜등대",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -470,11 +490,13 @@
     {
       "id": "art-land",
       "name": "예술랜드",
-      "category": [
-        "photo",
+      "activity_type": [
         "activity",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -514,11 +536,13 @@
     {
       "id": "jangdo-art",
       "name": "장도 예술공원",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",

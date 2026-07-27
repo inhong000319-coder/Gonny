@@ -11,11 +11,13 @@
     {
       "id": "sagrada-familia",
       "name": "사그라다 파밀리아",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -58,11 +60,13 @@
     {
       "id": "passeig-de-gracia",
       "name": "파세이그 데 그라시아",
-      "category": [
+      "activity_type": [
         "shopping",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -103,11 +107,13 @@
     {
       "id": "casa-batllo",
       "name": "카사 바트요",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -149,11 +155,13 @@
     {
       "id": "gothic-quarter",
       "name": "고딕 지구",
-      "category": [
+      "activity_type": [
         "culture",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -195,11 +203,13 @@
     {
       "id": "barceloneta",
       "name": "바르셀로네타 해변",
-      "category": [
+      "activity_type": [
         "relax",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -243,11 +253,14 @@
     {
       "id": "la-boqueria",
       "name": "보케리아 시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -290,11 +303,14 @@
     {
       "id": "la-rambla",
       "name": "람블라스 거리",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -337,11 +353,13 @@
     {
       "id": "park-guell",
       "name": "구엘 공원",
-      "category": [
-        "photo",
+      "activity_type": [
         "culture",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -383,11 +401,13 @@
     {
       "id": "bunker-del-carmel",
       "name": "벙커 델 카르멜",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -427,11 +447,14 @@
     {
       "id": "el-born",
       "name": "엘 보른",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -472,11 +495,13 @@
     {
       "id": "montjuic",
       "name": "몬주익 언덕",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -519,11 +544,13 @@
     {
       "id": "magic-fountain",
       "name": "몬주익 분수 일대",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -566,11 +593,13 @@
     {
       "id": "tibidabo-amusement-park",
       "name": "Tibidabo Amusement Park",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "photo"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -613,11 +642,13 @@
     {
       "id": "montjuic-cable-car",
       "name": "Montjuic Cable Car",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "photo"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],

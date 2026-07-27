@@ -12,11 +12,13 @@
     {
       "id": "colosseum",
       "name": "콜로세움",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -60,11 +62,13 @@
     {
       "id": "roman-forum",
       "name": "로마 포로",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -107,11 +111,13 @@
     {
       "id": "trevi-fountain",
       "name": "트레비 분수",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -154,11 +160,13 @@
     {
       "id": "pantheon",
       "name": "판테온",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -201,11 +209,13 @@
     {
       "id": "piazza-navona",
       "name": "나보나 광장",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -248,11 +258,14 @@
     {
       "id": "trastevere",
       "name": "트라스테베레",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -292,11 +305,13 @@
     {
       "id": "vatican-museum",
       "name": "바티칸 박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "family"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -339,11 +354,13 @@
     {
       "id": "st-peters",
       "name": "성베드로 대성당",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -387,11 +404,13 @@
     {
       "id": "borghese-garden",
       "name": "보르게세 공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -434,11 +453,13 @@
     {
       "id": "spanish-steps",
       "name": "스페인 광장",
-      "category": [
-        "photo",
+      "activity_type": [
         "shopping",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -479,11 +500,14 @@
     {
       "id": "campo-de-fiori",
       "name": "캄포 데 피오리",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -525,11 +549,13 @@
     {
       "id": "janiculum-hill",
       "name": "자니콜로 언덕",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -570,11 +596,13 @@
     {
       "id": "bioparco-di-roma",
       "name": "Bioparco di Roma",
-      "category": [
+      "activity_type": [
         "activity",
-        "nature",
-        "family"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],
@@ -617,11 +645,13 @@
     {
       "id": "cinecitta-world",
       "name": "Cinecitta World",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "photo"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"

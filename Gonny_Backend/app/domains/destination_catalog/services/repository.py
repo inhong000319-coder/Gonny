@@ -112,7 +112,10 @@ class DestinationCatalogRepository:
                     total_places=len(places),
                     active_places=sum(1 for place in places if place.get("is_active", True)),
                     activity_places=sum(
-                        1 for place in places if set(place.get("category", [])) & ACTIVITY_CATEGORIES
+                        1
+                        for place in places
+                        if set(place.get("activity_type", [])) & ACTIVITY_CATEGORIES
+                        or "액티비티" in place.get("activity_type", [])
                     ),
                 )
             )

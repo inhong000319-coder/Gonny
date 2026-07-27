@@ -16,7 +16,8 @@ def build_place(**overrides) -> PlaceData:
     data = {
         "id": "hamdeok-beach",
         "name": "Hamdeok Beach",
-        "category": ["relax", "photo", "nature"],
+        "activity_type": ["relax", "nature"],
+        "visual_feature": ["포토스팟"],
         "budget_level": ["low", "medium", "high"],
         "suitable_for": ["solo", "couple", "friend", "family"],
         "time_fit": ["morning", "afternoon"],

@@ -12,11 +12,13 @@
     {
       "id": "gyeongpo-beach",
       "name": "경포해변",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -60,11 +62,13 @@
     {
       "id": "gyeongpo-lake",
       "name": "경포호 산책길",
-      "category": [
+      "activity_type": [
         "nature",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -108,11 +112,13 @@
     {
       "id": "anmok-coffee",
       "name": "안목 커피거리",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -155,11 +161,13 @@
     {
       "id": "jeongdongjin",
       "name": "정동진 해변",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -202,11 +210,13 @@
     {
       "id": "arte-museum-gangneung",
       "name": "아르떼뮤지엄 강릉",
-      "category": [
-        "photo",
+      "activity_type": [
         "activity",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -246,12 +256,14 @@
     {
       "id": "haslla-art-world",
       "name": "Haslla Art World",
-      "category": [
+      "activity_type": [
         "activity",
         "local_experience",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],
@@ -299,11 +311,13 @@
     {
       "id": "ojukheon",
       "name": "오죽헌",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "family"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -345,11 +359,13 @@
     {
       "id": "seongyojang",
       "name": "선교장",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -392,11 +408,14 @@
     {
       "id": "central-market-gangneung",
       "name": "강릉중앙시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -439,11 +458,13 @@
     {
       "id": "sacheon-beach",
       "name": "사천해변",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -486,10 +507,13 @@
     {
       "id": "chodang-sundubu",
       "name": "초당순두부마을",
-      "category": [
+      "activity_type": [
         "food",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -532,11 +556,13 @@
     {
       "id": "terarosa-main",
       "name": "테라로사 본점",
-      "category": [
+      "activity_type": [
         "food",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"

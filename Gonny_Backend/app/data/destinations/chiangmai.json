@@ -12,11 +12,14 @@
     {
       "id": "old-city-moat",
       "name": "올드시티 해자 산책",
-      "category": [
+      "activity_type": [
         "relax",
         "culture",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -59,11 +62,13 @@
     {
       "id": "wat-chedi-luang",
       "name": "왓 체디 루앙",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -105,11 +110,14 @@
     {
       "id": "wat-phra-singh",
       "name": "왓 프라싱",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -152,11 +160,13 @@
     {
       "id": "nimmanhaemin",
       "name": "님만해민 거리",
-      "category": [
+      "activity_type": [
         "food",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -197,11 +207,13 @@
     {
       "id": "maya-mall",
       "name": "마야 몰 일대",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -243,11 +255,13 @@
     {
       "id": "doi-suthep",
       "name": "도이수텝 사원",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -289,11 +303,13 @@
     {
       "id": "doi-suthep-view",
       "name": "도이수텝 전망 포인트",
-      "category": [
-        "photo",
+      "activity_type": [
         "nature",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -336,11 +352,14 @@
     {
       "id": "night-bazaar",
       "name": "치앙마이 나이트 바자",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -382,11 +401,14 @@
     {
       "id": "warorot-market",
       "name": "와로롯 시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -428,11 +450,13 @@
     {
       "id": "jing-jai-market",
       "name": "징짜이 마켓",
-      "category": [
+      "activity_type": [
         "food",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -473,11 +497,14 @@
     {
       "id": "huay-kaew-waterfall",
       "name": "후아이깨우 폭포",
-      "category": [
+      "activity_type": [
         "nature",
         "relax",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -518,11 +545,13 @@
     {
       "id": "riverfront-chiangmai",
       "name": "핑강 리버프런트",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -562,11 +591,13 @@
     {
       "id": "chiang-mai-night-safari",
       "name": "Chiang Mai Night Safari",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "family"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],
@@ -613,11 +644,14 @@
     {
       "id": "chiang-mai-celadon-workshop",
       "name": "Chiang Mai Celadon Workshop",
-      "category": [
+      "activity_type": [
         "activity",
         "local_experience",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],

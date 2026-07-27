@@ -11,11 +11,13 @@
     {
       "id": "hanok-village",
       "name": "전주한옥마을",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -58,11 +60,13 @@
     {
       "id": "gyeonggijeon",
       "name": "경기전",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -104,11 +108,13 @@
     {
       "id": "jeondong-cathedral",
       "name": "전동성당",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -151,11 +157,14 @@
     {
       "id": "nambu-market",
       "name": "남부시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -197,11 +206,13 @@
     {
       "id": "gaekridan-gil",
       "name": "객리단길",
-      "category": [
+      "activity_type": [
         "food",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -243,11 +254,13 @@
     {
       "id": "deokjin-park",
       "name": "덕진공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -290,11 +303,13 @@
     {
       "id": "deokjin-art",
       "name": "전주국립박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "family",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -336,11 +351,14 @@
     {
       "id": "makgeolli-town",
       "name": "전주 막걸리 골목",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -380,11 +398,13 @@
     {
       "id": "jaman-mural",
       "name": "자만벽화마을",
-      "category": [
-        "photo",
+      "activity_type": [
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -424,11 +444,13 @@
     {
       "id": "wansan-park",
       "name": "완산공원",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -469,11 +491,13 @@
     {
       "id": "hanbyeokdang",
       "name": "한벽당",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -516,10 +540,13 @@
     {
       "id": "bibimbap-street",
       "name": "비빔밥 골목",
-      "category": [
+      "activity_type": [
         "food",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -562,12 +589,14 @@
     {
       "id": "jeonju-hanok-hanbok-experience",
       "name": "Jeonju Hanok Hanbok Experience",
-      "category": [
+      "activity_type": [
         "activity",
         "local_experience",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -616,11 +645,14 @@
     {
       "id": "hanbyeok-traditional-play",
       "name": "Hanbyeok Traditional Play Experience",
-      "category": [
+      "activity_type": [
         "activity",
         "local_experience",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"

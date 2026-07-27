@@ -30,8 +30,9 @@ def day_phase(request: NormalizedRuleRequest, day_number: int) -> str:
 
 def base_score(place: PlaceData, request: NormalizedRuleRequest) -> int:
     score = place.priority * 10
-    score += len(set(place.category) & set(request.concepts)) * 8
-    if "activity" in request.concepts and set(place.category) & ACTIVITY_CATEGORIES:
+    concept_tags = set(place.concept_tags)
+    score += len(concept_tags & set(request.concepts)) * 8
+    if "activity" in request.concepts and set(place.activity_type_codes) & ACTIVITY_CATEGORIES:
         score += 28
     elif "activity" in request.concepts:
         score -= 6
@@ -65,7 +66,7 @@ def slot_score(
     preferred_area: str | None,
     previous_place: PlaceData | None = None,
 ) -> int:
-    categories = set(place.category)
+    categories = set(place.concept_tags)
     score = base_score(place, request)
     score += phase_score(place=place, request=request, day_number=day_number, time_slot=time_slot)
     score += duration_slot_score(place=place, request=request, time_slot=time_slot)
@@ -100,7 +101,7 @@ def duration_slot_score(
     time_slot: str,
 ) -> int:
     duration = place.duration_hours
-    categories = set(place.category)
+    categories = set(place.concept_tags)
 
     if time_slot == "morning":
         if duration <= 2:
@@ -191,7 +192,7 @@ def phase_score(
     time_slot: str,
 ) -> int:
     phase = day_phase(request, day_number)
-    categories = set(place.category)
+    categories = set(place.concept_tags)
     score = 0
 
     if phase == "arrival":

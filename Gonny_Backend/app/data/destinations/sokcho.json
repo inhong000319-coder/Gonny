@@ -11,11 +11,14 @@
     {
       "id": "seoraksan",
       "name": "설악산 국립공원",
-      "category": [
+      "activity_type": [
         "nature",
         "sightseeing",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -58,11 +61,14 @@
     {
       "id": "sinheungsa",
       "name": "신흥사",
-      "category": [
+      "activity_type": [
         "culture",
         "nature",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -105,11 +111,13 @@
     {
       "id": "sokcho-beach",
       "name": "속초해변",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -152,11 +160,13 @@
     {
       "id": "yeonggeumjeong",
       "name": "영금정",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -199,11 +209,14 @@
     {
       "id": "abai-village",
       "name": "아바이마을",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -245,11 +258,13 @@
     {
       "id": "gaetbae",
       "name": "갯배 체험",
-      "category": [
+      "activity_type": [
         "activity",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -291,11 +306,14 @@
     {
       "id": "jungang-market-sokcho",
       "name": "속초중앙시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -338,11 +356,13 @@
     {
       "id": "cheongcho-lake",
       "name": "청초호 산책길",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -385,11 +405,13 @@
     {
       "id": "daepho-port",
       "name": "대포항",
-      "category": [
+      "activity_type": [
         "food",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -432,11 +454,13 @@
     {
       "id": "oeongchi-badahangil",
       "name": "외옹치 바다향기로",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -478,11 +502,13 @@
     {
       "id": "seorak-waterpia",
       "name": "설악 워터피아",
-      "category": [
-        "family",
+      "activity_type": [
         "activity",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -522,11 +548,13 @@
     {
       "id": "dongmyeong-port",
       "name": "동명항",
-      "category": [
+      "activity_type": [
         "food",
-        "photo",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"

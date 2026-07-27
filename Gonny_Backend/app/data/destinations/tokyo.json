@@ -11,11 +11,14 @@
     {
       "id": "asakusa-sensoji",
       "name": "Senso-ji and Nakamise Street",
-      "category": [
+      "activity_type": [
         "sightseeing",
         "culture",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -60,11 +63,14 @@
     {
       "id": "ueno-park",
       "name": "Ueno Park",
-      "category": [
+      "activity_type": [
         "relax",
         "nature",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -106,10 +112,13 @@
     {
       "id": "ameyoko",
       "name": "Ameyoko Shopping Street",
-      "category": [
+      "activity_type": [
         "shopping",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -151,11 +160,14 @@
     {
       "id": "shibuya",
       "name": "Shibuya Crossing and Center-Gai",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -197,11 +209,14 @@
     {
       "id": "meiji-jingu",
       "name": "Meiji Jingu",
-      "category": [
+      "activity_type": [
         "sightseeing",
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -245,11 +260,13 @@
     {
       "id": "harajuku",
       "name": "Takeshita Street and Harajuku",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -289,11 +306,14 @@
     {
       "id": "tsukiji",
       "name": "Tsukiji Outer Market",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -338,11 +358,13 @@
     {
       "id": "ginza",
       "name": "Ginza",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -384,11 +406,13 @@
     {
       "id": "odaiba",
       "name": "Odaiba Seaside Area",
-      "category": [
+      "activity_type": [
         "relax",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -430,11 +454,14 @@
     {
       "id": "kappabashi",
       "name": "갓파바시 도구거리",
-      "category": [
+      "activity_type": [
         "shopping",
         "culture",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -475,11 +502,14 @@
     {
       "id": "yanaka-ginza",
       "name": "야나카 긴자",
-      "category": [
+      "activity_type": [
         "relax",
         "culture",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -520,11 +550,14 @@
     {
       "id": "shimokitazawa",
       "name": "시모키타자와",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -566,11 +599,13 @@
     {
       "id": "roppongi-hills",
       "name": "롯폰기 힐즈 전망대",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -611,11 +646,14 @@
     {
       "id": "kagurazaka",
       "name": "가구라자카",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -657,11 +695,14 @@
     {
       "id": "akihabara",
       "name": "아키하바라",
-      "category": [
+      "activity_type": [
         "shopping",
         "culture",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -705,11 +746,13 @@
     {
       "id": "kiyosumi-shirakawa",
       "name": "기요스미시라카와 카페 거리",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -751,11 +794,14 @@
     {
       "id": "kichijoji",
       "name": "기치조지와 이노카시라 공원",
-      "category": [
+      "activity_type": [
         "relax",
         "shopping",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -798,11 +844,14 @@
     {
       "id": "daikanyama",
       "name": "다이칸야마",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -843,11 +892,13 @@
     {
       "id": "ebisu",
       "name": "에비스 가든플레이스와 맛집 골목",
-      "category": [
+      "activity_type": [
         "food",
-        "photo",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -888,11 +939,13 @@
     {
       "id": "tokyo-disneysea",
       "name": "Tokyo DisneySea",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "photo"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "high"
       ],

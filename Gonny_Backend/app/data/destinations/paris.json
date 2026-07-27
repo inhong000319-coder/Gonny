@@ -11,11 +11,13 @@
     {
       "id": "eiffel-tower",
       "name": "Eiffel Tower Area",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -61,11 +63,13 @@
     {
       "id": "louvre",
       "name": "Louvre Museum Exterior and Courtyard",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -109,11 +113,14 @@
     {
       "id": "tuileries",
       "name": "Tuileries Garden",
-      "category": [
+      "activity_type": [
         "relax",
         "nature",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -156,11 +163,13 @@
     {
       "id": "montmartre",
       "name": "Montmartre and Sacre-Coeur",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -202,11 +211,14 @@
     {
       "id": "latin-quarter",
       "name": "Latin Quarter",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -248,11 +260,13 @@
     {
       "id": "seine-walk",
       "name": "Seine Riverside Walk",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -295,11 +309,14 @@
     {
       "id": "marais",
       "name": "Le Marais",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -340,11 +357,13 @@
     {
       "id": "luxembourg",
       "name": "Luxembourg Gardens",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "family"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -388,11 +407,13 @@
     {
       "id": "galeries-lafayette",
       "name": "Galeries Lafayette Area",
-      "category": [
+      "activity_type": [
         "shopping",
-        "photo",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -433,11 +454,13 @@
     {
       "id": "orsay",
       "name": "오르세 미술관",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -479,11 +502,14 @@
     {
       "id": "saint-germain",
       "name": "생제르맹 거리",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -524,11 +550,13 @@
     {
       "id": "pont-alexandre",
       "name": "알렉상드르 3세 다리",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -570,11 +598,13 @@
     {
       "id": "champs-elysees",
       "name": "샹젤리제 거리",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -617,11 +647,14 @@
     {
       "id": "ile-de-la-cite",
       "name": "시테 섬 산책",
-      "category": [
+      "activity_type": [
         "sightseeing",
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -663,11 +696,13 @@
     {
       "id": "canal-saint-martin",
       "name": "생마르탱 운하",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -709,11 +744,14 @@
     {
       "id": "rue-cler",
       "name": "뤼 클레르 시장 거리",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -754,11 +792,13 @@
     {
       "id": "palais-royal",
       "name": "팔레 루아얄 정원",
-      "category": [
+      "activity_type": [
         "relax",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -800,11 +840,13 @@
     {
       "id": "place-des-vosges",
       "name": "보주 광장",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -847,11 +889,14 @@
     {
       "id": "bercy-village",
       "name": "베르시 빌리지",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -893,11 +938,13 @@
     {
       "id": "disneyland-paris",
       "name": "Disneyland Paris",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "family"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "high"
       ],
@@ -941,11 +988,13 @@
     {
       "id": "vedettes-du-pont-neuf-cruise",
       "name": "Vedettes du Pont Neuf Cruise",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "photo"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"

@@ -11,10 +11,18 @@
     {
       "id": "gyeongbokgung",
       "name": "Gyeongbokgung Palace",
-      "category": [
-        "sightseeing",
-        "culture",
-        "photo"
+      "activity_type": [
+        "문화·역사"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [
+        "조용함"
+      ],
+      "visual_feature": [
+        "야경",
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -60,10 +68,15 @@
     {
       "id": "bukchon",
       "name": "Bukchon Hanok Village",
-      "category": [
-        "sightseeing",
-        "culture",
-        "photo"
+      "activity_type": [
+        "문화·역사"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -105,10 +118,17 @@
     {
       "id": "insadong",
       "name": "Insadong Street",
-      "category": [
-        "shopping",
-        "culture",
-        "food"
+      "activity_type": [
+        "쇼핑",
+        "문화·역사",
+        "미식"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -152,11 +172,15 @@
     {
       "id": "myeongdong",
       "name": "Myeongdong",
-      "category": [
-        "shopping",
-        "food",
-        "sightseeing"
+      "activity_type": [
+        "쇼핑",
+        "미식"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -200,10 +224,15 @@
     {
       "id": "namsan-tower",
       "name": "N Seoul Tower",
-      "category": [
-        "sightseeing",
-        "photo",
-        "relax"
+      "activity_type": [
+        "문화·역사",
+        "휴양·힐링"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "야경",
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -247,11 +276,16 @@
     {
       "id": "hongdae",
       "name": "Hongdae",
-      "category": [
-        "shopping",
-        "food",
-        "nightlife"
+      "activity_type": [
+        "쇼핑",
+        "미식",
+        "나이트라이프"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -294,10 +328,16 @@
     {
       "id": "yeouido-hangang",
       "name": "Yeouido Hangang Park",
-      "category": [
-        "relax",
-        "nature",
-        "photo"
+      "activity_type": [
+        "휴양·힐링",
+        "자연·트레킹"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "야경"
       ],
       "budget_level": [
         "low",
@@ -342,11 +382,16 @@
     {
       "id": "gangnam",
       "name": "Gangnam Station Area",
-      "category": [
-        "shopping",
-        "food",
-        "nightlife"
+      "activity_type": [
+        "쇼핑",
+        "미식",
+        "나이트라이프"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -387,10 +432,16 @@
     {
       "id": "coex",
       "name": "COEX Mall and Starfield Library",
-      "category": [
-        "shopping",
-        "culture",
-        "photo"
+      "activity_type": [
+        "쇼핑",
+        "문화·역사"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -434,10 +485,16 @@
     {
       "id": "changdeokgung",
       "name": "창덕궁과 후원",
-      "category": [
-        "sightseeing",
-        "culture",
-        "relax"
+      "activity_type": [
+        "문화·역사",
+        "휴양·힐링"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -482,10 +539,16 @@
     {
       "id": "ikseon-dong",
       "name": "익선동 한옥거리",
-      "category": [
-        "food",
-        "culture",
-        "photo"
+      "activity_type": [
+        "미식",
+        "문화·역사"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -527,10 +590,16 @@
     {
       "id": "seongsu",
       "name": "성수동 카페거리",
-      "category": [
-        "shopping",
-        "food",
-        "photo"
+      "activity_type": [
+        "쇼핑",
+        "미식"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -574,11 +643,15 @@
     {
       "id": "mangwon-market",
       "name": "망원시장",
-      "category": [
-        "food",
-        "shopping",
-        "culture"
+      "activity_type": [
+        "미식",
+        "쇼핑"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -620,10 +693,13 @@
     {
       "id": "yeonnam-forest",
       "name": "연남동 경의선숲길",
-      "category": [
-        "relax",
-        "food",
-        "photo"
+      "activity_type": [
+        "휴양·힐링"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -665,11 +741,16 @@
     {
       "id": "itaewon",
       "name": "이태원 경리단길",
-      "category": [
-        "food",
-        "culture",
-        "nightlife"
+      "activity_type": [
+        "미식",
+        "나이트라이프",
+        "문화·역사"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -712,11 +793,15 @@
     {
       "id": "apgujeong-rodeo",
       "name": "압구정 로데오 거리",
-      "category": [
-        "shopping",
-        "food",
-        "photo"
+      "activity_type": [
+        "쇼핑",
+        "미식"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -758,10 +843,16 @@
     {
       "id": "seokchon-lake",
       "name": "석촌호수 산책로",
-      "category": [
-        "relax",
-        "photo",
-        "nature"
+      "activity_type": [
+        "휴양·힐링",
+        "자연·트레킹"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -806,10 +897,17 @@
     {
       "id": "ddp",
       "name": "동대문디자인플라자",
-      "category": [
-        "culture",
-        "photo",
-        "shopping"
+      "activity_type": [
+        "문화·역사",
+        "쇼핑"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟",
+        "야경"
       ],
       "budget_level": [
         "low",
@@ -853,11 +951,15 @@
     {
       "id": "euljiro",
       "name": "을지로 노포 골목",
-      "category": [
-        "food",
-        "culture",
-        "nightlife"
+      "activity_type": [
+        "미식",
+        "나이트라이프"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -899,10 +1001,16 @@
     {
       "id": "lotte-world-adventure",
       "name": "Lotte World Adventure",
-      "category": [
-        "activity",
-        "theme_park",
-        "family"
+      "activity_type": [
+        "액티비티"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "야경",
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -969,10 +1077,14 @@
     {
       "id": "e-land-hangang-cruise",
       "name": "Eland Hangang Cruise",
-      "category": [
-        "activity",
-        "local_experience",
-        "photo"
+      "activity_type": [
+        "액티비티",
+        "휴양·힐링"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "야경"
       ],
       "budget_level": [
         "medium",
@@ -1021,11 +1133,13 @@
     {
       "id": "sewoon-plaza",
       "name": "세운상가",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1076,11 +1190,13 @@
     {
       "id": "cheonggyecheon-museum",
       "name": "청계천박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1129,11 +1245,13 @@
     {
       "id": "seoul-forest",
       "name": "서울숲",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1184,11 +1302,13 @@
     {
       "id": "s-factory",
       "name": "S-Factory",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1238,11 +1358,13 @@
     {
       "id": "myeongdong-cathedral",
       "name": "명동성당",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1293,11 +1415,13 @@
     {
       "id": "bank-of-korea-money-museum",
       "name": "한국은행 화폐박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1347,11 +1471,13 @@
     {
       "id": "heunginjimun-gate",
       "name": "흥인지문",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1401,11 +1527,14 @@
     {
       "id": "dongdaemun-shopping-town",
       "name": "동대문 쇼핑타운",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1455,11 +1584,13 @@
     {
       "id": "war-memorial-korea",
       "name": "전쟁기념관",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1508,11 +1639,13 @@
     {
       "id": "itaewon-antique-furniture-street",
       "name": "이태원 앤틱가구거리",
-      "category": [
+      "activity_type": [
         "shopping",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1560,11 +1693,13 @@
     {
       "id": "namsan-cable-car",
       "name": "남산 케이블카",
-      "category": [
+      "activity_type": [
         "activity",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1613,11 +1748,13 @@
     {
       "id": "namsan-park-trail",
       "name": "남산공원 산책로",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1666,11 +1803,13 @@
     {
       "id": "seoul-sky",
       "name": "Seoul Sky",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1720,11 +1859,13 @@
     {
       "id": "lotte-world-mall",
       "name": "롯데월드몰",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1775,11 +1916,13 @@
     {
       "id": "the-hyundai-seoul",
       "name": "더현대 서울",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1830,11 +1973,13 @@
     {
       "id": "63-square",
       "name": "63 Square",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1883,11 +2028,13 @@
     {
       "id": "ktng-sangsangmadang-hongdae",
       "name": "KT&G 상상마당 홍대",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1938,11 +2085,13 @@
     {
       "id": "trick-eye-museum-seoul",
       "name": "트릭아이미술관",
-      "category": [
+      "activity_type": [
         "activity",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1991,11 +2140,13 @@
     {
       "id": "bongeunsa-temple",
       "name": "봉은사",
-      "category": [
+      "activity_type": [
         "culture",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -2046,11 +2197,14 @@
     {
       "id": "seonjeongneung",
       "name": "선정릉",
-      "category": [
+      "activity_type": [
         "relax",
         "nature",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -2099,11 +2253,13 @@
     {
       "id": "euljiro-nogari-alley",
       "name": "을지로 노가리골목",
-      "category": [
+      "activity_type": [
         "food",
-        "nightlife",
-        "photo"
+        "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -2152,11 +2308,13 @@
     {
       "id": "daelim-sangga",
       "name": "대림상가",
-      "category": [
+      "activity_type": [
         "culture",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -2204,11 +2362,12 @@
     {
       "id": "lotte-world-aquarium",
       "name": "롯데월드 아쿠아리움",
-      "category": [
-        "activity",
-        "family",
-        "photo"
+      "activity_type": [
+        "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -2258,11 +2417,12 @@
     {
       "id": "seoul-baekje-museum",
       "name": "한성백제박물관",
-      "category": [
-        "culture",
-        "family",
-        "photo"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -2312,11 +2472,14 @@
     {
       "id": "rolling-hall",
       "name": "롤링홀",
-      "category": [
+      "activity_type": [
         "nightlife",
         "culture",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -2366,11 +2529,13 @@
     {
       "id": "ak-plaza-hongdae",
       "name": "AK플라자 홍대",
-      "category": [
+      "activity_type": [
         "shopping",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -2420,11 +2585,13 @@
     {
       "id": "hyundai-motorstudio-seoul",
       "name": "현대 모터스튜디오 서울",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -2474,11 +2641,13 @@
     {
       "id": "kmca-seoul",
       "name": "K현대미술관",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -2527,11 +2696,13 @@
     {
       "id": "kbs-hall",
       "name": "KBS홀",
-      "category": [
+      "activity_type": [
         "culture",
-        "nightlife",
-        "photo"
+        "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -2581,11 +2752,13 @@
     {
       "id": "sema-bunker",
       "name": "세마벙커",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"

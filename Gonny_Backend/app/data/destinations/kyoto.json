@@ -11,11 +11,13 @@
     {
       "id": "fushimi-inari",
       "name": "후시미 이나리 신사",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -59,11 +61,13 @@
     {
       "id": "kiyomizu-dera",
       "name": "기요미즈데라",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -105,11 +109,13 @@
     {
       "id": "sannenzaka",
       "name": "산넨자카와 니넨자카",
-      "category": [
+      "activity_type": [
         "shopping",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -150,11 +156,13 @@
     {
       "id": "gion",
       "name": "기온 거리",
-      "category": [
+      "activity_type": [
         "food",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -195,11 +203,14 @@
     {
       "id": "yasaka-shrine",
       "name": "야사카 신사",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -242,11 +253,13 @@
     {
       "id": "arashiyama-bamboo",
       "name": "아라시야마 대나무숲",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -290,11 +303,13 @@
     {
       "id": "togetsukyo",
       "name": "도게츠교",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -337,11 +352,14 @@
     {
       "id": "nishiki-market",
       "name": "니시키 시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -385,11 +403,13 @@
     {
       "id": "pontocho",
       "name": "폰토초",
-      "category": [
+      "activity_type": [
         "food",
-        "nightlife",
-        "photo"
+        "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -429,11 +449,14 @@
     {
       "id": "kyoto-imperial",
       "name": "교토 교엔",
-      "category": [
+      "activity_type": [
         "relax",
         "nature",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -476,11 +499,13 @@
     {
       "id": "philosophers-path",
       "name": "철학의 길",
-      "category": [
+      "activity_type": [
         "nature",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -522,11 +547,13 @@
     {
       "id": "kinkakuji",
       "name": "금각사",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -568,12 +595,14 @@
     {
       "id": "toei-kyoto-studio-park",
       "name": "Toei Kyoto Studio Park",
-      "category": [
+      "activity_type": [
         "activity",
         "theme_park",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -617,12 +646,14 @@
     {
       "id": "sagano-romantic-train",
       "name": "Sagano Romantic Train",
-      "category": [
+      "activity_type": [
         "activity",
         "local_experience",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],

@@ -114,7 +114,11 @@ class RuleItineraryService:
                             day_number=day_number,
                             time_slot=slot,
                             place_name=self._localize_place_name(full_day_place),
-                            category=full_day_place.category[0] if full_day_place.category else "activity",
+                            category=(
+                                full_day_place.activity_type_codes[0]
+                                if full_day_place.activity_type_codes
+                                else "activity"
+                            ),
                             area=self._localize_area(full_day_place.area),
                             notes=self._build_note(
                                 place=full_day_place,
@@ -189,7 +193,9 @@ class RuleItineraryService:
         candidates = [
             place
             for place in scored_places
-            if place.id not in used_ids and place.full_day_recommended and set(place.category) & ACTIVITY_CATEGORIES
+            if place.id not in used_ids
+            and place.full_day_recommended
+            and set(place.activity_type_codes) & ACTIVITY_CATEGORIES
         ]
         if not candidates:
             return None
@@ -222,10 +228,10 @@ class RuleItineraryService:
         return None
 
     def _resolve_item_category(self, place: PlaceData, request: NormalizedRuleRequest) -> str:
-        categories = set(place.category)
+        categories = set(place.activity_type_codes)
         if "activity" in request.concepts and categories & ACTIVITY_CATEGORIES:
             return "activity"
-        return place.category[0] if place.category else "sightseeing"
+        return place.activity_type_codes[0] if place.activity_type_codes else "sightseeing"
 
     def _pick_place_for_slot(
         self,
@@ -273,7 +279,9 @@ class RuleItineraryService:
         if "activity" not in request.concepts:
             return places
 
-        non_activity_places = [place for place in places if not (set(place.category) & ACTIVITY_CATEGORIES)]
+        non_activity_places = [
+            place for place in places if not (set(place.activity_type_codes) & ACTIVITY_CATEGORIES)
+        ]
         return non_activity_places or places
 
     def _day_phase(self, request: NormalizedRuleRequest, day_number: int) -> str:

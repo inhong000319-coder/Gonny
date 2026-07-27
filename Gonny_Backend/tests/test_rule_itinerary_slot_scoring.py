@@ -16,7 +16,7 @@ def build_place(**overrides) -> PlaceData:
     data = {
         "id": "sample-place",
         "name": "Sample Place",
-        "category": ["sightseeing"],
+        "activity_type": ["sightseeing"],
         "budget_level": ["low", "medium", "high"],
         "suitable_for": ["solo", "couple", "friend", "family"],
         "time_fit": ["morning", "afternoon", "evening"],
@@ -76,8 +76,8 @@ def test_slot_bias_has_stronger_effect_on_matching_time_slot() -> None:
 def test_short_place_is_preferred_over_long_place_for_evening_slot() -> None:
     service = RuleItineraryService()
     request = build_request()
-    short_evening = build_place(id="short-evening", duration_hours=2, category=["food"])
-    long_evening = build_place(id="long-evening", duration_hours=5, category=["food"])
+    short_evening = build_place(id="short-evening", duration_hours=2, activity_type=["food"])
+    long_evening = build_place(id="long-evening", duration_hours=5, activity_type=["food"])
 
     short_score = service._slot_score(
         place=short_evening,
@@ -101,7 +101,7 @@ def test_activity_place_gets_afternoon_boost_for_longer_visit() -> None:
     service = RuleItineraryService()
     request = build_request(concepts=["activity"], style="tight")
     activity_place = build_place(
-        category=["activity"],
+        activity_type=["activity"],
         duration_hours=5,
         slot_bias={"afternoon": 3},
         pace=["tight"],

@@ -1,6 +1,22 @@
 from pydantic import BaseModel, ConfigDict, Field
 
 
+ACTIVITY_TYPE_CODE_MAP = {
+    "나이트라이프": "nightlife",
+    "문화·역사": "culture",
+    "미식": "food",
+    "쇼핑": "shopping",
+    "액티비티": "activity",
+    "자연·트레킹": "nature",
+    "휴양·힐링": "relax",
+}
+
+VISUAL_FEATURE_CODE_MAP = {
+    "포토스팟": "photo",
+    "야경": "photo",
+}
+
+
 class FeaturedVideoData(BaseModel):
     video_id: str
     title: str
@@ -17,7 +33,10 @@ class FeaturedVideoData(BaseModel):
 class PlaceData(BaseModel):
     id: str
     name: str
-    category: list[str]
+    activity_type: list[str]
+    mood: list[str] = Field(default_factory=list)
+    mood_evening_override: list[str] = Field(default_factory=list)
+    visual_feature: list[str] = Field(default_factory=list)
     budget_level: list[str]
     suitable_for: list[str]
     time_fit: list[str]
@@ -39,6 +58,19 @@ class PlaceData(BaseModel):
     note_templates: list[str] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
+
+    @property
+    def activity_type_codes(self) -> list[str]:
+        return [ACTIVITY_TYPE_CODE_MAP.get(value, value) for value in self.activity_type]
+
+    @property
+    def concept_tags(self) -> list[str]:
+        tags = [*self.activity_type_codes, *[VISUAL_FEATURE_CODE_MAP.get(value, value) for value in self.visual_feature]]
+        deduped: list[str] = []
+        for tag in tags:
+            if tag and tag not in deduped:
+                deduped.append(tag)
+        return deduped
 
 
 class CityPlaceCatalog(BaseModel):

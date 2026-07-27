@@ -182,7 +182,7 @@ class TemplateRuleNoteGenerator(BaseRuleNoteGenerator):
         return f"{context.localized_area_name} 일대 흐름을 자연스럽게 이어주기 좋아서 앞뒤 코스와도 잘 연결돼요."
 
     def _build_category_sentence(self, context: RuleNoteContext) -> str:
-        for category in context.place.category:
+        for category in context.place.concept_tags:
             if category in CATEGORY_REASON:
                 return CATEGORY_REASON[category]
         return ""
@@ -307,7 +307,7 @@ class OpenAIRuleNoteGenerator(BaseRuleNoteGenerator):
             f"시간대: {context.time_slot}\n"
             f"일차: {context.day_number}\n"
             f"요약: {place.summary}\n"
-            f"카테고리: {', '.join(place.category)}\n"
+            f"카테고리: {', '.join(place.activity_type)}\n"
             f"예산 구간: {context.request.budget_band}\n"
             f"여행 스타일: {context.request.style}\n"
             f"동행 유형: {context.request.companion_type}\n"

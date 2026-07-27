@@ -11,11 +11,13 @@
     {
       "id": "ohori-park",
       "name": "오호리 공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -59,11 +61,14 @@
     {
       "id": "maizuru-castle",
       "name": "마이즈루 공원과 후쿠오카성 터",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -106,11 +111,14 @@
     {
       "id": "tenjin",
       "name": "텐진 지하상가와 주변 거리",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -154,11 +162,14 @@
     {
       "id": "nakasu-yatai",
       "name": "나카스 포장마차 거리",
-      "category": [
+      "activity_type": [
         "food",
         "nightlife",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -198,11 +209,14 @@
     {
       "id": "canal-city",
       "name": "캐널시티 하카타",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -244,11 +258,13 @@
     {
       "id": "hakata-station",
       "name": "하카타역 일대",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -293,11 +309,13 @@
     {
       "id": "momochi-beach",
       "name": "모모치 해변",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -340,11 +358,13 @@
     {
       "id": "fukuoka-tower",
       "name": "후쿠오카 타워",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -385,11 +405,14 @@
     {
       "id": "dazaifu",
       "name": "다자이후 텐만구",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -431,11 +454,14 @@
     {
       "id": "yanagibashi",
       "name": "야나기바시 연합시장",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -477,11 +503,14 @@
     {
       "id": "kushida-shrine",
       "name": "구시다 신사",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -523,11 +552,13 @@
     {
       "id": "nokonoshima",
       "name": "노코노시마 아일랜드파크",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -567,11 +598,13 @@
     {
       "id": "marine-world-uminonakamichi",
       "name": "Marine World Uminonakamichi",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "family"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],
@@ -619,11 +652,13 @@
     {
       "id": "fukuoka-open-top-bus",
       "name": "Fukuoka Open Top Bus",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "photo"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],

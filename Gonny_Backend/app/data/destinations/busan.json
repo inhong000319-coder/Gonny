@@ -12,10 +12,17 @@
     {
       "id": "haeundae-beach",
       "name": "해운대 해수욕장",
-      "category": [
-        "relax",
-        "photo",
-        "sightseeing"
+      "activity_type": [
+        "휴양·힐링",
+        "자연·트레킹"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟",
+        "야경"
       ],
       "budget_level": [
         "low",
@@ -60,10 +67,16 @@
     {
       "id": "dongbaek-island",
       "name": "동백섬 산책로",
-      "category": [
-        "nature",
-        "relax",
-        "photo"
+      "activity_type": [
+        "자연·트레킹",
+        "휴양·힐링"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -107,10 +120,15 @@
     {
       "id": "blue-line-park",
       "name": "해운대 블루라인파크",
-      "category": [
-        "activity",
-        "photo",
-        "sightseeing"
+      "activity_type": [
+        "액티비티"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -151,10 +169,17 @@
     {
       "id": "gwangalli-beach",
       "name": "광안리 해변",
-      "category": [
-        "relax",
-        "food",
-        "photo"
+      "activity_type": [
+        "휴양·힐링",
+        "미식"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "야경",
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -197,10 +222,19 @@
     {
       "id": "millak-waterfront",
       "name": "민락수변공원",
-      "category": [
-        "food",
-        "relax",
-        "nightlife"
+      "activity_type": [
+        "미식",
+        "휴양·힐링",
+        "나이트라이프"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [
+        "활기참"
+      ],
+      "visual_feature": [
+        "야경"
       ],
       "budget_level": [
         "low",
@@ -241,10 +275,15 @@
     {
       "id": "gamcheon-culture-village",
       "name": "감천문화마을",
-      "category": [
-        "sightseeing",
-        "culture",
-        "photo"
+      "activity_type": [
+        "문화·역사"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -287,11 +326,16 @@
     {
       "id": "jagalchi-market",
       "name": "자갈치시장",
-      "category": [
-        "food",
-        "culture",
-        "shopping"
+      "activity_type": [
+        "미식",
+        "쇼핑",
+        "문화·역사"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -336,11 +380,16 @@
     {
       "id": "gukje-market",
       "name": "국제시장",
-      "category": [
-        "shopping",
-        "food",
-        "culture"
+      "activity_type": [
+        "쇼핑",
+        "미식",
+        "문화·역사"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -381,10 +430,17 @@
     {
       "id": "biff-square",
       "name": "BIFF 광장",
-      "category": [
-        "food",
-        "shopping",
-        "nightlife"
+      "activity_type": [
+        "미식",
+        "쇼핑",
+        "나이트라이프"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "야경"
       ],
       "budget_level": [
         "low",
@@ -425,10 +481,14 @@
     {
       "id": "songdo-cable-car",
       "name": "송도 해상케이블카",
-      "category": [
-        "activity",
-        "photo",
-        "relax"
+      "activity_type": [
+        "액티비티"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟",
+        "야경"
       ],
       "budget_level": [
         "medium",
@@ -470,10 +530,16 @@
     {
       "id": "taejongdae",
       "name": "태종대",
-      "category": [
-        "nature",
-        "sightseeing",
-        "photo"
+      "activity_type": [
+        "자연·트레킹",
+        "문화·역사"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -516,11 +582,13 @@
     {
       "id": "onjeoncheon-cafe",
       "name": "온천천 카페거리",
-      "category": [
-        "food",
-        "relax",
-        "photo"
+      "activity_type": [
+        "미식",
+        "휴양·힐링"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -563,10 +631,15 @@
     {
       "id": "skyline-luge-busan",
       "name": "Skyline Luge Busan",
-      "category": [
-        "activity",
-        "local_experience",
-        "photo"
+      "activity_type": [
+        "액티비티"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium"
@@ -614,11 +687,13 @@
     {
       "id": "songdo-beach",
       "name": "송도해수욕장",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -668,11 +743,13 @@
     {
       "id": "amnam-park",
       "name": "암남공원",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -721,11 +798,13 @@
     {
       "id": "millac-the-market",
       "name": "Millac The Market",
-      "category": [
+      "activity_type": [
         "food",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -776,11 +855,13 @@
     {
       "id": "f1963",
       "name": "F1963",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -829,11 +910,13 @@
     {
       "id": "sea-life-busan-aquarium",
       "name": "SEA LIFE Busan Aquarium",
-      "category": [
+      "activity_type": [
         "activity",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -883,11 +966,13 @@
     {
       "id": "busan-x-the-sky",
       "name": "BUSAN X the SKY",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -937,11 +1022,13 @@
     {
       "id": "yongdusan-park",
       "name": "용두산공원",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -992,11 +1079,13 @@
     {
       "id": "bosu-book-street",
       "name": "보수동 책방골목",
-      "category": [
+      "activity_type": [
         "culture",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1044,11 +1133,13 @@
     {
       "id": "songdo-yonggung-suspension-bridge",
       "name": "송도용궁구름다리",
-      "category": [
+      "activity_type": [
         "activity",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1096,11 +1187,13 @@
     {
       "id": "songdo-sky-park",
       "name": "송도스카이파크",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1150,11 +1243,13 @@
     {
       "id": "busan-tower",
       "name": "부산타워",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -1204,11 +1299,12 @@
     {
       "id": "busan-modern-history-museum",
       "name": "부산근현대역사관",
-      "category": [
-        "culture",
-        "photo",
-        "family"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1257,11 +1353,12 @@
     {
       "id": "busan-moca",
       "name": "부산현대미술관",
-      "category": [
-        "culture",
-        "photo",
-        "family"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1309,11 +1406,13 @@
     {
       "id": "huinnyeoul-culture-village",
       "name": "흰여울문화마을",
-      "category": [
+      "activity_type": [
         "relax",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",

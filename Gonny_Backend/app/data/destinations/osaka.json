@@ -11,11 +11,14 @@
     {
       "id": "dotonbori",
       "name": "Dotonbori",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -60,10 +63,13 @@
     {
       "id": "kuromon-market",
       "name": "Kuromon Market",
-      "category": [
+      "activity_type": [
         "food",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -107,11 +113,13 @@
     {
       "id": "osaka-castle",
       "name": "Osaka Castle",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -153,10 +161,13 @@
     {
       "id": "shinsaibashi",
       "name": "Shinsaibashi Shopping Arcade",
-      "category": [
+      "activity_type": [
         "shopping",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -198,11 +209,13 @@
     {
       "id": "tsutenkaku",
       "name": "Tsutenkaku and Shinsekai",
-      "category": [
+      "activity_type": [
         "food",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -245,11 +258,13 @@
     {
       "id": "umeda-sky",
       "name": "Umeda Sky Building",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -290,11 +305,13 @@
     {
       "id": "nakazakicho",
       "name": "Nakazakicho Cafe Area",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -335,11 +352,13 @@
     {
       "id": "tennoji-park",
       "name": "Tennoji Park",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "family"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -382,11 +401,14 @@
     {
       "id": "sumiyoshi-taisha",
       "name": "Sumiyoshi Taisha",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -427,11 +449,13 @@
     {
       "id": "america-mura",
       "name": "아메리카무라",
-      "category": [
+      "activity_type": [
         "shopping",
-        "photo",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -473,11 +497,14 @@
     {
       "id": "namba-yasaka",
       "name": "난바 야사카 신사",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -519,11 +546,12 @@
     {
       "id": "tempozan",
       "name": "덴포잔 하버빌리지",
-      "category": [
-        "photo",
-        "relax",
-        "family"
+      "activity_type": [
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -565,11 +593,13 @@
     {
       "id": "hankyu-umeda",
       "name": "한큐 우메다 주변",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -610,11 +640,13 @@
     {
       "id": "osaka-housing-museum",
       "name": "오사카 주택박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "activity",
-        "photo"
+        "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -655,11 +687,13 @@
     {
       "id": "nakanoshima-park",
       "name": "나카노시마 공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -703,11 +737,13 @@
     {
       "id": "hozenji-yokocho",
       "name": "호젠지 요코초",
-      "category": [
+      "activity_type": [
         "food",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -748,11 +784,14 @@
     {
       "id": "fukushima-food-street",
       "name": "후쿠시마 맛집 거리",
-      "category": [
+      "activity_type": [
         "food",
         "nightlife",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -793,11 +832,14 @@
     {
       "id": "osaka-temmangu",
       "name": "오사카 텐만구",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -838,11 +880,13 @@
     {
       "id": "aerial-garden",
       "name": "우메다 공중정원",
-      "category": [
-        "photo",
+      "activity_type": [
         "relax",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -882,11 +926,13 @@
     {
       "id": "universal-studios-japan",
       "name": "Universal Studios Japan",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "photo"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "high"
       ],

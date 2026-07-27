@@ -11,11 +11,13 @@
     {
       "id": "marina-bay",
       "name": "마리나베이 샌즈 일대",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -58,11 +60,13 @@
     {
       "id": "gardens-bay",
       "name": "가든스 바이 더 베이",
-      "category": [
-        "photo",
+      "activity_type": [
         "nature",
         "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -105,11 +109,13 @@
     {
       "id": "merlion",
       "name": "멀라이언 파크",
-      "category": [
-        "photo",
+      "activity_type": [
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -152,11 +158,13 @@
     {
       "id": "orchard-road",
       "name": "오차드 로드",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -199,11 +207,13 @@
     {
       "id": "fort-canning",
       "name": "포트 캐닝 파크",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -246,11 +256,14 @@
     {
       "id": "chinatown",
       "name": "차이나타운",
-      "category": [
+      "activity_type": [
         "food",
         "culture",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -293,10 +306,13 @@
     {
       "id": "maxwell",
       "name": "맥스웰 푸드센터",
-      "category": [
+      "activity_type": [
         "food",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -339,11 +355,14 @@
     {
       "id": "little-india",
       "name": "리틀 인디아",
-      "category": [
+      "activity_type": [
         "culture",
         "food",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -385,11 +404,13 @@
     {
       "id": "kampong-glam",
       "name": "캄퐁글램",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -430,11 +451,13 @@
     {
       "id": "sentosa",
       "name": "센토사",
-      "category": [
+      "activity_type": [
         "activity",
-        "relax",
-        "family"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -474,11 +497,13 @@
     {
       "id": "clarke-quay",
       "name": "클락키",
-      "category": [
+      "activity_type": [
         "food",
-        "nightlife",
-        "photo"
+        "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -519,11 +544,13 @@
     {
       "id": "botanic-garden",
       "name": "싱가포르 보타닉 가든",
-      "category": [
+      "activity_type": [
         "nature",
-        "relax",
-        "family"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -565,11 +592,13 @@
     {
       "id": "universal-studios-singapore",
       "name": "Universal Studios Singapore",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "photo"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "high"
       ],
@@ -634,11 +663,13 @@
     {
       "id": "night-safari-singapore",
       "name": "Night Safari Singapore",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "family"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"

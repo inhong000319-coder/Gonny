@@ -12,11 +12,13 @@
     {
       "id": "daereungwon",
       "name": "대릉원",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -58,11 +60,13 @@
     {
       "id": "cheomseongdae",
       "name": "첨성대",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -106,11 +110,13 @@
     {
       "id": "hwangridan-gil",
       "name": "황리단길",
-      "category": [
+      "activity_type": [
         "food",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -153,11 +159,13 @@
     {
       "id": "donggung-wolji",
       "name": "동궁과 월지",
-      "category": [
-        "photo",
+      "activity_type": [
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -200,11 +208,13 @@
     {
       "id": "woljeonggyo",
       "name": "월정교",
-      "category": [
-        "photo",
+      "activity_type": [
         "culture",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -246,11 +256,13 @@
     {
       "id": "bulguksa",
       "name": "불국사",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -292,11 +304,14 @@
     {
       "id": "seokguram",
       "name": "석굴암",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -339,11 +354,13 @@
     {
       "id": "bomun-lake",
       "name": "보문호 산책길",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -387,11 +404,12 @@
     {
       "id": "gyeongju-world",
       "name": "경주월드",
-      "category": [
-        "activity",
-        "family",
-        "photo"
+      "activity_type": [
+        "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -431,11 +449,13 @@
     {
       "id": "gyeongju-museum",
       "name": "국립경주박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "family"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -478,10 +498,13 @@
     {
       "id": "gyodong-ssambap",
       "name": "교동 쌈밥 골목",
-      "category": [
+      "activity_type": [
         "food",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -523,11 +546,13 @@
     {
       "id": "gyeongju-gyochon",
       "name": "교촌한옥마을",
-      "category": [
+      "activity_type": [
         "culture",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -570,12 +595,14 @@
     {
       "id": "gyeongju-expo-grand-park",
       "name": "Gyeongju Expo Grand Park",
-      "category": [
+      "activity_type": [
         "activity",
         "local_experience",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium"
       ],

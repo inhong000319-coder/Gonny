@@ -11,11 +11,13 @@
     {
       "id": "taipei-101",
       "name": "타이베이 101",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -58,11 +60,13 @@
     {
       "id": "elephant-mountain",
       "name": "샹산(코끼리산)",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -104,11 +108,13 @@
     {
       "id": "chiang-kai-shek",
       "name": "중정기념당",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -152,11 +158,14 @@
     {
       "id": "yongkang-street",
       "name": "융캉제",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -198,11 +207,13 @@
     {
       "id": "daan-park",
       "name": "다안삼림공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -245,11 +256,14 @@
     {
       "id": "ximending",
       "name": "시먼딩",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -292,11 +306,14 @@
     {
       "id": "longshan",
       "name": "용산사",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -340,11 +357,14 @@
     {
       "id": "raohe-night-market",
       "name": "라오허 야시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -385,11 +405,13 @@
     {
       "id": "songshan-cultural",
       "name": "송산문창원구",
-      "category": [
+      "activity_type": [
         "culture",
-        "shopping",
-        "photo"
+        "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -430,11 +452,14 @@
     {
       "id": "beitou-hot-spring",
       "name": "베이터우 온천지구",
-      "category": [
+      "activity_type": [
         "relax",
         "culture",
         "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -476,11 +501,13 @@
     {
       "id": "national-palace",
       "name": "국립고궁박물원",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "family"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -522,11 +549,14 @@
     {
       "id": "shilin-night-market",
       "name": "스린 야시장",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -569,11 +599,13 @@
     {
       "id": "maokong-gondola",
       "name": "Maokong Gondola",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "photo"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -622,11 +654,13 @@
     {
       "id": "taipei-childrens-amusement-park",
       "name": "Taipei Children's Amusement Park",
-      "category": [
+      "activity_type": [
         "activity",
-        "theme_park",
-        "family"
+        "theme_park"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"

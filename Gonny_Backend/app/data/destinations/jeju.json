@@ -13,10 +13,14 @@
     {
       "id": "hamdeok-beach",
       "name": "함덕해수욕장",
-      "category": [
-        "relax",
-        "photo",
-        "nature"
+      "activity_type": [
+        "휴양·힐링",
+        "자연·트레킹"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -60,10 +64,16 @@
     {
       "id": "woljeongri",
       "name": "월정리 해변",
-      "category": [
-        "relax",
-        "food",
-        "photo"
+      "activity_type": [
+        "휴양·힐링",
+        "미식"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -106,10 +116,14 @@
     {
       "id": "seongsan-ilchulbong",
       "name": "성산일출봉",
-      "category": [
-        "sightseeing",
-        "nature",
-        "photo"
+      "activity_type": [
+        "자연·트레킹",
+        "문화·역사"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -152,10 +166,14 @@
     {
       "id": "seopjikoji",
       "name": "섭지코지",
-      "category": [
-        "nature",
-        "photo",
-        "relax"
+      "activity_type": [
+        "자연·트레킹",
+        "휴양·힐링"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -199,11 +217,15 @@
     {
       "id": "bijarim",
       "name": "비자림",
-      "category": [
-        "nature",
-        "relax",
-        "sightseeing"
+      "activity_type": [
+        "자연·트레킹",
+        "휴양·힐링"
       ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -244,10 +266,16 @@
     {
       "id": "aewol-cafe",
       "name": "애월 카페거리",
-      "category": [
-        "food",
-        "relax",
-        "photo"
+      "activity_type": [
+        "미식",
+        "휴양·힐링"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -289,10 +317,16 @@
     {
       "id": "hallim-park",
       "name": "한림공원",
-      "category": [
-        "nature",
-        "family",
-        "relax"
+      "activity_type": [
+        "자연·트레킹",
+        "휴양·힐링"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -334,10 +368,15 @@
     {
       "id": "hyeopjae-beach",
       "name": "협재해수욕장",
-      "category": [
-        "relax",
-        "photo",
-        "nature"
+      "activity_type": [
+        "휴양·힐링"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -382,10 +421,14 @@
     {
       "id": "camellia-hill",
       "name": "카멜리아힐",
-      "category": [
-        "photo",
-        "nature",
-        "relax"
+      "activity_type": [
+        "자연·트레킹",
+        "휴양·힐링"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -427,10 +470,15 @@
     {
       "id": "jungmun-saekdal",
       "name": "중문색달해변",
-      "category": [
-        "relax",
-        "photo",
-        "nature"
+      "activity_type": [
+        "휴양·힐링"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "low",
@@ -474,10 +522,16 @@
     {
       "id": "osulloc",
       "name": "오설록 티뮤지엄",
-      "category": [
-        "food",
-        "culture",
-        "photo"
+      "activity_type": [
+        "미식",
+        "문화·역사"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [
+        "포토스팟"
       ],
       "budget_level": [
         "medium",
@@ -521,11 +575,15 @@
     {
       "id": "dongmun-market",
       "name": "동문시장",
-      "category": [
-        "food",
-        "shopping",
-        "culture"
+      "activity_type": [
+        "미식",
+        "쇼핑"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -566,11 +624,14 @@
     {
       "id": "aqua-planet-jeju",
       "name": "Aqua Planet Jeju",
-      "category": [
-        "activity",
-        "local_experience",
-        "family"
+      "activity_type": [
+        "액티비티"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -619,11 +680,15 @@
     {
       "id": "jeju-rail-bike",
       "name": "Jeju Rail Bike",
-      "category": [
-        "activity",
-        "local_experience",
-        "nature"
+      "activity_type": [
+        "액티비티",
+        "자연·트레킹"
       ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -671,11 +736,12 @@
     {
       "id": "arte-museum-jeju",
       "name": "ARTE Museum Jeju",
-      "category": [
-        "culture",
-        "photo",
-        "family"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -724,11 +790,12 @@
     {
       "id": "jeju-glass-castle",
       "name": "제주 유리의성",
-      "category": [
-        "culture",
-        "photo",
-        "family"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -776,11 +843,13 @@
     {
       "id": "yeomiji-botanical-garden",
       "name": "여미지식물원",
-      "category": [
+      "activity_type": [
         "nature",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -829,11 +898,12 @@
     {
       "id": "jeju-teddy-bear-museum",
       "name": "제주 테디베어뮤지엄",
-      "category": [
-        "culture",
-        "family",
-        "photo"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -881,11 +951,13 @@
     {
       "id": "gwangchigi-beach",
       "name": "광치기해변",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -935,11 +1007,13 @@
     {
       "id": "seongeup-folk-village",
       "name": "성읍민속마을",
-      "category": [
+      "activity_type": [
         "culture",
-        "local_experience",
-        "family"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -987,11 +1061,13 @@
     {
       "id": "jeju-stone-park",
       "name": "제주돌문화공원",
-      "category": [
+      "activity_type": [
         "culture",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1040,11 +1116,13 @@
     {
       "id": "haenyeo-museum",
       "name": "해녀박물관",
-      "category": [
+      "activity_type": [
         "culture",
-        "local_experience",
-        "family"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -1093,11 +1171,12 @@
     {
       "id": "snoopy-garden-jeju",
       "name": "스누피가든",
-      "category": [
-        "culture",
-        "family",
-        "photo"
+      "activity_type": [
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1146,11 +1225,13 @@
     {
       "id": "delmoondo-gimnyeong",
       "name": "델문도 김녕",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1200,11 +1281,12 @@
     {
       "id": "9-81-park-jeju",
       "name": "9.81 파크 제주",
-      "category": [
-        "activity",
-        "family",
-        "photo"
+      "activity_type": [
+        "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -1254,11 +1336,13 @@
     {
       "id": "saebyeol-oreum",
       "name": "새별오름",
-      "category": [
+      "activity_type": [
         "nature",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",

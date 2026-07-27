@@ -11,11 +11,13 @@
     {
       "id": "grand-palace",
       "name": "Grand Palace",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "culture",
-        "photo"
+        "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -73,11 +75,14 @@
     {
       "id": "wat-pho",
       "name": "Wat Pho",
-      "category": [
+      "activity_type": [
         "culture",
         "sightseeing",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -120,11 +125,13 @@
     {
       "id": "wat-arun",
       "name": "Wat Arun",
-      "category": [
+      "activity_type": [
         "sightseeing",
-        "photo",
         "culture"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -168,11 +175,14 @@
     {
       "id": "yaowarat",
       "name": "Yaowarat Road",
-      "category": [
+      "activity_type": [
         "food",
         "shopping",
         "nightlife"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -214,11 +224,14 @@
     {
       "id": "chatuchak",
       "name": "Chatuchak Market",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -259,11 +272,13 @@
     {
       "id": "iconsiam",
       "name": "ICONSIAM",
-      "category": [
+      "activity_type": [
         "shopping",
-        "food",
-        "photo"
+        "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -305,11 +320,13 @@
     {
       "id": "lumpini",
       "name": "Lumpini Park",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "family"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -352,11 +369,14 @@
     {
       "id": "siam",
       "name": "Siam Square",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -398,11 +418,14 @@
     {
       "id": "asiatique",
       "name": "Asiatique The Riverfront",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -442,11 +465,13 @@
     {
       "id": "benjakitti",
       "name": "벤자키티 공원",
-      "category": [
+      "activity_type": [
         "relax",
-        "nature",
-        "photo"
+        "nature"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium",
@@ -490,11 +515,13 @@
     {
       "id": "jim-thompson-house",
       "name": "짐 톰슨 하우스",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -536,11 +563,13 @@
     {
       "id": "talad-noi",
       "name": "탈랏노이",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "food"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -581,11 +610,13 @@
     {
       "id": "erawan-shrine",
       "name": "에라완 사원",
-      "category": [
+      "activity_type": [
         "culture",
-        "sightseeing",
-        "photo"
+        "sightseeing"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -628,11 +659,14 @@
     {
       "id": "khao-san-road",
       "name": "카오산 로드",
-      "category": [
+      "activity_type": [
         "food",
         "nightlife",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -671,11 +705,14 @@
     {
       "id": "bang-krachao",
       "name": "방 크라차오",
-      "category": [
+      "activity_type": [
         "nature",
         "relax",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -716,11 +753,13 @@
     {
       "id": "ari-cafe",
       "name": "아리 카페 거리",
-      "category": [
+      "activity_type": [
         "food",
-        "relax",
-        "photo"
+        "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "medium",
         "high"
@@ -762,11 +801,14 @@
     {
       "id": "terminal21",
       "name": "터미널21 아속",
-      "category": [
+      "activity_type": [
         "shopping",
         "food",
         "activity"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -809,11 +851,13 @@
     {
       "id": "flower-market",
       "name": "빡클롱 탈랏 꽃시장",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "shopping"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -855,11 +899,13 @@
     {
       "id": "baan-silapin",
       "name": "반실라핀 예술 마을",
-      "category": [
+      "activity_type": [
         "culture",
-        "photo",
         "relax"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "low",
         "medium"
@@ -899,11 +945,13 @@
     {
       "id": "mahanakhon-skywalk",
       "name": "Mahanakhon SkyWalk",
-      "category": [
+      "activity_type": [
         "activity",
-        "local_experience",
-        "photo"
+        "local_experience"
       ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
       "budget_level": [
         "high"
       ],

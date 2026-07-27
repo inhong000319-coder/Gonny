@@ -737,11 +737,15 @@
       "id": "arte-museum-jeju",
       "name": "ARTE Museum Jeju",
       "activity_type": [
-        "culture"
+        "문화·역사"
       ],
-      "mood": [],
+      "mood": [
+        "활기참"
+      ],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "medium",
         "high"
@@ -791,11 +795,15 @@
       "id": "jeju-glass-castle",
       "name": "제주 유리의성",
       "activity_type": [
-        "culture"
+        "문화·역사"
       ],
-      "mood": [],
+      "mood": [
+        "활기참"
+      ],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "low",
         "medium",
@@ -844,12 +852,16 @@
       "id": "yeomiji-botanical-garden",
       "name": "여미지식물원",
       "activity_type": [
-        "nature",
-        "culture"
+        "자연·트레킹",
+        "문화·역사"
       ],
-      "mood": [],
+      "mood": [
+        "조용함"
+      ],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "medium",
         "high"
@@ -899,9 +911,11 @@
       "id": "jeju-teddy-bear-museum",
       "name": "제주 테디베어뮤지엄",
       "activity_type": [
-        "culture"
+        "문화·역사"
       ],
-      "mood": [],
+      "mood": [
+        "활기참"
+      ],
       "mood_evening_override": [],
       "visual_feature": [],
       "budget_level": [
@@ -952,12 +966,16 @@
       "id": "gwangchigi-beach",
       "name": "광치기해변",
       "activity_type": [
-        "nature",
-        "relax"
+        "자연·트레킹",
+        "휴양·힐링"
       ],
-      "mood": [],
+      "mood": [
+        "조용함"
+      ],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "low",
         "medium",
@@ -1008,8 +1026,7 @@
       "id": "seongeup-folk-village",
       "name": "성읍민속마을",
       "activity_type": [
-        "culture",
-        "local_experience"
+        "문화·역사"
       ],
       "mood": [],
       "mood_evening_override": [],
@@ -1062,10 +1079,12 @@
       "id": "jeju-stone-park",
       "name": "제주돌문화공원",
       "activity_type": [
-        "culture",
-        "nature"
+        "문화·역사",
+        "자연·트레킹"
       ],
-      "mood": [],
+      "mood": [
+        "조용함"
+      ],
       "mood_evening_override": [],
       "visual_feature": [],
       "budget_level": [
@@ -1117,10 +1136,11 @@
       "id": "haenyeo-museum",
       "name": "해녀박물관",
       "activity_type": [
-        "culture",
-        "local_experience"
+        "문화·역사"
       ],
-      "mood": [],
+      "mood": [
+        "조용함"
+      ],
       "mood_evening_override": [],
       "visual_feature": [],
       "budget_level": [
@@ -1172,11 +1192,15 @@
       "id": "snoopy-garden-jeju",
       "name": "스누피가든",
       "activity_type": [
-        "culture"
+        "문화·역사"
       ],
-      "mood": [],
+      "mood": [
+        "조용함"
+      ],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "medium",
         "high"
@@ -1226,12 +1250,16 @@
       "id": "delmoondo-gimnyeong",
       "name": "델문도 김녕",
       "activity_type": [
-        "food",
-        "relax"
+        "미식",
+        "휴양·힐링"
       ],
-      "mood": [],
+      "mood": [
+        "활기참"
+      ],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "medium",
         "high"
@@ -1282,9 +1310,11 @@
       "id": "9-81-park-jeju",
       "name": "9.81 파크 제주",
       "activity_type": [
-        "activity"
+        "액티비티"
       ],
-      "mood": [],
+      "mood": [
+        "활기참"
+      ],
       "mood_evening_override": [],
       "visual_feature": [],
       "budget_level": [
@@ -1337,12 +1367,14 @@
       "id": "saebyeol-oreum",
       "name": "새별오름",
       "activity_type": [
-        "nature",
-        "relax"
+        "자연·트레킹",
+        "휴양·힐링"
       ],
       "mood": [],
       "mood_evening_override": [],
-      "visual_feature": [],
+      "visual_feature": [
+        "포토스팟"
+      ],
       "budget_level": [
         "low",
         "medium",

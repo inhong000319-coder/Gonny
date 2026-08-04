@@ -7,6 +7,7 @@ ACTIVITY_TYPE_CODE_MAP = {
     "미식": "food",
     "쇼핑": "shopping",
     "액티비티": "activity",
+    "온천": "onsen",
     "자연·트레킹": "nature",
     "휴양·힐링": "relax",
 }

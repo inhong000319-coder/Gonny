@@ -123,3 +123,15 @@ def test_activity_place_gets_afternoon_boost_for_longer_visit() -> None:
     )
 
     assert afternoon_score > evening_score
+
+
+def test_nightlife_place_gets_concept_overlap_bonus_for_nightlife_concept() -> None:
+    service = RuleItineraryService()
+    request = build_request(concepts=["nightlife"])
+    nightlife_place = build_place(activity_type=["나이트라이프"])
+    neutral_place = build_place(id="neutral-place", activity_type=["미식"])
+
+    nightlife_score = service._base_score(nightlife_place, request)
+    neutral_score = service._base_score(neutral_place, request)
+
+    assert nightlife_score - neutral_score == 8

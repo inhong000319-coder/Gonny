@@ -6,7 +6,7 @@ from app.domains.destination_catalog.schemas import CatalogCityOption, FeaturedV
 
 
 BudgetBand = Literal["low", "medium", "high"]
-TripConcept = Literal["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity"]
+TripConcept = Literal["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity", "nightlife"]
 TripStyle = Literal["tight", "easy", "near-stay", "mobility-first"]
 CompanionType = Literal["solo", "couple", "friend", "family"]
 TimeSlot = Literal["morning", "afternoon", "evening"]

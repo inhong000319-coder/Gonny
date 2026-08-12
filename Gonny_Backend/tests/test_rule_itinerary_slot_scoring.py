@@ -135,3 +135,15 @@ def test_nightlife_place_gets_concept_overlap_bonus_for_nightlife_concept() -> N
     neutral_score = service._base_score(neutral_place, request)
 
     assert nightlife_score - neutral_score == 8
+
+
+def test_onsen_place_gets_concept_overlap_bonus_for_onsen_concept() -> None:
+    service = RuleItineraryService()
+    request = build_request(concepts=["onsen"])
+    onsen_place = build_place(activity_type=["온천"])
+    neutral_place = build_place(id="neutral-place", activity_type=["미식"])
+
+    onsen_score = service._base_score(onsen_place, request)
+    neutral_score = service._base_score(neutral_place, request)
+
+    assert onsen_score - neutral_score == 8

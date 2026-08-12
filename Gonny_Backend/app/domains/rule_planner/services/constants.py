@@ -232,6 +232,8 @@ CONCEPT_LABEL_KO = {
     "culture": "문화",
     "nature": "자연",
     "activity": "액티비티",
+    "nightlife": "나이트라이프",
+    "onsen": "온천",
 }
 COMPANION_REASON_KO = {
     "solo": "혼자서도 부담 없이 움직이기 좋습니다.",

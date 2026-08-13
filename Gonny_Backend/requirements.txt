@@ -8,3 +8,6 @@ sqlalchemy==2.0.39
 psycopg2-binary==2.9.10
 openai==1.75.0
 redis==5.2.1
+scikit-learn==1.9.0
+joblib==1.5.3
+numpy==2.4.6

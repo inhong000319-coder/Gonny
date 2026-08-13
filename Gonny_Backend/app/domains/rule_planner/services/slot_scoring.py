@@ -10,6 +10,7 @@ from .constants import (
     MIDDLE_DAY_CATEGORIES,
     SLOT_CATEGORY_PREFERENCE,
 )
+from .fitness_model import get_fitness_scorer
 from .policies.city import (
     evening_food_bonus,
     neighbor_area_bonus,
@@ -28,7 +29,7 @@ def day_phase(request: NormalizedRuleRequest, day_number: int) -> str:
     return "middle"
 
 
-def base_score(place: PlaceData, request: NormalizedRuleRequest) -> int:
+def legacy_base_score(place: PlaceData, request: NormalizedRuleRequest) -> int:
     score = place.priority * 10
     concept_tags = set(place.concept_tags)
     score += len(concept_tags & set(request.concepts)) * 8
@@ -55,6 +56,11 @@ def base_score(place: PlaceData, request: NormalizedRuleRequest) -> int:
         score += 4
 
     return score
+
+
+def base_score(place: PlaceData, request: NormalizedRuleRequest) -> int:
+    prediction = get_fitness_scorer().predict(place, request)
+    return round(prediction)
 
 
 def slot_score(

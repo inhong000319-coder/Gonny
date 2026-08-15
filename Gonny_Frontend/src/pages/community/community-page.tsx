@@ -133,6 +133,7 @@ export function CommunityPage() {
 
   return (
     <AppShell>
+      <div className="community-home">
       <section className="page-hero panel panel-gradient">
         <div className="stack">
           <span className="section-kicker">COMMUNITY</span>
@@ -345,6 +346,7 @@ export function CommunityPage() {
             </div>
         </ModalOverlay>
       ) : null}
+      </div>
     </AppShell>
   );
 }

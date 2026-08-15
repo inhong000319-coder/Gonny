@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../app/providers/auth-provider";
+import { Button } from "../../../shared/components/ui/button";
 import { SocialLoginButton } from "./social-login-button";
 
 function SparkIcon() {
@@ -15,15 +16,20 @@ function SparkIcon() {
 
 export function LoginPanel() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { signInDemo } = useAuth();
+  const returnTo = (location.state as { from?: string } | null)?.from ?? "/";
 
   const handleLogin = () => {
     signInDemo();
-    navigate("/trips");
+    navigate(returnTo, { replace: true });
   };
 
   return (
     <div className="auth-hero">
+      <Button className="auth-back-button" onClick={() => navigate(-1)} variant="ghost">
+        ← 이전 화면으로
+      </Button>
       <div className="auth-copy">
         <div className="landing-pill">
           <SparkIcon />

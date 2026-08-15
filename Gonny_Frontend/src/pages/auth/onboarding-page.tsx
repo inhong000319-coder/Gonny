@@ -1,10 +1,16 @@
 import { AuthLayout } from "../../app/layouts/auth-layout";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../shared/components/ui/button";
 
 export function OnboardingPage() {
+  const navigate = useNavigate();
+
   return (
     <AuthLayout>
       <div className="stack">
+        <Button className="auth-back-button" onClick={() => navigate(-1)} variant="ghost">
+          ← 이전 화면으로
+        </Button>
         <h1 className="section-title">기본 여행 취향 설정</h1>
         <label className="field">
           <span>닉네임</span>

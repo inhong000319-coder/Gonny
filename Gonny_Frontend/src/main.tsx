@@ -5,6 +5,7 @@ import { QueryAppProvider } from "./app/providers/query-provider";
 import { AuthProvider } from "./app/providers/auth-provider";
 import "./app/styles/tokens.css";
 import "./app/styles/globals.css";
+import "./app/styles/travel-board-overrides.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -2870,6 +2870,95 @@
       "note_templates": [
         "{place_name}은(는) 여의도 일정에 쇼핑과 전망 사이로 조금 더 차분한 전시형 공간을 섞고 싶을 때 잘 어울려요."
       ]
+    },
+    {
+      "id": "woori-sulfur-spa",
+      "name": "우리유황온천",
+      "activity_type": [
+        "온천"
+      ],
+      "mood": [],
+      "mood_evening_override": [],
+      "visual_feature": [],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gwangjin",
+      "duration_hours": 2,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "지하 1,040m에서 끌어올린 서울의 희귀한 천연 유황온천입니다.",
+      "mood_keywords": [
+        "온천"
+      ],
+      "highlight_tags": [
+        "천연 유황온천"
+      ],
+      "note_templates": [
+        "{place_name}에서 희귀한 천연 유황온천을 체험할 수 있어요."
+      ]
+    },
+    {
+      "id": "bongil-spa-land",
+      "name": "봉일스파랜드",
+      "activity_type": [
+        "온천"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "morning",
+        "afternoon"
+      ],
+      "area": "gwanak",
+      "duration_hours": 2,
+      "priority": 3,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "서울 서남권의 유일한 알칼리성 천연 온천으로, 동네 목욕탕 같은 편안한 분위기입니다.",
+      "mood_keywords": [
+        "온천",
+        "조용함"
+      ],
+      "highlight_tags": [
+        "동네 온천"
+      ],
+      "note_templates": [
+        "{place_name}에서 동네 목욕탕 같은 편안한 온천을 즐길 수 있어요."
+      ]
     }
   ],
   "featured_video": {

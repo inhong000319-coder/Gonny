@@ -7,10 +7,19 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from app.domains.destination_catalog.services.repository import DestinationCatalogRepository
 from app.domains.rule_planner.services.slot_scoring import legacy_base_score
 from app.schemas.place_catalog import PlaceData
 from app.schemas.rule_itinerary import NormalizedRuleRequest
 from app.services.rule_itinerary_service import RuleItineraryService
+
+ONSEN_PLACE_IDS = [
+    "heosimchung",
+    "shinsegae-spaland",
+    "club-d-oasis",
+    "woori-sulfur-spa",
+    "bongil-spa-land",
+]
 
 
 def build_place(**overrides) -> PlaceData:
@@ -145,13 +154,6 @@ def test_legacy_base_score_nightlife_place_gets_concept_overlap_bonus() -> None:
 
 
 def test_legacy_base_score_onsen_place_gets_concept_overlap_bonus() -> None:
-    # NOTE: this is legacy-only. Zero real places currently carry the 온천
-    # activity_type tag, so "activity_type:onsen" never appears in the
-    # trained model's feature vocabulary and the ML-backed base_score() has
-    # no signal to score onsen places any differently from an unrelated
-    # place. This will resolve itself once real onsen-tagged place data
-    # exists and the model is retrained; fabricating that data was out of
-    # scope for this change.
     request = build_request(concepts=["onsen"])
     onsen_place = build_place(activity_type=["온천"])
     neutral_place = build_place(id="neutral-place", activity_type=["미식"])
@@ -176,6 +178,25 @@ def test_ml_base_score_favors_nightlife_place_for_nightlife_concept() -> None:
     neutral_score = service._base_score(neutral_place, request)
 
     assert nightlife_score > neutral_score
+
+
+def test_ml_base_score_favors_real_onsen_places_for_onsen_concept() -> None:
+    # Uses the real catalog entries (seoul.json/busan.json) rather than a
+    # synthetic build_place(), since the point is to confirm the 5 real
+    # onsen places added to the catalog actually get scored up by the
+    # trained model, not just a hypothetical place with an 온천 tag.
+    service = RuleItineraryService()
+    repository = DestinationCatalogRepository()
+    places_by_id = {place.id: place for catalog in repository.load_catalogs() for place in catalog.places}
+    request = build_request(concepts=["onsen"])
+
+    neutral_place = places_by_id["haeundae-beach"]
+    neutral_score = service._base_score(neutral_place, request)
+
+    for place_id in ONSEN_PLACE_IDS:
+        onsen_place = places_by_id[place_id]
+        onsen_score = service._base_score(onsen_place, request)
+        assert onsen_score > neutral_score, f"{place_id} ({onsen_score}) did not outscore neutral place ({neutral_score})"
 
 
 def test_ml_base_score_returns_plausible_int_score() -> None:

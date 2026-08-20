@@ -20,7 +20,7 @@ from app.domains.destination_catalog.services.repository import DestinationCatal
 from app.domains.rule_planner.services.fitness_features import build_feature_tags
 
 LOCAL_DATA_DIR = PROJECT_ROOT / "local_only" / "data"
-FITNESS_SCORE_CSV = LOCAL_DATA_DIR / "fitness_score_ALL.csv"
+FITNESS_SCORE_CSV = LOCAL_DATA_DIR / "fitness_score_ALL_v2.csv"
 PERSONA_ATTRIBUTES_CSV = LOCAL_DATA_DIR / "persona_attributes.csv"
 MODEL_OUTPUT_PATH = PROJECT_ROOT / "models" / "place_fitness_model.pkl"
 

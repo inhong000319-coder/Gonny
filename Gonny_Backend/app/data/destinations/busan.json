@@ -1495,6 +1495,149 @@
       "note_templates": [
         "{place_name}은(는) 송도 일정 끝에 바다와 골목 풍경을 조금 더 감성적으로 담고 싶을 때 잘 어울려요."
       ]
+    },
+    {
+      "id": "heosimchung",
+      "name": "허심청",
+      "activity_type": [
+        "온천"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 2,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "동래에 위치한 아시아 최대급 규모의 전통 온천 목욕탕입니다.",
+      "mood_keywords": [
+        "온천",
+        "활기참"
+      ],
+      "highlight_tags": [
+        "대형 온천"
+      ],
+      "note_templates": [
+        "{place_name}에서 아시아 최대급 규모의 전통 온천을 여유롭게 즐길 수 있어요."
+      ]
+    },
+    {
+      "id": "shinsegae-spaland",
+      "name": "신세계 센텀시티 스파랜드",
+      "activity_type": [
+        "온천"
+      ],
+      "mood": [
+        "활기참"
+      ],
+      "mood_evening_override": [],
+      "visual_feature": [],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 3,
+      "priority": 7,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "subway-friendly"
+      ],
+      "summary": "세계 최대 규모의 백화점 내 온천·찜질방 복합 스파 시설입니다.",
+      "mood_keywords": [
+        "온천",
+        "활기참"
+      ],
+      "highlight_tags": [
+        "백화점 온천"
+      ],
+      "note_templates": [
+        "{place_name}에서 백화점 안 온천과 찜질방을 편하게 즐기기 좋아요."
+      ]
+    },
+    {
+      "id": "club-d-oasis",
+      "name": "클럽디오아시스",
+      "activity_type": [
+        "온천",
+        "휴양·힐링"
+      ],
+      "mood": [
+        "조용함"
+      ],
+      "mood_evening_override": [
+        "활기참"
+      ],
+      "visual_feature": [
+        "야경"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 3,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 LCT에 위치한 프리미엄 온천 스파 & 워터파크로, 오션뷰 인피니티 풀을 즐길 수 있습니다.",
+      "mood_keywords": [
+        "온천",
+        "조용함"
+      ],
+      "highlight_tags": [
+        "오션뷰 온천",
+        "야경"
+      ],
+      "note_templates": [
+        "{place_name}에서 오션뷰 인피니티 풀과 함께 프리미엄 온천을 즐길 수 있어요."
+      ]
     }
   ],
   "featured_video": {

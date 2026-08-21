@@ -47,6 +47,8 @@ class PlaceData(BaseModel):
     pace: list[str]
     mobility: list[str]
     summary: str
+    latitude: float | None = None
+    longitude: float | None = None
     official_url: str | None = None
     booking_hint: str | None = None
     is_active: bool = True

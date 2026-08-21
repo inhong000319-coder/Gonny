@@ -63,7 +63,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
-      ]
+      ],
+      "latitude": 37.5762891312,
+      "longitude": 126.9733212169
     },
     {
       "id": "bukchon",
@@ -113,7 +115,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
-      ]
+      ],
+      "latitude": 37.5790529392,
+      "longitude": 126.9867060298
     },
     {
       "id": "insadong",
@@ -219,7 +223,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "latitude": 37.562152093,
+      "longitude": 126.984915005
     },
     {
       "id": "namsan-tower",
@@ -585,7 +591,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.5737675037,
+      "longitude": 126.9901419773
     },
     {
       "id": "seongsu",
@@ -946,7 +954,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.566107632,
+      "longitude": 127.0095709797
     },
     {
       "id": "euljiro",
@@ -1187,7 +1197,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 을지로 특유의 공업 감성과 도시 풍경을 함께 묶고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.5693347773,
+      "longitude": 126.9952555258
     },
     {
       "id": "cheonggyecheon-museum",
@@ -1538,7 +1550,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 동대문 동선에서 서울의 오래된 결을 한 번 더 느끼고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.5712209291,
+      "longitude": 127.0097180432
     },
     {
       "id": "dongdaemun-shopping-town",
@@ -1653,7 +1667,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 이태원 근처에서 먹거리 중심 일정에 문화 코스를 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.5373270838,
+      "longitude": 126.9784385198
     },
     {
       "id": "itaewon-antique-furniture-street",
@@ -2117,7 +2133,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 홍대 일정에 실내 문화 코스와 트렌디한 분위기를 함께 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.5509355861,
+      "longitude": 126.9210433658
     },
     {
       "id": "trick-eye-museum-seoul",
@@ -2465,7 +2483,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 잠실 일정에 날씨 영향을 덜 받으면서도 만족도 높은 가족형 체험을 넣고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 37.5141653654,
+      "longitude": 127.1040749597
     },
     {
       "id": "seoul-baekje-museum",
@@ -2522,7 +2542,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 잠실 일정에 놀이·쇼핑 위주 흐름만 두지 않고 조금 더 차분한 문화 결을 섞고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.5154988428,
+      "longitude": 127.1206650789
     },
     {
       "id": "rolling-hall",
@@ -2756,7 +2778,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 강남 일정에 도심 쇼핑 흐름 사이로 전시형 문화 결을 부드럽게 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.5244324498,
+      "longitude": 127.0391861299
     },
     {
       "id": "kbs-hall",
@@ -2912,7 +2936,9 @@
       ],
       "note_templates": [
         "{place_name}에서 희귀한 천연 유황온천을 체험할 수 있어요."
-      ]
+      ],
+      "latitude": 37.5309880533,
+      "longitude": 127.0841596279
     },
     {
       "id": "bongil-spa-land",

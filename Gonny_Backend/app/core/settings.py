@@ -17,7 +17,11 @@ class Settings:
     tour_api_key: str | None = os.getenv("TOUR_API_KEY")
     tour_api_base_url: str = os.getenv(
         "TOUR_API_BASE_URL",
-        "https://apis.data.go.kr/B551011/KorService1",
+        # KorService1 was retired by the Korea Tourism Organization; TourAPI
+        # 4.0 serves the same endpoints under KorService2. Verified live
+        # against apis.data.go.kr while building coordinate lookup - v1
+        # returns NO_OPENAPI_SERVICE_ERROR for every call.
+        "https://apis.data.go.kr/B551011/KorService2",
     )
     odsay_api_key: str | None = os.getenv("ODSAY_API_KEY")
     odsay_api_base_url: str = os.getenv("ODSAY_API_BASE_URL", "https://api.odsay.com/v1/api")

@@ -73,8 +73,19 @@ class OpenWeatherClient:
         ]
 
 
+# TourAPI (KorService2) areaCode values for the rule_planner's visible
+# Korean cities. Passing areaCode narrows searchKeyword2 results to that
+# region, which matters because place names are not unique nationwide
+# (e.g. a restaurant named "경복궁" exists outside Seoul too).
+TOUR_API_AREA_CODE_BY_CITY = {
+    "seoul": "1",
+    "busan": "6",
+    "jeju": "39",
+}
+
+
 class TourApiClient:
-    """Fetch seasonal destination feed for F15."""
+    """Fetch seasonal destination feed for F15, and place coordinates."""
 
     def __init__(self, settings: Settings) -> None:
         self.api_key = settings.tour_api_key
@@ -126,6 +137,79 @@ class TourApiClient:
                 }
             )
         return rows
+
+    def find_place_coordinates(
+        self,
+        name: str,
+        city: str,
+    ) -> tuple[float | None, float | None, str]:
+        """Look up a place's coordinates by name within a known city.
+
+        Returns (latitude, longitude, status) where status is one of:
+        - "ok": exactly one confident match was found
+        - "not_found": no candidate shared the place's name in that city
+        - "ambiguous": multiple same-named candidates in that city
+        - "api_error": the request failed or returned an unusable response
+          (network error, non-2xx status, non-"0000" resultCode, or an
+          unparseable body) - distinct from "ambiguous" so transient
+          failures (e.g. rate limiting) aren't mistaken for a genuine
+          naming conflict when reviewing results.
+
+        On anything other than "ok", latitude/longitude are both None.
+        Coordinates are never guessed - callers should leave the place's
+        coordinates unset and log it for manual follow-up.
+        """
+        area_code = TOUR_API_AREA_CODE_BY_CITY.get(city)
+        if not self.api_key or area_code is None:
+            return None, None, "api_error"
+
+        url = f"{self.base_url}/searchKeyword2"
+        params = {
+            "serviceKey": self.api_key,
+            "numOfRows": 20,
+            "pageNo": 1,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "keyword": name,
+            "areaCode": area_code,
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+                resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None, None, "api_error"
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None, None, "api_error"
+
+        if not isinstance(items, list):
+            items = [items]
+
+        normalized_name = name.strip()
+        exact_matches = [item for item in items if str(item.get("title", "")).strip() == normalized_name]
+        candidates = exact_matches
+        if not candidates:
+            candidates = [
+                item
+                for item in items
+                if normalized_name in str(item.get("title", "")) or str(item.get("title", "")) in normalized_name
+            ]
+
+        if len(candidates) != 1:
+            return None, None, "not_found" if not candidates else "ambiguous"
+
+        match = candidates[0]
+        try:
+            longitude = float(match["mapx"])
+            latitude = float(match["mapy"])
+        except (KeyError, TypeError, ValueError):
+            return None, None, "api_error"
+
+        return latitude, longitude, "ok"
 
 
 class ODSayClient:

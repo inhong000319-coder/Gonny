@@ -17,6 +17,7 @@ from .policies.city import (
     preferred_area_match_bonus,
     same_area_continuity_bonus,
 )
+from .travel_estimate import coordinate_area_transition_bonus
 
 
 def day_phase(request: NormalizedRuleRequest, day_number: int) -> str:
@@ -82,9 +83,13 @@ def slot_score(
         score += 12
     score += slot_bias_score(place=place, time_slot=time_slot)
     score += preferred_area_match_bonus(request, preferred_area, place.area)
-    score += same_area_continuity_bonus(request, previous_place.area if previous_place else None, place.area)
-    if previous_place and previous_place.area != place.area:
-        score += neighbor_area_bonus(request, previous_place.area, place.area)
+    coordinate_bonus = coordinate_area_transition_bonus(previous_place, place)
+    if coordinate_bonus is not None:
+        score += coordinate_bonus
+    else:
+        score += same_area_continuity_bonus(request, previous_place.area if previous_place else None, place.area)
+        if previous_place and previous_place.area != place.area:
+            score += neighbor_area_bonus(request, previous_place.area, place.area)
     if categories & SLOT_CATEGORY_PREFERENCE[time_slot]:
         score += 5
     if "activity" in request.concepts and categories & ACTIVITY_CATEGORIES:

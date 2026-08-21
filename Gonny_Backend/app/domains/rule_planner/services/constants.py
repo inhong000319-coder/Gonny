@@ -4,6 +4,7 @@ ARRIVAL_DAY_CATEGORIES = {"food", "shopping", "relax", "culture", "photo", "cafe
 MIDDLE_DAY_CATEGORIES = {"activity", "theme_park", "local_experience", "nature", "sightseeing"}
 DEPARTURE_DAY_CATEGORIES = {"food", "shopping", "relax", "culture", "photo", "sightseeing"}
 DEFAULT_CONCEPTS = ["sightseeing"]
+DAY_DURATION_WARNING_THRESHOLD_HOURS = 10
 DEFAULT_STYLE = "easy"
 DEFAULT_COMPANION = "friend"
 DEFAULT_CITY_BY_COUNTRY = {

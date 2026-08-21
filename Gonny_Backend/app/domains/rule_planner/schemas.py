@@ -40,6 +40,14 @@ class RuleItineraryItem(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleDayDurationWarning(BaseModel):
+    day_number: int
+    estimated_total_minutes: int
+    message: str
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class NormalizedRuleRequest(BaseModel):
     continent: str
     country: str
@@ -68,6 +76,7 @@ class RuleItineraryResponse(BaseModel):
     companion_type: CompanionType
     featured_video: FeaturedVideoData | None = None
     items: list[RuleItineraryItem]
+    day_duration_warnings: list[RuleDayDurationWarning] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

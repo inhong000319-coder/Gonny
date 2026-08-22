@@ -8,6 +8,7 @@ from app.domains.destination_catalog.services.provider import (
 from app.domains.rule_planner.schemas import (
     CatalogCityOption,
     NormalizedRuleRequest,
+    RuleDayDurationWarning,
     RuleItineraryItem,
     RuleItineraryRequest,
     RuleItineraryResponse,
@@ -16,6 +17,7 @@ from app.domains.rule_planner.schemas import (
 from .constants import (
     ACTIVITY_CATEGORIES,
     AREA_LABEL_KO,
+    DAY_DURATION_WARNING_THRESHOLD_HOURS,
     PLACE_NAME_KO,
     TIME_SLOTS,
 )
@@ -31,6 +33,7 @@ from .slot_scoring import (
     slot_score,
     style_slot_score,
 )
+from .travel_estimate import estimate_day_total_minutes
 
 
 class RuleItineraryService:
@@ -49,7 +52,8 @@ class RuleItineraryService:
             city=normalized.city,
             visible_only=True,
         )
-        items = self._build_items(normalized, city_catalog)
+        items, day_place_map = self._build_items(normalized, city_catalog)
+        day_duration_warnings = self._build_day_duration_warnings(day_place_map)
 
         return RuleItineraryResponse(
             continent=city_catalog.continent,
@@ -64,6 +68,7 @@ class RuleItineraryService:
             companion_type=normalized.companion_type,
             featured_video=city_catalog.featured_video,
             items=items,
+            day_duration_warnings=day_duration_warnings,
         )
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
@@ -85,7 +90,7 @@ class RuleItineraryService:
         self,
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
-    ) -> list[RuleItineraryItem]:
+    ) -> tuple[list[RuleItineraryItem], dict[int, list[PlaceData]]]:
         scored_places = sorted(
             [place for place in city_catalog.places if place.is_active],
             key=lambda place: self._base_score(place, request),
@@ -97,6 +102,7 @@ class RuleItineraryService:
         used_ids: set[str] = set()
         used_day_areas: set[str] = set()
         items: list[RuleItineraryItem] = []
+        day_place_map: dict[int, list[PlaceData]] = {}
         full_day_used = False
 
         for day_number in range(1, request.days + 1):
@@ -131,6 +137,7 @@ class RuleItineraryService:
                         )
                     )
                 used_ids.add(full_day_place.id)
+                day_place_map[day_number] = [full_day_place]
                 full_day_used = True
                 continue
 
@@ -174,7 +181,31 @@ class RuleItineraryService:
                 )
                 day_places.append(chosen)
 
-        return items
+            if day_places:
+                day_place_map[day_number] = day_places
+
+        return items, day_place_map
+
+    def _build_day_duration_warnings(
+        self,
+        day_place_map: dict[int, list[PlaceData]],
+    ) -> list[RuleDayDurationWarning]:
+        threshold_minutes = DAY_DURATION_WARNING_THRESHOLD_HOURS * 60
+        warnings: list[RuleDayDurationWarning] = []
+        for day_number, places in sorted(day_place_map.items()):
+            total_minutes = estimate_day_total_minutes(places)
+            if total_minutes > threshold_minutes:
+                warnings.append(
+                    RuleDayDurationWarning(
+                        day_number=day_number,
+                        estimated_total_minutes=total_minutes,
+                        message=(
+                            f"{day_number}일차 예상 총 소요시간이 약 {total_minutes / 60:.1f}시간으로 "
+                            f"{DAY_DURATION_WARNING_THRESHOLD_HOURS}시간을 초과합니다."
+                        ),
+                    )
+                )
+        return warnings
 
     def _pick_full_day_place(
         self,

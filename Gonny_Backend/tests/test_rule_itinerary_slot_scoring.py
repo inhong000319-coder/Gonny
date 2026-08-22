@@ -9,6 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from app.domains.destination_catalog.services.repository import DestinationCatalogRepository
 from app.domains.rule_planner.services.slot_scoring import legacy_base_score
+from app.domains.rule_planner.services.travel_estimate import coordinate_area_transition_bonus
 from app.schemas.place_catalog import PlaceData
 from app.schemas.rule_itinerary import NormalizedRuleRequest
 from app.services.rule_itinerary_service import RuleItineraryService
@@ -211,3 +212,86 @@ def test_ml_base_score_returns_plausible_int_score() -> None:
 
     assert isinstance(score, int)
     assert -20 <= score <= 120
+
+
+# Coordinate-based travel estimate (see services/travel_estimate.py)
+
+
+def test_coordinate_area_transition_bonus_applies_when_both_places_have_coordinates() -> None:
+    # ~100m apart in real-world terms (central Seoul), but different area
+    # strings with no defined neighbor relationship - string-based logic
+    # would score this pair's transition as 0.
+    previous_place = build_place(id="coord-prev", area="area-a", latitude=37.5665, longitude=126.9780)
+    nearby_place = build_place(id="coord-nearby", area="area-b", latitude=37.5670, longitude=126.9785)
+
+    bonus = coordinate_area_transition_bonus(previous_place, nearby_place)
+
+    assert bonus is not None
+    assert bonus > 0
+
+
+def test_coordinate_area_transition_bonus_falls_back_to_none_without_coordinates() -> None:
+    previous_place = build_place(id="coord-prev", area="area-a", latitude=37.5665, longitude=126.9780)
+    place_without_coords = build_place(id="no-coords", area="area-b")
+
+    assert coordinate_area_transition_bonus(previous_place, place_without_coords) is None
+    assert coordinate_area_transition_bonus(None, place_without_coords) is None
+
+
+def test_slot_score_prefers_coordinate_estimate_over_string_area_match() -> None:
+    # Two places in different, unrelated area strings (no same-area or
+    # neighbor bonus would apply under the old string-only logic) but very
+    # close together by coordinates should still get a continuity bonus
+    # now that coordinates are available for both.
+    service = RuleItineraryService()
+    request = build_request()
+
+    previous_with_coords = build_place(id="prev-coords", area="area-a", latitude=37.5665, longitude=126.9780)
+    nearby_cross_area = build_place(id="nearby-cross-area", area="area-b", latitude=37.5670, longitude=126.9785)
+    coordinate_score = service._slot_score(
+        place=nearby_cross_area,
+        request=request,
+        time_slot="afternoon",
+        day_number=2,
+        preferred_area=None,
+        previous_place=previous_with_coords,
+    )
+
+    # Same area pairing but with no coordinates on either place, so this
+    # transition falls back to the pre-existing string-based logic, which
+    # gives 0 for this unrelated area-a/area-b pair.
+    previous_without_coords = build_place(id="prev-no-coords", area="area-a")
+    cross_area_without_coords = build_place(id="cross-area-no-coords", area="area-b")
+    string_only_score = service._slot_score(
+        place=cross_area_without_coords,
+        request=request,
+        time_slot="afternoon",
+        day_number=2,
+        preferred_area=None,
+        previous_place=previous_without_coords,
+    )
+
+    assert coordinate_score > string_only_score
+
+
+# Daily total duration warning (see service._build_day_duration_warnings)
+
+
+def test_day_duration_warning_flagged_when_total_exceeds_threshold() -> None:
+    service = RuleItineraryService()
+    long_places = [build_place(id=f"long-place-{i}", duration_hours=4) for i in range(3)]  # 12h, no coords
+
+    warnings = service._build_day_duration_warnings({1: long_places})
+
+    assert len(warnings) == 1
+    assert warnings[0].day_number == 1
+    assert warnings[0].estimated_total_minutes == 12 * 60
+
+
+def test_day_duration_warning_not_flagged_under_threshold() -> None:
+    service = RuleItineraryService()
+    short_places = [build_place(id=f"short-place-{i}", duration_hours=2) for i in range(3)]  # 6h
+
+    warnings = service._build_day_duration_warnings({1: short_places})
+
+    assert warnings == []

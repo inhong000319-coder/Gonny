@@ -59,7 +59,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 33.5439000013,
+      "longitude": 126.668356772
     },
     {
       "id": "woljeongri",
@@ -212,7 +214,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.430250088,
+      "longitude": 126.9280674087
     },
     {
       "id": "bijarim",
@@ -363,7 +367,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.3886659647,
+      "longitude": 126.2415557152
     },
     {
       "id": "hyeopjae-beach",
@@ -416,7 +422,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 33.393776477,
+      "longitude": 126.239441896
     },
     {
       "id": "camellia-hill",
@@ -731,7 +739,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주에서 구경만 하지 않고 직접 움직이며 풍경을 즐기고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.4643587312,
+      "longitude": 126.8366273253
     },
     {
       "id": "arte-museum-jeju",
@@ -1073,7 +1083,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 성산 동선에 제주 전통 분위기와 문화 체험 결을 하나 더 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 33.388430228,
+      "longitude": 126.7882138165
     },
     {
       "id": "jeju-stone-park",
@@ -1361,7 +1373,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 서부 일정에 카페나 해변만이 아니라 몸으로 즐기는 시간을 하나 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.3900649983,
+      "longitude": 126.3665198188
     },
     {
       "id": "saebyeol-oreum",

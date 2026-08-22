@@ -375,7 +375,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.0966511661,
+      "longitude": 129.0306042201
     },
     {
       "id": "gukje-market",
@@ -425,7 +427,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "latitude": 35.1016422372,
+      "longitude": 129.0285792599
     },
     {
       "id": "biff-square",
@@ -577,7 +581,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.0645889744,
+      "longitude": 129.0787786847
     },
     {
       "id": "onjeoncheon-cafe",
@@ -626,7 +632,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.1916279693,
+      "longitude": 129.1024592605
     },
     {
       "id": "skyline-luge-busan",
@@ -742,7 +750,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 35.0739256715,
+      "longitude": 129.016458847
     },
     {
       "id": "amnam-park",

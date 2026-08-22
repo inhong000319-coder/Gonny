@@ -74,7 +74,7 @@ PLACE_NAME_KO = {
     "hongdae": "홍대",
     "yeouido-hangang": "여의도 한강공원",
     "gangnam": "강남역 일대",
-    "coex": "코엑스몰과 별마당도서관",
+    "coex": "코엑스",
     "asakusa-sensoji": "센소지와 나카미세 거리",
     "ueno-park": "우에노 공원",
     "ameyoko": "아메요코 시장거리",

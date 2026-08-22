@@ -488,7 +488,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "latitude": 37.5117453937,
+      "longitude": 127.0591541159
     },
     {
       "id": "changdeokgung",

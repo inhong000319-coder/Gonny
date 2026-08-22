@@ -8,6 +8,11 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.domains.destination_catalog.services.repository import DestinationCatalogRepository
+from app.domains.rule_planner.services.community_feedback import (
+    PlaceFeedbackSignal,
+    community_feedback_bonus,
+    load_place_feedback_signals,
+)
 from app.domains.rule_planner.services.slot_scoring import legacy_base_score
 from app.domains.rule_planner.services.travel_estimate import coordinate_area_transition_bonus
 from app.schemas.place_catalog import PlaceData
@@ -295,3 +300,135 @@ def test_day_duration_warning_not_flagged_under_threshold() -> None:
     warnings = service._build_day_duration_warnings({1: short_places})
 
     assert warnings == []
+
+
+# Community feedback bonus (see services/community_feedback.py)
+
+
+def test_community_feedback_bonus_none_when_signal_missing() -> None:
+    assert community_feedback_bonus(None, "morning", "friend") is None
+
+
+def test_community_feedback_bonus_none_below_review_count_threshold() -> None:
+    signal = PlaceFeedbackSignal(review_count=4, average_rating=5.0)
+
+    assert community_feedback_bonus(signal, "morning", "friend") is None
+
+
+def test_community_feedback_bonus_uses_slot_detail_when_reliable() -> None:
+    signal = PlaceFeedbackSignal(
+        review_count=10,
+        average_rating=3.0,
+        slot_scores={"morning": 5.0},
+        slot_review_counts={"morning": 3},
+    )
+
+    bonus = community_feedback_bonus(signal, "morning", "friend")
+
+    assert bonus == 10  # (5.0 - 3) * 5
+
+
+def test_community_feedback_bonus_falls_back_to_average_when_detail_unreliable() -> None:
+    # Only 2 reviews back the "morning" bucket - below MIN_DETAIL_REVIEWS
+    # (3), so this should fall back to the overall average rather than use
+    # the unreliable slot-specific rating.
+    signal = PlaceFeedbackSignal(
+        review_count=10,
+        average_rating=4.0,
+        slot_scores={"morning": 5.0},
+        slot_review_counts={"morning": 2},
+    )
+
+    bonus = community_feedback_bonus(signal, "morning", "friend")
+
+    assert bonus == 5  # (4.0 - 3) * 5, not the (5.0 - 3) * 5 = 10 the slot data would give
+
+
+def test_community_feedback_bonus_ignores_unrecognized_slot_and_companion_values() -> None:
+    # slot_scores/companion_scores can contain free-text values from
+    # PlaceReviewCreate (no server-side validation on visit_time_slot/
+    # companion_type) - e.g. Korean text or typos instead of our system's
+    # morning/afternoon/evening and solo/couple/friend/family. These must
+    # never be looked up even if they happen to be present with plenty of
+    # reviews behind them.
+    signal = PlaceFeedbackSignal(
+        review_count=10,
+        average_rating=3.0,
+        slot_scores={"저녁": 5.0},
+        slot_review_counts={"저녁": 10},
+        companion_scores={"unknown-companion": 1.0},
+        companion_review_counts={"unknown-companion": 10},
+    )
+
+    bonus = community_feedback_bonus(signal, "evening", "friend")
+
+    # Neither bogus bucket is used, so this falls back to the overall
+    # average (3.0 -> 0), not the 5.0/1.0 values sitting under the wrong keys.
+    assert bonus == 0
+
+
+def test_slot_score_applies_community_feedback_bonus_when_reliable_data_exists() -> None:
+    service = RuleItineraryService()
+    request = build_request()
+    place = build_place()
+    reliable_signal = PlaceFeedbackSignal(
+        review_count=10,
+        average_rating=5.0,
+        slot_scores={"morning": 5.0},
+        slot_review_counts={"morning": 5},
+    )
+
+    score_with_feedback = service._slot_score(
+        place=place,
+        request=request,
+        time_slot="morning",
+        day_number=2,
+        preferred_area="city-center",
+        community_signal=reliable_signal,
+    )
+    score_without_feedback = service._slot_score(
+        place=place,
+        request=request,
+        time_slot="morning",
+        day_number=2,
+        preferred_area="city-center",
+    )
+
+    assert score_with_feedback - score_without_feedback == 10
+
+
+def test_slot_score_unaffected_by_review_data_below_threshold() -> None:
+    # Proves the feature is inert until a place accumulates enough reviews:
+    # a signal that exists but doesn't clear MIN_TOTAL_REVIEWS must produce
+    # an identical score to having no signal at all (the current real-world
+    # state, since there are 0 reviews everywhere today).
+    service = RuleItineraryService()
+    request = build_request()
+    place = build_place()
+    thin_signal = PlaceFeedbackSignal(review_count=2, average_rating=5.0)
+
+    score_with_thin_signal = service._slot_score(
+        place=place,
+        request=request,
+        time_slot="morning",
+        day_number=2,
+        preferred_area="city-center",
+        community_signal=thin_signal,
+    )
+    score_with_no_signal = service._slot_score(
+        place=place,
+        request=request,
+        time_slot="morning",
+        day_number=2,
+        preferred_area="city-center",
+    )
+
+    assert score_with_thin_signal == score_with_no_signal
+
+
+def test_load_place_feedback_signals_empty_without_database() -> None:
+    # This test suite runs without DATABASE_URL configured, matching the
+    # real current deployment state (0 reviews, feature effectively
+    # disabled) - load_place_feedback_signals must degrade to {} rather
+    # than raise.
+    assert load_place_feedback_signals(["gyeongbokgung", "myeongdong"]) == {}

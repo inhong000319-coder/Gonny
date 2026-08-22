@@ -48,7 +48,9 @@ class PlaceStat(Base):
     revisit_rate = Column(Float, nullable=False, default=0.0, server_default="0")
     top_tags = Column(JSON, nullable=False, default=list)
     slot_scores = Column(JSON, nullable=False, default=dict)
+    slot_review_counts = Column(JSON, nullable=False, default=dict)
     companion_scores = Column(JSON, nullable=False, default=dict)
+    companion_review_counts = Column(JSON, nullable=False, default=dict)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
 

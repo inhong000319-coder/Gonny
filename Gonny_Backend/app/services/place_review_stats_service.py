@@ -28,7 +28,9 @@ def refresh_place_stat(*, db: Session, city: str, place_name: str) -> PlaceStat:
         stat.revisit_rate = 0.0
         stat.top_tags = []
         stat.slot_scores = {}
+        stat.slot_review_counts = {}
         stat.companion_scores = {}
+        stat.companion_review_counts = {}
         db.flush()
         return stat
 
@@ -54,8 +56,12 @@ def refresh_place_stat(*, db: Session, city: str, place_name: str) -> PlaceStat:
 
     stat.top_tags = [tag for tag, _ in tag_counter.most_common(5)]
     stat.slot_scores = {slot: round(sum(values) / len(values), 2) for slot, values in slot_ratings.items() if values}
+    stat.slot_review_counts = {slot: len(values) for slot, values in slot_ratings.items() if values}
     stat.companion_scores = {
         companion: round(sum(values) / len(values), 2) for companion, values in companion_ratings.items() if values
+    }
+    stat.companion_review_counts = {
+        companion: len(values) for companion, values in companion_ratings.items() if values
     }
     db.flush()
     return stat

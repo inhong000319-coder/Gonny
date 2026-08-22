@@ -3,6 +3,7 @@ from __future__ import annotations
 from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
+from .community_feedback import PlaceFeedbackSignal, community_feedback_bonus
 from .constants import (
     ACTIVITY_CATEGORIES,
     ARRIVAL_DAY_CATEGORIES,
@@ -72,6 +73,7 @@ def slot_score(
     day_number: int,
     preferred_area: str | None,
     previous_place: PlaceData | None = None,
+    community_signal: PlaceFeedbackSignal | None = None,
 ) -> int:
     categories = set(place.concept_tags)
     score = base_score(place, request)
@@ -90,6 +92,9 @@ def slot_score(
         score += same_area_continuity_bonus(request, previous_place.area if previous_place else None, place.area)
         if previous_place and previous_place.area != place.area:
             score += neighbor_area_bonus(request, previous_place.area, place.area)
+    feedback_bonus = community_feedback_bonus(community_signal, time_slot, request.companion_type)
+    if feedback_bonus is not None:
+        score += feedback_bonus
     if categories & SLOT_CATEGORY_PREFERENCE[time_slot]:
         score += 5
     if "activity" in request.concepts and categories & ACTIVITY_CATEGORIES:

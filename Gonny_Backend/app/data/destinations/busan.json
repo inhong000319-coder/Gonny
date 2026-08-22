@@ -62,7 +62,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 35.1590840227225,
+      "longitude": 129.160278564827
     },
     {
       "id": "dongbaek-island",
@@ -164,7 +166,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.161248012,
+      "longitude": 129.191400312
     },
     {
       "id": "gwangalli-beach",
@@ -217,7 +221,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 35.1551657503,
+      "longitude": 129.1221363273
     },
     {
       "id": "millak-waterfront",
@@ -270,7 +276,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.1545,
+      "longitude": 129.133
     },
     {
       "id": "gamcheon-culture-village",
@@ -321,7 +329,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 부산에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
-      ]
+      ],
+      "latitude": 35.0974606978369,
+      "longitude": 129.010596996534
     },
     {
       "id": "jagalchi-market",
@@ -480,7 +490,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.0980089584166,
+      "longitude": 129.032004281096
     },
     {
       "id": "songdo-cable-car",
@@ -529,7 +541,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.0766411637,
+      "longitude": 129.023396378
     },
     {
       "id": "taejongdae",
@@ -582,8 +596,8 @@
       "note_templates": [
         "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
       ],
-      "latitude": 35.0645889744,
-      "longitude": 129.0787786847
+      "latitude": 35.05969491904282,
+      "longitude": 129.07980569117214
     },
     {
       "id": "onjeoncheon-cafe",
@@ -690,7 +704,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 부산에서 풍경만 보는 일정보다 몸으로 즐기는 시간을 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.1943337788808,
+      "longitude": 129.220235885049
     },
     {
       "id": "songdo-beach",
@@ -811,7 +827,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.0589,
+      "longitude": 129.0158
     },
     {
       "id": "millac-the-market",
@@ -927,7 +945,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 광안리 일정에 바다 풍경과는 다른 실내 문화 결을 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.1767449923,
+      "longitude": 129.1154850253
     },
     {
       "id": "sea-life-busan-aquarium",
@@ -1103,7 +1123,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 남포 동선에 시장 분위기 말고도 부산 항구 쪽 풍경을 하나 더 담고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.1004440914145,
+      "longitude": 129.032664302294
     },
     {
       "id": "bosu-book-street",
@@ -1159,7 +1181,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 남포 일정에 조금 더 로컬하고 차분한 문화 결을 섞고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.1031742254,
+      "longitude": 129.0272841727
     },
     {
       "id": "songdo-yonggung-suspension-bridge",
@@ -1217,7 +1241,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 송도 쪽에서 바다 풍경을 조금 더 가까이 체감하고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.0619178693452,
+      "longitude": 129.021988581433
     },
     {
       "id": "songdo-sky-park",
@@ -1277,7 +1303,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 송도 일정 끝에 바다 풍경을 조금 더 여유 있게 보고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.0613530661,
+      "longitude": 129.0204027392
     },
     {
       "id": "busan-tower",
@@ -1335,7 +1363,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 남포 일정 마무리에 부산 도심과 항구 풍경을 조금 더 높게 담고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.101157344,
+      "longitude": 129.0323310732
     },
     {
       "id": "busan-modern-history-museum",
@@ -1446,7 +1476,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 송도 일정에 바다 풍경만이 아니라 실내 전시형 문화 코스를 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.1093302595485,
+      "longitude": 128.942691888704
     },
     {
       "id": "huinnyeoul-culture-village",
@@ -1504,7 +1536,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 송도 일정 끝에 바다와 골목 풍경을 조금 더 감성적으로 담고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.0783,
+      "longitude": 129.0453
     },
     {
       "id": "heosimchung",
@@ -1550,7 +1584,9 @@
       ],
       "note_templates": [
         "{place_name}에서 아시아 최대급 규모의 전통 온천을 여유롭게 즐길 수 있어요."
-      ]
+      ],
+      "latitude": 35.2211550982,
+      "longitude": 129.0826866234
     },
     {
       "id": "shinsegae-spaland",

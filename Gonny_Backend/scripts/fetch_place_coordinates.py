@@ -6,6 +6,11 @@ import sys
 import time
 from pathlib import Path
 
+# On Windows, stdout defaults to the console codepage (cp949) rather than
+# UTF-8 when redirected to a file, corrupting Korean output. Force UTF-8
+# explicitly so `python fetch_place_coordinates.py > log.txt` is readable.
+sys.stdout.reconfigure(encoding="utf-8")
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PROJECT_ROOT.parent
 if str(PROJECT_ROOT) not in sys.path:
@@ -13,7 +18,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from app.core.settings import Settings
 from app.domains.rule_planner.services.constants import PLACE_NAME_KO
-from app.services.external_clients import TOUR_API_AREA_CODE_BY_CITY, TourApiClient
+from app.services.external_clients import TOUR_API_ADDRESS_PREFIX_BY_CITY, TourApiClient
 
 DESTINATIONS_DIR = PROJECT_ROOT / "app" / "data" / "destinations"
 ENV_FILE = REPO_ROOT / ".env"
@@ -87,7 +92,7 @@ def main() -> None:
     resolved_count = 0
     total_count = 0
 
-    for city in TOUR_API_AREA_CODE_BY_CITY:
+    for city in TOUR_API_ADDRESS_PREFIX_BY_CITY:
         payload, unresolved = fetch_coordinates_for_city(client, city)
         total_count += len(payload["places"])
         resolved_count += len(payload["places"]) - len(unresolved)

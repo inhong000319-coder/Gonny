@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from datetime import datetime, timedelta
 
 import httpx
@@ -73,15 +74,39 @@ class OpenWeatherClient:
         ]
 
 
-# TourAPI (KorService2) areaCode values for the rule_planner's visible
-# Korean cities. Passing areaCode narrows searchKeyword2 results to that
-# region, which matters because place names are not unique nationwide
-# (e.g. a restaurant named "경복궁" exists outside Seoul too).
-TOUR_API_AREA_CODE_BY_CITY = {
-    "seoul": "1",
-    "busan": "6",
-    "jeju": "39",
+# Korean address prefixes for the rule_planner's visible cities, used to
+# filter searchKeyword2 results client-side by addr1.
+#
+# TourAPI's own areaCode parameter looks like the "correct" way to scope a
+# keyword search to a city, but it silently excludes any record whose cat1
+# classification field is empty - and a meaningful share of real records
+# have that field blank (verified live: e.g. "감천문화마을"/"허심청"/
+# "용두산공원" all have cat1="" and return totalCount=0 with areaCode=6,
+# even though they're real Busan tourist spots with correct addr1/mapx/
+# mapy). addr1 is reliably populated on every record seen, so filtering on
+# it ourselves is more complete than trusting areaCode.
+TOUR_API_ADDRESS_PREFIX_BY_CITY = {
+    "seoul": "서울",
+    "busan": "부산",
+    "jeju": "제주",
 }
+
+_TOUR_API_CITY_TITLE_PREFIX = re.compile(r"^(서울|부산|제주)\s*")
+_TOUR_API_TITLE_ANNOTATION_SUFFIX = re.compile(r"\s*[\[(][^\[\]()]*[\])]\s*$")
+
+
+def _normalize_tour_api_title(title: str) -> str:
+    """Strip decorative city-name prefixes ("부산 감천문화마을") and
+    trailing bracketed annotations ("성산일출봉 [유네스코 세계자연유산]")
+    that TourAPI titles commonly carry, so these still count as an exact
+    match against our plain place name. Deliberately conservative: it only
+    strips these two specific, observed patterns - it does not touch
+    franchise/branch suffixes like "~점"/"~역" since those can't be
+    distinguished from a genuinely different business sharing a substring
+    (e.g. a phone case shop named "...홍대점" is not "홍대")."""
+    normalized = _TOUR_API_CITY_TITLE_PREFIX.sub("", title.strip())
+    normalized = _TOUR_API_TITLE_ANNOTATION_SUFFIX.sub("", normalized)
+    return normalized.strip()
 
 
 class TourApiClient:
@@ -159,20 +184,19 @@ class TourApiClient:
         Coordinates are never guessed - callers should leave the place's
         coordinates unset and log it for manual follow-up.
         """
-        area_code = TOUR_API_AREA_CODE_BY_CITY.get(city)
-        if not self.api_key or area_code is None:
+        address_prefix = TOUR_API_ADDRESS_PREFIX_BY_CITY.get(city)
+        if not self.api_key or address_prefix is None:
             return None, None, "api_error"
 
         url = f"{self.base_url}/searchKeyword2"
         params = {
             "serviceKey": self.api_key,
-            "numOfRows": 20,
+            "numOfRows": 30,
             "pageNo": 1,
             "MobileOS": "ETC",
             "MobileApp": "Gonny",
             "_type": "json",
             "keyword": name,
-            "areaCode": area_code,
         }
         try:
             with httpx.Client(timeout=8.0) as client:
@@ -189,8 +213,22 @@ class TourApiClient:
         if not isinstance(items, list):
             items = [items]
 
+        # Filter to the target city ourselves via addr1 - see
+        # TOUR_API_ADDRESS_PREFIX_BY_CITY for why the areaCode request
+        # param isn't used here.
+        items = [item for item in items if str(item.get("addr1", "")).startswith(address_prefix)]
+
         normalized_name = name.strip()
-        exact_matches = [item for item in items if str(item.get("title", "")).strip() == normalized_name]
+        exact_matches = [
+            item
+            for item in items
+            # Compare the raw title first: normalizing could otherwise
+            # break a title where the city name is part of the place's
+            # actual name (e.g. "부산타워" normalizes to "타워", which no
+            # longer matches keyword "부산타워").
+            if str(item.get("title", "")).strip() == normalized_name
+            or _normalize_tour_api_title(str(item.get("title", ""))) == normalized_name
+        ]
         candidates = exact_matches
         if not candidates:
             candidates = [

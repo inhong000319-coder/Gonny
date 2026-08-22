@@ -163,7 +163,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
-      ]
+      ],
+      "latitude": 33.4581111174,
+      "longitude": 126.9415156012
     },
     {
       "id": "seopjikoji",
@@ -265,7 +267,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.4862219608,
+      "longitude": 126.8074760594
     },
     {
       "id": "aewol-cafe",
@@ -473,7 +477,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 사진으로 남기기 좋은 장면을 일정에 더하고 싶을 때 만족도가 높아요."
-      ]
+      ],
+      "latitude": 33.2898683072143,
+      "longitude": 126.368254661009
     },
     {
       "id": "jungmun-saekdal",
@@ -578,7 +584,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 33.3060818422347,
+      "longitude": 126.289392182586
     },
     {
       "id": "dongmun-market",
@@ -683,7 +691,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 자연을 조금 다른 방식으로 체험하고 싶을 때 넣기 좋아요."
-      ]
+      ],
+      "latitude": 33.4328023538,
+      "longitude": 126.9278439065
     },
     {
       "id": "jeju-rail-bike",
@@ -915,7 +925,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서귀포 서부 일정에 자연과 실내 관람을 함께 묶고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 33.25205020409702,
+      "longitude": 126.4145703230215
     },
     {
       "id": "jeju-teddy-bear-museum",
@@ -1030,7 +1042,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 성산 쪽에서 조금 더 편하게 바다 풍경을 즐기고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.45151,
+      "longitude": 126.924636
     },
     {
       "id": "seongeup-folk-village",
@@ -1142,7 +1156,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 동부 일정에 바다와 시장 말고도 조금 더 제주다운 문화 결을 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.446621402,
+      "longitude": 126.663992872
     },
     {
       "id": "haenyeo-museum",
@@ -1198,7 +1214,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 동부 일정에 풍경 위주 코스만 두기보다 지역 문화와 이야기를 한 번 더 담고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 33.5235518611,
+      "longitude": 126.8634366646
     },
     {
       "id": "snoopy-garden-jeju",
@@ -1256,7 +1274,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 동제주 일정에 바다와 자연 코스만이 아니라 조금 더 감성적인 전시형 공간을 하나 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 33.44337164886826,
+      "longitude": 126.77860501008234
     },
     {
       "id": "delmoondo-gimnyeong",
@@ -1432,7 +1452,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 서부 일정 끝에 풍경을 조금 더 크게 보고 싶을 때 마무리 카드로 잘 어울려요."
-      ]
+      ],
+      "latitude": 33.3663,
+      "longitude": 126.3576
     }
   ],
   "featured_video": {

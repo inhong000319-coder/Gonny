@@ -64,8 +64,8 @@
       "note_templates": [
         "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
       ],
-      "latitude": 37.5762891312,
-      "longitude": 126.9733212169
+      "latitude": 37.576030700049394,
+      "longitude": 126.97672186606306
     },
     {
       "id": "bukchon",
@@ -540,7 +540,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
-      ]
+      ],
+      "latitude": 37.5776507425,
+      "longitude": 126.990230631
     },
     {
       "id": "ikseon-dong",
@@ -592,8 +594,8 @@
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
       ],
-      "latitude": 37.5737675037,
-      "longitude": 126.9901419773
+      "latitude": 37.5734657272497,
+      "longitude": 126.989775703463
     },
     {
       "id": "seongsu",
@@ -646,7 +648,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "latitude": 37.5431984051,
+      "longitude": 127.0565978295
     },
     {
       "id": "mangwon-market",
@@ -696,7 +700,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.5560222529,
+      "longitude": 126.9064518912
     },
     {
       "id": "yeonnam-forest",
@@ -1255,7 +1261,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울의 분위기와 결을 조금 더 깊게 느끼고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.57126614487816,
+      "longitude": 127.03504321042874
     },
     {
       "id": "seoul-forest",
@@ -1316,7 +1324,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 37.5430715815,
+      "longitude": 127.041798446
     },
     {
       "id": "s-factory",
@@ -1436,7 +1446,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 명동 동선에서 쇼핑 일변도의 흐름을 조금 차분하게 풀어주기 좋아요."
-      ]
+      ],
+      "latitude": 37.56367587,
+      "longitude": 126.9867758233
     },
     {
       "id": "bank-of-korea-money-museum",
@@ -1493,7 +1505,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 명동 근처에서 실내 문화 코스를 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.5621506093431,
+      "longitude": 126.979991760891
     },
     {
       "id": "heunginjimun-gate",
@@ -2020,7 +2034,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 여의도 일정에서 날씨 영향을 덜 받으면서도 구경할 재미를 챙기고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 37.5270972265,
+      "longitude": 126.9273012282
     },
     {
       "id": "63-square",
@@ -2253,7 +2269,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 강남 일정에서 쇼핑과 도심 템포를 조금 차분하게 풀어주고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.514861,
+      "longitude": 127.057317
     },
     {
       "id": "seonjeongneung",
@@ -2368,7 +2386,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 을지로 일정에 저녁 분위기와 로컬 감성을 조금 더 진하게 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 37.566275039,
+      "longitude": 126.992650057
     },
     {
       "id": "daelim-sangga",
@@ -2603,7 +2623,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 홍대 일정에 저녁 라이브 분위기와 공연형 체험을 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 37.548497883332466,
+      "longitude": 126.92011886986354
     },
     {
       "id": "ak-plaza-hongdae",

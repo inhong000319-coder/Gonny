@@ -91,6 +91,11 @@ async def lifespan(app: FastAPI):
                 connection.execute(text("ALTER TABLE travel_journals ADD COLUMN content_blocks JSON NOT NULL DEFAULT '[]'::json"))
             if "image_urls" not in journal_columns:
                 connection.execute(text("ALTER TABLE travel_journals ADD COLUMN image_urls JSON NOT NULL DEFAULT '[]'::json"))
+            place_stats_columns = {column["name"] for column in inspector.get_columns("place_stats")} if "place_stats" in table_names else set()
+            if "slot_review_counts" not in place_stats_columns:
+                connection.execute(text("ALTER TABLE place_stats ADD COLUMN slot_review_counts JSON NOT NULL DEFAULT '{}'::json"))
+            if "companion_review_counts" not in place_stats_columns:
+                connection.execute(text("ALTER TABLE place_stats ADD COLUMN companion_review_counts JSON NOT NULL DEFAULT '{}'::json"))
     yield
 
 

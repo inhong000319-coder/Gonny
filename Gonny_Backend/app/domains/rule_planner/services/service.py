@@ -14,6 +14,7 @@ from app.domains.rule_planner.schemas import (
     RuleItineraryResponse,
 )
 
+from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
 from .constants import (
     ACTIVITY_CATEGORIES,
     AREA_LABEL_KO,
@@ -99,6 +100,7 @@ class RuleItineraryService:
 
         area_scores = self._group_area_scores(scored_places, request)
         preferred_areas = self._preferred_area_order(request=request, area_scores=area_scores)
+        feedback_signals = load_place_feedback_signals([place.id for place in scored_places])
         used_ids: set[str] = set()
         used_day_areas: set[str] = set()
         items: list[RuleItineraryItem] = []
@@ -156,6 +158,7 @@ class RuleItineraryService:
                     used_ids=used_ids,
                     preferred_area=day_area,
                     previous_place=previous_place,
+                    feedback_signals=feedback_signals,
                 )
                 if chosen is None:
                     continue
@@ -274,6 +277,7 @@ class RuleItineraryService:
         used_ids: set[str],
         preferred_area: str | None,
         previous_place: PlaceData | None,
+        feedback_signals: dict[str, PlaceFeedbackSignal] | None = None,
     ) -> PlaceData | None:
         available_places = [place for place in scored_places if place.id not in used_ids]
         slot_fitting_places = [place for place in available_places if time_slot in place.time_fit]
@@ -293,6 +297,7 @@ class RuleItineraryService:
                 day_number=day_number,
                 preferred_area=preferred_area,
                 previous_place=previous_place,
+                community_signal=(feedback_signals or {}).get(place.id),
             ),
             reverse=True,
         )
@@ -336,6 +341,7 @@ class RuleItineraryService:
         day_number: int,
         preferred_area: str | None,
         previous_place: PlaceData | None = None,
+        community_signal: PlaceFeedbackSignal | None = None,
     ) -> int:
         return slot_score(
             place=place,
@@ -344,6 +350,7 @@ class RuleItineraryService:
             day_number=day_number,
             preferred_area=preferred_area,
             previous_place=previous_place,
+            community_signal=community_signal,
         )
 
     def _duration_slot_score(

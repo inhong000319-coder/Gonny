@@ -113,7 +113,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 33.5550461413,
+      "longitude": 126.7982299577
     },
     {
       "id": "seongsan-ilchulbong",

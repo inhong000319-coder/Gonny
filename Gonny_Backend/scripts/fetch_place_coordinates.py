@@ -37,14 +37,16 @@ def load_tour_api_key_from_env_file() -> str | None:
     return match.group(1).strip() or None if match else None
 
 
-def find_coordinates_with_retry(client: TourApiClient, search_name: str, city: str) -> tuple[float | None, float | None, str]:
+def find_coordinates_with_retry(
+    client: TourApiClient, search_name: str, city: str, activity_types: list[str]
+) -> tuple[float | None, float | None, str]:
     """Retries only on "api_error" (network/HTTP/parse failure) - a
     genuine "not_found"/"ambiguous" result is never retried since retrying
     won't change a real naming conflict."""
     status = "api_error"
     latitude = longitude = None
     for attempt in range(MAX_RETRIES_ON_API_ERROR):
-        latitude, longitude, status = client.find_place_coordinates(search_name, city)
+        latitude, longitude, status = client.find_place_coordinates(search_name, city, activity_types)
         if status != "api_error":
             return latitude, longitude, status
         time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
@@ -61,7 +63,9 @@ def fetch_coordinates_for_city(client: TourApiClient, city: str) -> tuple[dict, 
         # (e.g. "Gyeongbokgung Palace"); PLACE_NAME_KO holds the Korean
         # display name TourAPI's titles are actually written in.
         search_name = PLACE_NAME_KO.get(place["id"], place["name"])
-        latitude, longitude, status = find_coordinates_with_retry(client, search_name, city)
+        latitude, longitude, status = find_coordinates_with_retry(
+            client, search_name, city, place.get("activity_type", [])
+        )
         time.sleep(REQUEST_INTERVAL_SECONDS)
         if status == "ok":
             place["latitude"] = latitude

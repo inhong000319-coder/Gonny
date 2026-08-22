@@ -383,7 +383,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 37.5263997727,
+      "longitude": 126.9336095794
     },
     {
       "id": "gangnam",
@@ -1088,7 +1090,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울 일정에 확실한 체험 요소를 넣고 싶을 때 만족도가 높은 장소예요."
-      ]
+      ],
+      "latitude": 37.5112974856,
+      "longitude": 127.0978836077
     },
     {
       "id": "e-land-hangang-cruise",
@@ -1798,7 +1802,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 남산 풍경을 조금 더 입체적으로 즐기고 싶을 때 넣기 좋아요."
-      ]
+      ],
+      "latitude": 37.556997122,
+      "longitude": 126.9841041137
     },
     {
       "id": "namsan-park-trail",

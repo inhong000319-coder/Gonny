@@ -91,6 +91,26 @@ TOUR_API_ADDRESS_PREFIX_BY_CITY = {
     "jeju": "제주",
 }
 
+# TourAPI contentTypeId reference: 12=관광지, 14=문화시설, 15=축제공연행사,
+# 25=여행코스, 28=레포츠, 32=숙박, 38=쇼핑, 39=음식점. Used only to break
+# ties among candidates whose titles already matched exactly (see
+# find_place_coordinates) - e.g. "부산타워" resolves to two identically
+# titled candidates, one contentTypeId=12 (the tower itself) and one
+# contentTypeId=38 (a gift shop inside it); our activity_type says which
+# is the real match. Not applied to loose/substring candidates: verified
+# live that doing so would resolve "홍대" to a phone-case shop that
+# happens to be misclassified as contentTypeId=12.
+ACTIVITY_TYPE_TO_TOUR_API_CONTENT_TYPE_IDS: dict[str, set[str]] = {
+    "문화·역사": {"12", "14"},
+    "미식": {"39"},
+    "쇼핑": {"38"},
+    "액티비티": {"12", "28"},
+    "자연·트레킹": {"12"},
+    "휴양·힐링": {"12", "32"},
+    "나이트라이프": {"39", "28"},
+    "온천": {"12", "32"},
+}
+
 _TOUR_API_CITY_TITLE_PREFIX = re.compile(r"^(서울|부산|제주)\s*")
 _TOUR_API_TITLE_ANNOTATION_SUFFIX = re.compile(r"\s*[\[(][^\[\]()]*[\])]\s*$")
 
@@ -107,6 +127,17 @@ def _normalize_tour_api_title(title: str) -> str:
     normalized = _TOUR_API_CITY_TITLE_PREFIX.sub("", title.strip())
     normalized = _TOUR_API_TITLE_ANNOTATION_SUFFIX.sub("", normalized)
     return normalized.strip()
+
+
+def _collapse_whitespace(text: str) -> str:
+    """Removes all whitespace, for a spacing-insensitive comparison.
+
+    TourAPI titles and our place names don't always agree on spacing for
+    the same real place (e.g. our "해운대 해수욕장" vs TourAPI's
+    "해운대해수욕장") - collapsing both sides makes that a match without
+    weakening the comparison in any other way.
+    """
+    return re.sub(r"\s+", "", text)
 
 
 class TourApiClient:
@@ -163,12 +194,48 @@ class TourApiClient:
             )
         return rows
 
+    def _search_keyword2(self, keyword: str) -> list[dict] | None:
+        """Raw searchKeyword2 call for one keyword string. Returns None on
+        any request/response failure (caller maps this to "api_error")."""
+        url = f"{self.base_url}/searchKeyword2"
+        params = {
+            "serviceKey": self.api_key,
+            # Popular/generic keywords (e.g. "명동") can have 100+ matches
+            # nationwide with the real single-word listing ranked well past
+            # position 30 among franchise-branch results like "OO 명동점" -
+            # verified live that raising this to 100 was enough to surface it.
+            "numOfRows": 100,
+            "pageNo": 1,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "keyword": keyword,
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+                resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None
+
+        return items if isinstance(items, list) else [items]
+
     def find_place_coordinates(
         self,
         name: str,
         city: str,
+        activity_types: list[str] | None = None,
     ) -> tuple[float | None, float | None, str]:
         """Look up a place's coordinates by name within a known city.
+
+        activity_types (our Korean activity_type labels, e.g. ["쇼핑"]) is
+        optional and only used to break a tie among candidates that already
+        matched the name exactly - see ACTIVITY_TYPE_TO_TOUR_API_CONTENT_TYPE_IDS.
 
         Returns (latitude, longitude, status) where status is one of:
         - "ok": exactly one confident match was found
@@ -188,30 +255,32 @@ class TourApiClient:
         if not self.api_key or address_prefix is None:
             return None, None, "api_error"
 
-        url = f"{self.base_url}/searchKeyword2"
-        params = {
-            "serviceKey": self.api_key,
-            "numOfRows": 30,
-            "pageNo": 1,
-            "MobileOS": "ETC",
-            "MobileApp": "Gonny",
-            "_type": "json",
-            "keyword": name,
-        }
-        try:
-            with httpx.Client(timeout=8.0) as client:
-                resp = client.get(url, params=params)
-                resp.raise_for_status()
-            payload = resp.json()["response"]
-            if payload["header"]["resultCode"] != "0000":
-                return None, None, "api_error"
-            body = payload["body"]["items"]
-            items = body["item"] if body else []
-        except Exception:
-            return None, None, "api_error"
+        # TourAPI's own search matching on whitespace is inconsistent, not
+        # just a title-formatting quirk on the response side: verified live
+        # that "해운대 해수욕장" (with space) returns totalCount=0 while
+        # "해운대해수욕장" (no space) finds it - but "롯데월드 어드벤처"
+        # (with space) finds 3 results while "롯데월드어드벤처" (no space)
+        # returns 0. There's no way to predict which form TourAPI indexed a
+        # given title under, so query both when the name has a space and
+        # merge the results.
+        query_variants = [name]
+        collapsed_query = re.sub(r"\s+", "", name)
+        if collapsed_query != name:
+            query_variants.append(collapsed_query)
 
-        if not isinstance(items, list):
-            items = [items]
+        items: list[dict] = []
+        seen_content_ids: set[str] = set()
+        for query in query_variants:
+            fetched = self._search_keyword2(query)
+            if fetched is None:
+                return None, None, "api_error"
+            for item in fetched:
+                content_id = str(item.get("contentid", ""))
+                if content_id and content_id in seen_content_ids:
+                    continue
+                if content_id:
+                    seen_content_ids.add(content_id)
+                items.append(item)
 
         # Filter to the target city ourselves via addr1 - see
         # TOUR_API_ADDRESS_PREFIX_BY_CITY for why the areaCode request
@@ -219,6 +288,7 @@ class TourApiClient:
         items = [item for item in items if str(item.get("addr1", "")).startswith(address_prefix)]
 
         normalized_name = name.strip()
+        collapsed_name = _collapse_whitespace(normalized_name)
         exact_matches = [
             item
             for item in items
@@ -228,13 +298,29 @@ class TourApiClient:
             # longer matches keyword "부산타워").
             if str(item.get("title", "")).strip() == normalized_name
             or _normalize_tour_api_title(str(item.get("title", ""))) == normalized_name
+            or _collapse_whitespace(str(item.get("title", ""))) == collapsed_name
         ]
         candidates = exact_matches
+        if len(candidates) > 1 and activity_types:
+            allowed_content_type_ids: set[str] = set()
+            for activity_type in activity_types:
+                allowed_content_type_ids |= ACTIVITY_TYPE_TO_TOUR_API_CONTENT_TYPE_IDS.get(activity_type, set())
+            if allowed_content_type_ids:
+                narrowed = [item for item in candidates if str(item.get("contenttypeid")) in allowed_content_type_ids]
+                # Only accept the narrowed set if it lands on exactly one
+                # candidate - if multiple still share a plausible
+                # contentTypeId (e.g. two museum buildings, both "문화시설"),
+                # this stays ambiguous rather than guessing between them.
+                if len(narrowed) == 1:
+                    candidates = narrowed
         if not candidates:
             candidates = [
                 item
                 for item in items
-                if normalized_name in str(item.get("title", "")) or str(item.get("title", "")) in normalized_name
+                if normalized_name in str(item.get("title", ""))
+                or str(item.get("title", "")) in normalized_name
+                or collapsed_name in _collapse_whitespace(str(item.get("title", "")))
+                or _collapse_whitespace(str(item.get("title", ""))) in collapsed_name
             ]
 
         if len(candidates) != 1:

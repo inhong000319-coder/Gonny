@@ -62,7 +62,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 35.1590840227225,
+      "longitude": 129.160278564827
     },
     {
       "id": "dongbaek-island",
@@ -219,7 +221,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "latitude": 35.1551657503,
+      "longitude": 129.1221363273
     },
     {
       "id": "millak-waterfront",
@@ -537,7 +541,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 구경만 하는 일정 대신 체험 요소를 하나 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "latitude": 35.0766411637,
+      "longitude": 129.023396378
     },
     {
       "id": "taejongdae",
@@ -1357,7 +1363,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 남포 일정 마무리에 부산 도심과 항구 풍경을 조금 더 높게 담고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "latitude": 35.101157344,
+      "longitude": 129.0323310732
     },
     {
       "id": "busan-modern-history-museum",

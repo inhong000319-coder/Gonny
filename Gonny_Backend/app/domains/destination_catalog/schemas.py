@@ -49,6 +49,14 @@ class PlaceData(BaseModel):
     summary: str
     latitude: float | None = None
     longitude: float | None = None
+    content_id: str | None = None
+    # Raw TourAPI usetime/restdate text, stored verbatim - these are
+    # free-form prose (e.g. "09:00~18:00(입장마감 17:30)"), not a
+    # structured schedule, so we don't attempt to parse them into a
+    # per-weekday structure (accuracy can't be guaranteed for arbitrary
+    # prose formats across venue types).
+    open_hours: str | None = None
+    closed_days: str | None = None
     official_url: str | None = None
     booking_hint: str | None = None
     is_active: bool = True

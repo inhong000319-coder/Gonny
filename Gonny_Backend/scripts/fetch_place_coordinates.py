@@ -42,11 +42,19 @@ def find_coordinates_with_retry(
 ) -> tuple[float | None, float | None, str]:
     """Retries only on "api_error" (network/HTTP/parse failure) - a
     genuine "not_found"/"ambiguous" result is never retried since retrying
-    won't change a real naming conflict."""
+    won't change a real naming conflict.
+
+    This script only needs coordinates - content_id/content_type_id
+    (also returned by find_place_coordinates now) are discarded here; see
+    scripts/fetch_place_operating_hours.py, which uses them to fetch
+    open_hours/closed_days in the same pass.
+    """
     status = "api_error"
     latitude = longitude = None
     for attempt in range(MAX_RETRIES_ON_API_ERROR):
-        latitude, longitude, status = client.find_place_coordinates(search_name, city, activity_types)
+        latitude, longitude, _content_id, _content_type_id, status = client.find_place_coordinates(
+            search_name, city, activity_types
+        )
         if status != "api_error":
             return latitude, longitude, status
         time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))

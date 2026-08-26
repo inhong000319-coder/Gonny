@@ -111,6 +111,29 @@ ACTIVITY_TYPE_TO_TOUR_API_CONTENT_TYPE_IDS: dict[str, set[str]] = {
     "온천": {"12", "32"},
 }
 
+# detailIntro2's operating-hours field names vary by contentTypeId - there
+# is no single "usetime"/"restdate" pair used across all of them. Verified
+# live against apis.data.go.kr for the types actually present in our
+# catalog (see scripts/fetch_place_operating_hours.py's logged contentTypeId
+# distribution for confirmation this covers what we actually have):
+#   12 (관광지): usetime / restdate
+#   14 (문화시설): usetimeculture / restdateculture
+#   28 (레포츠): usetimeleports / restdateleports
+#   38 (쇼핑): opentime / restdateshopping
+#   39 (음식점): opentimefood / restdatefood
+# contentTypeId=32 (숙박) has checkintime/checkouttime instead of a daily
+# open_hours concept - deliberately not mapped here, not the same thing.
+# Any other contentTypeId (e.g. 15/25, none seen in our catalog) simply
+# isn't in this dict, so fetch_place_operating_hours() returns (None, None)
+# for it rather than guessing at unverified field names.
+DETAIL_INTRO_HOURS_FIELDS_BY_CONTENT_TYPE: dict[str, tuple[str, str]] = {
+    "12": ("usetime", "restdate"),
+    "14": ("usetimeculture", "restdateculture"),
+    "28": ("usetimeleports", "restdateleports"),
+    "38": ("opentime", "restdateshopping"),
+    "39": ("opentimefood", "restdatefood"),
+}
+
 _TOUR_API_CITY_TITLE_PREFIX = re.compile(r"^(서울|부산|제주)\s*")
 _TOUR_API_TITLE_ANNOTATION_SUFFIX = re.compile(r"\s*[\[(][^\[\]()]*[\])]\s*$")
 
@@ -230,14 +253,16 @@ class TourApiClient:
         name: str,
         city: str,
         activity_types: list[str] | None = None,
-    ) -> tuple[float | None, float | None, str]:
-        """Look up a place's coordinates by name within a known city.
+    ) -> tuple[float | None, float | None, str | None, str | None, str]:
+        """Look up a place's coordinates (and TourAPI identity) by name
+        within a known city.
 
         activity_types (our Korean activity_type labels, e.g. ["쇼핑"]) is
         optional and only used to break a tie among candidates that already
         matched the name exactly - see ACTIVITY_TYPE_TO_TOUR_API_CONTENT_TYPE_IDS.
 
-        Returns (latitude, longitude, status) where status is one of:
+        Returns (latitude, longitude, content_id, content_type_id, status)
+        where status is one of:
         - "ok": exactly one confident match was found
         - "not_found": no candidate shared the place's name in that city
         - "ambiguous": multiple same-named candidates in that city
@@ -247,13 +272,18 @@ class TourApiClient:
           failures (e.g. rate limiting) aren't mistaken for a genuine
           naming conflict when reviewing results.
 
-        On anything other than "ok", latitude/longitude are both None.
-        Coordinates are never guessed - callers should leave the place's
-        coordinates unset and log it for manual follow-up.
+        On anything other than "ok", all four values are None. Coordinates
+        (and content_id) are never guessed - callers should leave the
+        place's coordinates unset and log it for manual follow-up.
+
+        content_type_id is returned so callers can immediately follow up
+        with fetch_place_operating_hours(content_id, content_type_id)
+        without a second search - it isn't meant to be persisted alongside
+        content_id (PlaceData only stores content_id).
         """
         address_prefix = TOUR_API_ADDRESS_PREFIX_BY_CITY.get(city)
         if not self.api_key or address_prefix is None:
-            return None, None, "api_error"
+            return None, None, None, None, "api_error"
 
         # TourAPI's own search matching on whitespace is inconsistent, not
         # just a title-formatting quirk on the response side: verified live
@@ -273,7 +303,7 @@ class TourApiClient:
         for query in query_variants:
             fetched = self._search_keyword2(query)
             if fetched is None:
-                return None, None, "api_error"
+                return None, None, None, None, "api_error"
             for item in fetched:
                 content_id = str(item.get("contentid", ""))
                 if content_id and content_id in seen_content_ids:
@@ -324,16 +354,81 @@ class TourApiClient:
             ]
 
         if len(candidates) != 1:
-            return None, None, "not_found" if not candidates else "ambiguous"
+            status = "not_found" if not candidates else "ambiguous"
+            return None, None, None, None, status
 
         match = candidates[0]
         try:
             longitude = float(match["mapx"])
             latitude = float(match["mapy"])
         except (KeyError, TypeError, ValueError):
+            return None, None, None, None, "api_error"
+
+        content_id = str(match.get("contentid", "")).strip() or None
+        content_type_id = str(match.get("contenttypeid", "")).strip() or None
+        return latitude, longitude, content_id, content_type_id, "ok"
+
+    def fetch_place_operating_hours(
+        self,
+        content_id: str,
+        content_type_id: str,
+    ) -> tuple[str | None, str | None, str]:
+        """Look up open_hours/closed_days via detailIntro2 for a place we
+        already have a content_id for (no re-search needed).
+
+        Returns (open_hours, closed_days, status) where status is "ok" or
+        "api_error". Both values are the raw TourAPI text verbatim (prose,
+        HTML <br> tags and all) - never parsed into a structured schedule,
+        since the source text isn't structured to begin with (see
+        DETAIL_INTRO_HOURS_FIELDS_BY_CONTENT_TYPE for why the field names
+        differ by contentTypeId). An empty/missing field becomes None; a
+        field containing text like "연중무휴" (no closed days) is kept as
+        that literal text, not collapsed into None - "no data" and "no
+        closed days" are different facts and must stay distinguishable.
+
+        A contentTypeId with no mapped fields (e.g. 32/숙박, which has
+        checkintime/checkouttime instead of daily hours) returns
+        (None, None, "ok") - that's a legitimate "this venue type has no
+        open_hours concept", not a failure.
+        """
+        if not self.api_key:
             return None, None, "api_error"
 
-        return latitude, longitude, "ok"
+        fields = DETAIL_INTRO_HOURS_FIELDS_BY_CONTENT_TYPE.get(content_type_id)
+        if fields is None:
+            return None, None, "ok"
+
+        url = f"{self.base_url}/detailIntro2"
+        params = {
+            "serviceKey": self.api_key,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentId": content_id,
+            "contentTypeId": content_type_id,
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+                resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None, None, "api_error"
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None, None, "api_error"
+
+        if not isinstance(items, list):
+            items = [items]
+        if not items:
+            return None, None, "ok"
+
+        item = items[0]
+        hours_field, closed_field = fields
+        open_hours = str(item.get(hours_field, "")).strip() or None
+        closed_days = str(item.get(closed_field, "")).strip() or None
+        return open_hours, closed_days, "ok"
 
 
 class ODSayClient:

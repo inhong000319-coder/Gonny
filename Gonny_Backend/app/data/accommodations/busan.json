@@ -1,0 +1,408 @@
+{
+  "city": "busan",
+  "accommodations": [
+    {
+      "id": "2754601",
+      "name": "더펫텔프리미엄스위트",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1592408683,
+      "longitude": 129.1531418525,
+      "content_id": "2754601",
+      "accommodation_type": "모텔",
+      "amenities": [
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2925797",
+      "name": "엘시티 레지던스",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1619491796,
+      "longitude": 129.1683126815,
+      "content_id": "2925797",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3532715",
+      "name": "누스테이 부산",
+      "city": "busan",
+      "area": "gwangalli",
+      "latitude": 35.168222552,
+      "longitude": 129.1183890728,
+      "content_id": "3532715",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "취사가능",
+        "바비큐",
+        "캠프파이어"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3533138",
+      "name": "샌드스테이",
+      "city": "busan",
+      "area": "gwangalli",
+      "latitude": 35.1569128366,
+      "longitude": 129.1253526663,
+      "content_id": "3533138",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "12:00",
+      "view": null
+    },
+    {
+      "id": "2818890",
+      "name": "그랜드 조선 부산",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1601048456,
+      "longitude": 129.1631548469,
+      "content_id": "2818890",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "사우나",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3083428",
+      "name": "제이비디자인호텔",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1617295697,
+      "longitude": 129.1580746892,
+      "content_id": "3083428",
+      "accommodation_type": "모텔",
+      "amenities": [
+        "주차가능",
+        "세미나실"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2731553",
+      "name": "펠릭스바이STX",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.163001657,
+      "longitude": 129.1584801742,
+      "content_id": "2731553",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "세미나실",
+        "음료서비스",
+        "피트니스",
+        "PC실"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3532572",
+      "name": "송정담다펜션",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.178772849,
+      "longitude": 129.1981457361,
+      "content_id": "3532572",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2574073",
+      "name": "윙민박",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1822391732,
+      "longitude": 129.200550987,
+      "content_id": "2574073",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "10:00",
+      "checkout_time": "09:00",
+      "view": null
+    },
+    {
+      "id": "2816102",
+      "name": "그레이193호텔",
+      "city": "busan",
+      "area": "gwangalli",
+      "latitude": 35.1540103687,
+      "longitude": 129.1245417048,
+      "content_id": "2816102",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "17:00",
+      "checkout_time": "12:00",
+      "view": null
+    },
+    {
+      "id": "2705418",
+      "name": "해운대 영무파라드호텔",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1609381479,
+      "longitude": 129.1665100882,
+      "content_id": "2705418",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00 (금요일~일요일·공휴일·공휴전일 16:00)",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3533169",
+      "name": "이스턴룸",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1622938525,
+      "longitude": 129.1827197529,
+      "content_id": "3533169",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2708705",
+      "name": "라비드아틀란호텔2",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1611685856,
+      "longitude": 129.1615188489,
+      "content_id": "2708705",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "142978",
+      "name": "리베로호텔",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1624489933,
+      "longitude": 129.161266058,
+      "content_id": "142978",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2811461",
+      "name": "베이몬드호텔",
+      "city": "busan",
+      "area": "haeundae",
+      "latitude": 35.1595992286,
+      "longitude": 129.1567804158,
+      "content_id": "2811461",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스",
+        "PC실"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    }
+  ]
+}

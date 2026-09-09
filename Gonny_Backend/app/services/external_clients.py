@@ -91,6 +91,84 @@ TOUR_API_ADDRESS_PREFIX_BY_CITY = {
     "jeju": "제주",
 }
 
+# Numeric TourAPI areaCode values, used only for areaBasedList2 (browse-by-
+# region), NOT for searchKeyword2 - these are a different mechanism.
+# areaBasedList2's areaCode filter was verified live to work correctly
+# (totalCount=235/65/56 for seoul/busan/jeju lodging), unlike
+# searchKeyword2's areaCode, which silently drops records with an empty
+# cat1 (see TOUR_API_ADDRESS_PREFIX_BY_CITY above for that bug).
+TOUR_API_AREA_CODE_BY_CITY = {
+    "seoul": "1",
+    "busan": "6",
+    "jeju": "39",
+}
+
+# TourAPI's lclsSystm2 classification codes for contentTypeId=32 (숙박),
+# verified live via the lclsSystmCode2 endpoint (lclsSystm1=AC) - this is
+# the authoritative list, not a guess. There is no Airbnb/에어비앤비
+# category: TourAPI only carries officially registered tourism lodging
+# businesses, not platform listings, so that type can't be represented
+# here.
+ACCOMMODATION_TYPE_LABELS_BY_LCLS2: dict[str, str] = {
+    "AC01": "호텔",
+    "AC02": "콘도미니엄",
+    "AC03": "펜션·민박",
+    "AC04": "모텔",
+    "AC05": "캠핑",
+    "AC06": "호스텔",
+}
+
+# detailIntro2 fields for contentTypeId=32, verified live (see a real
+# hotel's response). Two shapes:
+# - flag fields: "0"/"1" indicating whether the facility exists at all
+# - text fields: free text where "가능"/"불가(능)" indicates availability
+# No breakfast ("조식제공") or pool ("수영장") field exists anywhere in
+# detailIntro2 or detailInfo2 for lodging - verified live, not just
+# unmapped. Only fields TourAPI actually exposes are listed below.
+LODGING_AMENITY_FLAG_FIELDS: dict[str, str] = {
+    "seminar": "세미나실",
+    "sports": "체육시설",
+    "sauna": "사우나",
+    "beauty": "미용실",
+    "beverage": "음료서비스",
+    "karaoke": "노래방",
+    "barbecue": "바비큐",
+    "campfire": "캠프파이어",
+    "bicycle": "자전거대여",
+    "fitness": "피트니스",
+    "publicpc": "PC실",
+    "publicbath": "대중목욕탕",
+}
+LODGING_AMENITY_TEXT_FIELDS: dict[str, str] = {
+    "parkinglodging": "주차가능",
+    "chkcooking": "취사가능",
+}
+
+
+def _text_field_indicates_available(value: str) -> bool:
+    """"가능" is a substring of "불가능", so a naive `"가능" in value` check
+    would misread "불가능"/"불가" as available. Checking the negative
+    prefix first avoids that trap."""
+    normalized = value.strip()
+    if not normalized or normalized.startswith("불가") or normalized in {"없음", "불가"}:
+        return False
+    return "가능" in normalized
+
+
+def extract_lodging_amenities(detail_item: dict) -> list[str]:
+    """Builds the amenities list from a detailIntro2 (contentTypeId=32)
+    item, using only fields TourAPI actually provides - see
+    LODGING_AMENITY_FLAG_FIELDS/LODGING_AMENITY_TEXT_FIELDS."""
+    amenities: list[str] = []
+    for field, label in LODGING_AMENITY_TEXT_FIELDS.items():
+        value = str(detail_item.get(field, "")).strip()
+        if value and _text_field_indicates_available(value):
+            amenities.append(label)
+    for field, label in LODGING_AMENITY_FLAG_FIELDS.items():
+        if str(detail_item.get(field, "")).strip() == "1":
+            amenities.append(label)
+    return amenities
+
 # TourAPI contentTypeId reference: 12=관광지, 14=문화시설, 15=축제공연행사,
 # 25=여행코스, 28=레포츠, 32=숙박, 38=쇼핑, 39=음식점. Used only to break
 # ties among candidates whose titles already matched exactly (see
@@ -216,6 +294,78 @@ class TourApiClient:
                 }
             )
         return rows
+
+    def fetch_lodging_candidates(self, city: str, num_rows: int = 50) -> list[dict] | None:
+        """Browse-by-region listing of contentTypeId=32 (숙박) items for a
+        city via areaBasedList2. Returns raw TourAPI items (title,
+        contentid, mapx/mapy, lclsSystm2, addr1, etc.) or None on any
+        request/response failure.
+
+        Unlike searchKeyword2, areaBasedList2's areaCode filter is safe to
+        use here - see TOUR_API_AREA_CODE_BY_CITY.
+        """
+        area_code = TOUR_API_AREA_CODE_BY_CITY.get(city)
+        if not self.api_key or area_code is None:
+            return None
+
+        url = f"{self.base_url}/areaBasedList2"
+        params = {
+            "serviceKey": self.api_key,
+            "numOfRows": num_rows,
+            "pageNo": 1,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentTypeId": "32",
+            "areaCode": area_code,
+            "arrange": "Q",  # 수정일순 - stable, not popularity-skewed
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+                resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None
+
+        return items if isinstance(items, list) else [items]
+
+    def fetch_lodging_details(self, content_id: str) -> dict | None:
+        """Raw detailIntro2 (contentTypeId=32) item for one lodging
+        content_id, or None on any failure. Callers extract
+        checkintime/checkouttime/amenities from the returned dict (see
+        extract_lodging_amenities and LODGING_AMENITY_*_FIELDS)."""
+        if not self.api_key:
+            return None
+
+        url = f"{self.base_url}/detailIntro2"
+        params = {
+            "serviceKey": self.api_key,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentId": content_id,
+            "contentTypeId": "32",
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+                resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None
+
+        if not isinstance(items, list):
+            items = [items]
+        return items[0] if items else None
 
     def _search_keyword2(self, keyword: str) -> list[dict] | None:
         """Raw searchKeyword2 call for one keyword string. Returns None on

@@ -2,6 +2,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CatalogCityOption, FeaturedVideoData
 
 
@@ -77,6 +78,7 @@ class RuleItineraryResponse(BaseModel):
     featured_video: FeaturedVideoData | None = None
     items: list[RuleItineraryItem]
     day_duration_warnings: list[RuleDayDurationWarning] = Field(default_factory=list)
+    accommodation_recommendation: AccommodationData | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

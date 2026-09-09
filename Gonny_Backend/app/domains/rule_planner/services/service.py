@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
 from app.domains.destination_catalog.services.provider import (
     LocalJsonPlaceCatalogProvider,
@@ -14,6 +15,11 @@ from app.domains.rule_planner.schemas import (
     RuleItineraryResponse,
 )
 
+from .accommodation_scoring import (
+    compute_reference_point,
+    load_city_accommodations,
+    select_accommodation_recommendation,
+)
 from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
 from .constants import (
     ACTIVITY_CATEGORIES,
@@ -55,6 +61,7 @@ class RuleItineraryService:
         )
         items, day_place_map = self._build_items(normalized, city_catalog)
         day_duration_warnings = self._build_day_duration_warnings(day_place_map)
+        accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
 
         return RuleItineraryResponse(
             continent=city_catalog.continent,
@@ -70,6 +77,7 @@ class RuleItineraryService:
             featured_video=city_catalog.featured_video,
             items=items,
             day_duration_warnings=day_duration_warnings,
+            accommodation_recommendation=accommodation_recommendation,
         )
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
@@ -209,6 +217,16 @@ class RuleItineraryService:
                     )
                 )
         return warnings
+
+    def _recommend_accommodation(
+        self,
+        request: NormalizedRuleRequest,
+        city_catalog: CityPlaceCatalog,
+        day_place_map: dict[int, list[PlaceData]],
+    ) -> AccommodationData | None:
+        accommodations = load_city_accommodations(city_catalog.city)
+        reference_point = compute_reference_point(day_place_map, city_catalog)
+        return select_accommodation_recommendation(accommodations, request, reference_point)
 
     def _pick_full_day_place(
         self,

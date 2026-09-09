@@ -1,0 +1,414 @@
+{
+  "city": "jeju",
+  "accommodations": [
+    {
+      "id": "1894943",
+      "name": "포도호텔",
+      "city": "jeju",
+      "area": "seogwipo-west",
+      "latitude": 33.3178733106,
+      "longitude": 126.3875196113,
+      "content_id": "1894943",
+      "accommodation_type": "모텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3084988",
+      "name": "아덴힐리조트&골프",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.348127981,
+      "longitude": 126.3672651377,
+      "content_id": "3084988",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "체육시설",
+        "사우나",
+        "음료서비스",
+        "노래방",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "735314",
+      "name": "까델아스",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.4753472289,
+      "longitude": 126.3666540021,
+      "content_id": "735314",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2699343",
+      "name": "솔트",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.4670365589,
+      "longitude": 126.3363346046,
+      "content_id": "2699343",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "3084957",
+      "name": "리치호텔",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.472097309,
+      "longitude": 126.3489500598,
+      "content_id": "3084957",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "984562",
+      "name": "타미우스골프&빌리지",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.3469894223,
+      "longitude": 126.3802668112,
+      "content_id": "984562",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "12:00",
+      "view": null
+    },
+    {
+      "id": "1897905",
+      "name": "노을담은뜨락",
+      "city": "jeju",
+      "area": "seogwipo-west",
+      "latitude": 33.2562936895,
+      "longitude": 126.1903769911,
+      "content_id": "1897905",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "바비큐"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2626800",
+      "name": "오션힐스테이",
+      "city": "jeju",
+      "area": "seogwipo-west",
+      "latitude": 33.2368032498,
+      "longitude": 126.3088143604,
+      "content_id": "2626800",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "음료서비스",
+        "바비큐"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "139008",
+      "name": "비치스토리호텔",
+      "city": "jeju",
+      "area": "east-jeju",
+      "latitude": 33.5421529255,
+      "longitude": 126.6654098459,
+      "content_id": "139008",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "137476",
+      "name": "토비스콘도 제주",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.4631615996,
+      "longitude": 126.3117312768,
+      "content_id": "137476",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2991120",
+      "name": "물결그림",
+      "city": "jeju",
+      "area": "east-jeju",
+      "latitude": 33.5444525773,
+      "longitude": 126.6595658566,
+      "content_id": "2991120",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2624249",
+      "name": "취다선리조트(취다선 리조트 Tea&Meditation)",
+      "city": "jeju",
+      "area": "seongsan",
+      "latitude": 33.4718785742,
+      "longitude": 126.9127177787,
+      "content_id": "2624249",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "체육시설",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "984523",
+      "name": "제주 블랙스톤",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.3377949264,
+      "longitude": 126.3124118005,
+      "content_id": "984523",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "체육시설",
+        "사우나",
+        "미용실",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "2757210",
+      "name": "플레이스 캠프 제주(Playce camp Jeju)",
+      "city": "jeju",
+      "area": "seongsan",
+      "latitude": 33.4498866488,
+      "longitude": 126.9182122544,
+      "content_id": "2757210",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "음료서비스",
+        "자전거대여"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null
+    },
+    {
+      "id": "1853848",
+      "name": "바다하우스",
+      "city": "jeju",
+      "area": "west-jeju",
+      "latitude": 33.4665921534,
+      "longitude": 126.3356596732,
+      "content_id": "1853848",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "12:00",
+      "view": null
+    }
+  ]
+}

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from math import asin, cos, radians, sin, sqrt
 
+from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import PlaceData
 
 EARTH_RADIUS_KM = 6371.0
@@ -62,19 +63,58 @@ def estimate_travel_minutes_between(place_a: PlaceData, place_b: PlaceData) -> i
     return estimate_straight_line_travel_minutes(distance_km)
 
 
-def estimate_day_total_minutes(places: list[PlaceData]) -> int:
+def estimate_accommodation_transition_minutes(
+    accommodation: AccommodationData | None, place: PlaceData
+) -> int | None:
+    """Estimated travel time between the recommended accommodation and a
+    place, or None if there's no accommodation or either side is missing
+    coordinates. Reuses the same haversine + straight-line estimate as
+    estimate_travel_minutes_between(), just for an AccommodationData/
+    PlaceData pair instead of two PlaceData."""
+    if accommodation is None:
+        return None
+    if accommodation.latitude is None or accommodation.longitude is None:
+        return None
+    if place.latitude is None or place.longitude is None:
+        return None
+    distance_km = haversine_distance_km(
+        accommodation.latitude, accommodation.longitude, place.latitude, place.longitude
+    )
+    return estimate_straight_line_travel_minutes(distance_km)
+
+
+def estimate_day_total_minutes(
+    places: list[PlaceData],
+    accommodation: AccommodationData | None = None,
+) -> int:
     """Total estimated minutes for one day's plan: each place's own
     duration plus estimated travel between consecutive places.
 
     A pair without coordinates on both ends contributes 0 travel time (not
     an error) - the total simply reflects duration_hours only for that
     pair, same as before coordinates existed.
+
+    accommodation is optional (defaults to None, preserving prior
+    behavior). When given, the accommodation-to-first-place and
+    last-place-to-accommodation legs are added too, since the MVP
+    recommends a single accommodation for the whole trip and the traveler
+    is assumed to return there every night - see
+    RuleItineraryService._recommend_accommodation.
     """
     total_minutes = sum(place.duration_hours * 60 for place in places)
     for previous_place, place in zip(places, places[1:]):
         travel_minutes = estimate_travel_minutes_between(previous_place, place)
         if travel_minutes is not None:
             total_minutes += travel_minutes
+
+    if places:
+        to_first_place_minutes = estimate_accommodation_transition_minutes(accommodation, places[0])
+        if to_first_place_minutes is not None:
+            total_minutes += to_first_place_minutes
+        from_last_place_minutes = estimate_accommodation_transition_minutes(accommodation, places[-1])
+        if from_last_place_minutes is not None:
+            total_minutes += from_last_place_minutes
+
     return total_minutes
 
 

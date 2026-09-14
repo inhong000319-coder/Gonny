@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -26,6 +27,10 @@ class RuleItineraryRequest(BaseModel):
     concepts: list[TripConcept] | None = None
     style: TripStyle | None = None
     companion_type: CompanionType | None = None
+    # Trip start date. Optional - without it there's no way to map a
+    # day_number to a weekday, so closed-day exclusion (see
+    # RuleClosedDayExclusion) simply never triggers.
+    start_date: date | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -49,6 +54,14 @@ class RuleDayDurationWarning(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleClosedDayExclusion(BaseModel):
+    day_number: int
+    place_name: str
+    message: str
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class NormalizedRuleRequest(BaseModel):
     continent: str
     country: str
@@ -60,6 +73,7 @@ class NormalizedRuleRequest(BaseModel):
     concepts: list[TripConcept]
     style: TripStyle
     companion_type: CompanionType
+    start_date: date | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -78,6 +92,7 @@ class RuleItineraryResponse(BaseModel):
     featured_video: FeaturedVideoData | None = None
     items: list[RuleItineraryItem]
     day_duration_warnings: list[RuleDayDurationWarning] = Field(default_factory=list)
+    closed_day_exclusions: list[RuleClosedDayExclusion] = Field(default_factory=list)
     accommodation_recommendation: AccommodationData | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)

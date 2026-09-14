@@ -43,6 +43,7 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
         concepts=concepts,
         style=style,
         companion_type=companion_type,
+        start_date=request.start_date,
     )
 
 

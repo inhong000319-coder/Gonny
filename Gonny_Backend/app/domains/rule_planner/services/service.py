@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import timedelta
+
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
 from app.domains.destination_catalog.services.provider import (
@@ -9,6 +11,7 @@ from app.domains.destination_catalog.services.provider import (
 from app.domains.rule_planner.schemas import (
     CatalogCityOption,
     NormalizedRuleRequest,
+    RuleClosedDayExclusion,
     RuleDayDurationWarning,
     RuleItineraryItem,
     RuleItineraryRequest,
@@ -20,6 +23,7 @@ from .accommodation_scoring import (
     load_city_accommodations,
     select_accommodation_recommendation,
 )
+from .closed_days import WEEKDAY_LABEL_KO, is_confirmed_closed_on
 from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
 from .constants import (
     ACTIVITY_CATEGORIES,
@@ -59,7 +63,7 @@ class RuleItineraryService:
             city=normalized.city,
             visible_only=True,
         )
-        items, day_place_map = self._build_items(normalized, city_catalog)
+        items, day_place_map, closed_day_exclusions = self._build_items(normalized, city_catalog)
         day_duration_warnings = self._build_day_duration_warnings(day_place_map)
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
 
@@ -77,6 +81,7 @@ class RuleItineraryService:
             featured_video=city_catalog.featured_video,
             items=items,
             day_duration_warnings=day_duration_warnings,
+            closed_day_exclusions=closed_day_exclusions,
             accommodation_recommendation=accommodation_recommendation,
         )
 
@@ -99,7 +104,7 @@ class RuleItineraryService:
         self,
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
-    ) -> tuple[list[RuleItineraryItem], dict[int, list[PlaceData]]]:
+    ) -> tuple[list[RuleItineraryItem], dict[int, list[PlaceData]], list[RuleClosedDayExclusion]]:
         scored_places = sorted(
             [place for place in city_catalog.places if place.is_active],
             key=lambda place: self._base_score(place, request),
@@ -113,15 +118,21 @@ class RuleItineraryService:
         used_day_areas: set[str] = set()
         items: list[RuleItineraryItem] = []
         day_place_map: dict[int, list[PlaceData]] = {}
+        closed_day_exclusions: list[RuleClosedDayExclusion] = []
+        seen_exclusion_keys: set[tuple[int, str]] = set()
         full_day_used = False
 
         for day_number in range(1, request.days + 1):
+            day_weekday = self._day_weekday(request, day_number)
             full_day_place = self._pick_full_day_place(
                 scored_places=scored_places,
                 request=request,
                 used_ids=used_ids,
                 day_number=day_number,
                 allow_full_day=not full_day_used,
+                day_weekday=day_weekday,
+                closed_day_exclusions=closed_day_exclusions,
+                seen_exclusion_keys=seen_exclusion_keys,
             )
             if full_day_place is not None:
                 for slot in TIME_SLOTS:
@@ -167,6 +178,9 @@ class RuleItineraryService:
                     preferred_area=day_area,
                     previous_place=previous_place,
                     feedback_signals=feedback_signals,
+                    day_weekday=day_weekday,
+                    closed_day_exclusions=closed_day_exclusions,
+                    seen_exclusion_keys=seen_exclusion_keys,
                 )
                 if chosen is None:
                     continue
@@ -195,7 +209,51 @@ class RuleItineraryService:
             if day_places:
                 day_place_map[day_number] = day_places
 
-        return items, day_place_map
+        return items, day_place_map, closed_day_exclusions
+
+    def _day_weekday(self, request: NormalizedRuleRequest, day_number: int) -> int | None:
+        """0=Monday ... 6=Sunday for this day_number, or None if the
+        request has no start_date (closed-day exclusion never triggers
+        without it - see RuleItineraryRequest.start_date)."""
+        if request.start_date is None:
+            return None
+        return (request.start_date + timedelta(days=day_number - 1)).weekday()
+
+    def _select_first_open_candidate(
+        self,
+        *,
+        ranked_candidates: list[PlaceData],
+        day_number: int,
+        day_weekday: int | None,
+        closed_day_exclusions: list[RuleClosedDayExclusion] | None,
+        seen_exclusion_keys: set[tuple[int, str]] | None,
+    ) -> PlaceData | None:
+        """Returns the highest-ranked candidate that isn't confirmed closed
+        on day_weekday, skipping (and recording) any confirmed-closed ones
+        ahead of it. When day_weekday is None (no start_date on the
+        request), this is a no-op passthrough to ranked_candidates[0]."""
+        if day_weekday is None:
+            return ranked_candidates[0] if ranked_candidates else None
+
+        for candidate in ranked_candidates:
+            if not is_confirmed_closed_on(candidate.closed_days, day_weekday):
+                return candidate
+
+            key = (day_number, candidate.id)
+            if closed_day_exclusions is not None and seen_exclusion_keys is not None and key not in seen_exclusion_keys:
+                seen_exclusion_keys.add(key)
+                place_name = self._localize_place_name(candidate)
+                closed_day_exclusions.append(
+                    RuleClosedDayExclusion(
+                        day_number=day_number,
+                        place_name=place_name,
+                        message=(
+                            f"{place_name}은(는) {WEEKDAY_LABEL_KO[day_weekday]}에 휴무로 확인되어 "
+                            f"{day_number}일차 일정에서 제외했습니다."
+                        ),
+                    )
+                )
+        return None
 
     def _build_day_duration_warnings(
         self,
@@ -236,6 +294,9 @@ class RuleItineraryService:
         used_ids: set[str],
         day_number: int,
         allow_full_day: bool,
+        day_weekday: int | None = None,
+        closed_day_exclusions: list[RuleClosedDayExclusion] | None = None,
+        seen_exclusion_keys: set[tuple[int, str]] | None = None,
     ) -> PlaceData | None:
         if not allow_full_day or "activity" not in request.concepts:
             return None
@@ -253,7 +314,13 @@ class RuleItineraryService:
             return None
 
         ranked = sorted(candidates, key=lambda place: self._base_score(place, request) + 20, reverse=True)
-        return ranked[0]
+        return self._select_first_open_candidate(
+            ranked_candidates=ranked,
+            day_number=day_number,
+            day_weekday=day_weekday,
+            closed_day_exclusions=closed_day_exclusions,
+            seen_exclusion_keys=seen_exclusion_keys,
+        )
 
     def _group_area_scores(self, places: list[PlaceData], request: NormalizedRuleRequest) -> dict[str, int]:
         area_scores: dict[str, int] = {}
@@ -296,6 +363,9 @@ class RuleItineraryService:
         preferred_area: str | None,
         previous_place: PlaceData | None,
         feedback_signals: dict[str, PlaceFeedbackSignal] | None = None,
+        day_weekday: int | None = None,
+        closed_day_exclusions: list[RuleClosedDayExclusion] | None = None,
+        seen_exclusion_keys: set[tuple[int, str]] | None = None,
     ) -> PlaceData | None:
         available_places = [place for place in scored_places if place.id not in used_ids]
         slot_fitting_places = [place for place in available_places if time_slot in place.time_fit]
@@ -319,7 +389,13 @@ class RuleItineraryService:
             ),
             reverse=True,
         )
-        return ranked_candidates[0] if ranked_candidates else None
+        return self._select_first_open_candidate(
+            ranked_candidates=ranked_candidates,
+            day_number=day_number,
+            day_weekday=day_weekday,
+            closed_day_exclusions=closed_day_exclusions,
+            seen_exclusion_keys=seen_exclusion_keys,
+        )
 
     def _filter_phase_candidates(
         self,

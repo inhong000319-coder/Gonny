@@ -7,6 +7,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.services.repository import DestinationCatalogRepository
 from app.domains.rule_planner.services.community_feedback import (
     PlaceFeedbackSignal,
@@ -14,10 +15,26 @@ from app.domains.rule_planner.services.community_feedback import (
     load_place_feedback_signals,
 )
 from app.domains.rule_planner.services.slot_scoring import legacy_base_score
-from app.domains.rule_planner.services.travel_estimate import coordinate_area_transition_bonus
+from app.domains.rule_planner.services.travel_estimate import (
+    coordinate_area_transition_bonus,
+    estimate_accommodation_transition_minutes,
+    estimate_day_total_minutes,
+)
 from app.schemas.place_catalog import PlaceData
 from app.schemas.rule_itinerary import NormalizedRuleRequest
 from app.services.rule_itinerary_service import RuleItineraryService
+
+
+def build_accommodation(**overrides) -> AccommodationData:
+    data = {
+        "id": "sample-hotel",
+        "name": "Sample Hotel",
+        "city": "seoul",
+        "area": "city-center",
+        "accommodation_type": "호텔",
+    }
+    data.update(overrides)
+    return AccommodationData.model_validate(data)
 
 ONSEN_PLACE_IDS = [
     "heosimchung",
@@ -300,6 +317,73 @@ def test_day_duration_warning_not_flagged_under_threshold() -> None:
     warnings = service._build_day_duration_warnings({1: short_places})
 
     assert warnings == []
+
+
+# Accommodation<->place travel time in the daily total (see
+# services/travel_estimate.py's estimate_accommodation_transition_minutes)
+
+
+def test_estimate_accommodation_transition_minutes_none_without_accommodation() -> None:
+    place = build_place(latitude=37.5665, longitude=126.9780)
+    assert estimate_accommodation_transition_minutes(None, place) is None
+
+
+def test_estimate_accommodation_transition_minutes_none_without_coordinates() -> None:
+    accommodation_no_coords = build_accommodation()
+    place_with_coords = build_place(latitude=37.5665, longitude=126.9780)
+    assert estimate_accommodation_transition_minutes(accommodation_no_coords, place_with_coords) is None
+
+    accommodation_with_coords = build_accommodation(latitude=37.5665, longitude=126.9780)
+    place_no_coords = build_place()
+    assert estimate_accommodation_transition_minutes(accommodation_with_coords, place_no_coords) is None
+
+
+def test_day_total_minutes_adds_both_accommodation_legs_when_far_away() -> None:
+    # Places sit right next to each other (central Seoul); the accommodation
+    # is ~40km away (well outside the city center), so its to-first/
+    # from-last legs should dominate the total.
+    places = [
+        build_place(id="place-1", duration_hours=2, latitude=37.5665, longitude=126.9780),
+        build_place(id="place-2", duration_hours=2, latitude=37.5670, longitude=126.9785),
+    ]
+    far_accommodation = build_accommodation(latitude=37.9000, longitude=127.3000)
+
+    without_accommodation = estimate_day_total_minutes(places)
+    with_far_accommodation = estimate_day_total_minutes(places, far_accommodation)
+
+    assert with_far_accommodation > without_accommodation
+
+
+def test_day_total_minutes_unaffected_by_accommodation_without_coordinates() -> None:
+    places = [build_place(id="place-1", duration_hours=2, latitude=37.5665, longitude=126.9780)]
+    accommodation_no_coords = build_accommodation()
+
+    assert estimate_day_total_minutes(places, accommodation_no_coords) == estimate_day_total_minutes(places)
+
+
+def test_day_duration_warning_more_likely_when_accommodation_is_far_from_activity_area() -> None:
+    # Duration alone (8h) sits under the 10h threshold; only once the
+    # to/from-accommodation legs are added should the warning appear.
+    service = RuleItineraryService()
+    places = [
+        build_place(id="near-place-1", duration_hours=4, latitude=37.5665, longitude=126.9780),
+        build_place(id="near-place-2", duration_hours=4, latitude=37.5670, longitude=126.9785),
+    ]
+    far_accommodation = build_accommodation(latitude=37.9000, longitude=127.3000)
+
+    warnings_without_accommodation = service._build_day_duration_warnings({1: places})
+    warnings_with_far_accommodation = service._build_day_duration_warnings({1: places}, far_accommodation)
+
+    assert warnings_without_accommodation == []
+    assert len(warnings_with_far_accommodation) == 1
+    assert warnings_with_far_accommodation[0].day_number == 1
+
+
+def test_day_duration_warning_unaffected_when_no_accommodation_recommended() -> None:
+    service = RuleItineraryService()
+    short_places = [build_place(id=f"short-place-{i}", duration_hours=2) for i in range(3)]  # 6h
+
+    assert service._build_day_duration_warnings({1: short_places}, None) == []
 
 
 # Community feedback bonus (see services/community_feedback.py)

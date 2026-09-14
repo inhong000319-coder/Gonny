@@ -64,8 +64,8 @@ class RuleItineraryService:
             visible_only=True,
         )
         items, day_place_map, closed_day_exclusions = self._build_items(normalized, city_catalog)
-        day_duration_warnings = self._build_day_duration_warnings(day_place_map)
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
+        day_duration_warnings = self._build_day_duration_warnings(day_place_map, accommodation_recommendation)
 
         return RuleItineraryResponse(
             continent=city_catalog.continent,
@@ -258,11 +258,12 @@ class RuleItineraryService:
     def _build_day_duration_warnings(
         self,
         day_place_map: dict[int, list[PlaceData]],
+        accommodation: AccommodationData | None = None,
     ) -> list[RuleDayDurationWarning]:
         threshold_minutes = DAY_DURATION_WARNING_THRESHOLD_HOURS * 60
         warnings: list[RuleDayDurationWarning] = []
         for day_number, places in sorted(day_place_map.items()):
-            total_minutes = estimate_day_total_minutes(places)
+            total_minutes = estimate_day_total_minutes(places, accommodation)
             if total_minutes > threshold_minutes:
                 warnings.append(
                     RuleDayDurationWarning(

@@ -1409,6 +1409,32 @@ body.modal-open {
   color: #b91c1c;
 }
 
+.planner-feedback.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: #92400e;
+}
+
+.planner-feedback.info {
+  background: rgba(37, 99, 255, 0.08);
+  color: #1d4ed8;
+}
+
+.planner-accommodation-card {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(180, 203, 241, 0.56);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.95)),
+    linear-gradient(135deg, rgba(93, 186, 255, 0.1), rgba(108, 121, 255, 0.08));
+}
+
+.planner-accommodation-card strong {
+  color: #173f78;
+  font-size: 1.1rem;
+}
+
 .planner-result-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);

@@ -25,7 +25,16 @@ type TimeSlot = "morning" | "afternoon" | "evening";
 type BudgetBand = "low" | "medium" | "high";
 type TripStyle = "tight" | "easy" | "near-stay" | "mobility-first";
 type CompanionType = "solo" | "couple" | "friend" | "family";
-type TripConcept = "food" | "shopping" | "relax" | "sightseeing" | "culture" | "nature" | "activity";
+type TripConcept =
+  | "food"
+  | "shopping"
+  | "relax"
+  | "sightseeing"
+  | "culture"
+  | "nature"
+  | "activity"
+  | "nightlife"
+  | "onsen";
 
 type RuleItineraryItem = {
   day_number: number;
@@ -34,6 +43,27 @@ type RuleItineraryItem = {
   category: string;
   area: string;
   notes: string;
+};
+
+type RuleDayDurationWarning = {
+  day_number: number;
+  estimated_total_minutes: number;
+  message: string;
+};
+
+type RuleClosedDayExclusion = {
+  day_number: number;
+  place_name: string;
+  message: string;
+};
+
+// view(숙소 조망)는 데이터 신뢰도 문제로 이번 범위에서 표시하지 않는다.
+type AccommodationRecommendation = {
+  id: string;
+  name: string;
+  accommodation_type: string;
+  checkin_time?: string | null;
+  checkout_time?: string | null;
 };
 
 type FeaturedVideo = {
@@ -60,6 +90,9 @@ type RuleItineraryResponse = {
   companion_type: CompanionType;
   featured_video?: FeaturedVideo | null;
   items: RuleItineraryItem[];
+  day_duration_warnings: RuleDayDurationWarning[];
+  closed_day_exclusions: RuleClosedDayExclusion[];
+  accommodation_recommendation: AccommodationRecommendation | null;
 };
 
 type PlannerFormState = {
@@ -77,7 +110,17 @@ type PlannerFormState = {
 };
 
 const STEP_COUNT = 4;
-const conceptOptions: TripConcept[] = ["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity"];
+const conceptOptions: TripConcept[] = [
+  "food",
+  "shopping",
+  "relax",
+  "sightseeing",
+  "culture",
+  "nature",
+  "activity",
+  "nightlife",
+  "onsen",
+];
 const budgetOptions: BudgetBand[] = ["low", "medium", "high"];
 const styleOptions: TripStyle[] = ["tight", "easy", "near-stay", "mobility-first"];
 const companionOptions: CompanionType[] = ["solo", "couple", "friend", "family"];
@@ -184,6 +227,8 @@ function labelTripConcept(value: TripConcept) {
   if (value === "sightseeing") return "관광";
   if (value === "culture") return "문화";
   if (value === "activity") return "액티비티";
+  if (value === "nightlife") return "나이트라이프";
+  if (value === "onsen") return "온천";
   return "자연";
 }
 
@@ -304,6 +349,45 @@ function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
   );
 }
 
+function isRuleDayDurationWarning(value: unknown): value is RuleDayDurationWarning {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const warning = value as Record<string, unknown>;
+  return (
+    typeof warning.day_number === "number" &&
+    typeof warning.estimated_total_minutes === "number" &&
+    typeof warning.message === "string"
+  );
+}
+
+function isRuleClosedDayExclusion(value: unknown): value is RuleClosedDayExclusion {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const exclusion = value as Record<string, unknown>;
+  return (
+    typeof exclusion.day_number === "number" &&
+    typeof exclusion.place_name === "string" &&
+    typeof exclusion.message === "string"
+  );
+}
+
+function isAccommodationRecommendation(value: unknown): value is AccommodationRecommendation {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const accommodation = value as Record<string, unknown>;
+  return (
+    typeof accommodation.id === "string" &&
+    typeof accommodation.name === "string" &&
+    typeof accommodation.accommodation_type === "string"
+  );
+}
+
 function normalizeCatalogResponse(payload: unknown) {
   if (!payload || typeof payload !== "object") {
     return [];
@@ -346,6 +430,15 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     featured_video:
       data.featured_video && typeof data.featured_video === "object" ? (data.featured_video as FeaturedVideo) : null,
     items,
+    day_duration_warnings: Array.isArray(data.day_duration_warnings)
+      ? data.day_duration_warnings.filter(isRuleDayDurationWarning)
+      : [],
+    closed_day_exclusions: Array.isArray(data.closed_day_exclusions)
+      ? data.closed_day_exclusions.filter(isRuleClosedDayExclusion)
+      : [],
+    accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
+      ? data.accommodation_recommendation
+      : null,
   };
 }
 
@@ -1290,6 +1383,22 @@ export function TripCreateForm() {
               </article>
             </div>
 
+            {result.accommodation_recommendation ? (
+              <section className="planner-accommodation-card">
+                <span className="section-kicker">Recommended Stay</span>
+                <strong>{result.accommodation_recommendation.name}</strong>
+                <div className="planner-result-tags">
+                  <span className="badge">{result.accommodation_recommendation.accommodation_type}</span>
+                  {result.accommodation_recommendation.checkin_time ? (
+                    <span className="badge">체크인 {result.accommodation_recommendation.checkin_time}</span>
+                  ) : null}
+                  {result.accommodation_recommendation.checkout_time ? (
+                    <span className="badge">체크아웃 {result.accommodation_recommendation.checkout_time}</span>
+                  ) : null}
+                </div>
+              </section>
+            ) : null}
+
             {message ? <p className="planner-feedback success">{message}</p> : null}
             {error ? <p className="planner-feedback error">{error}</p> : null}
 
@@ -1309,6 +1418,23 @@ export function TripCreateForm() {
                     </div>
                     <p>{summarizeRoute(group.items)}</p>
                   </div>
+                  {result.day_duration_warnings
+                    .filter((warning) => warning.day_number === group.day)
+                    .map((warning) => (
+                      <p key={`duration-warning-${warning.day_number}`} className="planner-feedback warning">
+                        {warning.message}
+                      </p>
+                    ))}
+                  {result.closed_day_exclusions
+                    .filter((exclusion) => exclusion.day_number === group.day)
+                    .map((exclusion) => (
+                      <p
+                        key={`closed-day-exclusion-${exclusion.day_number}-${exclusion.place_name}`}
+                        className="planner-feedback info"
+                      >
+                        {exclusion.message}
+                      </p>
+                    ))}
                   <div className="planner-day-timeline">
                     {group.items.map((item) => {
                       const note = splitNoteLines(item.notes);

@@ -91,14 +91,15 @@ def test_parses_no_closure_markers_as_open_every_day():
     assert parse_closed_days("휴무일 없음").certainty == ClosureCertainty.OPEN_EVERY_DAY
 
 
-def test_gyeongbokgung_real_text_parses_as_tuesday_closure():
+def test_gyeongbokgung_real_text_parses_as_unknown():
     # Actual closed_days text from app/data/destinations/seoul.json - the
-    # holiday-swap caveat is ignored (no holiday calendar available), but
-    # the underlying "매주 화요일" pattern must still resolve correctly.
+    # holiday-swap caveat ("단, ... 공휴일과 겹칠 경우에는 개방하며...") means
+    # "매주 화요일" alone would be a confidently-wrong exclusion on weeks
+    # where Tuesday is a substitute holiday, so this must resolve to
+    # UNKNOWN rather than a flat Tuesday closure.
     text = "매주 화요일 ※ 단, 정기휴일이 공휴일 및 대체공휴일과 겹칠 경우에는 개방하며, 그 다음의 첫 번째 비공휴일이 정기휴일임"
     info = parse_closed_days(text)
-    assert info.certainty == ClosureCertainty.CLOSED_ON_WEEKDAYS
-    assert info.closed_weekdays == frozenset({1})
+    assert info.certainty == ClosureCertainty.UNKNOWN
 
 
 def test_seasonal_or_ambiguous_text_is_reported_as_unknown():

@@ -88,6 +88,8 @@ _COMPLEX_PATTERN_MARKERS = (
     "상이",
     "협의",
     "탄력",
+    "단,",
+    "공휴일",
 )
 
 # Matches "매주" followed by one or more weekday characters (optionally

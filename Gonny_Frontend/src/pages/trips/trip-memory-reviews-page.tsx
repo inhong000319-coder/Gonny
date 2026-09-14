@@ -18,7 +18,14 @@ import { Button } from "../../shared/components/ui/button";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
 
 const ratingOptions = [1, 2, 3, 4, 5];
-const timeSlotOptions = ["이른 아침", "아침", "점심", "오후", "저녁", "밤"];
+// rule_planner의 community_feedback.py가 인식하는 값(VALID_TIME_SLOTS)과
+// 반드시 일치해야 한다 - 이 3종 외의 값은 시간대별 학습 신호로 영원히
+// 집계되지 않는다.
+const timeSlotOptions = [
+  { value: "morning", label: "아침" },
+  { value: "afternoon", label: "오후" },
+  { value: "evening", label: "저녁" },
+];
 const companionOptions = [
   { value: "solo", label: "혼자" },
   { value: "friend", label: "친구" },
@@ -43,7 +50,7 @@ function buildReviewForm(city: string): ReviewFormState {
     city,
     place_name: "",
     rating: "5",
-    visit_time_slot: "저녁",
+    visit_time_slot: "evening",
     companion_type: "friend",
     recommended: true,
     would_revisit: true,
@@ -91,7 +98,7 @@ function fromReview(review: PlaceReview): ReviewFormState {
     city: review.city,
     place_name: review.place_name,
     rating: String(review.rating),
-    visit_time_slot: review.visit_time_slot ?? "저녁",
+    visit_time_slot: review.visit_time_slot ?? "evening",
     companion_type: review.companion_type ?? "friend",
     recommended: review.recommended,
     would_revisit: review.would_revisit,
@@ -113,6 +120,10 @@ function formatDateTime(value: string) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(parsed);
+}
+
+function labelTimeSlot(value: string | null | undefined) {
+  return timeSlotOptions.find((option) => option.value === value)?.label ?? "시간대 미기록";
 }
 
 function formatPercent(value: number) {
@@ -652,8 +663,8 @@ export function TripMemoryReviewsPage() {
                     onChange={(event) => setReviewForm((prev) => ({ ...prev, visit_time_slot: event.target.value }))}
                   >
                     {timeSlotOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
+                      <option key={option.value} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
                   </select>
@@ -827,8 +838,8 @@ export function TripMemoryReviewsPage() {
                       onChange={(event) => setDetailForm((prev) => ({ ...prev, visit_time_slot: event.target.value }))}
                     >
                       {timeSlotOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
+                        <option key={option.value} value={option.value}>
+                          {option.label}
                         </option>
                       ))}
                     </select>
@@ -924,7 +935,7 @@ export function TripMemoryReviewsPage() {
                 <div className="memory-summary-strip">
                   <strong>{selectedReview.place_name}</strong>
                   <span>
-                    {selectedReview.visit_time_slot ?? "시간대 미기록"} ·{" "}
+                    {labelTimeSlot(selectedReview.visit_time_slot)} ·{" "}
                     {selectedReview.companion_type ?? "동행 정보 없음"}
                   </span>
                 </div>

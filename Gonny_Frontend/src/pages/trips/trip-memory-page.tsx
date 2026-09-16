@@ -6,13 +6,14 @@ import { useTripCommunityQuery } from "../../features/community/hooks/use-trip-c
 import { useUpdateTripTodoMutation } from "../../features/community/hooks/use-update-trip-todo-mutation";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { Button } from "../../shared/components/ui/button";
+import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
 
 const dayLabels = ["첫째 날", "둘째 날", "셋째 날", "넷째 날", "다섯째 날", "여섯째 날", "일곱째 날"];
 
 export function TripMemoryPage() {
   const { tripId = "101" } = useParams();
-  const { data: tripDetail } = useTripDetailQuery(tripId);
+  const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
   const { data: community, isLoading } = useTripCommunityQuery(tripId);
   const createTripTodoMutation = useCreateTripTodoMutation(tripId);
   const updateTripTodoMutation = useUpdateTripTodoMutation(tripId);
@@ -44,6 +45,18 @@ export function TripMemoryPage() {
   };
 
   if (!tripDetail) {
+    if (isTripDetailError) {
+      return (
+        <AppShell>
+          <LoadErrorCard
+            description="네트워크 상태를 확인하고 다시 시도해 주세요."
+            onRetry={() => refetchTripDetail()}
+            title="여행 정보를 불러오지 못했습니다."
+          />
+        </AppShell>
+      );
+    }
+
     return (
       <AppShell>
         <div className="card">

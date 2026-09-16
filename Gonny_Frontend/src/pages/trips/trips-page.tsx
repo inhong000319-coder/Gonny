@@ -6,12 +6,14 @@ import { TripList } from "../../features/trips/components/trip-list";
 import { useTripsQuery } from "../../features/trips/hooks/use-trips-query";
 import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
+import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 
 export function TripsPage() {
   const queryClient = useQueryClient();
-  const { data: trips = [] } = useTripsQuery();
-  const favoriteCount = trips.filter((trip) => trip.isFavorite).length;
-  const completedCount = trips.filter((trip) => trip.status === "completed").length;
+  const { data: trips, isError, refetch } = useTripsQuery();
+  const tripList = trips ?? [];
+  const favoriteCount = tripList.filter((trip) => trip.isFavorite).length;
+  const completedCount = tripList.filter((trip) => trip.status === "completed").length;
   const favoriteMutation = useMutation({
     mutationFn: ({ tripId, isFavorite }: { tripId: string; isFavorite: boolean }) => updateTripFavorite(tripId, isFavorite),
     onSuccess: async () => queryClient.invalidateQueries({ queryKey: queryKeys.trips }),
@@ -30,17 +32,25 @@ export function TripsPage() {
           </div>
         </div>
         <div className="trip-dashboard-stats">
-          <div><strong>{trips.length}</strong><span>전체 여행</span></div>
+          <div><strong>{tripList.length}</strong><span>전체 여행</span></div>
           <div><strong>{favoriteCount}</strong><span>다시 갈 여행</span></div>
           <div><strong>{completedCount}</strong><span>완료한 기록</span></div>
         </div>
       </section>
       {favoriteMutation.error ? <p className="form-error">즐겨찾기를 변경하지 못했습니다. 잠시 후 다시 시도해 주세요.</p> : null}
-      <TripList
-        pendingTripId={favoriteMutation.isPending ? (favoriteMutation.variables?.tripId ?? null) : null}
-        trips={trips}
-        onToggleFavorite={(tripId, nextFavorite) => favoriteMutation.mutate({ tripId, isFavorite: nextFavorite })}
-      />
+      {isError ? (
+        <LoadErrorCard
+          description="네트워크 상태를 확인하고 다시 시도해 주세요."
+          onRetry={() => refetch()}
+          title="여행 목록을 불러오지 못했습니다."
+        />
+      ) : (
+        <TripList
+          pendingTripId={favoriteMutation.isPending ? (favoriteMutation.variables?.tripId ?? null) : null}
+          trips={tripList}
+          onToggleFavorite={(tripId, nextFavorite) => favoriteMutation.mutate({ tripId, isFavorite: nextFavorite })}
+        />
+      )}
     </AppShell>
   );
 }

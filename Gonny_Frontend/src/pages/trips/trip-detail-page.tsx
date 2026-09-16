@@ -17,6 +17,7 @@ import { ShareLinkModal } from "../../features/share/components/share-link-modal
 import { TripHeader } from "../../features/trips/components/trip-header";
 import { TripSummary } from "../../features/trips/components/trip-summary";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
+import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { mockReportOverview } from "../../shared/mocks/trip-data";
 
 type EditableItineraryItem = {
@@ -39,9 +40,9 @@ const categoryOptions = ["관광", "식사", "카페", "쇼핑", "산책", "휴�
 export function TripDetailPage() {
   const { tripId = "101" } = useParams();
   const queryClient = useQueryClient();
-  const { data: tripDetail } = useTripDetailQuery(tripId);
+  const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
   const { data: budget } = useBudgetSummaryQuery(tripId);
-  const { data: expenses = [] } = useExpensesQuery(tripId);
+  const { data: expenses } = useExpensesQuery(tripId);
   const [editableItems, setEditableItems] = useState<EditableItineraryItem[]>([]);
   const [newItem, setNewItem] = useState<EditableItineraryItem>({
     id: 0,
@@ -122,6 +123,18 @@ export function TripDetailPage() {
   });
 
   if (!tripDetail) {
+    if (isTripDetailError) {
+      return (
+        <AppShell>
+          <LoadErrorCard
+            description="네트워크 상태를 확인하고 다시 시도해 주세요."
+            onRetry={() => refetchTripDetail()}
+            title="여행 정보를 불러오지 못했습니다."
+          />
+        </AppShell>
+      );
+    }
+
     return (
       <AppShell>
         <div className="card">

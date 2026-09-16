@@ -15,6 +15,7 @@ import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-q
 import { apiClient } from "../../shared/api/client";
 import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
+import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
 
 const ratingOptions = [1, 2, 3, 4, 5];
@@ -148,7 +149,7 @@ function applyTagValue(previousValue: string, suggestion: string) {
 export function TripMemoryReviewsPage() {
   const { tripId = "" } = useParams();
   const queryClient = useQueryClient();
-  const { data: tripDetail } = useTripDetailQuery(tripId);
+  const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
   const { data, isLoading } = useTripCommunityQuery(tripId);
   const createReviewMutation = useCreatePlaceReviewMutation(tripId);
 
@@ -487,6 +488,18 @@ export function TripMemoryReviewsPage() {
   };
 
   if (!tripDetail) {
+    if (isTripDetailError) {
+      return (
+        <AppShell>
+          <LoadErrorCard
+            description="네트워크 상태를 확인하고 다시 시도해 주세요."
+            onRetry={() => refetchTripDetail()}
+            title="여행 정보를 불러오지 못했습니다."
+          />
+        </AppShell>
+      );
+    }
+
     return (
       <AppShell>
         <div className="card">

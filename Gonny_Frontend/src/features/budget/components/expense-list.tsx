@@ -1,10 +1,21 @@
 import { Expense } from "../../../shared/types/domain";
 
 type ExpenseListProps = {
-  expenses: Expense[];
+  expenses: Expense[] | undefined;
 };
 
 export function ExpenseList({ expenses }: ExpenseListProps) {
+  if (!expenses) {
+    return (
+      <div className="card">
+        <h2 className="section-title">최근 지출</h2>
+        <p className="section-subtitle" style={{ marginBottom: 0 }}>
+          지출 내역을 준비 중입니다.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="card">
       <h2 className="section-title">최근 지출</h2>

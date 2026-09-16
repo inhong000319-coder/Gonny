@@ -52,3 +52,21 @@ def test_city_policy_neighbor_bonus_only_rewards_linked_areas() -> None:
     assert neighbor_area_bonus(busan_request, "nampo", "haeundae") == 0
     assert neighbor_area_bonus(jeju_request, "east-jeju", "seongsan") > 0
     assert neighbor_area_bonus(jeju_request, "east-jeju", "west-jeju") == 0
+
+
+def test_busan_policy_recognizes_centum_and_dongnae_as_haeundae_neighbors() -> None:
+    # centum (Udong, Haeundae-gu) and dongnae (Dongnae-gu, which borders
+    # Haeundae-gu to its east) were added to the catalog for the onsen
+    # places heosimchung (dongnae) and shinsegae-spaland (centum) - both
+    # must actually be reachable through BUSAN_AREA_NEIGHBORS or their
+    # neighbor_area_bonus silently never applies.
+    busan_request = build_request("busan")
+
+    assert neighbor_area_bonus(busan_request, "haeundae", "centum") > 0
+    assert neighbor_area_bonus(busan_request, "haeundae", "dongnae") > 0
+    assert neighbor_area_bonus(busan_request, "gwangalli", "centum") > 0
+    # centum sits between gwangalli and haeundae, but dongnae (inland) is
+    # not geographically close to the coastal downtown areas.
+    assert neighbor_area_bonus(busan_request, "nampo", "dongnae") == 0
+    assert neighbor_area_bonus(busan_request, "songdo", "dongnae") == 0
+    assert neighbor_area_bonus(busan_request, "gwangalli", "dongnae") == 0

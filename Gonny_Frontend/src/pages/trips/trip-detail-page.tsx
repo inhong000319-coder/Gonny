@@ -121,7 +121,7 @@ export function TripDetailPage() {
     },
   });
 
-  if (!tripDetail || !budget) {
+  if (!tripDetail) {
     return (
       <AppShell>
         <div className="card">

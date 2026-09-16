@@ -1,5 +1,4 @@
 import {
-  BudgetOverview,
   DayPlan,
   Expense,
   ReportOverview,
@@ -73,13 +72,6 @@ export const mockDayPlans: DayPlan[] = [
     ],
   },
 ];
-
-export const mockBudgetOverview: BudgetOverview = {
-  totalBudget: 500000,
-  totalSpent: 175000,
-  remainingBudget: 325000,
-  usagePercent: 35,
-};
 
 export const mockExpenses: Expense[] = [
   {

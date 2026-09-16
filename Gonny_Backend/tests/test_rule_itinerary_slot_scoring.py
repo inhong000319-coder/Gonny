@@ -222,6 +222,50 @@ def test_ml_base_score_favors_real_onsen_places_for_onsen_concept() -> None:
         assert onsen_score > neutral_score, f"{place_id} ({onsen_score}) did not outscore neutral place ({neutral_score})"
 
 
+def test_real_busan_onsen_places_receive_neighbor_area_bonus() -> None:
+    # heosimchung (area=dongnae) and shinsegae-spaland (area=centum) are
+    # real catalog entries added alongside the rest of the Busan onsen
+    # data, but centum/dongnae were initially missing from
+    # BUSAN_AREA_NEIGHBORS - meaning neighbor_area_bonus() could never
+    # apply to either of them. Both must now receive it when the previous
+    # slot's place sits in haeundae, which genuinely borders both.
+    service = RuleItineraryService()
+    repository = DestinationCatalogRepository()
+    places_by_id = {place.id: place for catalog in repository.load_catalogs() for place in catalog.places}
+    request = build_request(city="busan", concepts=["onsen"])
+
+    # No coordinates set, so coordinate_area_transition_bonus() returns
+    # None and slot_score() falls back to the string-based area bonuses
+    # (same_area_continuity_bonus/neighbor_area_bonus) being tested here.
+    haeundae_previous_place = build_place(id="haeundae-anchor", area="haeundae")
+    unrelated_previous_place = build_place(id="nampo-anchor", area="nampo")
+
+    for onsen_id in ("heosimchung", "shinsegae-spaland"):
+        onsen_place = places_by_id[onsen_id]
+
+        neighbor_score = service._slot_score(
+            place=onsen_place,
+            request=request,
+            time_slot="afternoon",
+            day_number=2,
+            preferred_area=None,
+            previous_place=haeundae_previous_place,
+        )
+        unrelated_score = service._slot_score(
+            place=onsen_place,
+            request=request,
+            time_slot="afternoon",
+            day_number=2,
+            preferred_area=None,
+            previous_place=unrelated_previous_place,
+        )
+
+        assert neighbor_score > unrelated_score, (
+            f"{onsen_id} (area={onsen_place.area}) did not score higher when the previous "
+            "place was in haeundae vs. an unrelated area - neighbor_area_bonus likely isn't applying."
+        )
+
+
 def test_ml_base_score_returns_plausible_int_score() -> None:
     # Sanity-checks the model/encoder wiring end to end rather than an exact
     # value, since fitness_score training targets ranged 0-100 but a

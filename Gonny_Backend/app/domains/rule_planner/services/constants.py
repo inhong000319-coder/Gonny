@@ -45,13 +45,25 @@ BUSAN_AREA_ROUTE_ORDER = [
     "nampo",
     "songdo",
     "gwangalli",
+    "centum",
     "haeundae",
+    "dongnae",
 ]
 BUSAN_AREA_NEIGHBORS = {
     "nampo": {"songdo"},
     "songdo": {"nampo"},
-    "gwangalli": {"haeundae"},
-    "haeundae": {"gwangalli"},
+    # gwangalli (Suyeong-gu) and centum (Haeundae-gu, Udong) sit directly
+    # across Suyeong Bay from each other, connected by Gwangan Bridge.
+    "gwangalli": {"haeundae", "centum"},
+    # haeundae borders both centum (same Haeundae-gu, adjoining
+    # neighborhood) and dongnae (Dongnae-gu's eastern border is Haeundae-gu).
+    "haeundae": {"gwangalli", "centum", "dongnae"},
+    "centum": {"haeundae", "gwangalli"},
+    # dongnae is inland (Dongnae-gu), not on the coast like the other 5
+    # areas - its only real geographic adjacency here is haeundae, which
+    # it borders to the east. Not connected to nampo/songdo/gwangalli/
+    # centum, which are all a subway ride further southwest/south.
+    "dongnae": {"haeundae"},
 }
 JEJU_AREA_ROUTE_ORDER = [
     "east-jeju",

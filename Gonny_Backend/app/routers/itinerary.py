@@ -2,12 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.domains.trips.schemas import TripDetailResponse
 from app.domains.trips.services.service import trip_service
 from app.models.itinerary import ItineraryItem
-from app.schemas.generator import ItineraryGenerationRequest
 from app.schemas.itinerary import ItineraryItemCreate, ItineraryItemResponse, ItineraryItemUpdate
-from app.services.itinerary_generator import generate_itinerary as generate_itinerary_service
 
 
 router = APIRouter(prefix="/trips/{trip_id}", tags=["itinerary-items"])
@@ -89,38 +86,3 @@ def list_itinerary_items(trip_id: int, db: Session = Depends(get_db)):
         .all()
     )
     return itinerary_items
-
-
-@router.post("/generate-itinerary", response_model=TripDetailResponse)
-def generate_itinerary(trip_id: int, db: Session = Depends(get_db)):
-    trip = trip_service.get_trip_or_404(db=db, trip_id=trip_id)
-
-    request_data = ItineraryGenerationRequest(
-        destination=trip.destination,
-        start_date=trip.start_date,
-        end_date=trip.end_date,
-        budget=trip.budget,
-        travel_style=trip.travel_style,
-        companion_type=trip.companion_type,
-    )
-
-    generated_result = generate_itinerary_service(request_data)
-
-    db.query(ItineraryItem).filter(ItineraryItem.trip_id == trip_id).delete()
-
-    for day in generated_result.days:
-        for item in day.items:
-            db.add(
-                ItineraryItem(
-                    trip_id=trip_id,
-                    day_number=day.day_number,
-                    time_slot=item.time_slot,
-                    place_name=item.place_name,
-                    category=item.category,
-                    notes=item.notes,
-                )
-            )
-
-    db.commit()
-    db.refresh(trip)
-    return trip

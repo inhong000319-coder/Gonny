@@ -18,7 +18,7 @@ from app.domains.rule_planner.services.accommodation_scoring import (
 )
 from app.schemas.place_catalog import CityPlaceCatalog, PlaceData
 from app.schemas.rule_itinerary import NormalizedRuleRequest, RuleItineraryRequest
-from app.services.rule_itinerary_service import RuleItineraryService
+from app.domains.rule_planner.services.service import RuleItineraryService
 
 # Roughly central Seoul, used as a stand-in "reference point" in tests
 # that don't need a real itinerary to derive one.

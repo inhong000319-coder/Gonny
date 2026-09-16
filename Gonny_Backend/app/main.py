@@ -13,7 +13,6 @@ from sqlalchemy import inspect, text
 from app.core.settings import settings
 from app.db.base import Base
 from app.db.session import engine
-from app.routers.context import router as context_router
 from app.routers.itinerary import router as itinerary_router
 from app.routers.admin_destinations import router as admin_destinations_router
 from app.routers.community import feed_router as community_feed_router
@@ -130,7 +129,6 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-app.include_router(context_router, prefix=settings.api_prefix)
 app.include_router(admin_destinations_router)
 app.include_router(trip_router)
 app.include_router(itinerary_router)

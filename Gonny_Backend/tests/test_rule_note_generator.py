@@ -9,7 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from app.schemas.place_catalog import PlaceData
 from app.schemas.rule_itinerary import NormalizedRuleRequest
-from app.services.rule_note_generator import RuleNoteContext, TemplateRuleNoteGenerator
+from app.domains.rule_planner.services.note_generator import RuleNoteContext, TemplateRuleNoteGenerator
 
 
 def build_place(**overrides) -> PlaceData:

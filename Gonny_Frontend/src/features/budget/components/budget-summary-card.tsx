@@ -2,10 +2,21 @@ import { BudgetOverview } from "../../../shared/types/domain";
 import { BudgetGauge } from "./budget-gauge";
 
 type BudgetSummaryCardProps = {
-  budget: BudgetOverview;
+  budget: BudgetOverview | undefined;
 };
 
 export function BudgetSummaryCard({ budget }: BudgetSummaryCardProps) {
+  if (!budget) {
+    return (
+      <div className="card">
+        <h2 className="section-title">예산</h2>
+        <p className="section-subtitle" style={{ marginBottom: 0 }}>
+          예산 정보를 준비 중입니다.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="card">
       <h2 className="section-title">예산</h2>

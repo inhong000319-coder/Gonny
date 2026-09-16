@@ -2,7 +2,7 @@ from fastapi import HTTPException
 
 from app.providers.place_catalog.local_json_catalog import LocalJsonPlaceCatalogProvider
 from app.schemas.rule_itinerary import RuleItineraryRequest
-from app.services.rule_itinerary_service import RuleItineraryService
+from app.domains.rule_planner.services.service import RuleItineraryService
 
 
 def test_rule_itinerary_request_accepts_activity_concept() -> None:

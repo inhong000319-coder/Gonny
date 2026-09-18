@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -59,6 +61,20 @@ class PlaceData(BaseModel):
     closed_days: str | None = None
     official_url: str | None = None
     booking_hint: str | None = None
+    # Weather-feature (F04) prerequisite data - indoor/outdoor/mixed
+    # classification and whether even light rain warrants surfacing an
+    # indoor alternative (e.g. beaches, observation decks, ride-based
+    # activities). Only the 109 Seoul/Busan/Jeju places have been
+    # classified so far (see local_only/data/indoor_outdoor_classification.csv) -
+    # every other city's catalog (Tokyo, Bangkok, Paris, etc.) has no
+    # classification yet, so this must stay optional rather than required;
+    # setting=None means "not yet classified", not "unknown/mixed".
+    # rain_sensitive_light defaults to False, meaning "only worth
+    # reconsidering once rain is moderate or heavier" - the actual weather
+    # lookup/alternative-recommendation logic is not part of this
+    # data-only pass.
+    setting: Literal["indoor", "outdoor", "mixed"] | None = None
+    rain_sensitive_light: bool = False
     is_active: bool = True
     mvp_tier: str = "standard"
     full_day_recommended: bool = False

@@ -64,7 +64,9 @@
       "longitude": 126.668356772,
       "content_id": "126451",
       "open_hours": "상시 개방\n※ 해수욕장 개장기간에는 변동 가능성 있음",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "woljeongri",
@@ -121,7 +123,9 @@
       "longitude": 126.7982299577,
       "content_id": "1918639",
       "open_hours": "[해변] - 상시 개방 [해수욕장] - 주간 개장 10:00~19:00 - 야간 개장 10:00~20:00",
-      "closed_days": "연중무휴※ 수영 개장 시기는 전화 문의 바람"
+      "closed_days": "연중무휴※ 수영 개장 시기는 전화 문의 바람",
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "seongsan-ilchulbong",
@@ -176,7 +180,9 @@
       "longitude": 126.9415156012,
       "content_id": "126435",
       "open_hours": "- 1~2월, 11~12월 06:00~18:00 (매표마감 17:00)\n- 3~4월, 9~10월 05:00~19:00 (매표마감 18:00)\n- 5~8월 04:30~20:00 (매표마감 19:00)",
-      "closed_days": "매달 첫째 주 월요일※ 공휴일인 경우 다음날 휴무"
+      "closed_days": "매달 첫째 주 월요일※ 공휴일인 경우 다음날 휴무",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "seopjikoji",
@@ -232,7 +238,9 @@
       "longitude": 126.9280674087,
       "content_id": "127813",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "bijarim",
@@ -286,7 +294,9 @@
       "longitude": 126.8074760594,
       "content_id": "126472",
       "open_hours": "09:00~18:00 (입장 마감 17:00)",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "aewol-cafe",
@@ -337,7 +347,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "hallim-park",
@@ -393,7 +405,9 @@
       "longitude": 126.2415557152,
       "content_id": "126455",
       "open_hours": "- 2월~5월 09:00~17:00\n- 6월~8월 09:00~17:30\n- 9월~10월 09:00~17:00\n- 11월~1월 09:00~16:30",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "hyeopjae-beach",
@@ -451,7 +465,9 @@
       "longitude": 126.239441896,
       "content_id": "127490",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "camellia-hill",
@@ -505,7 +521,9 @@
       "longitude": 126.368254661009,
       "content_id": "741109",
       "open_hours": "[하절기/간절기(3월~11월)]- 08:30~18:30- 입장 마감 17:30[동절기(11월~2월)]- 08:30~18:00- 입장 마감 17:00",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "jungmun-saekdal",
@@ -557,7 +575,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "osulloc",
@@ -615,7 +635,9 @@
       "longitude": 126.289392182586,
       "content_id": "2660802",
       "open_hours": "- 하절기 09:00~19:00- 동절기 09:00~18:00※ 기상악화 시 운영시간 변경될 수 있음",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "dongmun-market",
@@ -664,7 +686,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "aqua-planet-jeju",
@@ -725,7 +749,9 @@
       "longitude": 126.9278439065,
       "content_id": "2048059",
       "open_hours": "09:30~18:00 (입장 마감 17:30)",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "jeju-rail-bike",
@@ -786,7 +812,9 @@
       "longitude": 126.8366273253,
       "content_id": "2705373",
       "open_hours": null,
-      "closed_days": null
+      "closed_days": null,
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "arte-museum-jeju",
@@ -844,7 +872,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 서부 일정에 실내 체험과 사진 포인트를 함께 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "jeju-glass-castle",
@@ -901,7 +931,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 제주 서부에서 날씨 영향을 덜 받는 코스를 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "yeomiji-botanical-garden",
@@ -965,7 +997,9 @@
       "longitude": 126.4145703230215,
       "content_id": "126464",
       "open_hours": "개장시간 09:00~18:00(매표마감 09:00~17:30)※ 온실식물원 : 18:00시까지 관람 가능※ 옥외식물원 : 일몰시까지 관람 가능※ 식물원 입장 : 17:30까지 가능※ 동절기(11월~2월) 17:00까지 입장 가능",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "jeju-teddy-bear-museum",
@@ -1020,7 +1054,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서귀포 서부 일정에서 날씨 영향을 덜 받는 가족형 코스를 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "gwangchigi-beach",
@@ -1085,7 +1121,9 @@
       "longitude": 126.924636,
       "content_id": "2564158",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "seongeup-folk-village",
@@ -1143,7 +1181,9 @@
       "longitude": 126.7882138165,
       "content_id": "126471",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "jeju-stone-park",
@@ -1205,7 +1245,9 @@
       "longitude": 126.663992872,
       "content_id": "1544730",
       "open_hours": "09:00~18:00 (매표 마감 17:00)",
-      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 다음의 첫번째 비공휴일에 휴원) / 1월 1일 / 설날 및 추석 당일"
+      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 다음의 첫번째 비공휴일에 휴원) / 1월 1일 / 설날 및 추석 당일",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "haenyeo-museum",
@@ -1266,7 +1308,9 @@
       "longitude": 126.8634366646,
       "content_id": "130857",
       "open_hours": "- 09:00~18:00- 매표 마감 17:00",
-      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음 첫 번째 비공휴일) / 1월 1일 / 설·추석 연휴"
+      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음 첫 번째 비공휴일) / 1월 1일 / 설·추석 연휴",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "snoopy-garden-jeju",
@@ -1329,7 +1373,9 @@
       "longitude": 126.77860501008234,
       "content_id": "2714222",
       "open_hours": "09:00~19:00 (입장마감 : 종료 1시간 전)",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "delmoondo-gimnyeong",
@@ -1389,7 +1435,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 동제주 일정 끝에 너무 바쁘지 않게 쉬어가면서 바다 풍경을 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "9-81-park-jeju",
@@ -1451,7 +1499,9 @@
       "longitude": 126.3665198188,
       "content_id": "2609373",
       "open_hours": null,
-      "closed_days": null
+      "closed_days": null,
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "saebyeol-oreum",
@@ -1513,7 +1563,9 @@
       "longitude": 126.3576,
       "content_id": "572973",
       "open_hours": "상시 개방",
-      "closed_days": null
+      "closed_days": null,
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     }
   ],
   "featured_video": {

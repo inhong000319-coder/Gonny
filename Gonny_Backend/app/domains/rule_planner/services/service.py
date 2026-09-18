@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+from app.core.settings import settings
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
 from app.domains.destination_catalog.services.provider import (
@@ -16,7 +17,9 @@ from app.domains.rule_planner.schemas import (
     RuleItineraryItem,
     RuleItineraryRequest,
     RuleItineraryResponse,
+    RuleWeatherAlert,
 )
+from app.services.external_clients import OpenWeatherClient
 
 from .accommodation_scoring import (
     compute_reference_point,
@@ -45,12 +48,18 @@ from .slot_scoring import (
     style_slot_score,
 )
 from .travel_estimate import estimate_day_total_minutes
+from .weather_alerts import build_weather_alerts
 
 
 class RuleItineraryService:
-    def __init__(self, catalog_provider: PlaceCatalogProvider | None = None):
+    def __init__(
+        self,
+        catalog_provider: PlaceCatalogProvider | None = None,
+        weather_client: OpenWeatherClient | None = None,
+    ):
         self.catalog_provider = catalog_provider or LocalJsonPlaceCatalogProvider()
         self.note_generator = build_rule_note_generator()
+        self.weather_client = weather_client or OpenWeatherClient(settings)
 
     def list_catalog_options(self) -> list[CatalogCityOption]:
         return self.catalog_provider.list_city_options(visible_only=True)
@@ -66,6 +75,7 @@ class RuleItineraryService:
         items, day_place_map, closed_day_exclusions = self._build_items(normalized, city_catalog)
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
         day_duration_warnings = self._build_day_duration_warnings(day_place_map, accommodation_recommendation)
+        weather_alerts = self._build_weather_alerts(normalized, day_place_map, city_catalog)
 
         return RuleItineraryResponse(
             continent=city_catalog.continent,
@@ -82,6 +92,7 @@ class RuleItineraryService:
             items=items,
             day_duration_warnings=day_duration_warnings,
             closed_day_exclusions=closed_day_exclusions,
+            weather_alerts=weather_alerts,
             accommodation_recommendation=accommodation_recommendation,
         )
 
@@ -276,6 +287,19 @@ class RuleItineraryService:
                     )
                 )
         return warnings
+
+    def _build_weather_alerts(
+        self,
+        request: NormalizedRuleRequest,
+        day_place_map: dict[int, list[PlaceData]],
+        city_catalog: CityPlaceCatalog,
+    ) -> list[RuleWeatherAlert]:
+        return build_weather_alerts(
+            request=request,
+            day_place_map=day_place_map,
+            city_catalog=city_catalog,
+            weather_client=self.weather_client,
+        )
 
     def _recommend_accommodation(
         self,

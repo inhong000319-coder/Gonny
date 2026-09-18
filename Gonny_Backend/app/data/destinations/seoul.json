@@ -68,7 +68,9 @@
       "longitude": 126.97672186606306,
       "content_id": "126508",
       "open_hours": "[1월~2월/11월~12월]09:00~17:00 (입장마감 16:00)[3월~5월/9월~10월]09:00~18:00 (입장마감 17:00)[6월~8월] 09:00~18:30 (입장마감 17:30)",
-      "closed_days": "매주 화요일 ※ 단, 정기휴일이 공휴일 및 대체공휴일과 겹칠 경우에는 개방하며, 그 다음의 첫 번째 비공휴일이 정기휴일임"
+      "closed_days": "매주 화요일 ※ 단, 정기휴일이 공휴일 및 대체공휴일과 겹칠 경우에는 개방하며, 그 다음의 첫 번째 비공휴일이 정기휴일임",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "bukchon",
@@ -123,7 +125,9 @@
       "longitude": 126.9867060298,
       "content_id": "126537",
       "open_hours": "10:00~17:00\n※ 방문 제한시간(특별관리지역(레드존) 방문 금지) : 17:00~익일 10:00",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "insadong",
@@ -177,7 +181,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "myeongdong",
@@ -234,7 +240,9 @@
       "longitude": 126.984915005,
       "content_id": "264311",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "namsan-tower",
@@ -286,7 +294,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "hongdae",
@@ -338,7 +348,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "yeouido-hangang",
@@ -397,7 +409,9 @@
       "longitude": 126.9336095794,
       "content_id": "1059479",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "gangnam",
@@ -447,7 +461,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "coex",
@@ -505,7 +521,9 @@
       "longitude": 127.0591541159,
       "content_id": "229901",
       "open_hours": "※ 시설 별로 상이하므로 홈페이지 참조",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "changdeokgung",
@@ -564,7 +582,9 @@
       "longitude": 126.990230631,
       "content_id": "127642",
       "open_hours": "[2월~5월]- 09:00~18:00 (입장 마감 17:00)[6월~8월]- 09:00~18:30 (입장 마감 17:30)[9월~10월]- 09:00~18:00 (입장 마감 17:00)[11월~1월]- 09:00~17:30 (입장 마감 16:30)",
-      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 개방하며, 그 다음 첫 번째 평일에 휴관)"
+      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 개방하며, 그 다음 첫 번째 평일에 휴관)",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "ikseon-dong",
@@ -620,7 +640,9 @@
       "longitude": 126.989775703463,
       "content_id": "2650046",
       "open_hours": "점포 별로 상이함",
-      "closed_days": "점포 별로 상이함"
+      "closed_days": "점포 별로 상이함",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "seongsu",
@@ -678,7 +700,9 @@
       "longitude": 127.0565978295,
       "content_id": "2930901",
       "open_hours": "점포별로 상이함",
-      "closed_days": "점포별로 상이함"
+      "closed_days": "점포별로 상이함",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "mangwon-market",
@@ -733,7 +757,9 @@
       "longitude": 126.9064518912,
       "content_id": "2499807",
       "open_hours": "점포 별로 상이함",
-      "closed_days": "점포 별로 상이함"
+      "closed_days": "점포 별로 상이함",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "yeonnam-forest",
@@ -781,7 +807,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "itaewon",
@@ -833,7 +861,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "apgujeong-rodeo",
@@ -883,7 +913,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "seokchon-lake",
@@ -937,7 +969,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "ddp",
@@ -996,7 +1030,9 @@
       "longitude": 127.0095709797,
       "content_id": "2470006",
       "open_hours": "10:00~20:00\n※ 프로그램에 따라 일부공간 탄력운영",
-      "closed_days": "1월 1일 / 설·추석 당일※ 시설 별로 상이하므로 자세한 사항은 홈페이지 참조"
+      "closed_days": "1월 1일 / 설·추석 당일※ 시설 별로 상이하므로 자세한 사항은 홈페이지 참조",
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "euljiro",
@@ -1046,7 +1082,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "lotte-world-adventure",
@@ -1127,7 +1165,9 @@
       "longitude": 127.0978836077,
       "content_id": "126498",
       "open_hours": "[월요일~목요일/일요일]- 10:00~21:00 (입장 마감 20:00)[금요일~토요일]- 10:00~22:00 (입장 마감 21:00)",
-      "closed_days": "연중무휴※ 기상 상태에 따라 매직아일랜드 일부 어트랙션 중단 가능※ 기상 상태와 별개로 현장 상황에 따라 운휴하거나 중간 점검할 수 있음"
+      "closed_days": "연중무휴※ 기상 상태에 따라 매직아일랜드 일부 어트랙션 중단 가능※ 기상 상태와 별개로 현장 상황에 따라 운휴하거나 중간 점검할 수 있음",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "e-land-hangang-cruise",
@@ -1183,7 +1223,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 서울 풍경을 걷는 대신 물 위에서 한 번 더 느껴보고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "sewoon-plaza",
@@ -1247,7 +1289,9 @@
       "longitude": 126.9952555258,
       "content_id": "2553876",
       "open_hours": "점포별 상이",
-      "closed_days": "점포별 상이"
+      "closed_days": "점포별 상이",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "cheonggyecheon-museum",
@@ -1308,7 +1352,9 @@
       "longitude": 127.03504321042874,
       "content_id": "130658",
       "open_hours": "09:00~18:00 (입장 마감 17:30)",
-      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 정상 운영) / 1월1일"
+      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 정상 운영) / 1월1일",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "seoul-forest",
@@ -1374,7 +1420,9 @@
       "longitude": 127.041798446,
       "content_id": "128611",
       "open_hours": "상시 개방※ 시설별 이용시간 상이하므로 홈페이지 참조",
-      "closed_days": "연중무휴※ 시설별 쉬는날 상이하므로 홈페이지 참조"
+      "closed_days": "연중무휴※ 시설별 쉬는날 상이하므로 홈페이지 참조",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "s-factory",
@@ -1434,7 +1482,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 성수 쪽에서 구경과 사진 포인트를 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "myeongdong-cathedral",
@@ -1499,7 +1549,9 @@
       "longitude": 126.9867758233,
       "content_id": "126804",
       "open_hours": "[사무실]- 화요일~토요일 09:00~19:00- 일요일 07:00~21:00[상설 고해성사]- 월요일 13:00~17:00- 화요일~금요일 11:00~20:00-토요일~일요일 10:00~20:00",
-      "closed_days": "[사무실]매주 월요일"
+      "closed_days": "[사무실]매주 월요일",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "bank-of-korea-money-museum",
@@ -1561,7 +1613,9 @@
       "longitude": 126.979991760891,
       "content_id": "2762802",
       "open_hours": "10:00~17:00 (입장 마감 16:40)",
-      "closed_days": "매주 월요일 / 설·추석 연휴 / 근로자의 날 / 선거일 / 12월 29일~1월 2일"
+      "closed_days": "매주 월요일 / 설·추석 연휴 / 근로자의 날 / 선거일 / 12월 29일~1월 2일",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "heunginjimun-gate",
@@ -1623,7 +1677,9 @@
       "longitude": 127.0097180432,
       "content_id": "126514",
       "open_hours": "상시 개방",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "dongdaemun-shopping-town",
@@ -1684,7 +1740,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 동대문 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "war-memorial-korea",
@@ -1743,7 +1801,9 @@
       "longitude": 126.9784385198,
       "content_id": "130431",
       "open_hours": "09:30~18:00 (입장마감 17:00)",
-      "closed_days": "매주 월요일"
+      "closed_days": "매주 월요일",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "itaewon-antique-furniture-street",
@@ -1799,7 +1859,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 이태원 동선에 분위기와 취향 요소를 조금 더 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "mixed",
+      "rain_sensitive_light": false
     },
     {
       "id": "namsan-cable-car",
@@ -1863,7 +1925,9 @@
       "longitude": 126.984087841,
       "content_id": "128776",
       "open_hours": "10:00~23:00※ 자세한 사항은 전화문의 요망",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "namsan-park-trail",
@@ -1920,7 +1984,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 도심 속에서 조금 더 천천히 호흡을 가다듬고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "seoul-sky",
@@ -1979,7 +2045,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 잠실 쪽에서 서울 스카이라인을 한 번에 담고 싶을 때 만족도가 높은 장소예요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "lotte-world-mall",
@@ -2038,7 +2106,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 잠실 동선에서 쇼핑과 식사를 안정감 있게 묶고 싶을 때 잘 들어가요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "the-hyundai-seoul",
@@ -2104,7 +2174,9 @@
       "longitude": 126.9273012282,
       "content_id": "2708109",
       "open_hours": "- 월요일~목요일 10:30~20:00- 금요일~일요일 10:30~20:30- 식당가 10:30~22:00",
-      "closed_days": "※ 매월 상이하므로 홈페이지 확인 요망"
+      "closed_days": "※ 매월 상이하므로 홈페이지 확인 요망",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "63-square",
@@ -2160,7 +2232,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 여의도 쪽에서 한강 풍경을 조금 더 높고 넓게 보고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": true
     },
     {
       "id": "ktng-sangsangmadang-hongdae",
@@ -2222,7 +2296,9 @@
       "longitude": 126.9210433658,
       "content_id": "397572",
       "open_hours": "11:00~21:00",
-      "closed_days": "※ 프로그램마다 상이하므로 홈페이지 참조"
+      "closed_days": "※ 프로그램마다 상이하므로 홈페이지 참조",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "trick-eye-museum-seoul",
@@ -2281,7 +2357,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 홍대 쪽에서 날씨 영향을 덜 받으면서도 사진과 체험 요소를 챙기고 싶을 때 좋아요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "bongeunsa-temple",
@@ -2345,7 +2423,9 @@
       "longitude": 127.057317,
       "content_id": "126504",
       "open_hours": "09:00~18:00※ 자세한 사항은 전화문의 요망",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "seonjeongneung",
@@ -2403,7 +2483,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 강남 쪽에서 바쁜 도심 일정 사이에 산책과 역사 분위기를 조금 섞고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "euljiro-nogari-alley",
@@ -2465,7 +2547,9 @@
       "longitude": 126.992650057,
       "content_id": "2994062",
       "open_hours": "점포 별로 상이함",
-      "closed_days": "점포 별로 상이함"
+      "closed_days": "점포 별로 상이함",
+      "setting": "outdoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "daelim-sangga",
@@ -2523,7 +2607,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 을지로 일정에 골목 감성만이 아니라 조금 더 실내형 구경거리를 함께 묶고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "lotte-world-aquarium",
@@ -2585,7 +2671,9 @@
       "longitude": 127.1040749597,
       "content_id": "2476731",
       "open_hours": "10:00~20:00 (입장마감 19:00)",
-      "closed_days": null
+      "closed_days": null,
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "seoul-baekje-museum",
@@ -2647,7 +2735,9 @@
       "longitude": 127.1206650789,
       "content_id": "1916296",
       "open_hours": "[하절기(3월~10월)]\n- 평일 09:00~19:00\n- 주말 09:00~19:00\n- 금요일 09:00~21:00\n[동절기(11월~2월)]\n- 평일 09:00~19:00\n- 주말 09:00~18:00\n- 금요일 09:00~21:00\n※ 자세한 사항은 홈페이지 참조",
-      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 정상 운영) / 1월 1일 / 시장이 정하는 휴관일"
+      "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 정상 운영) / 1월 1일 / 시장이 정하는 휴관일",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "rolling-hall",
@@ -2711,7 +2801,9 @@
       "longitude": 126.92011886986354,
       "content_id": "1022243",
       "open_hours": "12:00~22:00※ 공연 별로 상이하므로 전화문의 요망",
-      "closed_days": "연중무휴※ 공연 별로 상이하므로 전화문의 요망"
+      "closed_days": "연중무휴※ 공연 별로 상이하므로 전화문의 요망",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "ak-plaza-hongdae",
@@ -2769,7 +2861,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 홍대 일정에 날씨 영향을 덜 받으면서도 트렌디한 실내 구경거리를 넣고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "hyundai-motorstudio-seoul",
@@ -2829,7 +2923,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 강남 일정에 쇼핑과 식음만이 아니라 조금 더 감각적인 전시형 실내 공간을 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "kmca-seoul",
@@ -2891,7 +2987,9 @@
       "longitude": 127.0391861299,
       "content_id": "2773265",
       "open_hours": "10:00~19:00 (18시 입장 마감)",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "kbs-hall",
@@ -2947,7 +3045,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 여의도 일정에 한강 풍경 말고도 저녁 문화 결을 하나 더 넣고 싶을 때 잘 맞아요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "sema-bunker",
@@ -3004,7 +3104,9 @@
       ],
       "note_templates": [
         "{place_name}은(는) 여의도 일정에 쇼핑과 전망 사이로 조금 더 차분한 전시형 공간을 섞고 싶을 때 잘 어울려요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "woori-sulfur-spa",
@@ -3052,7 +3154,9 @@
       "longitude": 127.0841596279,
       "content_id": "2756589",
       "open_hours": "05:30~21:00",
-      "closed_days": "연중무휴"
+      "closed_days": "연중무휴",
+      "setting": "indoor",
+      "rain_sensitive_light": false
     },
     {
       "id": "bongil-spa-land",
@@ -3098,7 +3202,9 @@
       ],
       "note_templates": [
         "{place_name}에서 동네 목욕탕 같은 편안한 온천을 즐길 수 있어요."
-      ]
+      ],
+      "setting": "indoor",
+      "rain_sensitive_light": false
     }
   ],
   "featured_video": {

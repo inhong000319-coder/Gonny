@@ -21,15 +21,38 @@ def _condition_from_openweather(main_value: str) -> str:
     return "clear"
 
 
+def _precipitation_mm_from_openweather(item: dict) -> float:
+    """3-hour accumulated precipitation (rain + snow, both reported by
+    OpenWeatherMap in mm) for one forecast block. Either field is only
+    present in the response when it's actually raining/snowing, so both
+    default to 0.0 when absent."""
+    rain = item.get("rain")
+    snow = item.get("snow")
+    rain_mm = float(rain.get("3h", 0.0)) if isinstance(rain, dict) else 0.0
+    snow_mm = float(snow.get("3h", 0.0)) if isinstance(snow, dict) else 0.0
+    return rain_mm + snow_mm
+
+
 class OpenWeatherClient:
     """Fetch weather forecasts for F04."""
 
     def __init__(self, settings: Settings) -> None:
         self.api_key = settings.openweather_api_key
 
-    def fetch_5day_forecast(self, destination: str) -> list[dict]:
+    def fetch_5day_forecast(self, destination: str, *, allow_mock_fallback: bool = True) -> list[dict]:
+        """Returns one representative 3-hour block per forecast day
+        (OpenWeatherMap's free 5-day/3-hour endpoint).
+
+        allow_mock_fallback controls what happens when there's no API key
+        or the request fails: by default (True) this falls back to
+        _mock_forecast() so callers always get something to display.
+        Callers that need to tell "no real forecast available" apart from
+        "here's today's actual weather" (e.g. weather_alerts, which must
+        stay silent rather than alert on fabricated data) should pass
+        False - that returns [] instead of mock data on any failure.
+        """
         if not self.api_key:
-            return self._mock_forecast()
+            return self._mock_forecast() if allow_mock_fallback else []
 
         url = "https://api.openweathermap.org/data/2.5/forecast"
         params = {"q": destination, "appid": self.api_key, "units": "metric"}
@@ -39,38 +62,57 @@ class OpenWeatherClient:
                 resp.raise_for_status()
             payload = resp.json()
         except Exception:
-            return self._mock_forecast()
+            return self._mock_forecast() if allow_mock_fallback else []
 
-        result: list[dict] = []
-        seen_dates = set()
+        blocks_by_date: dict = {}
         for item in payload.get("list", []):
             dt_txt = item.get("dt_txt")
             if not dt_txt:
                 continue
-            forecast_date = datetime.fromisoformat(dt_txt).date()
-            if forecast_date in seen_dates:
-                continue
-            seen_dates.add(forecast_date)
+            forecast_dt = datetime.fromisoformat(dt_txt)
+            blocks_by_date.setdefault(forecast_dt.date(), []).append((forecast_dt, item))
+
+        result: list[dict] = []
+        for forecast_date in sorted(blocks_by_date)[:5]:
+            # Pick the 3-hour block closest to midday (12:00) rather than
+            # simply the first one for that date - a day's itinerary
+            # mostly happens in daytime hours, so an 00:00/03:00 reading
+            # is a poor stand-in (e.g. it could show "clear" for a
+            # pre-dawn block while the actual midday forecast is rain).
+            _, item = min(blocks_by_date[forecast_date], key=lambda pair: abs(pair[0].hour - 12))
             result.append(
                 {
                     "forecast_date": forecast_date,
                     "condition": _condition_from_openweather(item["weather"][0]["main"]),
                     "min_temp_c": item["main"]["temp_min"],
                     "max_temp_c": item["main"]["temp_max"],
+                    "precipitation_mm": _precipitation_mm_from_openweather(item),
                 }
             )
-            if len(result) >= 5:
-                break
 
-        return result or self._mock_forecast()
+        if result:
+            return result
+        return self._mock_forecast() if allow_mock_fallback else []
 
     @staticmethod
     def _mock_forecast() -> list[dict]:
         today = datetime.utcnow().date()
         return [
-            {"forecast_date": today, "condition": "clear", "min_temp_c": 9.0, "max_temp_c": 16.0},
-            {"forecast_date": today + timedelta(days=1), "condition": "cloudy", "min_temp_c": 8.0, "max_temp_c": 14.0},
-            {"forecast_date": today + timedelta(days=2), "condition": "rain", "min_temp_c": 7.0, "max_temp_c": 12.0},
+            {"forecast_date": today, "condition": "clear", "min_temp_c": 9.0, "max_temp_c": 16.0, "precipitation_mm": 0.0},
+            {
+                "forecast_date": today + timedelta(days=1),
+                "condition": "cloudy",
+                "min_temp_c": 8.0,
+                "max_temp_c": 14.0,
+                "precipitation_mm": 0.0,
+            },
+            {
+                "forecast_date": today + timedelta(days=2),
+                "condition": "rain",
+                "min_temp_c": 7.0,
+                "max_temp_c": 12.0,
+                "precipitation_mm": 2.0,
+            },
         ]
 
 

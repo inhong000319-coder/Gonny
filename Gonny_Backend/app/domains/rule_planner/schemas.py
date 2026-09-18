@@ -62,6 +62,16 @@ class RuleClosedDayExclusion(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleWeatherAlert(BaseModel):
+    day_number: int
+    condition: Literal["rain", "snow"]
+    precipitation_mm: float
+    affected_place_names: list[str]
+    suggested_alternatives: list[str] = Field(default_factory=list)
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class NormalizedRuleRequest(BaseModel):
     continent: str
     country: str
@@ -93,6 +103,7 @@ class RuleItineraryResponse(BaseModel):
     items: list[RuleItineraryItem]
     day_duration_warnings: list[RuleDayDurationWarning] = Field(default_factory=list)
     closed_day_exclusions: list[RuleClosedDayExclusion] = Field(default_factory=list)
+    weather_alerts: list[RuleWeatherAlert] = Field(default_factory=list)
     accommodation_recommendation: AccommodationData | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)

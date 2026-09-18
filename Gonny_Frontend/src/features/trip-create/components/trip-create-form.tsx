@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { Button } from "../../../shared/components/ui/button";
 import { createItineraryItem } from "../../itinerary/api/create-itinerary-item";
+import { WeatherBanner } from "../../itinerary/components/weather-banner";
 import { createTrip } from "../../trips/api/create-trip";
 import {
   createItineraryDocDownload,
@@ -57,6 +58,14 @@ type RuleClosedDayExclusion = {
   message: string;
 };
 
+type RuleWeatherAlert = {
+  day_number: number;
+  condition: "rain" | "snow";
+  precipitation_mm: number;
+  affected_place_names: string[];
+  suggested_alternatives: string[];
+};
+
 // view(숙소 조망)는 데이터 신뢰도 문제로 이번 범위에서 표시하지 않는다.
 type AccommodationRecommendation = {
   id: string;
@@ -92,6 +101,7 @@ type RuleItineraryResponse = {
   items: RuleItineraryItem[];
   day_duration_warnings: RuleDayDurationWarning[];
   closed_day_exclusions: RuleClosedDayExclusion[];
+  weather_alerts: RuleWeatherAlert[];
   accommodation_recommendation: AccommodationRecommendation | null;
 };
 
@@ -375,6 +385,23 @@ function isRuleClosedDayExclusion(value: unknown): value is RuleClosedDayExclusi
   );
 }
 
+function isRuleWeatherAlert(value: unknown): value is RuleWeatherAlert {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const alert = value as Record<string, unknown>;
+  return (
+    typeof alert.day_number === "number" &&
+    (alert.condition === "rain" || alert.condition === "snow") &&
+    typeof alert.precipitation_mm === "number" &&
+    Array.isArray(alert.affected_place_names) &&
+    alert.affected_place_names.every((name) => typeof name === "string") &&
+    Array.isArray(alert.suggested_alternatives) &&
+    alert.suggested_alternatives.every((name) => typeof name === "string")
+  );
+}
+
 function isAccommodationRecommendation(value: unknown): value is AccommodationRecommendation {
   if (!value || typeof value !== "object") {
     return false;
@@ -436,6 +463,7 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     closed_day_exclusions: Array.isArray(data.closed_day_exclusions)
       ? data.closed_day_exclusions.filter(isRuleClosedDayExclusion)
       : [],
+    weather_alerts: Array.isArray(data.weather_alerts) ? data.weather_alerts.filter(isRuleWeatherAlert) : [],
     accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
       ? data.accommodation_recommendation
       : null,
@@ -1434,6 +1462,11 @@ export function TripCreateForm() {
                       >
                         {exclusion.message}
                       </p>
+                    ))}
+                  {result.weather_alerts
+                    .filter((alert) => alert.day_number === group.day)
+                    .map((alert) => (
+                      <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
                     ))}
                   <div className="planner-day-timeline">
                     {group.items.map((item) => {

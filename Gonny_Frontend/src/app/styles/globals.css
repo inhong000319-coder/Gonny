@@ -735,6 +735,14 @@ select {
   justify-content: flex-end;
 }
 
+.weather-banner-alternatives {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
 .auth-hero {
   display: grid;
   gap: 18px;

@@ -10,7 +10,6 @@ import { useExpensesQuery } from "../../features/budget/hooks/use-expenses-query
 import { createItineraryItem } from "../../features/itinerary/api/create-itinerary-item";
 import { deleteItineraryItem } from "../../features/itinerary/api/delete-itinerary-item";
 import { updateItineraryItem } from "../../features/itinerary/api/update-itinerary-item";
-import { WeatherBanner } from "../../features/itinerary/components/weather-banner";
 import { ReportInsights } from "../../features/report/components/report-insights";
 import { ReportSummary } from "../../features/report/components/report-summary";
 import { ShareLinkModal } from "../../features/share/components/share-link-modal";
@@ -156,7 +155,6 @@ export function TripDetailPage() {
 
       <div className="page-grid grid-two">
         <div className="stack">
-          <WeatherBanner />
           <TripSummary
             budgetLabel={tripDetail.overview.budgetLabel}
             companionLabel={tripDetail.overview.companionLabel}

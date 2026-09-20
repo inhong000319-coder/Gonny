@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+import calendar
 import re
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 import httpx
 
@@ -284,58 +285,107 @@ def _collapse_whitespace(text: str) -> str:
 
 
 class TourApiClient:
-    """Fetch seasonal destination feed for F15, and place coordinates."""
+    """Fetch festivals/popular destinations for the seasonal feed (F15),
+    lodging data, and place coordinates."""
 
     def __init__(self, settings: Settings) -> None:
         self.api_key = settings.tour_api_key
         self.base_url = settings.tour_api_base_url.rstrip("/")
 
-    def fetch_season_feed(self, keyword: str | None = None) -> list[dict]:
-        """Fetch a compact list from TourAPI if key is available.
+    def fetch_festivals_this_month(self, city: str, num_rows: int = 100) -> list[dict] | None:
+        """TourAPI's festival-specific endpoint (searchFestival2), for the
+        current calendar month via eventStartDate/eventEndDate (TourAPI
+        returns festivals whose date range overlaps this window), then
+        filtered to one of our supported cities by addr1 prefix.
 
-        This uses areaBasedList1 for stable response shape and returns a reduced model.
+        Deliberately does NOT use the areaCode request param - verified
+        live that searchFestival2 has the exact same silent-exclusion bug
+        already documented for searchKeyword2 (see
+        TOUR_API_ADDRESS_PREFIX_BY_CITY): areaCode=1/6/39 (seoul/busan/
+        jeju) each returned totalCount=0 for 2026-09, while the
+        unfiltered national response for the same month contained 45 real
+        Seoul festivals alone (cat1/areacode both empty on those
+        records). Fetching nationally and filtering by addr1 ourselves
+        avoids silently losing real festivals in our own cities.
+
+        Returns None on any request/response failure - same best-effort
+        contract as fetch_lodging_candidates, so callers should treat that
+        as "no festivals" rather than an error.
         """
+        address_prefix = TOUR_API_ADDRESS_PREFIX_BY_CITY.get(city)
+        if not self.api_key or address_prefix is None:
+            return None
 
-        if not self.api_key:
-            return []
+        today = date.today()
+        month_start = today.replace(day=1)
+        last_day = calendar.monthrange(today.year, today.month)[1]
+        month_end = today.replace(day=last_day)
 
-        url = f"{self.base_url}/areaBasedList1"
+        url = f"{self.base_url}/searchFestival2"
         params = {
             "serviceKey": self.api_key,
-            "numOfRows": 6,
+            "numOfRows": num_rows,
             "pageNo": 1,
             "MobileOS": "ETC",
             "MobileApp": "Gonny",
             "_type": "json",
             "arrange": "P",
-            "contentTypeId": 12,  # tourist spots
+            "eventStartDate": month_start.strftime("%Y%m%d"),
+            "eventEndDate": month_end.strftime("%Y%m%d"),
         }
-        if keyword:
-            params["keyword"] = keyword
-
         try:
             with httpx.Client(timeout=8.0) as client:
                 resp = client.get(url, params=params)
                 resp.raise_for_status()
-            body = resp.json()["response"]["body"]["items"]["item"]
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
         except Exception:
-            return []
+            return None
 
-        if not isinstance(body, list):
-            body = [body]
+        if not isinstance(items, list):
+            items = [items]
+        return [item for item in items if str(item.get("addr1", "")).startswith(address_prefix)]
 
-        rows: list[dict] = []
-        for item in body[:6]:
-            rows.append(
-                {
-                    "title": item.get("title", "Tour spot"),
-                    "region": item.get("addr1", "Korea"),
-                    "reason": "Live feed from TourAPI popularity ranking",
-                    "tags": ["tour", "live"],
-                    "source": "TourAPI",
-                }
-            )
-        return rows
+    def fetch_popular_destinations(self, city: str, num_rows: int = 6) -> list[dict] | None:
+        """Browse-by-region listing of contentTypeId=12 (관광지) for one of
+        our supported cities via areaBasedList2, ranked by popularity
+        (arrange="P") - replaces the old fetch_season_feed, which used
+        areaBasedList1 with no area restriction and could surface any
+        city nationwide. Returns None on any request/response failure -
+        same contract as fetch_lodging_candidates.
+        """
+        area_code = TOUR_API_AREA_CODE_BY_CITY.get(city)
+        if not self.api_key or area_code is None:
+            return None
+
+        url = f"{self.base_url}/areaBasedList2"
+        params = {
+            "serviceKey": self.api_key,
+            "numOfRows": num_rows,
+            "pageNo": 1,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentTypeId": "12",
+            "areaCode": area_code,
+            "arrange": "P",
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+                resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None
+
+        return items if isinstance(items, list) else [items]
 
     def fetch_lodging_candidates(self, city: str, num_rows: int = 50) -> list[dict] | None:
         """Browse-by-region listing of contentTypeId=32 (숙박) items for a

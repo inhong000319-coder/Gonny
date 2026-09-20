@@ -1,4 +1,8 @@
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { PublicLayout } from "../../app/layouts/public-layout";
+import { SharedItineraryItem } from "../../features/share/api/get-shared-trip";
+import { useSharedTripQuery } from "../../features/share/hooks/use-shared-trip-query";
 
 function GlobeIcon() {
   return (
@@ -9,7 +13,57 @@ function GlobeIcon() {
   );
 }
 
+const timeSlotLabelKo: Record<string, string> = {
+  morning: "오전",
+  afternoon: "오후",
+  evening: "저녁",
+};
+
+function labelTimeSlot(value: string) {
+  return timeSlotLabelKo[value] ?? value;
+}
+
+function groupByDay(items: SharedItineraryItem[]) {
+  return items.reduce<Array<{ day: number; items: SharedItineraryItem[] }>>((groups, item) => {
+    const current = groups.find((group) => group.day === item.day_number);
+    if (current) {
+      current.items.push(item);
+      return groups;
+    }
+
+    groups.push({ day: item.day_number, items: [item] });
+    return groups;
+  }, []).sort((left, right) => left.day - right.day);
+}
+
 export function SharedTripPage() {
+  const { token = "" } = useParams();
+  const { data, isLoading, isError } = useSharedTripQuery(token);
+  const groupedItems = useMemo(() => groupByDay(data?.itinerary_items ?? []), [data]);
+
+  if (isLoading) {
+    return (
+      <PublicLayout>
+        <div className="card">
+          <h2 className="section-title">공유된 일정을 불러오는 중이에요.</h2>
+        </div>
+      </PublicLayout>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <PublicLayout>
+        <div className="card">
+          <h2 className="section-title">링크가 만료되었거나 존재하지 않습니다.</h2>
+          <p className="section-subtitle" style={{ marginBottom: 0 }}>
+            공유한 분에게 새 링크를 요청해 주세요.
+          </p>
+        </div>
+      </PublicLayout>
+    );
+  }
+
   return (
     <PublicLayout>
       <section className="page-hero panel panel-gradient">
@@ -17,10 +71,10 @@ export function SharedTripPage() {
           <div>
             <span className="section-kicker">Shared itinerary</span>
             <h1 className="section-title" style={{ fontSize: "2.2rem", margin: "8px 0" }}>
-              Jeju 2N3D
+              {data.title}
             </h1>
             <p className="section-subtitle" style={{ marginBottom: 0 }}>
-              A clean public-facing view for people opening the plan from a shared link.
+              {data.destination} · {data.start_date} ~ {data.end_date}
             </p>
           </div>
           <div className="landing-feature-icon-wrap">
@@ -30,11 +84,24 @@ export function SharedTripPage() {
       </section>
 
       <div className="card card-tinted stack">
-        <div className="timeline">
-          <div className="timeline-item timeline-item-accent">09:00 Seongsan Ilchulbong</div>
-          <div className="timeline-item timeline-item-accent">11:30 Black Pork Lunch</div>
-          <div className="timeline-item timeline-item-accent">14:00 Cafe Stop</div>
-        </div>
+        {groupedItems.length > 0 ? (
+          groupedItems.map((group) => (
+            <div className="stack" key={group.day}>
+              <strong className="trip-card-title">DAY {group.day}</strong>
+              <div className="timeline">
+                {group.items.map((item) => (
+                  <div className="timeline-item timeline-item-accent" key={item.id}>
+                    {labelTimeSlot(item.time_slot)} · {item.place_name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="section-subtitle" style={{ marginBottom: 0 }}>
+            아직 등록된 일정이 없어요.
+          </p>
+        )}
       </div>
     </PublicLayout>
   );

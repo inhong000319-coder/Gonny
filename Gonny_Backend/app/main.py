@@ -20,6 +20,7 @@ from app.routers.community import router as community_router
 from app.routers.rule_itinerary import router as rule_itinerary_router
 from app.routers.seasonal_feed import router as seasonal_feed_router
 from app.routers.trip import router as trip_router
+from app.routers.trip import share_router as trip_share_router
 import app.models.itinerary
 import app.models.place_review
 import app.models.trip
@@ -41,6 +42,11 @@ async def lifespan(app: FastAPI):
                 connection.execute(text("ALTER TABLE trips ADD COLUMN title VARCHAR NOT NULL DEFAULT '새 여행'"))
             if "is_favorite" not in trip_columns:
                 connection.execute(text("ALTER TABLE trips ADD COLUMN is_favorite BOOLEAN NOT NULL DEFAULT FALSE"))
+            if "share_token" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN share_token VARCHAR"))
+                connection.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_trips_share_token ON trips (share_token)"))
+            if "share_expires_at" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN share_expires_at TIMESTAMPTZ"))
             trip_todo_columns = {column["name"] for column in inspector.get_columns("trip_todos")} if "trip_todos" in inspector.get_table_names() else set()
             if "day_number" not in trip_todo_columns:
                 connection.execute(text("ALTER TABLE trip_todos ADD COLUMN day_number INTEGER NOT NULL DEFAULT 1"))
@@ -132,6 +138,7 @@ def health() -> dict[str, str]:
 
 app.include_router(admin_destinations_router)
 app.include_router(trip_router)
+app.include_router(trip_share_router)
 app.include_router(itinerary_router)
 app.include_router(community_router)
 app.include_router(community_feed_router)

@@ -30,6 +30,10 @@ class Settings:
     openai_model: str = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
     rule_note_generation_mode: str = os.getenv("RULE_NOTE_GENERATION_MODE", "template")
     rule_note_model: str = os.getenv("RULE_NOTE_MODEL", "")
+    # Used to build the public share_url returned by POST /trips/{id}/share
+    # (e.g. "{frontend_base_url}/share/{token}") - the backend has no other
+    # reason to know the frontend's origin.
+    frontend_base_url: str = os.getenv("FRONTEND_BASE_URL", "http://localhost:5173")
 
 
 settings = Settings()

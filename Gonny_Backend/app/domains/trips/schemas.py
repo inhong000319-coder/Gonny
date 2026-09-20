@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -36,3 +37,13 @@ class TripDetailResponse(TripResponse):
 
 class TripFavoriteUpdate(BaseModel):
     is_favorite: bool
+
+
+class ShareLinkCreateRequest(BaseModel):
+    expires_in: Literal["1d", "7d", "unlimited"] = "7d"
+
+
+class ShareLinkResponse(BaseModel):
+    share_url: str
+    token: str
+    expires_at: datetime | None

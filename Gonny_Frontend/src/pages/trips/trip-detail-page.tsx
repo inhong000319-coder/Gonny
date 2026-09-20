@@ -166,7 +166,7 @@ export function TripDetailPage() {
           <BudgetSummaryCard budget={budget} />
           <ExpenseList expenses={expenses} />
           <AddExpenseForm tripId={tripId} />
-          <ShareLinkModal />
+          <ShareLinkModal tripId={tripId} />
         </div>
       </div>
 

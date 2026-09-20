@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
 import { queryKeys } from "../../shared/api/query-keys";
+import { AddExpenseForm } from "../../features/budget/components/add-expense-form";
 import { BudgetSummaryCard } from "../../features/budget/components/budget-summary-card";
 import { ExpenseList } from "../../features/budget/components/expense-list";
 import { useBudgetSummaryQuery } from "../../features/budget/hooks/use-budget-summary-query";
@@ -164,6 +165,7 @@ export function TripDetailPage() {
         <div className="stack">
           <BudgetSummaryCard budget={budget} />
           <ExpenseList expenses={expenses} />
+          <AddExpenseForm tripId={tripId} />
           <ShareLinkModal />
         </div>
       </div>

@@ -7,4 +7,5 @@ export const queryKeys = {
   weather: (destination: string) => ["weather", destination] as const,
   expenses: (tripId: string) => ["expenses", tripId] as const,
   report: (tripId: string) => ["report", tripId] as const,
+  seasonalFeed: ["seasonal-feed"] as const,
 };

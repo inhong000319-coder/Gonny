@@ -1,4 +1,6 @@
 import { AppShell } from "../../app/layouts/app-shell";
+import { useSeasonalFeedQuery } from "../../features/inspiration/hooks/use-seasonal-feed-query";
+import { Season } from "../../features/inspiration/api/get-seasonal-feed";
 
 function FlowerIcon() {
   return (
@@ -34,28 +36,27 @@ function CurrencyIcon() {
   );
 }
 
-const cards = [
-  {
-    icon: <FlowerIcon />,
-    title: "시즌 추천",
-    copy: "봄꽃, 여름 바다, 가을 단풍처럼 시기에 맞는 여행지를 더 직관적으로 보여줍니다.",
-    accent: "cyan",
-  },
-  {
-    icon: <TicketIcon />,
-    title: "축제 캘린더",
-    copy: "지역 이벤트를 단순 정보가 아니라 바로 일정 생성으로 이어지는 진입점으로 활용합니다.",
-    accent: "violet",
-  },
-  {
-    icon: <CurrencyIcon />,
-    title: "실시간 환율",
-    copy: "해외 확장 시 유용하고, 탐색 화면에서도 신뢰감을 더해주는 정보 카드 역할을 합니다.",
-    accent: "amber",
-  },
-];
+const seasonLabelKo: Record<Season, string> = {
+  spring: "봄",
+  summer: "여름",
+  autumn: "가을",
+  winter: "겨울",
+};
+
+const cityLabelKo: Record<string, string> = {
+  seoul: "서울",
+  busan: "부산",
+  jeju: "제주",
+};
+
+function toCityLabel(city: string) {
+  return cityLabelKo[city] ?? city;
+}
 
 export function InspirationPage() {
+  const seasonalFeedQuery = useSeasonalFeedQuery();
+  const seasonalFeed = seasonalFeedQuery.data;
+
   return (
     <AppShell>
       <section className="page-hero panel panel-gradient">
@@ -69,13 +70,68 @@ export function InspirationPage() {
       </section>
 
       <div className="page-grid inspiration-grid">
-        {cards.map((card) => (
-          <article className={`feature-panel feature-panel-${card.accent}`} key={card.title}>
-            <div className="landing-feature-icon-wrap">{card.icon}</div>
-            <h2>{card.title}</h2>
-            <p>{card.copy}</p>
-          </article>
-        ))}
+        <article className="feature-panel feature-panel-cyan">
+          <div className="landing-feature-icon-wrap">
+            <FlowerIcon />
+          </div>
+          <h2>시즌 추천</h2>
+          {seasonalFeedQuery.isLoading ? (
+            <p>시즌 정보를 불러오는 중이에요.</p>
+          ) : seasonalFeedQuery.isError || !seasonalFeed ? (
+            <p>지금은 시즌 추천 정보를 불러오지 못했어요.</p>
+          ) : (
+            <>
+              <p>
+                지금은 {seasonLabelKo[seasonalFeed.season]}이에요. 서울·부산·제주에서 지금 인기 있는 여행지를
+                모아봤어요.
+              </p>
+              {seasonalFeed.popular_destinations.length > 0 ? (
+                <div className="chip-list">
+                  {seasonalFeed.popular_destinations.slice(0, 8).map((destination, index) => (
+                    <span className="chip" key={`${destination.city}-${destination.title}-${index}`}>
+                      {toCityLabel(destination.city)} · {destination.title}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p>지금 보여드릴 인기 여행지가 아직 없어요.</p>
+              )}
+            </>
+          )}
+        </article>
+
+        <article className="feature-panel feature-panel-violet">
+          <div className="landing-feature-icon-wrap">
+            <TicketIcon />
+          </div>
+          <h2>축제 캘린더</h2>
+          {seasonalFeedQuery.isLoading ? (
+            <p>축제 정보를 불러오는 중이에요.</p>
+          ) : seasonalFeedQuery.isError || !seasonalFeed ? (
+            <p>지금은 축제 정보를 불러오지 못했어요.</p>
+          ) : seasonalFeed.festivals.length > 0 ? (
+            <div className="stack" style={{ gap: 8 }}>
+              {seasonalFeed.festivals.slice(0, 5).map((festival, index) => (
+                <div key={`${festival.city}-${festival.title}-${index}`}>
+                  <strong style={{ display: "block" }}>{festival.title}</strong>
+                  <span style={{ color: "#61728d", fontSize: "0.85rem" }}>
+                    {toCityLabel(festival.city)} · {festival.start_date} ~ {festival.end_date}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>서울·부산·제주에 이번 달 등록된 축제 정보가 아직 없어요.</p>
+          )}
+        </article>
+
+        <article className="feature-panel feature-panel-amber">
+          <div className="landing-feature-icon-wrap">
+            <CurrencyIcon />
+          </div>
+          <h2>실시간 환율</h2>
+          <p>해외 확장 시 유용하고, 탐색 화면에서도 신뢰감을 더해주는 정보 카드 역할을 합니다.</p>
+        </article>
       </div>
     </AppShell>
   );

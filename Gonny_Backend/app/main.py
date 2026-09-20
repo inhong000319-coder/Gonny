@@ -18,6 +18,7 @@ from app.routers.admin_destinations import router as admin_destinations_router
 from app.routers.community import feed_router as community_feed_router
 from app.routers.community import router as community_router
 from app.routers.rule_itinerary import router as rule_itinerary_router
+from app.routers.seasonal_feed import router as seasonal_feed_router
 from app.routers.trip import router as trip_router
 import app.models.itinerary
 import app.models.place_review
@@ -135,3 +136,4 @@ app.include_router(itinerary_router)
 app.include_router(community_router)
 app.include_router(community_feed_router)
 app.include_router(rule_itinerary_router)
+app.include_router(seasonal_feed_router)

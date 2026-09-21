@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import io
 import json
 import re
 import secrets
@@ -7,6 +8,13 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from fastapi import HTTPException, status
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.units import mm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -34,9 +42,19 @@ SHARE_TOKEN_BYTES = 32
 
 DESTINATIONS_DIR = Path(__file__).resolve().parents[4] / "app" / "data" / "destinations"
 TIME_SLOT_ORDER = {"morning": 0, "afternoon": 1, "evening": 2}
+TIME_SLOT_LABELS = {"morning": "오전", "afternoon": "오후", "evening": "저녁"}
 # Fewer than this many matched-and-adjacent legs isn't enough to call a
 # total distance meaningful - see _compute_trip_distance().
 MIN_DISTANCE_SEGMENTS = 2
+
+# ReportLab's built-in fonts (Helvetica etc.) have no Korean glyphs and
+# silently render Korean text as blank/garbled boxes. HYSMyeongJo-Medium is
+# one of ReportLab's bundled CID fonts - no font file to install, works
+# offline. Registered once at import time; registerFont() is safe to call
+# more than once (later calls just re-register the same font under the
+# same name), but there's no need to repeat it per PDF build.
+PDF_FONT_NAME = "HYSMyeongJo-Medium"
+pdfmetrics.registerFont(UnicodeCIDFont(PDF_FONT_NAME))
 
 
 def _compute_share_expires_at(expires_in: str, *, now: datetime | None = None) -> datetime | None:
@@ -139,6 +157,17 @@ def _compute_trip_distance(
     return round(total_km, 1), matched_place_count, total_place_count
 
 
+def _compute_category_breakdown(expenses: list[Expense]) -> list[TripCategoryBreakdownItem]:
+    """Shared by get_trip_report() and the PDF export so both surfaces
+    agree on the same numbers from the same expense rows."""
+    category_totals: dict[str, int] = {}
+    for expense in expenses:
+        category_totals[expense.category] = category_totals.get(expense.category, 0) + expense.amount_krw
+    return [
+        TripCategoryBreakdownItem(category=category, amount_krw=amount) for category, amount in category_totals.items()
+    ]
+
+
 def _build_report_insights(
     *,
     budget: int,
@@ -168,6 +197,113 @@ def _build_report_insights(
         insights.append(f"'{top_category.category}' 항목에 가장 많이 지출했어요 ({top_category.amount_krw:,}원).")
 
     return insights
+
+
+def _build_trip_pdf_bytes(
+    *,
+    trip: Trip,
+    itinerary_items: list[ItineraryItem],
+    total_spent: int,
+    category_breakdown: list[TripCategoryBreakdownItem],
+) -> bytes:
+    """Renders the trip's saved itinerary + budget summary to an A4 PDF.
+
+    Only fields that actually exist on Trip/ItineraryItem are used - no
+    address, operating hours, contact info, or accommodation, since none
+    of that is stored anywhere yet (see this feature's scope note).
+    """
+    title_style = ParagraphStyle("Title", fontName=PDF_FONT_NAME, fontSize=20, leading=26)
+    meta_style = ParagraphStyle("Meta", fontName=PDF_FONT_NAME, fontSize=10, textColor=colors.grey, leading=14)
+    heading_style = ParagraphStyle(
+        "Heading", fontName=PDF_FONT_NAME, fontSize=14, leading=20, spaceBefore=14, spaceAfter=6
+    )
+    day_style = ParagraphStyle("Day", fontName=PDF_FONT_NAME, fontSize=12, leading=16, spaceBefore=8, spaceAfter=4)
+    body_style = ParagraphStyle("Body", fontName=PDF_FONT_NAME, fontSize=10, leading=14)
+
+    elements = [
+        Paragraph(trip.title, title_style),
+        Paragraph(f"{trip.destination} · {trip.start_date.isoformat()} ~ {trip.end_date.isoformat()}", meta_style),
+        Spacer(1, 10 * mm),
+        Paragraph("일정", heading_style),
+    ]
+
+    if not itinerary_items:
+        elements.append(Paragraph("저장된 일정이 없습니다.", body_style))
+    else:
+        items_by_day: dict[int, list[ItineraryItem]] = {}
+        for item in itinerary_items:
+            items_by_day.setdefault(item.day_number, []).append(item)
+
+        for day_number in sorted(items_by_day):
+            elements.append(Paragraph(f"Day {day_number}", day_style))
+            day_items = sorted(items_by_day[day_number], key=lambda item: TIME_SLOT_ORDER.get(item.time_slot, 3))
+            rows = [["시간대", "장소", "카테고리"]] + [
+                [TIME_SLOT_LABELS.get(item.time_slot, item.time_slot), item.place_name, item.category]
+                for item in day_items
+            ]
+            table = Table(rows, colWidths=[25 * mm, 90 * mm, 35 * mm])
+            table.setStyle(
+                TableStyle(
+                    [
+                        ("FONTNAME", (0, 0), (-1, -1), PDF_FONT_NAME),
+                        ("FONTSIZE", (0, 0), (-1, -1), 10),
+                        ("BACKGROUND", (0, 0), (-1, 0), colors.whitesmoke),
+                        ("GRID", (0, 0), (-1, -1), 0.5, colors.lightgrey),
+                        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ]
+                )
+            )
+            elements.append(table)
+
+    elements.append(Paragraph("예산 요약", heading_style))
+    budget_rows = [["총 예산", f"{trip.budget:,}원"], ["총 지출", f"{total_spent:,}원"]]
+    if trip.budget:
+        diff_pct = round(((total_spent - trip.budget) / trip.budget) * 100, 1)
+        budget_rows.append(["예산 대비", f"{diff_pct:+.1f}%"])
+    budget_table = Table(budget_rows, colWidths=[40 * mm, 60 * mm])
+    budget_table.setStyle(
+        TableStyle(
+            [
+                ("FONTNAME", (0, 0), (-1, -1), PDF_FONT_NAME),
+                ("FONTSIZE", (0, 0), (-1, -1), 10),
+                ("GRID", (0, 0), (-1, -1), 0.5, colors.lightgrey),
+            ]
+        )
+    )
+    elements.append(budget_table)
+
+    if category_breakdown:
+        elements.append(Spacer(1, 4 * mm))
+        category_rows = [["카테고리", "금액"]] + [
+            [item.category, f"{item.amount_krw:,}원"] for item in category_breakdown
+        ]
+        category_table = Table(category_rows, colWidths=[40 * mm, 60 * mm])
+        category_table.setStyle(
+            TableStyle(
+                [
+                    ("FONTNAME", (0, 0), (-1, -1), PDF_FONT_NAME),
+                    ("FONTSIZE", (0, 0), (-1, -1), 10),
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.whitesmoke),
+                    ("GRID", (0, 0), (-1, -1), 0.5, colors.lightgrey),
+                ]
+            )
+        )
+        elements.append(category_table)
+    else:
+        elements.append(Paragraph("기록된 지출이 없습니다.", body_style))
+
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        topMargin=20 * mm,
+        bottomMargin=20 * mm,
+        leftMargin=20 * mm,
+        rightMargin=20 * mm,
+        title=trip.title,
+    )
+    doc.build(elements)
+    return buffer.getvalue()
 
 
 class TripService:
@@ -331,13 +467,7 @@ class TripService:
 
         expenses = db.query(Expense).filter(Expense.trip_id == trip_id).all()
         total_spent = sum(e.amount_krw for e in expenses)
-        category_totals: dict[str, int] = {}
-        for expense in expenses:
-            category_totals[expense.category] = category_totals.get(expense.category, 0) + expense.amount_krw
-        category_breakdown = [
-            TripCategoryBreakdownItem(category=category, amount_krw=amount)
-            for category, amount in category_totals.items()
-        ]
+        category_breakdown = _compute_category_breakdown(expenses)
 
         budget_diff_pct = round(((total_spent - trip.budget) / trip.budget) * 100, 1) if trip.budget else None
 
@@ -371,6 +501,30 @@ class TripService:
             insights=insights,
             satisfaction_rating=trip.satisfaction_rating,
             retrospective_note=trip.retrospective_note,
+        )
+
+    def generate_trip_pdf(self, *, db: Session, trip_id: int) -> bytes:
+        """A4 itinerary + budget PDF, built from whatever's actually saved
+        right now - unlike get_trip_report(), this isn't gated on the trip
+        having ended, since a printable plan is just as useful beforehand."""
+        trip = self.get_trip_or_404(db=db, trip_id=trip_id)
+
+        expenses = db.query(Expense).filter(Expense.trip_id == trip_id).all()
+        total_spent = sum(e.amount_krw for e in expenses)
+        category_breakdown = _compute_category_breakdown(expenses)
+
+        itinerary_items = (
+            db.query(ItineraryItem)
+            .filter(ItineraryItem.trip_id == trip_id)
+            .order_by(ItineraryItem.day_number.asc(), ItineraryItem.id.asc())
+            .all()
+        )
+
+        return _build_trip_pdf_bytes(
+            trip=trip,
+            itinerary_items=itinerary_items,
+            total_spent=total_spent,
+            category_breakdown=category_breakdown,
         )
 
 

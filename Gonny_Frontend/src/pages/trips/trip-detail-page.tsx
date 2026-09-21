@@ -11,6 +11,7 @@ import { useExpensesQuery } from "../../features/budget/hooks/use-expenses-query
 import { createItineraryItem } from "../../features/itinerary/api/create-itinerary-item";
 import { deleteItineraryItem } from "../../features/itinerary/api/delete-itinerary-item";
 import { updateItineraryItem } from "../../features/itinerary/api/update-itinerary-item";
+import { downloadTripPdf } from "../../features/report/api/download-trip-pdf";
 import { ReportInsights } from "../../features/report/components/report-insights";
 import { ReportSummary } from "../../features/report/components/report-summary";
 import { useTripReportQuery } from "../../features/report/hooks/use-trip-report-query";
@@ -46,6 +47,8 @@ export function TripDetailPage() {
   const { data: report, isLoading: isReportLoading, isError: isReportError, refetch: refetchReport } =
     useTripReportQuery(tripId);
   const [editableItems, setEditableItems] = useState<EditableItineraryItem[]>([]);
+  const [isPdfDownloading, setIsPdfDownloading] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
   const [newItem, setNewItem] = useState<EditableItineraryItem>({
     id: 0,
     day_number: 1,
@@ -124,6 +127,18 @@ export function TripDetailPage() {
     },
   });
 
+  const handleDownloadPdf = async () => {
+    setIsPdfDownloading(true);
+    setPdfError(null);
+    try {
+      await downloadTripPdf(tripId);
+    } catch {
+      setPdfError("PDF 다운로드에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setIsPdfDownloading(false);
+    }
+  };
+
   if (!tripDetail) {
     if (isTripDetailError) {
       return (
@@ -150,11 +165,24 @@ export function TripDetailPage() {
   return (
     <AppShell>
       <TripHeader trip={tripDetail.overview} />
-      <div className="row" style={{ marginBottom: 16, justifyContent: "flex-end" }}>
+      <div className="row" style={{ marginBottom: 16, justifyContent: "flex-end", gap: 8 }}>
+        <button
+          className="button secondary"
+          disabled={isPdfDownloading}
+          onClick={handleDownloadPdf}
+          type="button"
+        >
+          {isPdfDownloading ? "PDF 생성 중..." : "PDF 다운로드"}
+        </button>
         <Link className="admin-primary-link" to={`/trips/${tripId}/memory`}>
           여행 기록 관리로 이동
         </Link>
       </div>
+      {pdfError ? (
+        <p className="section-subtitle" style={{ color: "#dc2626", marginTop: -8, marginBottom: 16, textAlign: "right" }}>
+          {pdfError}
+        </p>
+      ) : null}
 
       <div className="page-grid grid-two">
         <div className="stack">

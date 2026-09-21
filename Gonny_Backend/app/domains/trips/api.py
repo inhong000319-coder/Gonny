@@ -1,19 +1,40 @@
+from typing import Generic, TypeVar
+
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.domains.trips.schemas import (
+    ExpenseCreate,
+    ExpenseCreateResponse,
+    ExpenseListData,
+    ExpenseSummaryData,
     ShareLinkCreateRequest,
     ShareLinkResponse,
     TripCreate,
     TripDetailResponse,
     TripFavoriteUpdate,
+    TripReportResponse,
     TripResponse,
+    TripRetrospectiveUpdate,
 )
 from app.domains.trips.services.service import trip_service
 
 
 router = APIRouter(prefix="/trips", tags=["trips"])
+
+T = TypeVar("T")
+
+
+class ApiSuccessResponse(BaseModel, Generic[T]):
+    """{success, data, message} envelope - matches the frontend's
+    pre-existing ApiSuccessResponse<T> contract for the expense endpoints
+    (features/budget/api/*.ts), written before these endpoints existed."""
+
+    success: bool = True
+    data: T
+    message: str = "성공"
 
 # Separate, unprefixed router for the public /share/{token} lookup - it's
 # not a /trips/{trip_id} sub-resource (no trip_id is known to the caller,
@@ -58,3 +79,39 @@ def create_share_link(
 @share_router.get("/share/{token}", response_model=TripDetailResponse)
 def get_shared_trip(token: str, db: Session = Depends(get_db)):
     return trip_service.get_trip_by_share_token(db=db, token=token)
+
+
+@router.patch("/{trip_id}/retrospective", response_model=TripResponse)
+def update_trip_retrospective(
+    trip_id: int,
+    payload: TripRetrospectiveUpdate,
+    db: Session = Depends(get_db),
+):
+    return trip_service.update_trip_retrospective(db=db, trip_id=trip_id, payload=payload)
+
+
+@router.post("/{trip_id}/expenses", response_model=ApiSuccessResponse[ExpenseCreateResponse])
+def create_expense(
+    trip_id: int,
+    payload: ExpenseCreate,
+    db: Session = Depends(get_db),
+):
+    data = trip_service.create_expense(db=db, trip_id=trip_id, payload=payload)
+    return ApiSuccessResponse(data=data)
+
+
+@router.get("/{trip_id}/expenses", response_model=ApiSuccessResponse[ExpenseListData])
+def list_expenses(trip_id: int, db: Session = Depends(get_db)):
+    data = trip_service.list_expenses(db=db, trip_id=trip_id)
+    return ApiSuccessResponse(data=data)
+
+
+@router.get("/{trip_id}/expenses/summary", response_model=ApiSuccessResponse[ExpenseSummaryData])
+def get_expense_summary(trip_id: int, db: Session = Depends(get_db)):
+    data = trip_service.get_expense_summary(db=db, trip_id=trip_id)
+    return ApiSuccessResponse(data=data)
+
+
+@router.get("/{trip_id}/report", response_model=TripReportResponse)
+def get_trip_report(trip_id: int, db: Session = Depends(get_db)):
+    return trip_service.get_trip_report(db=db, trip_id=trip_id)

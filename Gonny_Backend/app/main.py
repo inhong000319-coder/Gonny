@@ -21,6 +21,7 @@ from app.routers.rule_itinerary import router as rule_itinerary_router
 from app.routers.seasonal_feed import router as seasonal_feed_router
 from app.routers.trip import router as trip_router
 from app.routers.trip import share_router as trip_share_router
+import app.models.expense
 import app.models.itinerary
 import app.models.place_review
 import app.models.trip
@@ -47,6 +48,10 @@ async def lifespan(app: FastAPI):
                 connection.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_trips_share_token ON trips (share_token)"))
             if "share_expires_at" not in trip_columns:
                 connection.execute(text("ALTER TABLE trips ADD COLUMN share_expires_at TIMESTAMPTZ"))
+            if "satisfaction_rating" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN satisfaction_rating INTEGER"))
+            if "retrospective_note" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN retrospective_note VARCHAR"))
             trip_todo_columns = {column["name"] for column in inspector.get_columns("trip_todos")} if "trip_todos" in inspector.get_table_names() else set()
             if "day_number" not in trip_todo_columns:
                 connection.execute(text("ALTER TABLE trip_todos ADD COLUMN day_number INTEGER NOT NULL DEFAULT 1"))

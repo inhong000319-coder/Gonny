@@ -13,12 +13,12 @@ import { deleteItineraryItem } from "../../features/itinerary/api/delete-itinera
 import { updateItineraryItem } from "../../features/itinerary/api/update-itinerary-item";
 import { ReportInsights } from "../../features/report/components/report-insights";
 import { ReportSummary } from "../../features/report/components/report-summary";
+import { useTripReportQuery } from "../../features/report/hooks/use-trip-report-query";
 import { ShareLinkModal } from "../../features/share/components/share-link-modal";
 import { TripHeader } from "../../features/trips/components/trip-header";
 import { TripSummary } from "../../features/trips/components/trip-summary";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
-import { mockReportOverview } from "../../shared/mocks/trip-data";
 
 type EditableItineraryItem = {
   id: number;
@@ -43,6 +43,8 @@ export function TripDetailPage() {
   const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
   const { data: budget } = useBudgetSummaryQuery(tripId);
   const { data: expenses } = useExpensesQuery(tripId);
+  const { data: report, isLoading: isReportLoading, isError: isReportError, refetch: refetchReport } =
+    useTripReportQuery(tripId);
   const [editableItems, setEditableItems] = useState<EditableItineraryItem[]>([]);
   const [newItem, setNewItem] = useState<EditableItineraryItem>({
     id: 0,
@@ -385,8 +387,51 @@ export function TripDetailPage() {
       </section>
 
       <div className="stack" style={{ marginTop: 20 }}>
-        <ReportSummary report={mockReportOverview} />
-        <ReportInsights insights={mockReportOverview.insights} />
+        {isReportLoading ? (
+          <div className="card">
+            <h2 className="section-title">여행 회고를 불러오는 중이에요.</h2>
+          </div>
+        ) : isReportError ? (
+          <LoadErrorCard
+            description="네트워크 상태를 확인하고 다시 시도해 주세요."
+            onRetry={() => refetchReport()}
+            title="여행 회고를 불러오지 못했습니다."
+          />
+        ) : !report ? null : !report.ready ? (
+          <div className="card">
+            <h2 className="section-title">여행 회고</h2>
+            <p className="section-subtitle" style={{ marginBottom: 0 }}>
+              {report.message ?? "여행이 아직 종료되지 않았습니다."}
+            </p>
+          </div>
+        ) : (
+          <>
+            <ReportSummary
+              budget={report.budget ?? 0}
+              budgetDiffPct={report.budget_diff_pct}
+              distanceKm={report.distance_km}
+              totalSpent={report.total_spent ?? 0}
+              visitedCount={report.visited_count ?? 0}
+            />
+            <ReportInsights insights={report.insights} />
+            {report.satisfaction_rating || report.retrospective_note ? (
+              <div className="card">
+                <h2 className="section-title">내 만족도</h2>
+                {report.satisfaction_rating ? (
+                  <p style={{ margin: "0 0 8px" }}>
+                    {"★".repeat(report.satisfaction_rating)}
+                    {"☆".repeat(5 - report.satisfaction_rating)}
+                  </p>
+                ) : null}
+                {report.retrospective_note ? (
+                  <p className="section-subtitle" style={{ marginBottom: 0 }}>
+                    {report.retrospective_note}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
     </AppShell>
   );

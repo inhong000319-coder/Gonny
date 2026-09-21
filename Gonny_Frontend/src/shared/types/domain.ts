@@ -57,11 +57,3 @@ export type Expense = {
   amountLabel: string;
   note: string;
 };
-
-export type ReportOverview = {
-  totalSpentLabel: string;
-  budgetDiffLabel: string;
-  visitedCountLabel: string;
-  totalDistanceLabel: string;
-  insights: string[];
-};

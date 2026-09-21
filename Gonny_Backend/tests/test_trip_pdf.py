@@ -79,12 +79,19 @@ def test_generate_trip_pdf_returns_valid_pdf_bytes_with_real_data(db_session: Se
 
     assert pdf_bytes.startswith(b"%PDF")
     assert len(pdf_bytes) > 0
-    # The Korean place/category text must be embedded as real text in the
-    # PDF content stream, not rasterized - CID-encoded glyph bytes aren't
-    # plain UTF-8 in the stream, so this only checks the file is well-formed
-    # (starts with the PDF magic bytes and has trailer/EOF markers), while
-    # actual glyph rendering is verified visually (see PR description).
     assert b"%%EOF" in pdf_bytes
+    # The font must be a genuinely embedded TrueType program (FontFile2),
+    # not a reference to a non-embedded CID font like the old
+    # UnicodeCIDFont("HYSMyeongJo-Medium") - that approach let text
+    # extraction work but left rendering dependent on the *viewer* having
+    # a Korean font installed, which silently produced blank text in
+    # viewers (e.g. poppler on a font-less Linux host) that had no local
+    # substitute. See this file's font registration comment for the full
+    # story; actual glyph rendering is additionally verified visually via
+    # pdf2image/poppler (see PR description) since a byte-level check like
+    # this can't see rendered pixels.
+    assert b"/FontFile2" in pdf_bytes
+    assert b"HYSMyeongJo" not in pdf_bytes
 
 
 def test_generate_trip_pdf_works_even_when_trip_has_not_ended(db_session: Session) -> None:

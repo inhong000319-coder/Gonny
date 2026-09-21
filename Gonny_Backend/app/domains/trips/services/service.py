@@ -13,7 +13,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -48,13 +48,27 @@ TIME_SLOT_LABELS = {"morning": "오전", "afternoon": "오후", "evening": "저�
 MIN_DISTANCE_SEGMENTS = 2
 
 # ReportLab's built-in fonts (Helvetica etc.) have no Korean glyphs and
-# silently render Korean text as blank/garbled boxes. HYSMyeongJo-Medium is
-# one of ReportLab's bundled CID fonts - no font file to install, works
-# offline. Registered once at import time; registerFont() is safe to call
-# more than once (later calls just re-register the same font under the
-# same name), but there's no need to repeat it per PDF build.
-PDF_FONT_NAME = "HYSMyeongJo-Medium"
-pdfmetrics.registerFont(UnicodeCIDFont(PDF_FONT_NAME))
+# silently render Korean text as blank/garbled boxes.
+#
+# A UnicodeCIDFont (e.g. "HYSMyeongJo-Medium") was tried first, but it
+# doesn't embed any font data - it just references a standard CID font
+# name and relies on the *viewer* to substitute a local Korean font at
+# render time. `pdffonts` on the generated PDF confirms this: the font
+# shows up with "emb no", and poppler has to log a substitution ("Couldn't
+# find a font for 'HYSMyeongJo-Medium', subst is 'Batang'"). That
+# substitution only works if the machine opening the PDF happens to have
+# a Korean font installed - on a plain Linux server/container without one,
+# poppler (and many other viewers) render the text as nothing at all,
+# leaving only the table borders visible.
+#
+# TTFont actually embeds the font program's glyph outlines into the PDF
+# (subset to only the glyphs used), so every viewer can render the text
+# correctly with zero dependency on the host's installed fonts. Nanum
+# Gothic (SIL Open Font License 1.1 - see app/assets/fonts/OFL.txt) is
+# vendored here for that reason rather than relying on a system font.
+PDF_FONT_NAME = "NanumGothic"
+PDF_FONT_PATH = Path(__file__).resolve().parents[4] / "app" / "assets" / "fonts" / "NanumGothic-Regular.ttf"
+pdfmetrics.registerFont(TTFont(PDF_FONT_NAME, str(PDF_FONT_PATH)))
 
 
 def _compute_share_expires_at(expires_in: str, *, now: datetime | None = None) -> datetime | None:

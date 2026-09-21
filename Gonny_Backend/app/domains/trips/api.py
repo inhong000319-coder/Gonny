@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -115,3 +115,13 @@ def get_expense_summary(trip_id: int, db: Session = Depends(get_db)):
 @router.get("/{trip_id}/report", response_model=TripReportResponse)
 def get_trip_report(trip_id: int, db: Session = Depends(get_db)):
     return trip_service.get_trip_report(db=db, trip_id=trip_id)
+
+
+@router.get("/{trip_id}/pdf")
+def get_trip_pdf(trip_id: int, db: Session = Depends(get_db)):
+    pdf_bytes = trip_service.generate_trip_pdf(db=db, trip_id=trip_id)
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="trip_{trip_id}.pdf"'},
+    )

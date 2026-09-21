@@ -24,9 +24,18 @@ class Trip(Base):
     # "never shared". share_expires_at NULL means "no expiry" (unlimited).
     share_token = Column(String, nullable=True, unique=True, index=True)
     share_expires_at = Column(DateTime(timezone=True), nullable=True)
+    # F14 retrospective report (see app/domains/trips/services/service.py's
+    # get_trip_report) - both optional, set via PATCH /trips/{id}/retrospective.
+    satisfaction_rating = Column(Integer, nullable=True)
+    retrospective_note = Column(String, nullable=True)
 
     itinerary_items = relationship(
         "ItineraryItem",
+        back_populates="trip",
+        cascade="all, delete-orphan",
+    )
+    expenses = relationship(
+        "Expense",
         back_populates="trip",
         cascade="all, delete-orphan",
     )

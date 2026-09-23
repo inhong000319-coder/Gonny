@@ -5,7 +5,6 @@ import { LoginPage } from "../../pages/auth/login-page";
 import { OnboardingPage } from "../../pages/auth/onboarding-page";
 import { PlannerPage } from "../../pages/planner/planner-page";
 import { TripsPage } from "../../pages/trips/trips-page";
-import { TripCreatePage } from "../../pages/trips/trip-create-page";
 import { TripRecommendPage } from "../../pages/trips/trip-recommend-page";
 import { TripDetailPage } from "../../pages/trips/trip-detail-page";
 import { TripMemoryPage } from "../../pages/trips/trip-memory-page";
@@ -33,7 +32,6 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       { path: "/trips", element: <TripsPage /> },
-      { path: "/trips/new", element: <TripCreatePage /> },
       { path: "/trips/recommend", element: <TripRecommendPage /> },
       { path: "/trips/:tripId", element: <TripDetailPage /> },
       { path: "/trips/:tripId/memory", element: <TripMemoryPage /> },

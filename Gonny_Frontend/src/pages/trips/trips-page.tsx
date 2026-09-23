@@ -28,7 +28,6 @@ export function TripsPage() {
           <p>계획 중인 일정부터 다시 꺼내 보고 싶은 여행 기록까지, 나만의 여행 아카이브를 한눈에 확인하세요.</p>
           <div className="travel-hero-actions">
             <Link to="/trips/recommend"><Button>새 여행 만들기</Button></Link>
-            <Link to="/trips/recommend"><Button variant="secondary">맞춤 일정 추천</Button></Link>
           </div>
         </div>
         <div className="trip-dashboard-stats">

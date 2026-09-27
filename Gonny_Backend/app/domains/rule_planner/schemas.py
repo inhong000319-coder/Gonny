@@ -42,6 +42,11 @@ class RuleItineraryItem(BaseModel):
     category: str
     area: str
     notes: str
+    # Straight-line travel-time estimate from the previous slot's place to
+    # this one (see travel_estimate.estimate_travel_minutes_between) - None
+    # for a day's first slot (no previous place) or a full-day place (all
+    # slots are the same place, so there's no real transition to report).
+    travel_minutes_from_previous: int | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

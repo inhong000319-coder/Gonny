@@ -47,7 +47,7 @@ from .slot_scoring import (
     slot_score,
     style_slot_score,
 )
-from .travel_estimate import estimate_day_total_minutes
+from .travel_estimate import estimate_day_total_minutes, estimate_travel_minutes_between
 from .weather_alerts import build_weather_alerts
 
 
@@ -166,6 +166,10 @@ class RuleItineraryService:
                                 day_area=full_day_place.area,
                                 previous_place=full_day_place if slot != "morning" else None,
                             ),
+                            # Every slot is the same place on a full-day
+                            # itinerary item, so there's no real transition
+                            # to report - see RuleItineraryItem's docstring.
+                            travel_minutes_from_previous=None,
                         )
                     )
                 used_ids.add(full_day_place.id)
@@ -198,6 +202,9 @@ class RuleItineraryService:
 
                 used_ids.add(chosen.id)
                 main_category = self._resolve_item_category(chosen, request)
+                travel_minutes_from_previous = (
+                    estimate_travel_minutes_between(previous_place, chosen) if previous_place is not None else None
+                )
                 items.append(
                     RuleItineraryItem(
                         day_number=day_number,
@@ -213,6 +220,7 @@ class RuleItineraryService:
                             day_area=day_area,
                             previous_place=previous_place,
                         ),
+                        travel_minutes_from_previous=travel_minutes_from_previous,
                     )
                 )
                 day_places.append(chosen)

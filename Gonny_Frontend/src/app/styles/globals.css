@@ -2306,6 +2306,13 @@ body.modal-open {
   flex-wrap: wrap;
 }
 
+.planner-slot-travel-time {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 .planner-slot-area,
 .planner-slot-note {
   margin: 8px 0 0;

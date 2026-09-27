@@ -44,6 +44,10 @@ type RuleItineraryItem = {
   category: string;
   area: string;
   notes: string;
+  // Straight-line travel-time estimate from the previous slot's place, in
+  // minutes - null for a day's first slot or a full-day place (see the
+  // backend's RuleItineraryItem docstring).
+  travel_minutes_from_previous: number | null;
 };
 
 type RuleDayDurationWarning = {
@@ -355,7 +359,8 @@ function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
     typeof item.place_name === "string" &&
     typeof item.category === "string" &&
     typeof item.area === "string" &&
-    typeof item.notes === "string"
+    typeof item.notes === "string" &&
+    (item.travel_minutes_from_previous === null || typeof item.travel_minutes_from_previous === "number")
   );
 }
 
@@ -1478,6 +1483,11 @@ export function TripCreateForm() {
                           <span>{labelTimeSlot(item.time_slot)}</span>
                         </div>
                         <div className="planner-stop-body">
+                          {item.travel_minutes_from_previous !== null ? (
+                            <p className="planner-slot-travel-time">
+                              이전 장소에서 약 {item.travel_minutes_from_previous}분 이동
+                            </p>
+                          ) : null}
                           <div className="planner-slot-top">
                             <strong>{item.place_name}</strong>
                             <span className="badge">{item.category}</span>

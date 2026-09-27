@@ -1,17 +1,11 @@
 from __future__ import annotations
 
-import logging
 import re
 from dataclasses import dataclass
 
-from openai import OpenAI
-
-from app.core.settings import settings
 from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
-
-logger = logging.getLogger(__name__)
 
 TIME_SLOT_OPENING = {
     "morning": "{place_name}, 오전 일정의 시작으로 넣기 좋아요!",
@@ -279,73 +273,5 @@ class TemplateRuleNoteGenerator(BaseRuleNoteGenerator):
         return korean_count >= ascii_letter_count and korean_count > 0
 
 
-class OpenAIRuleNoteGenerator(BaseRuleNoteGenerator):
-    def __init__(self, model: str):
-        self.model = model
-        self.client = OpenAI(api_key=settings.openai_api_key)
-
-    def generate(self, context: RuleNoteContext) -> str:
-        prompt = self._build_prompt(context)
-        response = self.client.responses.create(model=self.model, input=prompt)
-        text = getattr(response, "output_text", "").strip()
-        if not text:
-            raise ValueError("OpenAI rule note generation returned empty output.")
-        return text
-
-    def _build_prompt(self, context: RuleNoteContext) -> str:
-        place = context.place
-        return (
-            "선택된 여행 장소 설명문을 한국어로 작성해주세요.\n"
-            "말투는 부드러운 서비스 안내 문구처럼 모두 ~요 체로 작성해주세요.\n"
-            "출력 형식은 반드시 아래 구조를 지켜주세요.\n"
-            "1. 첫 줄: 추천 한 문장. 예: 경복궁, 오전 일정의 시작으로 넣기 좋아요!\n"
-            "2. 그 아래 3문장: 언제 좋은지, 왜 좋은지, 어디와 이어지기 좋은지 설명\n"
-            "문장은 짧고 보기 편하게 써주세요.\n"
-            "너무 AI처럼 딱딱하거나 과장하지 말고 실제 여행 서비스 문구처럼 자연스럽게 써주세요.\n"
-            f"장소명: {context.localized_place_name}\n"
-            f"권역: {context.localized_area_name}\n"
-            f"시간대: {context.time_slot}\n"
-            f"일차: {context.day_number}\n"
-            f"요약: {place.summary}\n"
-            f"카테고리: {', '.join(place.activity_type)}\n"
-            f"예산 구간: {context.request.budget_band}\n"
-            f"여행 스타일: {context.request.style}\n"
-            f"동행 유형: {context.request.companion_type}\n"
-            f"이동 특성: {', '.join(place.mobility)}\n"
-            f"분위기 키워드: {', '.join(place.mood_keywords or [])}\n"
-            f"강조 태그: {', '.join(place.highlight_tags or [])}\n"
-            f"직전 장소: {context.previous_place_name or '없음'}\n"
-            f"하루 권역 중심: {context.day_area_name or context.localized_area_name}\n"
-        )
-
-
-class HybridRuleNoteGenerator(BaseRuleNoteGenerator):
-    def __init__(self, primary: BaseRuleNoteGenerator | None, fallback: BaseRuleNoteGenerator):
-        self.primary = primary
-        self.fallback = fallback
-
-    def generate(self, context: RuleNoteContext) -> str:
-        if self.primary is None:
-            return self.fallback.generate(context)
-
-        try:
-            return self.primary.generate(context)
-        except Exception as exc:  # pragma: no cover
-            logger.warning("Primary rule note generator failed. Falling back to template mode: %s", exc)
-            return self.fallback.generate(context)
-
-
 def build_rule_note_generator() -> BaseRuleNoteGenerator:
-    template_generator = TemplateRuleNoteGenerator()
-    mode = settings.rule_note_generation_mode.lower()
-    model = settings.rule_note_model or settings.openai_model
-
-    if mode == "template":
-        return template_generator
-
-    openai_generator = OpenAIRuleNoteGenerator(model=model) if settings.openai_api_key else None
-
-    if mode == "openai":
-        return HybridRuleNoteGenerator(primary=openai_generator, fallback=template_generator)
-
-    return HybridRuleNoteGenerator(primary=openai_generator, fallback=template_generator)
+    return TemplateRuleNoteGenerator()

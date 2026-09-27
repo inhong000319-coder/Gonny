@@ -322,7 +322,6 @@ docker-compose -f docker-compose.dev.yml up --build
 ```env
 # ── LLM ──────────────────────────────
 ANTHROPIC_API_KEY=your_claude_api_key
-OPENAI_API_KEY=your_openai_api_key       # Claude 사용 시 선택
 
 # ── 인증 ─────────────────────────────
 SECRET_KEY=your_jwt_secret_key_here

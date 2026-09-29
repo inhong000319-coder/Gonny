@@ -48,6 +48,13 @@ from .slot_scoring import (
     style_slot_score,
 )
 from .travel_estimate import estimate_day_total_minutes, estimate_travel_minutes_between
+
+# How much higher a next-place-aware refinement candidate's score must be
+# than the currently-placed item's before _refine_day_with_next_place_lookahead
+# swaps it in - a real margin, not any marginal/noise-level improvement, so
+# the refinement pass doesn't just churn picks. Roughly one continuity-bonus
+# tier (see travel_estimate.py's NEARBY_TRANSITION_BONUS=6/CLOSE_TRANSITION_BONUS=14).
+REFINEMENT_SCORE_MARGIN = 10
 from .weather_alerts import build_weather_alerts
 
 
@@ -180,27 +187,44 @@ class RuleItineraryService:
             day_area = self._pick_day_area(preferred_areas, scored_places, used_ids, used_day_areas)
             if day_area:
                 used_day_areas.add(day_area)
-            day_places: list[PlaceData] = []
 
-            for slot in TIME_SLOTS:
-                previous_place = day_places[-1] if day_places else None
-                chosen = self._pick_place_for_slot(
-                    scored_places=scored_places,
-                    request=request,
-                    time_slot=slot,
-                    day_number=day_number,
-                    used_ids=used_ids,
-                    preferred_area=day_area,
-                    previous_place=previous_place,
-                    feedback_signals=feedback_signals,
-                    day_weekday=day_weekday,
-                    closed_day_exclusions=closed_day_exclusions,
-                    seen_exclusion_keys=seen_exclusion_keys,
-                )
-                if chosen is None:
-                    continue
+            slot_places = self._pick_places_for_day(
+                scored_places=scored_places,
+                request=request,
+                day_number=day_number,
+                used_ids=used_ids,
+                day_area=day_area,
+                feedback_signals=feedback_signals,
+                day_weekday=day_weekday,
+                closed_day_exclusions=closed_day_exclusions,
+                seen_exclusion_keys=seen_exclusion_keys,
+            )
+            slot_places = self._refine_day_with_next_place_lookahead(
+                slot_places,
+                scored_places=scored_places,
+                request=request,
+                day_number=day_number,
+                used_ids=used_ids,
+                day_area=day_area,
+                feedback_signals=feedback_signals,
+                day_weekday=day_weekday,
+            )
+            slot_places = self._ensure_food_slot(
+                slot_places,
+                scored_places=scored_places,
+                request=request,
+                day_number=day_number,
+                used_ids=used_ids,
+                day_area=day_area,
+                feedback_signals=feedback_signals,
+                day_weekday=day_weekday,
+                closed_day_exclusions=closed_day_exclusions,
+                seen_exclusion_keys=seen_exclusion_keys,
+            )
 
-                used_ids.add(chosen.id)
+            day_places = [place for _, place in slot_places]
+            for index, (slot, chosen) in enumerate(slot_places):
+                previous_place = slot_places[index - 1][1] if index > 0 else None
                 main_category = self._resolve_item_category(chosen, request)
                 travel_minutes_from_previous = (
                     estimate_travel_minutes_between(previous_place, chosen) if previous_place is not None else None
@@ -223,12 +247,229 @@ class RuleItineraryService:
                         travel_minutes_from_previous=travel_minutes_from_previous,
                     )
                 )
-                day_places.append(chosen)
 
             if day_places:
                 day_place_map[day_number] = day_places
 
         return items, day_place_map, closed_day_exclusions
+
+    def _pick_places_for_day(
+        self,
+        *,
+        scored_places: list[PlaceData],
+        request: NormalizedRuleRequest,
+        day_number: int,
+        used_ids: set[str],
+        day_area: str | None,
+        feedback_signals: dict[str, PlaceFeedbackSignal] | None,
+        day_weekday: int | None,
+        closed_day_exclusions: list[RuleClosedDayExclusion] | None,
+        seen_exclusion_keys: set[tuple[int, str]] | None,
+    ) -> list[tuple[str, PlaceData]]:
+        """Greedy first pass: one slot at a time, morning -> afternoon ->
+        evening. previous_place is known at this point (the prior slot in
+        this same pass); next_place never is - the slot loop can't know
+        what a later slot will hold before picking it. That's what
+        _refine_day_with_next_place_lookahead() is for, run afterward once
+        the whole day is confirmed.
+        """
+        slot_places: list[tuple[str, PlaceData]] = []
+        for slot in TIME_SLOTS:
+            previous_place = slot_places[-1][1] if slot_places else None
+            chosen = self._pick_place_for_slot(
+                scored_places=scored_places,
+                request=request,
+                time_slot=slot,
+                day_number=day_number,
+                used_ids=used_ids,
+                preferred_area=day_area,
+                previous_place=previous_place,
+                feedback_signals=feedback_signals,
+                day_weekday=day_weekday,
+                closed_day_exclusions=closed_day_exclusions,
+                seen_exclusion_keys=seen_exclusion_keys,
+            )
+            if chosen is None:
+                continue
+            used_ids.add(chosen.id)
+            slot_places.append((slot, chosen))
+        return slot_places
+
+    def _is_open_on_day(self, place: PlaceData, day_weekday: int | None) -> bool:
+        """Silent (no exclusion-recording) closed-day check for the
+        speculative re-scoring below - unlike _select_first_open_candidate(),
+        this evaluates candidates that mostly never end up placed, so it
+        must not add closed_day_exclusions noise implying a real attempt."""
+        if day_weekday is None:
+            return True
+        return not is_confirmed_closed_on(place.closed_days, day_weekday)
+
+    def _refine_day_with_next_place_lookahead(
+        self,
+        slot_places: list[tuple[str, PlaceData]],
+        *,
+        scored_places: list[PlaceData],
+        request: NormalizedRuleRequest,
+        day_number: int,
+        used_ids: set[str],
+        day_area: str | None,
+        feedback_signals: dict[str, PlaceFeedbackSignal] | None,
+        day_weekday: int | None,
+    ) -> list[tuple[str, PlaceData]]:
+        """2nd pass over an already-greedily-placed day: re-score each slot
+        (except the day's last, which has no next place) against its now-
+        confirmed previous AND next place, and swap in a clearly-better
+        unused candidate if one exists (see REFINEMENT_SCORE_MARGIN). This
+        is the "refine after the fact" approach recommended for exposing
+        next_place-aware scoring without restructuring the greedy slot
+        loop into a lookahead search.
+        """
+        if len(slot_places) < 2:
+            return slot_places  # no next_place context exists with 0-1 slots
+
+        for index, (slot, current_place) in enumerate(slot_places):
+            if index + 1 >= len(slot_places):
+                continue  # day's last slot has no next place to look ahead to
+
+            previous_place = slot_places[index - 1][1] if index > 0 else None
+            next_place = slot_places[index + 1][1]
+
+            current_score = self._slot_score(
+                place=current_place,
+                request=request,
+                time_slot=slot,
+                day_number=day_number,
+                preferred_area=day_area,
+                previous_place=previous_place,
+                next_place=next_place,
+                community_signal=(feedback_signals or {}).get(current_place.id),
+            )
+
+            available = [
+                place
+                for place in scored_places
+                if place.id not in used_ids and self._is_open_on_day(place, day_weekday)
+            ]
+            if not available:
+                continue
+
+            best_candidate = max(
+                available,
+                key=lambda place: self._slot_score(
+                    place=place,
+                    request=request,
+                    time_slot=slot,
+                    day_number=day_number,
+                    preferred_area=day_area,
+                    previous_place=previous_place,
+                    next_place=next_place,
+                    community_signal=(feedback_signals or {}).get(place.id),
+                ),
+            )
+            best_score = self._slot_score(
+                place=best_candidate,
+                request=request,
+                time_slot=slot,
+                day_number=day_number,
+                preferred_area=day_area,
+                previous_place=previous_place,
+                next_place=next_place,
+                community_signal=(feedback_signals or {}).get(best_candidate.id),
+            )
+
+            if best_score > current_score + REFINEMENT_SCORE_MARGIN:
+                used_ids.discard(current_place.id)
+                used_ids.add(best_candidate.id)
+                slot_places[index] = (slot, best_candidate)
+
+        return slot_places
+
+    def _ensure_food_slot(
+        self,
+        slot_places: list[tuple[str, PlaceData]],
+        *,
+        scored_places: list[PlaceData],
+        request: NormalizedRuleRequest,
+        day_number: int,
+        used_ids: set[str],
+        day_area: str | None,
+        feedback_signals: dict[str, PlaceFeedbackSignal] | None,
+        day_weekday: int | None,
+        closed_day_exclusions: list[RuleClosedDayExclusion] | None,
+        seen_exclusion_keys: set[tuple[int, str]] | None,
+    ) -> list[tuple[str, PlaceData]]:
+        """Final safety net: the per-slot scoring only ever gives food
+        places a bonus in the evening (SLOT_CATEGORY_PREFERENCE,
+        evening_food_bonus) - never a guarantee - so a day can legitimately
+        end up with zero food items. Runs last (after the next-place
+        refinement pass above) so it's always the final word on whether a
+        day has food, regardless of what that pass did.
+
+        Replaces whichever placed slot scored lowest with the best-scoring
+        unused food candidate (same day_area preferred, falling back to
+        the whole city). If no food candidate exists at all for this city,
+        or every candidate is confirmed closed today, leaves the day
+        as-is - that's a data gap, not a bug (see this feature's scope
+        note).
+        """
+        if not slot_places:
+            return slot_places
+        if any("food" in place.concept_tags for _, place in slot_places):
+            return slot_places
+
+        worst_index = min(
+            range(len(slot_places)),
+            key=lambda index: self._slot_score(
+                place=slot_places[index][1],
+                request=request,
+                time_slot=slot_places[index][0],
+                day_number=day_number,
+                preferred_area=day_area,
+                previous_place=slot_places[index - 1][1] if index > 0 else None,
+                next_place=slot_places[index + 1][1] if index + 1 < len(slot_places) else None,
+                community_signal=(feedback_signals or {}).get(slot_places[index][1].id),
+            ),
+        )
+        worst_slot, worst_place = slot_places[worst_index]
+        previous_place = slot_places[worst_index - 1][1] if worst_index > 0 else None
+        next_place = slot_places[worst_index + 1][1] if worst_index + 1 < len(slot_places) else None
+
+        available = [place for place in scored_places if place.id not in used_ids]
+        food_candidates = [place for place in available if "food" in place.concept_tags]
+        if not food_candidates:
+            return slot_places  # no food entity available for this city - data gap, not a bug
+
+        same_area_candidates = [place for place in food_candidates if day_area and place.area == day_area]
+        candidate_pool = same_area_candidates or food_candidates
+
+        ranked = sorted(
+            candidate_pool,
+            key=lambda place: self._slot_score(
+                place=place,
+                request=request,
+                time_slot=worst_slot,
+                day_number=day_number,
+                preferred_area=day_area,
+                previous_place=previous_place,
+                next_place=next_place,
+                community_signal=(feedback_signals or {}).get(place.id),
+            ),
+            reverse=True,
+        )
+        replacement = self._select_first_open_candidate(
+            ranked_candidates=ranked,
+            day_number=day_number,
+            day_weekday=day_weekday,
+            closed_day_exclusions=closed_day_exclusions,
+            seen_exclusion_keys=seen_exclusion_keys,
+        )
+        if replacement is None:
+            return slot_places  # every candidate is confirmed closed today - data gap, not a bug
+
+        used_ids.discard(worst_place.id)
+        used_ids.add(replacement.id)
+        slot_places[worst_index] = (worst_slot, replacement)
+        return slot_places
 
     def _day_weekday(self, request: NormalizedRuleRequest, day_number: int) -> int | None:
         """0=Monday ... 6=Sunday for this day_number, or None if the
@@ -468,6 +709,7 @@ class RuleItineraryService:
         day_number: int,
         preferred_area: str | None,
         previous_place: PlaceData | None = None,
+        next_place: PlaceData | None = None,
         community_signal: PlaceFeedbackSignal | None = None,
     ) -> int:
         return slot_score(
@@ -477,6 +719,7 @@ class RuleItineraryService:
             day_number=day_number,
             preferred_area=preferred_area,
             previous_place=previous_place,
+            next_place=next_place,
             community_signal=community_signal,
         )
 

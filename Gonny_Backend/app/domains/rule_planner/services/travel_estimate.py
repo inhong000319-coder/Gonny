@@ -131,17 +131,21 @@ NEARBY_TRANSITION_BONUS = 6
 FAR_TRANSITION_PENALTY = -6
 
 
-def coordinate_area_transition_bonus(previous_place: PlaceData | None, place: PlaceData) -> int | None:
-    """Distance-based continuity bonus for a slot transition.
+def _coordinate_transition_bonus(other_place: PlaceData | None, place: PlaceData) -> int | None:
+    """Distance-based continuity bonus for a transition between `place` and
+    `other_place` - shared by the previous-place and next-place bonus
+    functions below, since haversine distance (and therefore the estimated
+    travel time) is symmetric regardless of which direction the leg is
+    actually walked.
 
-    Returns None when previous_place is missing or either place lacks
-    coordinates - the caller should fall back to the string-based
-    same_area_continuity_bonus()/neighbor_area_bonus() in that case, per
-    the gradual per-pair transition described in this feature's scope.
+    Returns None when other_place is missing or either place lacks
+    coordinates - callers fall back to something else in that case (the
+    string-based same_area_continuity_bonus()/neighbor_area_bonus() for the
+    previous-place direction; simply no bonus for the next-place direction).
     """
-    if previous_place is None:
+    if other_place is None:
         return None
-    travel_minutes = estimate_travel_minutes_between(previous_place, place)
+    travel_minutes = estimate_travel_minutes_between(other_place, place)
     if travel_minutes is None:
         return None
     if travel_minutes <= CLOSE_TRAVEL_MINUTES_THRESHOLD:
@@ -151,3 +155,39 @@ def coordinate_area_transition_bonus(previous_place: PlaceData | None, place: Pl
     if travel_minutes <= FAR_TRAVEL_MINUTES_THRESHOLD:
         return 0
     return FAR_TRANSITION_PENALTY
+
+
+def coordinate_area_transition_bonus(previous_place: PlaceData | None, place: PlaceData) -> int | None:
+    """Distance-based continuity bonus for a slot transition, looking
+    *backward* to the previous slot's (already-confirmed) place.
+
+    Returns None when previous_place is missing or either place lacks
+    coordinates - the caller should fall back to the string-based
+    same_area_continuity_bonus()/neighbor_area_bonus() in that case, per
+    the gradual per-pair transition described in this feature's scope.
+    """
+    return _coordinate_transition_bonus(previous_place, place)
+
+
+def coordinate_next_place_transition_bonus(next_place: PlaceData | None, place: PlaceData) -> int | None:
+    """Distance-based continuity bonus looking *forward* to the next slot's
+    place, mirroring coordinate_area_transition_bonus's backward-looking
+    version (same thresholds/estimate, via _coordinate_transition_bonus()).
+
+    Only meaningful once the day's slots have already been greedily placed
+    once - see RuleItineraryService._refine_day_with_next_place_lookahead,
+    which re-scores each slot against its now-known next place and swaps in
+    a clearly-better unused candidate when one exists.
+
+    Weighted at half of the previous-place bonus: previous_place is a
+    transition the traveler will actually walk by the time a slot is
+    re-scored in that refinement pass, while next_place is a forward-
+    looking signal for nudging the pick, not a confirmed leg (the next
+    slot could itself still be swapped in the same pass). Halving it keeps
+    the confirmed previous-leg bonus the dominant signal rather than having
+    this lookahead bonus override it.
+    """
+    raw_bonus = _coordinate_transition_bonus(next_place, place)
+    if raw_bonus is None:
+        return None
+    return round(raw_bonus / 2)

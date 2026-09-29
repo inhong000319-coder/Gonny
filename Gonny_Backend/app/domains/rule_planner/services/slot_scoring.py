@@ -18,7 +18,7 @@ from .policies.city import (
     preferred_area_match_bonus,
     same_area_continuity_bonus,
 )
-from .travel_estimate import coordinate_area_transition_bonus
+from .travel_estimate import coordinate_area_transition_bonus, coordinate_next_place_transition_bonus
 
 
 def day_phase(request: NormalizedRuleRequest, day_number: int) -> str:
@@ -73,6 +73,7 @@ def slot_score(
     day_number: int,
     preferred_area: str | None,
     previous_place: PlaceData | None = None,
+    next_place: PlaceData | None = None,
     community_signal: PlaceFeedbackSignal | None = None,
 ) -> int:
     categories = set(place.concept_tags)
@@ -92,6 +93,15 @@ def slot_score(
         score += same_area_continuity_bonus(request, previous_place.area if previous_place else None, place.area)
         if previous_place and previous_place.area != place.area:
             score += neighbor_area_bonus(request, previous_place.area, place.area)
+    # Forward-looking counterpart to coordinate_bonus above - only ever
+    # non-None once a day's slots have already been placed once and the
+    # refinement pass re-scores against the now-known next place (see
+    # RuleItineraryService._refine_day_with_next_place_lookahead). No
+    # string-based fallback here (unlike previous_place): this is a
+    # secondary nudge signal, not the primary continuity bonus.
+    next_place_bonus = coordinate_next_place_transition_bonus(next_place, place)
+    if next_place_bonus is not None:
+        score += next_place_bonus
     feedback_bonus = community_feedback_bonus(community_signal, time_slot, request.companion_type)
     if feedback_bonus is not None:
         score += feedback_bonus
@@ -106,8 +116,41 @@ def slot_score(
         score += 3
     if request.style == "near-stay" and place.area == preferred_area:
         score += 3
+    score += google_rating_bonus_score(place)
 
     return score
+
+
+# Google rating thresholds/bonuses for the researched restaurant entities
+# (see scripts/merge_restaurant_data.py) - deliberately small next to the
+# other bonuses here (coordinate transitions alone swing +/-14) so a good
+# rating nudges ranking among similar candidates without letting it
+# override real fit/continuity signals.
+GOOGLE_RATING_HIGH_CONFIDENCE_THRESHOLD = 4.5
+GOOGLE_RATING_HIGH_CONFIDENCE_MIN_COUNT = 30
+GOOGLE_RATING_HIGH_CONFIDENCE_BONUS = 6
+GOOGLE_RATING_GOOD_THRESHOLD = 4.0
+GOOGLE_RATING_GOOD_BONUS = 3
+
+
+def google_rating_bonus_score(place: PlaceData) -> int:
+    """Small bonus for places with a strong Google rating.
+
+    Returns 0 (neutral, never a penalty) whenever google_rating is missing,
+    which is true for most of the catalog (only the CSV-researched
+    restaurants have this field populated) - places without the data must
+    never be scored worse than before this bonus existed.
+    """
+    if place.google_rating is None:
+        return 0
+    if (
+        place.google_rating >= GOOGLE_RATING_HIGH_CONFIDENCE_THRESHOLD
+        and (place.google_rating_count or 0) >= GOOGLE_RATING_HIGH_CONFIDENCE_MIN_COUNT
+    ):
+        return GOOGLE_RATING_HIGH_CONFIDENCE_BONUS
+    if place.google_rating >= GOOGLE_RATING_GOOD_THRESHOLD:
+        return GOOGLE_RATING_GOOD_BONUS
+    return 0
 
 
 def duration_slot_score(

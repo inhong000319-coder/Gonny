@@ -60,16 +60,23 @@ def test_setting_defaults_to_none_for_catalogs_without_classification_data() -> 
             assert place.rain_sensitive_light is False
 
 
-def test_seoul_busan_jeju_catalogs_have_109_unique_place_ids() -> None:
+def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # This used to cross-check against local_only/data/indoor_outdoor_
     # classification.csv, but local_only/ isn't committed to git, so that
     # comparison always failed on a fresh clone/CI. The place_id-level
     # match against that CSV was already verified once when the setting/
     # rain_sensitive_light data was applied (see feature/indoor-outdoor-
     # labels) - this just guards the count/uniqueness invariant going forward.
+    #
+    # 301 = the original 109 indoor/outdoor-classified places plus 192
+    # individual restaurant entries merged in by
+    # scripts/merge_restaurant_data.py (see feature/restaurant-recommendations) -
+    # those restaurants predate the indoor/outdoor classification CSV, so
+    # they're intentionally unclassified (setting=None), checked in
+    # test_all_109_korean_focus_places_are_classified below.
     ids = [place.id for place in load_korean_focus_places()]
 
-    assert len(ids) == 109
+    assert len(ids) == 301
     assert len(set(ids)) == len(ids), "duplicate place_id found across seoul/busan/jeju catalogs"
 
 
@@ -81,20 +88,31 @@ def test_all_109_korean_focus_places_are_classified() -> None:
     # test hardcodes the already-verified expectations instead of
     # re-reading that CSV - otherwise it would always fail on a fresh
     # clone/CI where local_only/ doesn't exist.
+    #
+    # The 192 restaurant entries merged in later (see
+    # feature/restaurant-recommendations) are deliberately excluded from
+    # the classified set - that CSV predates them, so they're expected to
+    # have setting=None rather than a guessed classification.
     EXPECTED_SETTING_COUNTS = {"outdoor": 50, "indoor": 40, "mixed": 19}
     EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 23
+    EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 192
 
     places = load_korean_focus_places()
-    assert len(places) == 109
+    classified_places = [place for place in places if place.setting is not None]
+    unclassified_places = [place for place in places if place.setting is None]
+
+    assert len(classified_places) == 109
+    assert len(unclassified_places) == EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT
 
     setting_counts: dict[str, int] = {}
     rain_sensitive_light_true_count = 0
 
-    for place in places:
-        assert place.setting is not None, f"{place.id} is missing setting classification"
+    for place in classified_places:
         setting_counts[place.setting] = setting_counts.get(place.setting, 0) + 1
         if place.rain_sensitive_light:
             rain_sensitive_light_true_count += 1
 
     assert setting_counts == EXPECTED_SETTING_COUNTS
     assert rain_sensitive_light_true_count == EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT
+    # New restaurant places should never silently gain a false classification.
+    assert all(not place.rain_sensitive_light for place in unclassified_places)

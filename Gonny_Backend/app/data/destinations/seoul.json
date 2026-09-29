@@ -3205,6 +3205,3783 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false
+    },
+    {
+      "id": "seoul-restaurant-jongno-salon-sulla",
+      "name": "살롱순라",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "종로3가역 7번출구 인근 앤틱 인테리어 퓨전양식당, 여러 지역 맛집 블로그에서 데이트 코스로 소개",
+      "latitude": 37.5741573,
+      "longitude": 126.9916857,
+      "google_rating": 4.4,
+      "google_rating_count": 479,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-gwanghwamun-mijin",
+      "name": "광화문미진",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "1954년부터 이어진 전통 메밀국수 전문점, 미쉐린가이드 서울 빕구르망/셀렉티드 반복 등재로 다수 매체에서 확인",
+      "latitude": 37.5705973,
+      "longitude": 126.9799047,
+      "google_rating": 4.1,
+      "google_rating_count": 3567,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-jongno-iksun-dimibang",
+      "name": "익선디미방",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "익선동 한옥거리 내 퓨전 한식당, 커플 데이트 코스로 다수 블로그에 소개",
+      "latitude": 37.5740648,
+      "longitude": 126.9902931,
+      "google_rating": 4.7,
+      "google_rating_count": 66,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-xiaobao",
+      "name": "샤오바오우육면",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "정통 중국식 란저우 우육면 전문점으로 소개, 삼일대로17길 위치",
+      "latitude": 37.5690842,
+      "longitude": 126.9866297,
+      "google_rating": 4.1,
+      "google_rating_count": 1072,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-oncheonjip",
+      "name": "온천집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "돈화문로 인근 일본식 한옥 샤브샤브 전문점",
+      "latitude": 37.5739866,
+      "longitude": 126.9896822,
+      "google_rating": 4.3,
+      "google_rating_count": 653,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-daeryeonjip",
+      "name": "대련집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "종로16길 소재, 생배추보쌈과 칼국수로 유명한 노포형 식당",
+      "latitude": 37.5684546,
+      "longitude": 126.9890652,
+      "google_rating": 4.0,
+      "google_rating_count": 1460,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-choidaegamne",
+      "name": "최대감네",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "인사동 한옥 개조 한식당, 상추샤브정식으로 소개",
+      "latitude": 37.5740197,
+      "longitude": 126.9860946,
+      "google_rating": 3.9,
+      "google_rating_count": 198,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-dallaengyi",
+      "name": "달랭이",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "돈화문로 인근 낙곱새 전문점",
+      "latitude": 37.5735552,
+      "longitude": 126.9906947,
+      "google_rating": 3.3,
+      "google_rating_count": 13,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-yuklab",
+      "name": "육랩",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "우정국로 소재 소고기·양고기 전문점, 젊은층 인기로 소개",
+      "latitude": 37.5694406,
+      "longitude": 126.9854029,
+      "google_rating": 4.6,
+      "google_rating_count": 70,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-bangida",
+      "name": "반기다",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "익선동 소재, 플레이팅이 화려한 퓨전 음식점으로 소개",
+      "latitude": 37.5736806,
+      "longitude": 126.9893168,
+      "google_rating": 4.3,
+      "google_rating_count": 191,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-gwangjang-chapssal",
+      "name": "광장시장 찹쌀꽈배기",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광장시장 내 간식 노점, 평점 정보만 확인되어 상세 근거는 약함",
+      "latitude": 37.5707114,
+      "longitude": 127.0003582,
+      "google_rating": 4.5,
+      "google_rating_count": 841,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jongno-modern-shabu",
+      "name": "모던샤브하우스",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jongno",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "종로 소재 샤브샤브 전문점, 평점 정보만 확인되어 상세 근거는 약함",
+      "latitude": 37.5709867,
+      "longitude": 126.97892,
+      "google_rating": 4.6,
+      "google_rating_count": 426,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-euljiro-gaetmaeul",
+      "name": "갯마을횟집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "에스콰이어코리아 취재 기사에서 소개, 2022년 폐업 예정이라는 기사 내용이 있어 현재 영업 여부 재확인 필요",
+      "latitude": 37.5687149,
+      "longitude": 126.9885967,
+      "google_rating": 4.2,
+      "google_rating_count": 503,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-euljiro-woojiljip",
+      "name": "우일집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "을지로 공구골목 대표 야장 맛집으로 매체에 소개",
+      "latitude": 37.5668368,
+      "longitude": 126.9932724,
+      "google_rating": 3.5,
+      "google_rating_count": 268,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-euljiro-tongiljip",
+      "name": "통일집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "을지로 공구골목 소재, 오랜 전통의 한우 전문점으로 매체에 소개",
+      "latitude": 37.5628261,
+      "longitude": 126.9936147,
+      "google_rating": 3.7,
+      "google_rating_count": 126,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-euljiro-mapo-jjukkumi",
+      "name": "마포쭈꾸미",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "공업사 사이에 위치한 철판 쭈삼 전문점",
+      "latitude": 37.5661032,
+      "longitude": 126.9937746,
+      "google_rating": 4.7,
+      "google_rating_count": 23,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-euljiro-mugyodong-bugeoguk",
+      "name": "무교동북어국집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "을지로/무교동 경계 지역의 북어국 전문점, 다이닝코드 메타데이터로만 확인되어 근거가 약함",
+      "latitude": 37.5677475,
+      "longitude": 126.9798528,
+      "google_rating": 4.5,
+      "google_rating_count": 3971,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-euljiro-sancheong-sutbul",
+      "name": "산청숯불가든",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "평점 정보만 확인되어 상세 근거는 약함",
+      "latitude": 37.566,
+      "longitude": 126.9906213,
+      "google_rating": 4.6,
+      "google_rating_count": 745,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-euljiro-jinjung-uyukmyeon",
+      "name": "진중우육면관",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "평점 정보만 확인되어 상세 근거는 약함",
+      "latitude": 37.5685803,
+      "longitude": 126.9861475,
+      "google_rating": 4.4,
+      "google_rating_count": 1335,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-euljiro-bangbang-golbaengi",
+      "name": "뱅뱅골뱅이",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "euljiro",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "을지로 골뱅이골목 소재로 추정, 상세 근거는 약함",
+      "latitude": 37.5651306,
+      "longitude": 126.9897286,
+      "google_rating": 3.8,
+      "google_rating_count": 129,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-haemul-jeongol",
+      "name": "명동해물전골",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "명동7길 소재 해산물전골 전문점",
+      "latitude": 37.5628541,
+      "longitude": 126.9851503,
+      "google_rating": 3.2,
+      "google_rating_count": 67,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-hadongkwan",
+      "name": "하동관",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "명동 대표 노포 곰탕/국밥집, 다수 매체에서 반복 확인되는 명동 대표 맛집",
+      "latitude": 37.5643946,
+      "longitude": 126.9850185,
+      "google_rating": 3.6,
+      "google_rating_count": 2167,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-wontang-gamja-galbitang",
+      "name": "원탕감자돼지갈비탕",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "서소문로 소재, 블로그 추천 리스트 등재",
+      "latitude": 37.5574616,
+      "longitude": 126.9683526,
+      "google_rating": 4.1,
+      "google_rating_count": 123,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-tutu-chicken",
+      "name": "투투치킨",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "명동7길 소재 치킨 전문점",
+      "latitude": 37.559886,
+      "longitude": 126.9857712,
+      "google_rating": 4.0,
+      "google_rating_count": 671,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-myeongdong-mandu",
+      "name": "명동만두(명동교자)",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "40년 이상 운영된 명동 대표 노포, 다수 매체에서 반복 확인",
+      "latitude": 37.5610151,
+      "longitude": 126.9860829,
+      "google_rating": 4.2,
+      "google_rating_count": 14866,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-hamheung-guksujip",
+      "name": "명동함흥국수집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "명동10길 소재 로컬 냉면 노포",
+      "latitude": 37.5627334,
+      "longitude": 126.9856737,
+      "google_rating": 4.1,
+      "google_rating_count": 919,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-dongdaemun-jinokhwa",
+      "name": "진옥화할매원조닭한마리",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동대문 오장동 닭한마리 골목의 대표 원조 계열 식당, 리뷰 수가 많아 신뢰도 높음",
+      "latitude": 37.5703627,
+      "longitude": 127.0057612,
+      "google_rating": 4.0,
+      "google_rating_count": 8465,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-dongdaemun-wonjowonhalmae",
+      "name": "원조원할매닭한마리",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동대문 닭한마리 골목 소재",
+      "latitude": 37.5703053,
+      "longitude": 127.0053039,
+      "google_rating": 4.0,
+      "google_rating_count": 1472,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-dongdaemun-jinwonjo",
+      "name": "진원조닭한마리",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동대문 닭한마리 골목 소재",
+      "latitude": 37.5704514,
+      "longitude": 127.0059348,
+      "google_rating": 4.1,
+      "google_rating_count": 279,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-dongdaemun-kyochon1",
+      "name": "교촌치킨 동대문1호점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "체인점이나 동대문 인근 리뷰량 많은 매장",
+      "latitude": 37.5713239,
+      "longitude": 127.0106797,
+      "google_rating": 4.3,
+      "google_rating_count": 3434,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-dongdaemun-gyerimwon",
+      "name": "계림원누룽지통닭구이",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongdaemun",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "리뷰 수는 적으나 특색있는 메뉴로 확인",
+      "latitude": 37.5894272,
+      "longitude": 127.0562616,
+      "google_rating": 4.1,
+      "google_rating_count": 95,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-bd-burger",
+      "name": "bd버거",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성수이로14길 소재, 쉬림프버거 등 이색 메뉴",
+      "latitude": 37.5410589,
+      "longitude": 127.0564084,
+      "google_rating": 4.9,
+      "google_rating_count": 892,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-dojo",
+      "name": "도죠",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성수이로 소재, 가라아게 전문 이자카야",
+      "latitude": 37.546,
+      "longitude": 127.057855,
+      "google_rating": 4.0,
+      "google_rating_count": 22,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-seongsujang",
+      "name": "성수장",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "아차산로 소재 중식당",
+      "latitude": 37.5446395,
+      "longitude": 127.0593504,
+      "google_rating": 3.8,
+      "google_rating_count": 47,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-otugi-gamaek",
+      "name": "오뚜기식품",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "아차산로 소재 가맥집",
+      "latitude": 37.5461777,
+      "longitude": 127.0597677,
+      "google_rating": 4.2,
+      "google_rating_count": 26,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-dakhanmari",
+      "name": "성수 닭한마리",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "아차산로 소재",
+      "latitude": 37.5445489,
+      "longitude": 127.054975,
+      "google_rating": 4.4,
+      "google_rating_count": 116,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-burnout-burger",
+      "name": "번아웃버거",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "상원1길 소재 캐나다식 버거/푸틴 전문점",
+      "latitude": 37.5461675,
+      "longitude": 127.0470664,
+      "google_rating": 4.9,
+      "google_rating_count": 19,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-uri-maki",
+      "name": "우리마키",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성수이로7길 소재",
+      "latitude": 37.5419621,
+      "longitude": 127.053891,
+      "google_rating": 4.2,
+      "google_rating_count": 42,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-oegajip",
+      "name": "외가집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "연무장길 소재 연탄구이 전문점",
+      "latitude": 37.5390451,
+      "longitude": 127.0535341,
+      "google_rating": 4.4,
+      "google_rating_count": 120,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-kkupdang",
+      "name": "꿉당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성수이로20길 소재",
+      "latitude": 37.5432243,
+      "longitude": 127.057537,
+      "google_rating": 4.4,
+      "google_rating_count": 499,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-agu",
+      "name": "성수AGU",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "곱창튀김 아귀찜 전문점, 유튜버 추천으로 소개",
+      "latitude": 37.5482477,
+      "longitude": 127.0485034,
+      "google_rating": 4.8,
+      "google_rating_count": 303,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-bomui-jeongwon",
+      "name": "봄의정원 성수점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "와인 콜키지 프리 이벤트로 소개",
+      "latitude": 37.5417122,
+      "longitude": 127.0582892,
+      "google_rating": 4.3,
+      "google_rating_count": 107,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-bukchon-mandu",
+      "name": "북촌손만두 성수역점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성수역 인근 만두 전문점",
+      "latitude": 37.5458605,
+      "longitude": 127.0542663,
+      "google_rating": 4.0,
+      "google_rating_count": 85,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-italy-brewery",
+      "name": "이태리양조장 성수점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성수 소재 이탈리안 펍",
+      "latitude": 37.5465848,
+      "longitude": 127.046187,
+      "google_rating": 4.0,
+      "google_rating_count": 3,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-wongigok",
+      "name": "원기옥 성수본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "오픈주방 맡김차림 코스로 소개",
+      "latitude": 37.5461464,
+      "longitude": 127.0657521,
+      "google_rating": 4.5,
+      "google_rating_count": 220,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-brivit",
+      "name": "브리비트",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "시그니처 뇨끼 메뉴로 소개",
+      "latitude": 37.5486582,
+      "longitude": 127.0488604,
+      "google_rating": 4.9,
+      "google_rating_count": 719,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-seongsudarak",
+      "name": "성수다락",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "아늑한 분위기의 데이트 코스로 소개",
+      "latitude": 37.5398972,
+      "longitude": 127.0562192,
+      "google_rating": 4.8,
+      "google_rating_count": 2651,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-jojo",
+      "name": "죠죠 성수점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "오사카 정통 방식으로 소개",
+      "latitude": 37.5414552,
+      "longitude": 127.0610305,
+      "google_rating": 4.8,
+      "google_rating_count": 229,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-onryang",
+      "name": "온량",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "특급호텔 출신 셰프 운영으로 소개",
+      "latitude": 37.5468691,
+      "longitude": 127.0434697,
+      "google_rating": 4.4,
+      "google_rating_count": 428,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-beton",
+      "name": "베통 성수 플래그십",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "평점 정보만 확인되어 근거는 약함",
+      "latitude": 37.5429447,
+      "longitude": 127.0552259,
+      "google_rating": 4.2,
+      "google_rating_count": 296,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-dakgalbi",
+      "name": "홍대닭갈비",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대 소재, 리뷰량 많음",
+      "latitude": 37.5521114,
+      "longitude": 126.9218974,
+      "google_rating": 4.5,
+      "google_rating_count": 1584,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-myth-jakbol",
+      "name": "미쓰족발 홍대본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대 본점, 리뷰량 많음",
+      "latitude": 37.5556851,
+      "longitude": 126.9237421,
+      "google_rating": 4.3,
+      "google_rating_count": 2071,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-james-cheese",
+      "name": "제임스치즈등갈비 홍대역8번출구점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대역 8번출구 인근",
+      "latitude": 37.5565878,
+      "longitude": 126.9259154,
+      "google_rating": 4.1,
+      "google_rating_count": 302,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-mapo-mandu",
+      "name": "마포만두",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대 소재",
+      "latitude": 37.5513475,
+      "longitude": 126.9151659,
+      "google_rating": 3.6,
+      "google_rating_count": 675,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-baeknyeon-samgyetang",
+      "name": "백년토종삼계탕",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대 소재",
+      "latitude": 37.5538158,
+      "longitude": 126.9202046,
+      "google_rating": 4.2,
+      "google_rating_count": 1993,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-noonaholdak",
+      "name": "누나홀닭 홍대점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대 소재",
+      "latitude": 37.5559978,
+      "longitude": 126.9241538,
+      "google_rating": 4.1,
+      "google_rating_count": 716,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-falo-pizza",
+      "name": "팔로피자",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "홍대 소재, 평점 높으나 리뷰수는 적음",
+      "latitude": 37.5498905,
+      "longitude": 126.9156638,
+      "google_rating": 4.4,
+      "google_rating_count": 576,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-central-site",
+      "name": "센트럴사이트",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "평점 정보만 확인되어 근거는 약함",
+      "latitude": 37.5615587,
+      "longitude": 126.9268353,
+      "google_rating": 5.0,
+      "google_rating_count": 1104,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-hongdae-heki",
+      "name": "헤키",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "hongdae",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "평점 정보만 확인되어 근거는 약함",
+      "latitude": 37.555233,
+      "longitude": 126.9098049,
+      "google_rating": 4.5,
+      "google_rating_count": 449,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-gimsambo",
+      "name": "김삼보 여의도점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "국회의사당역 1번출구 인근, 1인용 찌개 메뉴 다양",
+      "latitude": 37.5299164,
+      "longitude": 126.9192046,
+      "google_rating": 4.1,
+      "google_rating_count": 441,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-mr-chow",
+      "name": "미스터초우",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "국회의사당역 4번출구 인근 직화요리 전문점",
+      "latitude": 37.5261443,
+      "longitude": 126.9184828,
+      "google_rating": 4.5,
+      "google_rating_count": 38,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-haedamon",
+      "name": "해담온",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "국회의사당역 4번출구 인근",
+      "latitude": 37.5264516,
+      "longitude": 126.9187862,
+      "google_rating": 4.3,
+      "google_rating_count": 16,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-bulls-burger",
+      "name": "불스버거",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "국회의사당역 3번출구 인근, 넓은 매장",
+      "latitude": 37.5275231,
+      "longitude": 126.9195998,
+      "google_rating": 4.5,
+      "google_rating_count": 19,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-bath-burger",
+      "name": "바스버거 여의도직영점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "여의도역 3번출구 인근, 감자칩 무료리필",
+      "latitude": 37.5248332,
+      "longitude": 126.9274351,
+      "google_rating": 4.5,
+      "google_rating_count": 2086,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-paldang-banjeom",
+      "name": "팔당반점 동여의도점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "여의도역 5번출구 인근",
+      "latitude": 37.5201371,
+      "longitude": 126.9263986,
+      "google_rating": 4.2,
+      "google_rating_count": 206,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-yongseolwang-jokbal",
+      "name": "용설왕족발",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "샛강역 1번출구 인근, 족발+칼국수 조합",
+      "latitude": 37.5201644,
+      "longitude": 126.9272254,
+      "google_rating": 4.2,
+      "google_rating_count": 102,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-mindeulle-bapsang",
+      "name": "민들레밥상",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "샛강역 2번출구 인근",
+      "latitude": 37.519084,
+      "longitude": 126.931192,
+      "google_rating": 3.7,
+      "google_rating_count": 3,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-curry-nice",
+      "name": "카레나이스 여의도점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "여의도역 3번출구 인근",
+      "latitude": 37.5238324,
+      "longitude": 126.9241294,
+      "google_rating": 4.1,
+      "google_rating_count": 46,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-jangdokdae",
+      "name": "장독대김치찌개",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "국회의사당역 4번출구 인근, 오랜 단골층",
+      "latitude": 37.5255736,
+      "longitude": 126.9194684,
+      "google_rating": 3.8,
+      "google_rating_count": 200,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-oto-gimbap",
+      "name": "오토김밥 여의도점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "여의도역 5번출구 인근",
+      "latitude": 37.5202418,
+      "longitude": 126.9263745,
+      "google_rating": 3.9,
+      "google_rating_count": 11,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-yeouido-sinuiju-sundae",
+      "name": "신의주찹쌀순대 여의도1호점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "yeouido",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "국회의사당역 4번출구 인근",
+      "latitude": 37.5256223,
+      "longitude": 126.9181483,
+      "google_rating": 3.8,
+      "google_rating_count": 82,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-samgyetang-village",
+      "name": "삼계탕마을",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "서초구 반포대로 소재",
+      "latitude": 37.5044951,
+      "longitude": 127.0007548,
+      "google_rating": 4.5,
+      "google_rating_count": 10,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-apgujeong-gadam",
+      "name": "압구정가담",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "언주로 소재 전통+현대 중식",
+      "latitude": 37.5263754,
+      "longitude": 127.0302672,
+      "google_rating": 4.3,
+      "google_rating_count": 680,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-wild-buffalo",
+      "name": "와일드버팔로",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "선릉로 소재",
+      "latitude": 37.5271816,
+      "longitude": 127.0391923,
+      "google_rating": 3.8,
+      "google_rating_count": 25,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-minamok",
+      "name": "미남옥",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "언주로153길 소재",
+      "latitude": 37.5227691,
+      "longitude": 127.0322725,
+      "google_rating": 4.4,
+      "google_rating_count": 105,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-hongmyeong",
+      "name": "홍명",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "논현로 소재",
+      "latitude": 37.5144701,
+      "longitude": 127.0295125,
+      "google_rating": 4.2,
+      "google_rating_count": 1069,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-apgujeong-hamheung",
+      "name": "압구정함흥면옥",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "논현로 소재",
+      "latitude": 37.5222479,
+      "longitude": 127.0284641,
+      "google_rating": 4.1,
+      "google_rating_count": 514,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-yeongdong-jangeo",
+      "name": "영동장어",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "언주로148길 소재",
+      "latitude": 37.5203179,
+      "longitude": 127.0353355,
+      "google_rating": 4.2,
+      "google_rating_count": 33,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-daeun-sikdang",
+      "name": "대운식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "역삼로 소재",
+      "latitude": 37.4943184,
+      "longitude": 127.0324599,
+      "google_rating": 4.3,
+      "google_rating_count": 244,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-buheung-jokbal",
+      "name": "부흥왕족발",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "도산대로89길 소재",
+      "latitude": 37.523128,
+      "longitude": 127.0487848,
+      "google_rating": 4.2,
+      "google_rating_count": 20,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-sushi-sumire",
+      "name": "스시스미레",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "도산대로55길 소재 하이엔드 오마카세",
+      "latitude": 37.5245905,
+      "longitude": 127.0405571,
+      "google_rating": 4.6,
+      "google_rating_count": 205,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-hyundai-sundaeguk",
+      "name": "현대순대국",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "강남대로124길 소재",
+      "latitude": 37.5090108,
+      "longitude": 127.0242031,
+      "google_rating": 4.3,
+      "google_rating_count": 491,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-yeongdong-seolleongtang",
+      "name": "영동설렁탕",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "서초구 강남대로 소재",
+      "latitude": 37.5161224,
+      "longitude": 127.0174252,
+      "google_rating": 4.1,
+      "google_rating_count": 3271,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-woojeong",
+      "name": "우정",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "도산대로55길 소재",
+      "latitude": 37.5261642,
+      "longitude": 127.0368266,
+      "google_rating": 4.8,
+      "google_rating_count": 241,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-daewoo-budae",
+      "name": "대우부대찌개",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "테헤란로25길 소재 노포",
+      "latitude": 37.5027247,
+      "longitude": 127.0351485,
+      "google_rating": 4.3,
+      "google_rating_count": 1639,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-gangnam-gangnam-jinhaejang",
+      "name": "강남진해장",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "테헤란로5길 소재",
+      "latitude": 37.4994553,
+      "longitude": 127.0292471,
+      "google_rating": 4.2,
+      "google_rating_count": 1426,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-daol-charcoal",
+      "name": "다올숯불구이",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "강남역 인근, 평점 매우 높음",
+      "latitude": 37.5631782,
+      "longitude": 126.9839641,
+      "google_rating": 4.8,
+      "google_rating_count": 1101,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-gowooga",
+      "name": "고우가 역삼역점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "역삼역 인근",
+      "latitude": 37.5001183,
+      "longitude": 127.0363898,
+      "google_rating": 5.0,
+      "google_rating_count": 439,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-oreno-ramen",
+      "name": "오레노라멘 강남점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "강남역 인근 일본식 라멘 전문점",
+      "latitude": 37.5004994,
+      "longitude": 127.0280802,
+      "google_rating": 4.8,
+      "google_rating_count": 959,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-gangnam-gangnam-gyoza",
+      "name": "강남교자",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gangnam",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "강남역 인근",
+      "latitude": 37.5013618,
+      "longitude": 127.0242077,
+      "google_rating": 4.0,
+      "google_rating_count": 880,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-jangeo-hanwoo",
+      "name": "잠실장어와한우",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "백제고분로 소재, 숯불 장어 전문점",
+      "latitude": 37.5107348,
+      "longitude": 127.0838527,
+      "google_rating": 4.0,
+      "google_rating_count": 364,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-yorihaneun-namja",
+      "name": "요리하는남자",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "잠실새내역 4번출구 인근",
+      "latitude": 37.5108554,
+      "longitude": 127.0818246,
+      "google_rating": 4.1,
+      "google_rating_count": 489,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-woogopjip",
+      "name": "우곱집 잠실본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "잠실새내역 4번출구 인근",
+      "latitude": 37.509632,
+      "longitude": 127.0807465,
+      "google_rating": 4.9,
+      "google_rating_count": 64,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-gaenari-agujjim",
+      "name": "개나리아구찜 본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "송파나루역 2번출구 인근",
+      "latitude": 37.5126519,
+      "longitude": 127.1090739,
+      "google_rating": 3.9,
+      "google_rating_count": 176,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-baekiyonbang",
+      "name": "배키욘방",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "잠실역 10번출구 인근",
+      "latitude": 37.5134985,
+      "longitude": 127.1083458,
+      "google_rating": 3.8,
+      "google_rating_count": 500,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-jamsil-bichaena",
+      "name": "비채나",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "롯데월드타워 81층 소재 고급 한정식",
+      "latitude": 37.5126072,
+      "longitude": 127.1025386,
+      "google_rating": 4.4,
+      "google_rating_count": 521,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-jamsil-vikings-wharf",
+      "name": "바이킹스워프 롯데월드몰점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "롯데월드몰 4층 소재",
+      "latitude": 37.5133269,
+      "longitude": 127.1037432,
+      "google_rating": 4.2,
+      "google_rating_count": 1721,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-pangzi",
+      "name": "팡즈",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "잠실역 2번출구 인근",
+      "latitude": 37.5083237,
+      "longitude": 127.1066485,
+      "google_rating": 4.2,
+      "google_rating_count": 30,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-gold-chamchi",
+      "name": "골드참치 방이점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "오금로 소재",
+      "latitude": 37.5118059,
+      "longitude": 127.1091526,
+      "google_rating": 4.4,
+      "google_rating_count": 468,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-namgyeong-makguksu",
+      "name": "남경막국수",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "석촌호수로 인근, 잠실새내역 3번출구",
+      "latitude": 37.5096022,
+      "longitude": 127.0854359,
+      "google_rating": 4.1,
+      "google_rating_count": 666,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-knickerbocker",
+      "name": "니커버커베이글",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "석촌호수로 소재, 40년 경력 장인 베이커리",
+      "latitude": 37.5098399,
+      "longitude": 127.1057043,
+      "google_rating": 4.3,
+      "google_rating_count": 270,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-jamsil-nz-story",
+      "name": "뉴질랜드스토리",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "석촌호수로 소재",
+      "latitude": 37.5097096,
+      "longitude": 127.1057107,
+      "google_rating": 4.3,
+      "google_rating_count": 348,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-cafe-cinnamon",
+      "name": "카페시나몬",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "석촌호수로 소재",
+      "latitude": 37.5090568,
+      "longitude": 127.1047967,
+      "google_rating": 4.3,
+      "google_rating_count": 68,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-riff-coffee",
+      "name": "리프커피바",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "송파동 소재",
+      "latitude": 37.5092103,
+      "longitude": 127.1082577,
+      "google_rating": 4.4,
+      "google_rating_count": 108,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-jamsil-orinji",
+      "name": "오린지",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "jamsil",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "송파대로48길 소재",
+      "latitude": 37.5070198,
+      "longitude": 127.1081664,
+      "google_rating": 4.2,
+      "google_rating_count": 113,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-itaewon-ziu-bbq",
+      "name": "지우바베큐",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "itaewon",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이태원 소재, 리뷰량 많고 평점 매우 높음",
+      "latitude": 37.560008,
+      "longitude": 126.9851912,
+      "google_rating": 4.7,
+      "google_rating_count": 757,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-itaewon-maple-tree-house",
+      "name": "메이플트리하우스 이태원점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "itaewon",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이태원 대표 바베큐 레스토랑, 리뷰량 매우 많음",
+      "latitude": 37.535049,
+      "longitude": 126.9939672,
+      "google_rating": 4.3,
+      "google_rating_count": 1394,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "seoul-restaurant-itaewon-mr-ahn",
+      "name": "미스터안의수제막걸리",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "itaewon",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이태원 소재 막걸리 전문점",
+      "latitude": 37.5385806,
+      "longitude": 126.9874086,
+      "google_rating": 4.6,
+      "google_rating_count": 691,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-itaewon-yujin-makguksu",
+      "name": "유진막국수",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "itaewon",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이태원 소재",
+      "latitude": 37.528433,
+      "longitude": 126.9923557,
+      "google_rating": 4.0,
+      "google_rating_count": 601,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-itaewon-geolgune",
+      "name": "걸그네왕곱창",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "itaewon",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이태원 소재",
+      "latitude": 37.5340636,
+      "longitude": 126.9930194,
+      "google_rating": 4.3,
+      "google_rating_count": 274,
+      "is_active": true
     }
   ],
   "featured_video": {

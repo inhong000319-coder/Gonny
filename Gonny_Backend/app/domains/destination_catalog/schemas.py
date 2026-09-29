@@ -51,6 +51,14 @@ class PlaceData(BaseModel):
     summary: str
     latitude: float | None = None
     longitude: float | None = None
+    # Optional - only populated for the restaurant entities researched via
+    # local_only/data/*_restaurants_geocoded.csv (see
+    # scripts/merge_restaurant_data.py). None for every place without a
+    # sourced Google rating, which the rating-aware scoring bonus (see
+    # slot_scoring.google_rating_bonus_score) treats as neutral (0), never
+    # a penalty - most of the existing catalog will stay None.
+    google_rating: float | None = None
+    google_rating_count: int | None = None
     content_id: str | None = None
     # Raw TourAPI usetime/restdate text, stored verbatim - these are
     # free-form prose (e.g. "09:00~18:00(입장마감 17:30)"), not a

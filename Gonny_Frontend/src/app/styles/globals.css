@@ -2258,6 +2258,15 @@ body.modal-open {
   background: rgba(255, 255, 255, 0.9);
 }
 
+.planner-meal-card {
+  border-color: rgba(255, 179, 102, 0.55);
+  background: rgba(255, 247, 235, 0.9);
+}
+
+.planner-meal-card .planner-stop-time span {
+  background: linear-gradient(135deg, rgba(255, 179, 102, 0.25), rgba(255, 140, 60, 0.16));
+}
+
 .planner-stop-time {
   display: grid;
   place-items: center;

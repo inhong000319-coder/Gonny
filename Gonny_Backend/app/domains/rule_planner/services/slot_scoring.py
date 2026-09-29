@@ -153,6 +153,36 @@ def google_rating_bonus_score(place: PlaceData) -> int:
     return 0
 
 
+def meal_candidate_score(
+    place: PlaceData,
+    request: NormalizedRuleRequest,
+    *,
+    previous_place: PlaceData | None,
+    next_place: PlaceData | None,
+) -> int:
+    """Lightweight scoring for the independent lunch/dinner recommendation
+    (see RuleItineraryService._recommend_meals) - deliberately NOT the
+    full slot_score(): meals no longer compete for a morning/afternoon/
+    evening slot (see SLOT_CATEGORY_PREFERENCE), so slot_score()'s
+    slot-fit/phase/duration/style bonuses - all tuned for that 3-way
+    activity competition - don't apply to a meal pick. Reuses base_score()
+    (trip concept/budget/style/companion fit) plus the same coordinate-
+    based continuity bonuses and rating-aware bonus slot_score() uses, so
+    a meal is still picked to sit conveniently between the surrounding
+    activity places and to favor well-rated restaurants - no new scoring
+    logic invented for this.
+    """
+    score = base_score(place, request)
+    previous_bonus = coordinate_area_transition_bonus(previous_place, place)
+    if previous_bonus is not None:
+        score += previous_bonus
+    next_bonus = coordinate_next_place_transition_bonus(next_place, place)
+    if next_bonus is not None:
+        score += next_bonus
+    score += google_rating_bonus_score(place)
+    return score
+
+
 def duration_slot_score(
     *,
     place: PlaceData,

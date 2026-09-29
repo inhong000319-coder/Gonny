@@ -14,9 +14,10 @@ from app.domains.rule_planner.services.community_feedback import (
     community_feedback_bonus,
     load_place_feedback_signals,
 )
-from app.domains.rule_planner.services.slot_scoring import legacy_base_score
+from app.domains.rule_planner.services.slot_scoring import google_rating_bonus_score, legacy_base_score
 from app.domains.rule_planner.services.travel_estimate import (
     coordinate_area_transition_bonus,
+    coordinate_next_place_transition_bonus,
     estimate_accommodation_transition_minutes,
     estimate_day_total_minutes,
 )
@@ -560,3 +561,125 @@ def test_load_place_feedback_signals_empty_without_database() -> None:
     # disabled) - load_place_feedback_signals must degrade to {} rather
     # than raise.
     assert load_place_feedback_signals(["gyeongbokgung", "myeongdong"]) == {}
+
+
+# next_place-aware scoring (see services/travel_estimate.py's
+# coordinate_next_place_transition_bonus, wired into slot_score() below)
+
+
+def test_coordinate_next_place_transition_bonus_none_without_next_place_or_coordinates() -> None:
+    place = build_place(latitude=37.5665, longitude=126.9780)
+    nearby_next_place = build_place(id="next-place", latitude=37.5670, longitude=126.9785)
+
+    assert coordinate_next_place_transition_bonus(None, place) is None
+    assert coordinate_next_place_transition_bonus(build_place(id="no-coords-next"), place) is None
+    # place itself missing coordinates -> still None even with a valid next_place.
+    assert coordinate_next_place_transition_bonus(nearby_next_place, build_place(id="no-coords-self")) is None
+
+
+def test_coordinate_next_place_transition_bonus_is_half_of_previous_place_bonus() -> None:
+    # Same pair, same distance - coordinate_area_transition_bonus() and
+    # coordinate_next_place_transition_bonus() both go through the same
+    # underlying haversine estimate, so the next-place version should be
+    # exactly half (rounded), per its documented half-weighting rationale.
+    place = build_place(id="anchor", area="area-a", latitude=37.5665, longitude=126.9780)
+    other_place = build_place(id="other", area="area-b", latitude=37.5670, longitude=126.9785)
+
+    previous_bonus = coordinate_area_transition_bonus(other_place, place)
+    next_bonus = coordinate_next_place_transition_bonus(other_place, place)
+
+    assert previous_bonus is not None
+    assert next_bonus is not None
+    assert next_bonus == round(previous_bonus / 2)
+
+
+def test_slot_score_rewards_a_next_place_that_is_coordinate_close() -> None:
+    # Same current place/previous_place in both calls - only next_place
+    # changes, so any score difference must come from
+    # coordinate_next_place_transition_bonus() inside slot_score().
+    service = RuleItineraryService()
+    request = build_request()
+    current_place = build_place(id="current", area="area-a", latitude=37.5665, longitude=126.9780)
+    close_next_place = build_place(id="close-next", area="area-b", latitude=37.5670, longitude=126.9785)
+    far_next_place = build_place(id="far-next", area="area-c", latitude=37.9000, longitude=127.3000)
+
+    score_without_next = service._slot_score(
+        place=current_place, request=request, time_slot="afternoon", day_number=2, preferred_area=None,
+    )
+    score_with_close_next = service._slot_score(
+        place=current_place, request=request, time_slot="afternoon", day_number=2, preferred_area=None,
+        next_place=close_next_place,
+    )
+    score_with_far_next = service._slot_score(
+        place=current_place, request=request, time_slot="afternoon", day_number=2, preferred_area=None,
+        next_place=far_next_place,
+    )
+
+    assert score_with_close_next > score_without_next
+    assert score_with_close_next > score_with_far_next
+
+
+# Google-rating-aware scoring (see services/slot_scoring.py's
+# google_rating_bonus_score, wired into slot_score() above)
+
+
+def test_google_rating_bonus_neutral_when_rating_missing() -> None:
+    place = build_place(google_rating=None, google_rating_count=None)
+    assert google_rating_bonus_score(place) == 0
+
+
+def test_google_rating_bonus_high_confidence_threshold() -> None:
+    high_confidence = build_place(google_rating=4.6, google_rating_count=120)
+    assert google_rating_bonus_score(high_confidence) == 6
+
+    # Rating is high enough, but not enough reviews back it up - falls
+    # back to the "good" tier rather than the high-confidence one.
+    unreliable_high_rating = build_place(google_rating=4.6, google_rating_count=5)
+    assert google_rating_bonus_score(unreliable_high_rating) == 3
+
+
+def test_google_rating_bonus_good_threshold() -> None:
+    good = build_place(google_rating=4.0, google_rating_count=10)
+    assert google_rating_bonus_score(good) == 3
+
+
+def test_google_rating_bonus_zero_below_good_threshold() -> None:
+    mediocre = build_place(google_rating=3.5, google_rating_count=500)
+    assert google_rating_bonus_score(mediocre) == 0
+
+
+def test_slot_score_unaffected_by_missing_google_rating() -> None:
+    # The core "no regression for existing places" guarantee: a place with
+    # no google_rating data at all (the vast majority of the catalog) must
+    # score identically to how it did before this bonus existed.
+    service = RuleItineraryService()
+    request = build_request()
+    place_without_rating = build_place(google_rating=None, google_rating_count=None)
+
+    score = service._slot_score(
+        place=place_without_rating, request=request, time_slot="morning", day_number=2, preferred_area="city-center",
+    )
+
+    assert score == service._slot_score(
+        place=build_place(google_rating=None, google_rating_count=None),
+        request=request,
+        time_slot="morning",
+        day_number=2,
+        preferred_area="city-center",
+    )
+
+
+def test_slot_score_rewards_a_well_rated_place_over_an_identical_unrated_one() -> None:
+    service = RuleItineraryService()
+    request = build_request()
+    unrated_place = build_place(id="unrated", google_rating=None, google_rating_count=None)
+    highly_rated_place = build_place(id="highly-rated", google_rating=4.7, google_rating_count=200)
+
+    unrated_score = service._slot_score(
+        place=unrated_place, request=request, time_slot="morning", day_number=2, preferred_area="city-center",
+    )
+    highly_rated_score = service._slot_score(
+        place=highly_rated_place, request=request, time_slot="morning", day_number=2, preferred_area="city-center",
+    )
+
+    assert highly_rated_score - unrated_score == 6

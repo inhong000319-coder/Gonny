@@ -1813,6 +1813,1624 @@
       ],
       "setting": "mixed",
       "rain_sensitive_light": true
+    },
+    {
+      "id": "busan-restaurant-nampo-icchi",
+      "name": "이찌",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남포동 소재, 프리미엄 와규·대창 참숯구이 전문점으로 소개",
+      "latitude": 35.0982774,
+      "longitude": 129.0331201,
+      "google_rating": 4.2,
+      "google_rating_count": 176,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-chaedo",
+      "name": "채도",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남포동 2층 소재 브런치 전문점",
+      "latitude": 35.0988484,
+      "longitude": 129.0300719,
+      "google_rating": 4.4,
+      "google_rating_count": 187,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-subokcenta",
+      "name": "수복센타",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남포동 소재, 방송 출연으로 확인된 해물·생선요리 전문점",
+      "latitude": 35.0988898,
+      "longitude": 129.0314969,
+      "google_rating": 4.0,
+      "google_rating_count": 439,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-nampo-honggane",
+      "name": "홍가네양곱창",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "자갈치로 소재",
+      "latitude": 35.0977332,
+      "longitude": 129.030341,
+      "google_rating": 4.6,
+      "google_rating_count": 114,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-sushibuok",
+      "name": "스시부엌",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남포동 소재, 프라이빗 공간 제공 스시 오마카세",
+      "latitude": 35.0981966,
+      "longitude": 129.0329396,
+      "google_rating": 4.0,
+      "google_rating_count": 109,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-samik",
+      "name": "삼익식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남포역 인근 백반집",
+      "latitude": 35.098727,
+      "longitude": 129.030919,
+      "google_rating": 4.6,
+      "google_rating_count": 143,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-18beon-wandangjip",
+      "name": "18번완당집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "비프광장로 소재 노포형 분식집",
+      "latitude": 35.09898,
+      "longitude": 129.0285759,
+      "google_rating": 4.0,
+      "google_rating_count": 439,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-jeilsan-kkomjangeo",
+      "name": "제일산꼼장어장어구이",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "자갈치해안로 소재",
+      "latitude": 35.0971803,
+      "longitude": 129.032288,
+      "google_rating": 3.9,
+      "google_rating_count": 790,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-nampo-kamatake",
+      "name": "카마타케제면소 본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "비프광장로 소재, 방송 출연으로 확인된 우동 전문점",
+      "latitude": 35.0989911,
+      "longitude": 129.0285905,
+      "google_rating": 4.1,
+      "google_rating_count": 244,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-nampo-naengsamjip",
+      "name": "냉삼집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "nampo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "구덕로 소재 가성비 삼겹살집",
+      "latitude": 35.0980957,
+      "longitude": 129.0326593,
+      "google_rating": 4.8,
+      "google_rating_count": 11,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-songdo-kitchen",
+      "name": "송도키친",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "송도해수욕장 인근, 리뷰량 많고 평점 높음",
+      "latitude": 35.0777186,
+      "longitude": 129.0193398,
+      "google_rating": 4.2,
+      "google_rating_count": 50,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-songdo-haesot",
+      "name": "송도해솥",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "리뷰 수가 적어 근거가 약함",
+      "latitude": 35.0777315,
+      "longitude": 129.021307,
+      "google_rating": 4.9,
+      "google_rating_count": 1801,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-songdo-clam-house",
+      "name": "클램하우스 부산송도점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "리뷰 수가 적어 근거가 약함",
+      "latitude": 35.0716702,
+      "longitude": 129.0171652,
+      "google_rating": 4.8,
+      "google_rating_count": 129,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-songdo-the-bridge",
+      "name": "더브릿지",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "송도해수욕장 인근",
+      "latitude": 35.078429299999996,
+      "longitude": 129.02417699999998,
+      "google_rating": 4.2,
+      "google_rating_count": 21,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-songdo-park-restaurant",
+      "name": "송도파크식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "리뷰 수가 적어 근거가 약함",
+      "latitude": 35.0705154,
+      "longitude": 129.0182096,
+      "google_rating": 3.8,
+      "google_rating_count": 643,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-bollywood",
+      "name": "볼리우드인디언레스토랑",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리해수욕장 인근, 리뷰량 많음",
+      "latitude": 35.1530981,
+      "longitude": 129.1168516,
+      "google_rating": 4.5,
+      "google_rating_count": 455,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-gwangalli-jangsusam",
+      "name": "장수삼",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 인근, 리뷰량 매우 많고 평점 높음",
+      "latitude": 35.1695,
+      "longitude": 129.119634,
+      "google_rating": 4.7,
+      "google_rating_count": 274,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-gwangalli-yoikuma",
+      "name": "요이쿠마",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.1579807,
+      "longitude": 129.1266016,
+      "google_rating": 4.5,
+      "google_rating_count": 221,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-hq-gwangan",
+      "name": "HQ광안",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.1547291,
+      "longitude": 129.1199445,
+      "google_rating": 4.6,
+      "google_rating_count": 265,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-butchers-burger",
+      "name": "부처스버거광안",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.1515702,
+      "longitude": 129.1166812,
+      "google_rating": 4.1,
+      "google_rating_count": 129,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-la-bella-citta",
+      "name": "라벨라치타",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.150113,
+      "longitude": 129.1150777,
+      "google_rating": 4.1,
+      "google_rating_count": 286,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-fuzzy-navel",
+      "name": "퍼지네이블광안",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재, 리뷰량은 많으나 평점은 상대적으로 낮음",
+      "latitude": 35.1504718,
+      "longitude": 129.1157809,
+      "google_rating": 4.1,
+      "google_rating_count": 151,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-gohyang-katsu",
+      "name": "고향카츠",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.1509223,
+      "longitude": 129.1140304,
+      "google_rating": 4.4,
+      "google_rating_count": 98,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-gwangalli-wild-wave",
+      "name": "와일드웨이브브루잉광안",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.1558158,
+      "longitude": 129.1232948,
+      "google_rating": 4.4,
+      "google_rating_count": 214,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-centum-jangsusam",
+      "name": "장수삼(센텀점)",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "센텀시티 신세계백화점 인근, 광안리 지점과 동일 브랜드로 추정",
+      "latitude": 35.1695,
+      "longitude": 129.119634,
+      "google_rating": 4.7,
+      "google_rating_count": 274,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-centum-the-party",
+      "name": "더파티센텀",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "센텀시티 소재",
+      "latitude": 35.1740594,
+      "longitude": 129.1261508,
+      "google_rating": 4.0,
+      "google_rating_count": 2376,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-centum-dongnae-samgyetang",
+      "name": "동래삼계탕(센텀점)",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "센텀시티 소재",
+      "latitude": 35.1729895,
+      "longitude": 129.1315998,
+      "google_rating": 4.0,
+      "google_rating_count": 177,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-centum-gami",
+      "name": "가미",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "센텀시티 소재",
+      "latitude": 35.1676495,
+      "longitude": 129.1312436,
+      "google_rating": 4.4,
+      "google_rating_count": 114,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-centum-hops-pizzeria",
+      "name": "홉스피제리아센텀",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "센텀시티 소재",
+      "latitude": 35.1724643,
+      "longitude": 129.1311757,
+      "google_rating": 4.1,
+      "google_rating_count": 163,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-centum-gordon-ramsay-burger",
+      "name": "고든램지버거 부산",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "centum",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "유명 셰프 브랜드이나 리뷰 수가 적어 근거는 약함",
+      "latitude": 35.1685728,
+      "longitude": 129.1297904,
+      "google_rating": 4.3,
+      "google_rating_count": 205,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-haeundae-namaste",
+      "name": "나마스테해운대",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재, 리뷰량 매우 많고 평점 매우 높음",
+      "latitude": 35.1601537,
+      "longitude": 129.1606393,
+      "google_rating": 4.8,
+      "google_rating_count": 3412,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-haeundae-royal-india",
+      "name": "로얄인디아해운대",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재, 리뷰량 많음",
+      "latitude": 35.1605987,
+      "longitude": 129.1616518,
+      "google_rating": 4.8,
+      "google_rating_count": 739,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-haeundae-legendary-ribs",
+      "name": "레전더리립스해운대",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재, 리뷰량 많음",
+      "latitude": 35.1599485,
+      "longitude": 129.1617164,
+      "google_rating": 4.9,
+      "google_rating_count": 2353,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-haeundae-the-party",
+      "name": "더파티해운대",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재, 리뷰량 많음",
+      "latitude": 35.1602037,
+      "longitude": 129.1665972,
+      "google_rating": 4.1,
+      "google_rating_count": 1614,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-haeundae-anga",
+      "name": "앙가",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재, 리뷰량 많음",
+      "latitude": 35.1650831,
+      "longitude": 129.1691953,
+      "google_rating": 4.5,
+      "google_rating_count": 529,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-haeundae-geumsu-bokkuk",
+      "name": "금수복국 본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 대표 복국 노포 체인, 리뷰량 많음",
+      "latitude": 35.1624205,
+      "longitude": 129.1645061,
+      "google_rating": 4.2,
+      "google_rating_count": 7723,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-haeundae-obanjang",
+      "name": "오반장",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재, 리뷰량 많음",
+      "latitude": 35.1615099,
+      "longitude": 129.1591675,
+      "google_rating": 4.0,
+      "google_rating_count": 2351,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-haeundae-wonjo-jeonbokjuk",
+      "name": "원조전복죽",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재",
+      "latitude": 35.1604738,
+      "longitude": 129.1658564,
+      "google_rating": 3.2,
+      "google_rating_count": 460,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-haeundae-ilpum-hanwoo",
+      "name": "일품한우",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재",
+      "latitude": 35.1602384,
+      "longitude": 129.1594118,
+      "google_rating": 4.0,
+      "google_rating_count": 388,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-haeundae-halmaejib",
+      "name": "할매집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재",
+      "latitude": 35.16307,
+      "longitude": 129.1650109,
+      "google_rating": 4.2,
+      "google_rating_count": 1018,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-haeundae-kyu-woojeong",
+      "name": "규우정",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재",
+      "latitude": 35.1601325,
+      "longitude": 129.1665759,
+      "google_rating": 4.6,
+      "google_rating_count": 247,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-haeundae-boi-brasil",
+      "name": "보이브라질",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "haeundae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해운대 소재",
+      "latitude": 35.1632186,
+      "longitude": 129.1593662,
+      "google_rating": 4.4,
+      "google_rating_count": 479,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-dongnae-hankyung-gamjatang",
+      "name": "한경돼지등뼈감자탕",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동래 소재, 평점 매우 높으나 리뷰 수는 불명확",
+      "latitude": 35.2055604,
+      "longitude": 129.0796655,
+      "google_rating": 4.5,
+      "google_rating_count": 6,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-dongnae-seokjeong-galbi",
+      "name": "석정갈비 동래점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동래 소재",
+      "latitude": 35.2105072,
+      "longitude": 129.0741897,
+      "google_rating": 4.5,
+      "google_rating_count": 244,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-dongnae-byeoljang",
+      "name": "동래별장",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동래 소재, 두 목록에 중복 등재되어 인지도 있는 것으로 추정",
+      "latitude": 35.2203554,
+      "longitude": 129.0795289,
+      "google_rating": 3.5,
+      "google_rating_count": 136,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-dongnae-jingook-myeongga",
+      "name": "진국명가 온천천점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "온천천 소재",
+      "latitude": 35.193775,
+      "longitude": 129.0930842,
+      "google_rating": 3.9,
+      "google_rating_count": 912,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-dongnae-wonjo-somunnan-kalgugsu",
+      "name": "원조소문난손칼국수",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동래 소재",
+      "latitude": 35.2215455,
+      "longitude": 129.0844849,
+      "google_rating": 4.0,
+      "google_rating_count": 867,
+      "is_active": true
     }
   ],
   "featured_video": {

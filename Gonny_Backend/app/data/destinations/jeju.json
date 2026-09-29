@@ -1566,6 +1566,1207 @@
       "closed_days": null,
       "setting": "outdoor",
       "rain_sensitive_light": false
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-ilpalpaljuk",
+      "name": "일팔팔죽",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근, 팥칼국수 별미로 소개",
+      "latitude": 33.512215,
+      "longitude": 126.5271214,
+      "google_rating": 3.9,
+      "google_rating_count": 11,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-sarang-bunsik",
+      "name": "사랑분식",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근",
+      "latitude": 33.5124677,
+      "longitude": 126.5278416,
+      "google_rating": 3.8,
+      "google_rating_count": 148,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-seoul-bunsik",
+      "name": "서울분식",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근, 사랑분식과 대비되는 스타일로 소개",
+      "latitude": 33.5122947,
+      "longitude": 126.5278355,
+      "google_rating": 2.5,
+      "google_rating_count": 215,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-jangchun",
+      "name": "장춘식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근 역사 있는 제주향토음식점",
+      "latitude": 33.5120848,
+      "longitude": 126.52792199999999,
+      "google_rating": 3.0,
+      "google_rating_count": 69,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-anseong",
+      "name": "안성식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근",
+      "latitude": 33.5117418,
+      "longitude": 126.5272069,
+      "google_rating": 4.6,
+      "google_rating_count": 23,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-hanil",
+      "name": "한일식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근",
+      "latitude": 33.5125631,
+      "longitude": 126.5272059,
+      "google_rating": 4.4,
+      "google_rating_count": 13,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-dongmun-ollejjinbbang",
+      "name": "동문올레찐빵 제주본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근 제주식 전통 간식점",
+      "latitude": 33.5121558,
+      "longitude": 126.5251722,
+      "google_rating": 4.1,
+      "google_rating_count": 7,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-nakwon-tteokjip",
+      "name": "낙원떡집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동문시장 인근",
+      "latitude": 33.5123468,
+      "longitude": 126.5257706,
+      "google_rating": 5.0,
+      "google_rating_count": 1,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-myeongdong-son-kalgugsu",
+      "name": "명동손칼국수",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "제주 대학생들에게 알려진 로컬 명소",
+      "latitude": 33.5106916,
+      "longitude": 126.5244168,
+      "google_rating": 4.4,
+      "google_rating_count": 173,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-woljeongri-gotgan",
+      "name": "월정리곳간",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해맞이해안로 소재",
+      "latitude": 33.5562572,
+      "longitude": 126.8068777,
+      "google_rating": 4.6,
+      "google_rating_count": 11,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-hangeori-pujutgan",
+      "name": "한거리푸줏간",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "월정3길 소재",
+      "latitude": 33.5553596,
+      "longitude": 126.7945055,
+      "google_rating": 4.3,
+      "google_rating_count": 77,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-taco-massim",
+      "name": "타코마씸",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해맞이해안로 소재, 해변 바로 앞",
+      "latitude": 33.5550516,
+      "longitude": 126.7972342,
+      "google_rating": 4.3,
+      "google_rating_count": 179,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-yuko",
+      "name": "유코식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "행원로 소재 바 형식 식당",
+      "latitude": 33.5548424,
+      "longitude": 126.7997354,
+      "google_rating": 3.9,
+      "google_rating_count": 85,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-baerongae",
+      "name": "배롱개",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해맞이해안로 소재",
+      "latitude": 33.5577737,
+      "longitude": 126.794557,
+      "google_rating": 4.1,
+      "google_rating_count": 288,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-ujin-haejangguk",
+      "name": "우진해장국",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "제주시 소재, 리뷰량 많음",
+      "latitude": 33.511505,
+      "longitude": 126.5200319,
+      "google_rating": 4.1,
+      "google_rating_count": 9494,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-samdae-guksu",
+      "name": "삼대국수회관",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "제주 대표 고기국수 체인점",
+      "latitude": 33.506942,
+      "longitude": 126.5300492,
+      "google_rating": 3.8,
+      "google_rating_count": 2472,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-geuriunbada",
+      "name": "그리운바다성산포",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성산일출봉 인근",
+      "latitude": 33.4698032,
+      "longitude": 126.9299962,
+      "google_rating": 4.4,
+      "google_rating_count": 887,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-matna-sikdang",
+      "name": "맛나식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성산일출봉 인근",
+      "latitude": 33.4485794,
+      "longitude": 126.9160712,
+      "google_rating": 4.3,
+      "google_rating_count": 1657,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-gasiabang",
+      "name": "가시아방식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성산 지역에서 인지도 있는 향토식당으로 추정",
+      "latitude": 33.438616,
+      "longitude": 126.918065,
+      "google_rating": 3.9,
+      "google_rating_count": 3703,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-bokjassi-yeontan",
+      "name": "복자씨연탄구이",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성산일출봉 인근",
+      "latitude": 33.4692355,
+      "longitude": 126.9198688,
+      "google_rating": 4.0,
+      "google_rating_count": 1601,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-godeungeo-ssambap",
+      "name": "고등어쌈밥",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 4,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성산일출봉 인근, 리뷰 수는 적음",
+      "latitude": 33.4643345,
+      "longitude": 126.9358292,
+      "google_rating": 4.3,
+      "google_rating_count": 64,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seogwipowest-gozipdolwuruk",
+      "name": "고집돌우럭 중문점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "중문색달해변 인근, 리뷰량 매우 많고 평점 매우 높음",
+      "latitude": 33.2579173,
+      "longitude": 126.4168242,
+      "google_rating": 4.7,
+      "google_rating_count": 8227,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "jeju-restaurant-seogwipowest-theparkview",
+      "name": "더파크뷰",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "중문색달해변 인근, 리뷰량 많음",
+      "latitude": 33.2471631,
+      "longitude": 126.4079553,
+      "google_rating": 4.5,
+      "google_rating_count": 775,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "jeju-restaurant-seogwipowest-jungmun-doldam-heukdwaeji",
+      "name": "중문돌담흑돼지",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "중문 소재",
+      "latitude": 33.2577671,
+      "longitude": 126.4132332,
+      "google_rating": 4.6,
+      "google_rating_count": 447,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seogwipowest-halla-galchi",
+      "name": "한라갈치 중문점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "중문 소재",
+      "latitude": 33.257304,
+      "longitude": 126.4154834,
+      "google_rating": 3.7,
+      "google_rating_count": 11,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seogwipowest-jungmun-sudu-ribomal",
+      "name": "중문수두리보말칼국수",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "afternoon",
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "중문 소재",
+      "latitude": 33.2515765,
+      "longitude": 126.4251078,
+      "google_rating": 4.6,
+      "google_rating_count": 1920,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seogwipowest-south-bounder",
+      "name": "사우스바운더",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "중문 소재",
+      "latitude": 33.2565309,
+      "longitude": 126.4026394,
+      "google_rating": 4.5,
+      "google_rating_count": 488,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-westjeju-euneheo-jeonbok",
+      "name": "애월 은혜전복",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "한담해안산책로 인근",
+      "latitude": 33.4629015,
+      "longitude": 126.3101289,
+      "google_rating": 4.2,
+      "google_rating_count": 668,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-westjeju-hyeopjae-suudong",
+      "name": "협재 수우동",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "협재 백사장 바로 옆, 비양도 조망 가능",
+      "latitude": 33.3965751,
+      "longitude": 126.2425147,
+      "google_rating": 3.7,
+      "google_rating_count": 1525,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "jeju-restaurant-westjeju-hallim-badasaenggak",
+      "name": "한림 바다생각",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "한림항 인근",
+      "latitude": 33.4029885,
+      "longitude": 126.2521448,
+      "google_rating": 3.8,
+      "google_rating_count": 325,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-westjeju-indian-kitchen",
+      "name": "인디언키친 협재점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "협재해수욕장 인근, 리뷰량 매우 많음",
+      "latitude": 33.4504215,
+      "longitude": 126.3307884,
+      "google_rating": 4.6,
+      "google_rating_count": 1380,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "jeju-restaurant-westjeju-galchibada",
+      "name": "갈치바다",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "협재/애월 권역 소재",
+      "latitude": 33.4604647,
+      "longitude": 126.3110144,
+      "google_rating": 4.5,
+      "google_rating_count": 425,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-westjeju-galchigangpae",
+      "name": "갈치강패 애월점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "애월 소재",
+      "latitude": 33.4637365,
+      "longitude": 126.3135065,
+      "google_rating": 4.9,
+      "google_rating_count": 19,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-westjeju-nolman",
+      "name": "놀맨",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "협재/애월 권역 소재",
+      "latitude": 33.4624571,
+      "longitude": 126.3102644,
+      "google_rating": 3.7,
+      "google_rating_count": 672,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-westjeju-muinjeju",
+      "name": "무인제주",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "협재/애월 권역 소재",
+      "latitude": 33.466895,
+      "longitude": 126.336944,
+      "google_rating": 4.4,
+      "google_rating_count": 88,
+      "is_active": true
     }
   ],
   "featured_video": {

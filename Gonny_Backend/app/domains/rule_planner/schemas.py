@@ -51,6 +51,23 @@ class RuleItineraryItem(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleMealRecommendation(BaseModel):
+    # Field shape deliberately mirrors RuleItineraryItem (minus category,
+    # which every meal implicitly is "food") so the frontend can reuse
+    # rendering patterns - see accommodation_recommendation for the same
+    # "recommended independently of the 3-slot competition" spirit, just
+    # repeated per day instead of once for the whole trip (see
+    # RuleItineraryService._recommend_meals).
+    day_number: int
+    meal_type: Literal["lunch", "dinner"]
+    place_name: str
+    area: str
+    notes: str
+    travel_minutes_from_previous: int | None = None
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleDayDurationWarning(BaseModel):
     day_number: int
     estimated_total_minutes: int
@@ -110,6 +127,7 @@ class RuleItineraryResponse(BaseModel):
     closed_day_exclusions: list[RuleClosedDayExclusion] = Field(default_factory=list)
     weather_alerts: list[RuleWeatherAlert] = Field(default_factory=list)
     accommodation_recommendation: AccommodationData | None = None
+    meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

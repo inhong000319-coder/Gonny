@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { Button } from "../../../shared/components/ui/button";
@@ -70,6 +70,21 @@ type RuleWeatherAlert = {
   suggested_alternatives: string[];
 };
 
+// Field shape deliberately mirrors RuleItineraryItem (minus category,
+// which every meal implicitly is "food") - see the backend's
+// RuleMealRecommendation schema. Recommended independently per day,
+// outside the morning/afternoon/evening slot competition - same spirit
+// as accommodation_recommendation being separate from items, just
+// repeated per day instead of once for the whole trip.
+type RuleMealRecommendation = {
+  day_number: number;
+  meal_type: "lunch" | "dinner";
+  place_name: string;
+  area: string;
+  notes: string;
+  travel_minutes_from_previous: number | null;
+};
+
 // view(숙소 조망)는 데이터 신뢰도 문제로 이번 범위에서 표시하지 않는다.
 type AccommodationRecommendation = {
   id: string;
@@ -107,6 +122,7 @@ type RuleItineraryResponse = {
   closed_day_exclusions: RuleClosedDayExclusion[];
   weather_alerts: RuleWeatherAlert[];
   accommodation_recommendation: AccommodationRecommendation | null;
+  meal_recommendations: RuleMealRecommendation[];
 };
 
 type PlannerFormState = {
@@ -407,6 +423,22 @@ function isRuleWeatherAlert(value: unknown): value is RuleWeatherAlert {
   );
 }
 
+function isRuleMealRecommendation(value: unknown): value is RuleMealRecommendation {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const meal = value as Record<string, unknown>;
+  return (
+    typeof meal.day_number === "number" &&
+    (meal.meal_type === "lunch" || meal.meal_type === "dinner") &&
+    typeof meal.place_name === "string" &&
+    typeof meal.area === "string" &&
+    typeof meal.notes === "string" &&
+    (meal.travel_minutes_from_previous === null || typeof meal.travel_minutes_from_previous === "number")
+  );
+}
+
 function isAccommodationRecommendation(value: unknown): value is AccommodationRecommendation {
   if (!value || typeof value !== "object") {
     return false;
@@ -472,6 +504,9 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
       ? data.accommodation_recommendation
       : null,
+    meal_recommendations: Array.isArray(data.meal_recommendations)
+      ? data.meal_recommendations.filter(isRuleMealRecommendation)
+      : [],
   };
 }
 
@@ -486,6 +521,54 @@ function groupByDay(items: RuleItineraryItem[]) {
     groups.push({ day: item.day_number, items: [item] });
     return groups;
   }, []);
+}
+
+function groupMealsByDay(meals: RuleMealRecommendation[]) {
+  const byDay = new Map<number, { lunch?: RuleMealRecommendation; dinner?: RuleMealRecommendation }>();
+  for (const meal of meals) {
+    const entry = byDay.get(meal.day_number) ?? {};
+    if (meal.meal_type === "lunch") {
+      entry.lunch = meal;
+    } else {
+      entry.dinner = meal;
+    }
+    byDay.set(meal.day_number, entry);
+  }
+  return byDay;
+}
+
+function MealCard({ meal }: { meal: RuleMealRecommendation }) {
+  const note = splitNoteLines(meal.notes);
+
+  return (
+    <article className="planner-stop-card planner-meal-card">
+      <div className="planner-stop-time">
+        <span>{meal.meal_type === "lunch" ? "점심" : "저녁"}</span>
+      </div>
+      <div className="planner-stop-body">
+        {meal.travel_minutes_from_previous !== null ? (
+          <p className="planner-slot-travel-time">이전 장소에서 약 {meal.travel_minutes_from_previous}분 이동</p>
+        ) : null}
+        <div className="planner-slot-top">
+          <strong>{meal.place_name}</strong>
+          <span className="badge">식사</span>
+        </div>
+        <p className="planner-slot-area">{meal.area}</p>
+        <div className="planner-slot-note">
+          {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
+          {note.details.length > 0 ? (
+            <div className="planner-slot-note-body">
+              {note.details.map((line, index) => (
+                <p key={`${meal.place_name}-note-${index}`} className="planner-slot-note-line">
+                  {line}
+                </p>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
 }
 
 function countDistinctAreas(items: RuleItineraryItem[]) {
@@ -634,6 +717,7 @@ export function TripCreateForm() {
   const mapCities = useMemo(() => cities.slice(0, 8), [cities]);
 
   const groupedItems = useMemo(() => groupByDay(result?.items ?? []), [result]);
+  const mealsByDay = useMemo(() => groupMealsByDay(result?.meal_recommendations ?? []), [result]);
   const selectedBudgetValue = parseBudgetValue(form.budget_value);
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
@@ -1476,9 +1560,11 @@ export function TripCreateForm() {
                   <div className="planner-day-timeline">
                     {group.items.map((item) => {
                       const note = splitNoteLines(item.notes);
+                      const dayMeals = mealsByDay.get(group.day);
 
                       return (
-                      <article key={`${group.day}-${item.time_slot}-${item.place_name}`} className="planner-stop-card">
+                      <Fragment key={`${group.day}-${item.time_slot}-${item.place_name}`}>
+                      <article className="planner-stop-card">
                         <div className="planner-stop-time">
                           <span>{labelTimeSlot(item.time_slot)}</span>
                         </div>
@@ -1507,6 +1593,9 @@ export function TripCreateForm() {
                           </div>
                         </div>
                       </article>
+                      {item.time_slot === "morning" && dayMeals?.lunch ? <MealCard meal={dayMeals.lunch} /> : null}
+                      {item.time_slot === "afternoon" && dayMeals?.dinner ? <MealCard meal={dayMeals.dinner} /> : null}
+                      </Fragment>
                       );
                     })}
                   </div>

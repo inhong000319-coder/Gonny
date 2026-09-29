@@ -11,10 +11,16 @@ DEFAULT_CITY_BY_COUNTRY = {
     "korea": "seoul",
     "south korea": "seoul",
 }
+# "food" deliberately excluded from every slot here - lunch/dinner are no
+# longer picked as one of the 3 morning/afternoon/evening activity slots
+# (see RuleItineraryService._recommend_meals for the independent per-day
+# meal recommendation that replaced it, same spirit as
+# accommodation_recommendation). These 3 sets are now pure activity
+# categories competing for the 3 slots.
 SLOT_CATEGORY_PREFERENCE = {
     "morning": {"relax", "nature", "cafe", "sightseeing", "culture", "activity", "local_experience"},
     "afternoon": {"sightseeing", "shopping", "culture", "activity", "nature", "theme_park", "local_experience"},
-    "evening": {"food", "shopping", "relax", "photo", "nightlife", "activity", "theme_park", "local_experience"},
+    "evening": {"shopping", "relax", "photo", "nightlife", "activity", "theme_park", "local_experience"},
 }
 SEOUL_AREA_ROUTE_ORDER = [
     "jongno",
@@ -76,6 +82,15 @@ JEJU_AREA_NEIGHBORS = {
     "seongsan": {"east-jeju"},
     "seogwipo-west": {"west-jeju"},
     "west-jeju": {"seogwipo-west"},
+}
+# Used by RuleItineraryService._recommend_meals to widen the meal-candidate
+# search from "same area as the day's activities" to "a neighboring area"
+# before falling back to the whole city - mirrors the *_AREA_NEIGHBORS
+# dicts above, just keyed by city for a single lookup.
+AREA_NEIGHBORS_BY_CITY: dict[str, dict[str, set[str]]] = {
+    "seoul": SEOUL_AREA_NEIGHBORS,
+    "busan": BUSAN_AREA_NEIGHBORS,
+    "jeju": JEJU_AREA_NEIGHBORS,
 }
 PLACE_NAME_KO = {
     "gyeongbokgung": "경복궁",

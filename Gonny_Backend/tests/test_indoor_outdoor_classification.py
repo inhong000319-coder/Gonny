@@ -68,15 +68,17 @@ def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # rain_sensitive_light data was applied (see feature/indoor-outdoor-
     # labels) - this just guards the count/uniqueness invariant going forward.
     #
-    # 301 = the original 109 indoor/outdoor-classified places plus 192
+    # 310 = the original 109 indoor/outdoor-classified places plus 201
     # individual restaurant entries merged in by
-    # scripts/merge_restaurant_data.py (see feature/restaurant-recommendations) -
+    # scripts/merge_restaurant_data.py: 192 from the initial merge (see
+    # feature/restaurant-recommendations) plus 9 more added once their
+    # coordinates were confirmed (see chore/add-newly-geocoded-restaurants) -
     # those restaurants predate the indoor/outdoor classification CSV, so
     # they're intentionally unclassified (setting=None), checked in
     # test_all_109_korean_focus_places_are_classified below.
     ids = [place.id for place in load_korean_focus_places()]
 
-    assert len(ids) == 301
+    assert len(ids) == 310
     assert len(set(ids)) == len(ids), "duplicate place_id found across seoul/busan/jeju catalogs"
 
 
@@ -89,13 +91,14 @@ def test_all_109_korean_focus_places_are_classified() -> None:
     # re-reading that CSV - otherwise it would always fail on a fresh
     # clone/CI where local_only/ doesn't exist.
     #
-    # The 192 restaurant entries merged in later (see
-    # feature/restaurant-recommendations) are deliberately excluded from
+    # The 201 restaurant entries merged in later (192 from
+    # feature/restaurant-recommendations + 9 from
+    # chore/add-newly-geocoded-restaurants) are deliberately excluded from
     # the classified set - that CSV predates them, so they're expected to
     # have setting=None rather than a guessed classification.
     EXPECTED_SETTING_COUNTS = {"outdoor": 50, "indoor": 40, "mixed": 19}
     EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 23
-    EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 192
+    EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 201
 
     places = load_korean_focus_places()
     classified_places = [place for place in places if place.setting is not None]

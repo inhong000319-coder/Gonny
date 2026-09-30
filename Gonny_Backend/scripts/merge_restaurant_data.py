@@ -1,10 +1,13 @@
 """Merges the researched-restaurant CSVs (local_only/data/*_restaurants_geocoded.csv)
 into app/data/destinations/{city}.json as new PlaceData entries.
 
-Reproducible, deterministic mapping - re-run any time the CSVs change
-(e.g. once the 25 currently-ungeocoded rows get coordinates). Rows without
-both latitude and longitude are skipped (see SKIPPED_UNGEOCODED_LOG below
-for what got skipped on the run that produced the committed JSON).
+Reproducible, deterministic mapping - safe to re-run any time the CSVs
+change (e.g. a previously-ungeocoded row gets coordinates filled in -
+see scripts/tag_restaurant_mood_visual.py's sibling task pattern). Rows
+already present in the destination JSON (by id) are silently skipped, not
+re-added or treated as an error - only genuinely new ids get merged.
+Rows without both latitude and longitude are skipped too (still
+ungeocoded).
 
 Usage: python scripts/merge_restaurant_data.py
 """
@@ -102,7 +105,7 @@ def load_geocoded_rows(city: str) -> tuple[list[dict], list[dict]]:
     return geocoded, skipped
 
 
-def merge_city(city: str) -> tuple[int, list[str]]:
+def merge_city(city: str) -> tuple[int, int, list[str]]:
     json_path = DESTINATIONS_DIR / f"{city}.json"
     with json_path.open(encoding="utf-8") as f:
         catalog = json.load(f)
@@ -110,11 +113,24 @@ def merge_city(city: str) -> tuple[int, list[str]]:
     existing_ids = {place["id"] for place in catalog["places"]}
     geocoded_rows, skipped_rows = load_geocoded_rows(city)
 
+    # A row whose id is already in the catalog is expected on a re-run
+    # (e.g. a previously-ungeocoded row just got coordinates filled in,
+    # but the CSV still contains every already-merged row too) - it's
+    # simply already merged, so it's skipped rather than treated as an
+    # error. This only guards against re-processing the *same* id twice
+    # within a single run (a real bug, e.g. a duplicate row in the CSV
+    # itself), which would still slip through silently if left unchecked.
+    seen_this_run: set[str] = set()
     new_places = []
+    already_merged_count = 0
     for row in geocoded_rows:
         place = row_to_place_data(row)
+        if place["id"] in seen_this_run:
+            raise ValueError(f"duplicate id within {city}'s CSV itself: {place['id']!r}")
+        seen_this_run.add(place["id"])
         if place["id"] in existing_ids:
-            raise ValueError(f"id collision in {city}: {place['id']!r} already exists in {json_path}")
+            already_merged_count += 1
+            continue
         new_places.append(place)
         existing_ids.add(place["id"])
 
@@ -125,19 +141,23 @@ def merge_city(city: str) -> tuple[int, list[str]]:
         f.write("\n")
 
     skipped_names = [row["name"] for row in skipped_rows]
-    return len(new_places), skipped_names
+    return len(new_places), already_merged_count, skipped_names
 
 
 def main() -> None:
     total_added = 0
     for city in CITIES:
-        added_count, skipped_names = merge_city(city)
+        added_count, already_merged_count, skipped_names = merge_city(city)
         total_added += added_count
-        print(f"{city}: added {added_count} restaurants, skipped {len(skipped_names)} (no coordinates)")
+        print(
+            f"{city}: added {added_count} restaurants, "
+            f"{already_merged_count} already merged (skipped), "
+            f"{len(skipped_names)} still ungeocoded (skipped)"
+        )
         for name in skipped_names:
             print(f"  - skipped (ungeocoded): {name}")
 
-    print(f"\ntotal restaurants merged: {total_added}")
+    print(f"\ntotal restaurants merged this run: {total_added}")
 
 
 if __name__ == "__main__":

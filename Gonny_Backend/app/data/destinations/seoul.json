@@ -7062,6 +7062,74 @@
       "google_rating": 4.3,
       "google_rating_count": 274,
       "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-myeongdong-hongsudak",
+      "name": "홍수닭안동찜닭",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "myeongdong",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "엠플라자 5층 소재 안동찜닭 전문점",
+      "latitude": 37.5625375,
+      "longitude": 126.9851719,
+      "google_rating": null,
+      "google_rating_count": null,
+      "is_active": true
+    },
+    {
+      "id": "seoul-restaurant-seongsu-ttukdo-salon",
+      "name": "뚝도살롱",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsu",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "데이트 장소로 소개되는 와인바",
+      "latitude": 37.5462805,
+      "longitude": 127.0493618,
+      "google_rating": 4.8,
+      "google_rating_count": 19,
+      "is_active": true
     }
   ],
   "featured_video": {

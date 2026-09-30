@@ -2799,6 +2799,142 @@
       "google_rating": 4.4,
       "google_rating_count": 88,
       "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-kkeomeongs",
+      "name": "꺼멍스",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "행원로 소재",
+      "latitude": 33.554482,
+      "longitude": 126.800174,
+      "google_rating": 4.5,
+      "google_rating_count": 79,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-eastjeju-yeppeugejeulgeobge",
+      "name": "예쁘게즐겁게",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "월정3길 소재",
+      "latitude": 33.5526814,
+      "longitude": 126.7922822,
+      "google_rating": 5.0,
+      "google_rating_count": 6,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-willala",
+      "name": "윌랄라",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성산일출봉 인근",
+      "latitude": 33.4628445,
+      "longitude": 126.9329878,
+      "google_rating": 4.5,
+      "google_rating_count": 755,
+      "is_active": true
+    },
+    {
+      "id": "jeju-restaurant-seongsan-seobji-haenyeouijip",
+      "name": "섭지해녀의집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "섭지코지 인근 해녀 운영 식당",
+      "latitude": 33.4344998,
+      "longitude": 126.9260799,
+      "google_rating": 3.8,
+      "google_rating_count": 551,
+      "is_active": true
     }
   ],
   "featured_video": {

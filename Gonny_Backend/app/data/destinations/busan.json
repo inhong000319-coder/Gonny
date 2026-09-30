@@ -3439,6 +3439,109 @@
       "google_rating": 4.0,
       "google_rating_count": 867,
       "is_active": true
+    },
+    {
+      "id": "busan-restaurant-songdo-dongnyeok",
+      "name": "동녘",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "songdo",
+      "duration_hours": 1,
+      "priority": 8,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "송도해수욕장 인근, 리뷰량 많음",
+      "latitude": 35.0791862,
+      "longitude": 129.0214875,
+      "google_rating": 4.9,
+      "google_rating_count": 1377,
+      "is_active": true,
+      "mvp_tier": "core"
+    },
+    {
+      "id": "busan-restaurant-gwangalli-sujeonggung",
+      "name": "수정궁",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "gwangalli",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "광안리 소재",
+      "latitude": 35.170656,
+      "longitude": 129.108668,
+      "google_rating": null,
+      "google_rating_count": null,
+      "is_active": true
+    },
+    {
+      "id": "busan-restaurant-dongnae-hurshimchung-baru",
+      "name": "허심청바루",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "dongnae",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "동래 온천장 허심청 인근 한식당, 기존 온천 데이터(heosimchung)와 인접",
+      "latitude": 35.2202216,
+      "longitude": 129.0823133,
+      "google_rating": null,
+      "google_rating_count": null,
+      "is_active": true
     }
   ],
   "featured_video": {

@@ -3238,7 +3238,11 @@
       "longitude": 126.9916857,
       "google_rating": 4.4,
       "google_rating_count": 479,
-      "is_active": true
+      "is_active": true,
+      "mood": [],
+      "visual_feature": [
+        "포토스팟"
+      ]
     },
     {
       "id": "seoul-restaurant-jongno-gwanghwamun-mijin",
@@ -3549,7 +3553,11 @@
       "longitude": 126.9893168,
       "google_rating": 4.3,
       "google_rating_count": 191,
-      "is_active": true
+      "is_active": true,
+      "mood": [],
+      "visual_feature": [
+        "포토스팟"
+      ]
     },
     {
       "id": "seoul-restaurant-jongno-gwangjang-chapssal",
@@ -3584,7 +3592,11 @@
       "longitude": 127.0003582,
       "google_rating": 4.5,
       "google_rating_count": 841,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-jongno-modern-shabu",
@@ -3653,7 +3665,11 @@
       "longitude": 126.9885967,
       "google_rating": 4.2,
       "google_rating_count": 503,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-euljiro-woojiljip",
@@ -3689,7 +3705,11 @@
       "google_rating": 3.5,
       "google_rating_count": 268,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-euljiro-tongiljip",
@@ -3725,7 +3745,11 @@
       "google_rating": 3.7,
       "google_rating_count": 126,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-euljiro-mapo-jjukkumi",
@@ -3760,7 +3784,11 @@
       "longitude": 126.9937746,
       "google_rating": 4.7,
       "google_rating_count": 23,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-euljiro-mugyodong-bugeoguk",
@@ -3966,7 +3994,11 @@
       "google_rating": 3.6,
       "google_rating_count": 2167,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-myeongdong-wontang-gamja-galbitang",
@@ -4000,7 +4032,11 @@
       "longitude": 126.9683526,
       "google_rating": 4.1,
       "google_rating_count": 123,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-myeongdong-tutu-chicken",
@@ -4071,7 +4107,11 @@
       "google_rating": 4.2,
       "google_rating_count": 14866,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-myeongdong-hamheung-guksujip",
@@ -4107,7 +4147,11 @@
       "longitude": 126.9856737,
       "google_rating": 4.1,
       "google_rating_count": 919,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-dongdaemun-jinokhwa",
@@ -5265,7 +5309,11 @@
       "longitude": 126.9192046,
       "google_rating": 4.1,
       "google_rating_count": 441,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-yeouido-mr-chow",
@@ -5572,7 +5620,11 @@
       "longitude": 126.9194684,
       "google_rating": 3.8,
       "google_rating_count": 200,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-yeouido-oto-gimbap",
@@ -5640,7 +5692,11 @@
       "longitude": 126.9181483,
       "google_rating": 3.8,
       "google_rating_count": 82,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-gangnam-samgyetang-village",
@@ -5982,7 +6038,11 @@
       "longitude": 127.0405571,
       "google_rating": 4.6,
       "google_rating_count": 205,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "조용함"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-gangnam-hyundai-sundaeguk",
@@ -6016,7 +6076,11 @@
       "longitude": 127.0242031,
       "google_rating": 4.3,
       "google_rating_count": 491,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-gangnam-yeongdong-seolleongtang",
@@ -6050,7 +6114,11 @@
       "longitude": 127.0174252,
       "google_rating": 4.1,
       "google_rating_count": 3271,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-gangnam-woojeong",
@@ -6154,7 +6222,11 @@
       "longitude": 127.0292471,
       "google_rating": 4.2,
       "google_rating_count": 1426,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-gangnam-daol-charcoal",
@@ -6498,7 +6570,11 @@
       "google_rating": 4.4,
       "google_rating_count": 521,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "mood": [
+        "조용함"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-jamsil-vikings-wharf",
@@ -6601,7 +6677,11 @@
       "longitude": 127.1091526,
       "google_rating": 4.4,
       "google_rating_count": 468,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "조용함"
+      ],
+      "visual_feature": []
     },
     {
       "id": "seoul-restaurant-jamsil-namgyeong-makguksu",

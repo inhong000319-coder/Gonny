@@ -1986,7 +1986,11 @@
       "longitude": 129.0329396,
       "google_rating": 4.0,
       "google_rating_count": 109,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "조용함"
+      ],
+      "visual_feature": []
     },
     {
       "id": "busan-restaurant-nampo-samik",
@@ -2056,7 +2060,11 @@
       "longitude": 129.0285759,
       "google_rating": 4.0,
       "google_rating_count": 439,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "busan-restaurant-nampo-jeilsan-kkomjangeo",

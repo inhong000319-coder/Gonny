@@ -1600,7 +1600,11 @@
       "longitude": 126.5271214,
       "google_rating": 3.9,
       "google_rating_count": 11,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-sarang-bunsik",
@@ -1634,7 +1638,11 @@
       "longitude": 126.5278416,
       "google_rating": 3.8,
       "google_rating_count": 148,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-seoul-bunsik",
@@ -1668,7 +1676,11 @@
       "longitude": 126.5278355,
       "google_rating": 2.5,
       "google_rating_count": 215,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-jangchun",
@@ -1703,7 +1715,11 @@
       "google_rating": 3.0,
       "google_rating_count": 69,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-anseong",
@@ -1737,7 +1753,11 @@
       "longitude": 126.5272069,
       "google_rating": 4.6,
       "google_rating_count": 23,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-hanil",
@@ -1771,7 +1791,11 @@
       "longitude": 126.5272059,
       "google_rating": 4.4,
       "google_rating_count": 13,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-dongmun-ollejjinbbang",
@@ -1805,7 +1829,11 @@
       "longitude": 126.5251722,
       "google_rating": 4.1,
       "google_rating_count": 7,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-nakwon-tteokjip",
@@ -1839,7 +1867,11 @@
       "longitude": 126.5257706,
       "google_rating": 5.0,
       "google_rating_count": 1,
-      "is_active": true
+      "is_active": true,
+      "mood": [
+        "활기참"
+      ],
+      "visual_feature": []
     },
     {
       "id": "jeju-restaurant-eastjeju-myeongdong-son-kalgugsu",

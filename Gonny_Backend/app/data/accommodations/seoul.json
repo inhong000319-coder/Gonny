@@ -79,7 +79,7 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": "city"
     },
     {
       "id": "142769",
@@ -111,7 +111,7 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": "city"
     },
     {
       "id": "2541308",
@@ -259,7 +259,7 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": "river"
     },
     {
       "id": "142766",
@@ -393,7 +393,7 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "12:00",
-      "view": null
+      "view": "city"
     }
   ]
 }

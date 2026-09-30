@@ -596,14 +596,6 @@ function splitNoteLines(note: string) {
   };
 }
 
-function buildEmbedUrl(video: FeaturedVideo) {
-  if (video.embed_url) {
-    return `${video.embed_url}${video.embed_url.includes("?") ? "&" : "?"}autoplay=1&rel=0`;
-  }
-
-  return `https://www.youtube.com/embed/${video.video_id}?autoplay=1&rel=0`;
-}
-
 export function TripCreateForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<PlannerFormState>(initialForm);
@@ -615,7 +607,6 @@ export function TripCreateForm() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [result, setResult] = useState<RuleItineraryResponse | null>(null);
-  const [playingVideoId, setPlayingVideoId] = useState("");
   const [docDownload, setDocDownload] = useState<{ href: string; filename: string } | null>(null);
   const [printPreview, setPrintPreview] = useState<{ href: string; filename: string } | null>(null);
   const hasResult = result !== null;
@@ -804,7 +795,6 @@ export function TripCreateForm() {
 
       const nextResult = normalizeGenerateResponse(response.data);
       setResult(nextResult);
-      setPlayingVideoId("");
       setCurrentStep(STEP_COUNT);
       setMessage(`${toCityLabel(nextResult.city)} 기준으로 ${nextResult.items.length}개의 일정이 생성되었습니다.`);
     } catch (generateError) {
@@ -819,7 +809,6 @@ export function TripCreateForm() {
 
   const handleEditAgain = () => {
     setResult(null);
-    setPlayingVideoId("");
     setMessage("");
     setError("");
     setCurrentStep(STEP_COUNT);
@@ -1429,49 +1418,6 @@ export function TripCreateForm() {
                 </div>
               </div>
             </div>
-
-            {result.featured_video ? (
-              <section className="planner-video-card">
-                <div className="planner-video-copy">
-                  <span className="section-kicker">City Video</span>
-                  <strong>{toCityLabel(result.city)} 분위기를 영상으로 먼저 볼 수 있어요</strong>
-                  <p>
-                    {result.featured_video.title}
-                    <br />
-                    {result.featured_video.channel} · {result.featured_video.view_count_text}
-                  </p>
-                </div>
-                <div className="planner-video-player">
-                  {playingVideoId === result.featured_video.video_id ? (
-                    <div className="planner-video-frame-wrap">
-                      <iframe
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="planner-video-frame"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        src={buildEmbedUrl(result.featured_video)}
-                        title={result.featured_video.title}
-                      />
-                    </div>
-                  ) : (
-                    <button
-                      className="planner-video-thumb"
-                      onClick={() => setPlayingVideoId(result.featured_video?.video_id ?? "")}
-                      type="button"
-                    >
-                      <img
-                        alt={result.featured_video.title}
-                        src={
-                          result.featured_video.thumbnail_url ??
-                          `https://i.ytimg.com/vi/${result.featured_video.video_id}/hqdefault.jpg`
-                        }
-                      />
-                      <span className="planner-video-play">영상 재생</span>
-                    </button>
-                  )}
-                </div>
-              </section>
-            ) : null}
 
             <div className="planner-result-summary">
               <article className="metric">

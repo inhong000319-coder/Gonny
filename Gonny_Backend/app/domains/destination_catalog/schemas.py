@@ -59,6 +59,10 @@ class PlaceData(BaseModel):
     # a penalty - most of the existing catalog will stay None.
     google_rating: float | None = None
     google_rating_count: int | None = None
+    # 성인 기준 대표 입장료/이용료(원). 0은 무료로 확인된 경우, None은 조사했지만
+    # 확정된 금액을 찾지 못한 경우. 미식(food) 활동유형 장소에는 의도적으로 채우지 않음 -
+    # 메뉴별 가격 편차가 커서 이 필드의 스코프 밖.
+    average_cost_krw: int | None = None
     content_id: str | None = None
     # Raw TourAPI usetime/restdate text, stored verbatim - these are
     # free-form prose (e.g. "09:00~18:00(입장마감 17:30)"), not a

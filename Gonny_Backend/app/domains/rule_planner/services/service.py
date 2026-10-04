@@ -195,6 +195,7 @@ class RuleItineraryService:
                             # itinerary item, so there's no real transition
                             # to report - see RuleItineraryItem's docstring.
                             travel_minutes_from_previous=None,
+                            average_cost_krw=full_day_place.average_cost_krw,
                         )
                     )
                 used_ids.add(full_day_place.id)
@@ -251,6 +252,7 @@ class RuleItineraryService:
                             previous_place=previous_place,
                         ),
                         travel_minutes_from_previous=travel_minutes_from_previous,
+                        average_cost_krw=chosen.average_cost_krw,
                     )
                 )
 

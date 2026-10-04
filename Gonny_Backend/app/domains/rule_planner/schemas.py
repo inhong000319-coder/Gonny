@@ -47,6 +47,9 @@ class RuleItineraryItem(BaseModel):
     # for a day's first slot (no previous place) or a full-day place (all
     # slots are the same place, so there's no real transition to report).
     travel_minutes_from_previous: int | None = None
+    # Copied from the source PlaceData.average_cost_krw - see that field's docstring
+    # for the 0 (free) vs None (unknown) distinction. Not set for food places.
+    average_cost_krw: int | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

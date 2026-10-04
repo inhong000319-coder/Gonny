@@ -46,6 +46,9 @@ class AccommodationData(BaseModel):
     # Not populated in this round - reserved for a later, separate pass
     # (e.g. ocean view / city view / mountain view research).
     view: str | None = None
+    # 표준/기본 객실 기준 1박 대표가(원), OTA/공식 사이트에서 확인된 값. None은 확정된
+    # 가격을 찾지 못한 경우. 환율 환산으로 추정한 값은 포함하지 않음 - 원화로 명시된 숫자만 사용.
+    average_price_krw: int | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

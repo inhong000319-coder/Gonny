@@ -23,7 +23,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 109000
     },
     {
       "id": "2925797",
@@ -49,7 +50,8 @@
       ],
       "checkin_time": "16:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 250401
     },
     {
       "id": "3532715",
@@ -132,7 +134,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 550000
     },
     {
       "id": "3083428",
@@ -157,7 +160,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 58206
     },
     {
       "id": "2731553",
@@ -188,7 +192,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 352000
     },
     {
       "id": "3532572",
@@ -267,7 +272,8 @@
       ],
       "checkin_time": "17:00",
       "checkout_time": "12:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 65000
     },
     {
       "id": "2705418",
@@ -294,7 +300,8 @@
       ],
       "checkin_time": "15:00 (금요일~일요일·공휴일·공휴전일 16:00)",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 42862
     },
     {
       "id": "3533169",
@@ -348,7 +355,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 280000
     },
     {
       "id": "142978",
@@ -374,7 +382,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 70000
     },
     {
       "id": "2811461",
@@ -402,7 +411,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 85195
     }
   ]
 }

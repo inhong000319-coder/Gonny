@@ -66,7 +66,8 @@
       "open_hours": "상시 개방\n※ 해수욕장 개장기간에는 변동 가능성 있음",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 0
     },
     {
       "id": "woljeongri",
@@ -182,7 +183,8 @@
       "open_hours": "- 1~2월, 11~12월 06:00~18:00 (매표마감 17:00)\n- 3~4월, 9~10월 05:00~19:00 (매표마감 18:00)\n- 5~8월 04:30~20:00 (매표마감 19:00)",
       "closed_days": "매달 첫째 주 월요일※ 공휴일인 경우 다음날 휴무",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 5000
     },
     {
       "id": "seopjikoji",
@@ -240,7 +242,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "bijarim",
@@ -296,7 +299,8 @@
       "open_hours": "09:00~18:00 (입장 마감 17:00)",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 3000
     },
     {
       "id": "aewol-cafe",
@@ -407,7 +411,8 @@
       "open_hours": "- 2월~5월 09:00~17:00\n- 6월~8월 09:00~17:30\n- 9월~10월 09:00~17:00\n- 11월~1월 09:00~16:30",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 15000
     },
     {
       "id": "hyeopjae-beach",
@@ -467,7 +472,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 0
     },
     {
       "id": "camellia-hill",
@@ -523,7 +529,8 @@
       "open_hours": "[하절기/간절기(3월~11월)]- 08:30~18:30- 입장 마감 17:30[동절기(11월~2월)]- 08:30~18:00- 입장 마감 17:00",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 10000
     },
     {
       "id": "jungmun-saekdal",
@@ -577,7 +584,8 @@
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 0
     },
     {
       "id": "osulloc",
@@ -814,7 +822,8 @@
       "open_hours": null,
       "closed_days": null,
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 30000
     },
     {
       "id": "arte-museum-jeju",
@@ -874,7 +883,8 @@
         "{place_name}은(는) 제주 서부 일정에 실내 체험과 사진 포인트를 함께 넣고 싶을 때 잘 어울려요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 18000
     },
     {
       "id": "jeju-glass-castle",
@@ -933,7 +943,8 @@
         "{place_name}은(는) 제주 서부에서 날씨 영향을 덜 받는 코스를 하나 더 넣고 싶을 때 잘 맞아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 9000
     },
     {
       "id": "yeomiji-botanical-garden",
@@ -999,7 +1010,8 @@
       "open_hours": "개장시간 09:00~18:00(매표마감 09:00~17:30)※ 온실식물원 : 18:00시까지 관람 가능※ 옥외식물원 : 일몰시까지 관람 가능※ 식물원 입장 : 17:30까지 가능※ 동절기(11월~2월) 17:00까지 입장 가능",
       "closed_days": "연중무휴",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 10000
     },
     {
       "id": "jeju-teddy-bear-museum",
@@ -1056,7 +1068,8 @@
         "{place_name}은(는) 서귀포 서부 일정에서 날씨 영향을 덜 받는 가족형 코스를 하나 더 넣고 싶을 때 잘 맞아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 12000
     },
     {
       "id": "gwangchigi-beach",
@@ -1123,7 +1136,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 0
     },
     {
       "id": "seongeup-folk-village",
@@ -1183,7 +1197,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "jeju-stone-park",
@@ -1247,7 +1262,8 @@
       "open_hours": "09:00~18:00 (매표 마감 17:00)",
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 다음의 첫번째 비공휴일에 휴원) / 1월 1일 / 설날 및 추석 당일",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 5000
     },
     {
       "id": "haenyeo-museum",
@@ -1310,7 +1326,8 @@
       "open_hours": "- 09:00~18:00- 매표 마감 17:00",
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음 첫 번째 비공휴일) / 1월 1일 / 설·추석 연휴",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 1100
     },
     {
       "id": "snoopy-garden-jeju",
@@ -1375,7 +1392,8 @@
       "open_hours": "09:00~19:00 (입장마감 : 종료 1시간 전)",
       "closed_days": "연중무휴",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 19000
     },
     {
       "id": "delmoondo-gimnyeong",
@@ -1501,7 +1519,8 @@
       "open_hours": null,
       "closed_days": null,
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 29500
     },
     {
       "id": "saebyeol-oreum",
@@ -1565,7 +1584,8 @@
       "open_hours": "상시 개방",
       "closed_days": null,
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "jeju-restaurant-eastjeju-ilpalpaljuk",

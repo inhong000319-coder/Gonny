@@ -52,7 +52,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 143391
     },
     {
       "id": "2570164",
@@ -156,7 +157,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "12:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 49886
     },
     {
       "id": "142721",
@@ -183,7 +185,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "12:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 323400
     },
     {
       "id": "3080814",
@@ -259,7 +262,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "river"
+      "view": "river",
+      "average_price_krw": 69111
     },
     {
       "id": "142766",
@@ -286,7 +290,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 762300
     },
     {
       "id": "1327006",
@@ -366,7 +371,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 182664
     },
     {
       "id": "142771",
@@ -393,7 +399,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "12:00",
-      "view": "city"
+      "view": "city",
+      "average_price_krw": 197123
     }
   ]
 }

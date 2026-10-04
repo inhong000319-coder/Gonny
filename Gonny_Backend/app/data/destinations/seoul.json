@@ -70,7 +70,8 @@
       "open_hours": "[1월~2월/11월~12월]09:00~17:00 (입장마감 16:00)[3월~5월/9월~10월]09:00~18:00 (입장마감 17:00)[6월~8월] 09:00~18:30 (입장마감 17:30)",
       "closed_days": "매주 화요일 ※ 단, 정기휴일이 공휴일 및 대체공휴일과 겹칠 경우에는 개방하며, 그 다음의 첫 번째 비공휴일이 정기휴일임",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 3000
     },
     {
       "id": "bukchon",
@@ -127,7 +128,8 @@
       "open_hours": "10:00~17:00\n※ 방문 제한시간(특별관리지역(레드존) 방문 금지) : 17:00~익일 10:00",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "insadong",
@@ -296,7 +298,8 @@
         "{place_name}은(는) 서울에서 대표적인 장면을 가장 안정적으로 담기 좋은 장소예요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 29000
     },
     {
       "id": "hongdae",
@@ -411,7 +414,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "gangnam",
@@ -523,7 +527,8 @@
       "open_hours": "※ 시설 별로 상이하므로 홈페이지 참조",
       "closed_days": "연중무휴",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "changdeokgung",
@@ -584,7 +589,8 @@
       "open_hours": "[2월~5월]- 09:00~18:00 (입장 마감 17:00)[6월~8월]- 09:00~18:30 (입장 마감 17:30)[9월~10월]- 09:00~18:00 (입장 마감 17:00)[11월~1월]- 09:00~17:30 (입장 마감 16:30)",
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 개방하며, 그 다음 첫 번째 평일에 휴관)",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 8000
     },
     {
       "id": "ikseon-dong",
@@ -809,7 +815,8 @@
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "itaewon",
@@ -971,7 +978,8 @@
         "{place_name}은(는) 일정을 너무 빽빽하게 채우지 않고 조금 더 여유 있게 풀고 싶을 때 좋아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "ddp",
@@ -1032,7 +1040,8 @@
       "open_hours": "10:00~20:00\n※ 프로그램에 따라 일부공간 탄력운영",
       "closed_days": "1월 1일 / 설·추석 당일※ 시설 별로 상이하므로 자세한 사항은 홈페이지 참조",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "euljiro",
@@ -1167,7 +1176,8 @@
       "open_hours": "[월요일~목요일/일요일]- 10:00~21:00 (입장 마감 20:00)[금요일~토요일]- 10:00~22:00 (입장 마감 21:00)",
       "closed_days": "연중무휴※ 기상 상태에 따라 매직아일랜드 일부 어트랙션 중단 가능※ 기상 상태와 별개로 현장 상황에 따라 운휴하거나 중간 점검할 수 있음",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 67000
     },
     {
       "id": "e-land-hangang-cruise",
@@ -1225,7 +1235,8 @@
         "{place_name}은(는) 서울 풍경을 걷는 대신 물 위에서 한 번 더 느껴보고 싶을 때 잘 어울려요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 18000
     },
     {
       "id": "sewoon-plaza",
@@ -1291,7 +1302,8 @@
       "open_hours": "점포별 상이",
       "closed_days": "점포별 상이",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "cheonggyecheon-museum",
@@ -1354,7 +1366,8 @@
       "open_hours": "09:00~18:00 (입장 마감 17:30)",
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 정상 운영) / 1월1일",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "seoul-forest",
@@ -1422,7 +1435,8 @@
       "open_hours": "상시 개방※ 시설별 이용시간 상이하므로 홈페이지 참조",
       "closed_days": "연중무휴※ 시설별 쉬는날 상이하므로 홈페이지 참조",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "s-factory",
@@ -1551,7 +1565,8 @@
       "open_hours": "[사무실]- 화요일~토요일 09:00~19:00- 일요일 07:00~21:00[상설 고해성사]- 월요일 13:00~17:00- 화요일~금요일 11:00~20:00-토요일~일요일 10:00~20:00",
       "closed_days": "[사무실]매주 월요일",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "bank-of-korea-money-museum",
@@ -1615,7 +1630,8 @@
       "open_hours": "10:00~17:00 (입장 마감 16:40)",
       "closed_days": "매주 월요일 / 설·추석 연휴 / 근로자의 날 / 선거일 / 12월 29일~1월 2일",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "heunginjimun-gate",
@@ -1679,7 +1695,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "dongdaemun-shopping-town",
@@ -1803,7 +1820,8 @@
       "open_hours": "09:30~18:00 (입장마감 17:00)",
       "closed_days": "매주 월요일",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "itaewon-antique-furniture-street",
@@ -1861,7 +1879,8 @@
         "{place_name}은(는) 이태원 동선에 분위기와 취향 요소를 조금 더 넣고 싶을 때 잘 어울려요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "namsan-cable-car",
@@ -1927,7 +1946,8 @@
       "open_hours": "10:00~23:00※ 자세한 사항은 전화문의 요망",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 15000
     },
     {
       "id": "namsan-park-trail",
@@ -1986,7 +2006,8 @@
         "{place_name}은(는) 도심 속에서 조금 더 천천히 호흡을 가다듬고 싶을 때 잘 맞아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "seoul-sky",
@@ -2047,7 +2068,8 @@
         "{place_name}은(는) 잠실 쪽에서 서울 스카이라인을 한 번에 담고 싶을 때 만족도가 높은 장소예요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 29000
     },
     {
       "id": "lotte-world-mall",
@@ -2234,7 +2256,8 @@
         "{place_name}은(는) 여의도 쪽에서 한강 풍경을 조금 더 높고 넓게 보고 싶을 때 잘 맞아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 15000
     },
     {
       "id": "ktng-sangsangmadang-hongdae",
@@ -2298,7 +2321,8 @@
       "open_hours": "11:00~21:00",
       "closed_days": "※ 프로그램마다 상이하므로 홈페이지 참조",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "trick-eye-museum-seoul",
@@ -2359,7 +2383,8 @@
         "{place_name}은(는) 홍대 쪽에서 날씨 영향을 덜 받으면서도 사진과 체험 요소를 챙기고 싶을 때 좋아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 15000
     },
     {
       "id": "bongeunsa-temple",
@@ -2425,7 +2450,8 @@
       "open_hours": "09:00~18:00※ 자세한 사항은 전화문의 요망",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "seonjeongneung",
@@ -2485,7 +2511,8 @@
         "{place_name}은(는) 강남 쪽에서 바쁜 도심 일정 사이에 산책과 역사 분위기를 조금 섞고 싶을 때 잘 맞아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 1000
     },
     {
       "id": "euljiro-nogari-alley",
@@ -2609,7 +2636,8 @@
         "{place_name}은(는) 을지로 일정에 골목 감성만이 아니라 조금 더 실내형 구경거리를 함께 묶고 싶을 때 잘 맞아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "lotte-world-aquarium",
@@ -2673,7 +2701,8 @@
       "open_hours": "10:00~20:00 (입장마감 19:00)",
       "closed_days": null,
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 35000
     },
     {
       "id": "seoul-baekje-museum",
@@ -2737,7 +2766,8 @@
       "open_hours": "[하절기(3월~10월)]\n- 평일 09:00~19:00\n- 주말 09:00~19:00\n- 금요일 09:00~21:00\n[동절기(11월~2월)]\n- 평일 09:00~19:00\n- 주말 09:00~18:00\n- 금요일 09:00~21:00\n※ 자세한 사항은 홈페이지 참조",
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 정상 운영) / 1월 1일 / 시장이 정하는 휴관일",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "rolling-hall",
@@ -2863,7 +2893,8 @@
         "{place_name}은(는) 홍대 일정에 날씨 영향을 덜 받으면서도 트렌디한 실내 구경거리를 넣고 싶을 때 잘 어울려요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "hyundai-motorstudio-seoul",
@@ -3106,7 +3137,8 @@
         "{place_name}은(는) 여의도 일정에 쇼핑과 전망 사이로 조금 더 차분한 전시형 공간을 섞고 싶을 때 잘 어울려요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "woori-sulfur-spa",

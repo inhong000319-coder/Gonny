@@ -48,6 +48,8 @@ type RuleItineraryItem = {
   // minutes - null for a day's first slot or a full-day place (see the
   // backend's RuleItineraryItem docstring).
   travel_minutes_from_previous: number | null;
+  // Representative adult admission in KRW (0 = confirmed free, null = unknown).
+  average_cost_krw?: number | null;
 };
 
 type RuleDayDurationWarning = {
@@ -92,6 +94,8 @@ type AccommodationRecommendation = {
   accommodation_type: string;
   checkin_time?: string | null;
   checkout_time?: string | null;
+  // Standard room, one night, in KRW (null = no confirmed figure).
+  average_price_krw?: number | null;
 };
 
 type FeaturedVideo = {
@@ -435,6 +439,10 @@ function isAccommodationRecommendation(value: unknown): value is AccommodationRe
     typeof accommodation.name === "string" &&
     typeof accommodation.accommodation_type === "string"
   );
+}
+
+function formatCostLabel(value: number) {
+  return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
 }
 
 function normalizeCatalogResponse(payload: unknown) {
@@ -1394,6 +1402,9 @@ export function TripCreateForm() {
                     <span className="badge">체크아웃 {result.accommodation_recommendation.checkout_time}</span>
                   ) : null}
                 </div>
+                {result.accommodation_recommendation.average_price_krw != null ? (
+                  <p className="planner-accommodation-price">1박 기준 {formatCostLabel(result.accommodation_recommendation.average_price_krw)}</p>
+                ) : null}
               </section>
             ) : null}
 
@@ -1460,6 +1471,9 @@ export function TripCreateForm() {
                             <span className="badge">{item.category}</span>
                           </div>
                           <p className="planner-slot-area">{item.area}</p>
+                          {item.average_cost_krw != null ? (
+                            <p className="planner-slot-cost">{formatCostLabel(item.average_cost_krw)}</p>
+                          ) : null}
                           <div className="planner-slot-note">
                             {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
                             {note.details.length > 0 ? (

@@ -23,7 +23,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 880000
     },
     {
       "id": "3084988",
@@ -81,7 +82,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 80000
     },
     {
       "id": "2699343",
@@ -107,7 +109,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 90000
     },
     {
       "id": "3084957",
@@ -133,7 +136,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 54835
     },
     {
       "id": "984562",
@@ -187,7 +191,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "ocean"
+      "view": "ocean",
+      "average_price_krw": 69000
     },
     {
       "id": "2626800",
@@ -241,7 +246,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 60000
     },
     {
       "id": "137476",
@@ -268,7 +274,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 110000
     },
     {
       "id": "2991120",
@@ -294,7 +301,8 @@
       ],
       "checkin_time": "16:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 500000
     },
     {
       "id": "2624249",
@@ -322,7 +330,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": null
+      "view": null,
+      "average_price_krw": 142269
     },
     {
       "id": "984523",
@@ -382,7 +391,8 @@
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
-      "view": "mountain"
+      "view": "mountain",
+      "average_price_krw": 64900
     },
     {
       "id": "1853848",

@@ -69,7 +69,8 @@
       "open_hours": "매년 6월~8월",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 0
     },
     {
       "id": "dongbaek-island",
@@ -124,7 +125,8 @@
         "{place_name}은(는) 부산 일정에 자연 풍경을 부드럽게 섞고 싶을 때 잘 맞아요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "blue-line-park",
@@ -180,7 +182,8 @@
       "open_hours": "[해운대 해변열차] - 동절기(11, 12, 1, 2월) 09:00~19:00 - 간절기(3, 4, 10월) 09:00~19:30 - 성수기(5, 6, 9월) 09:00~20:30 - 극성수기(7, 8월) 09:00~21:30 [해운대 스카이캡슐] - 동절기(11, 12, 1, 2월) 08:30~18:00 - 간절기(3, 4, 10월) 08:30~18:30 - 성수기(5, 6, 9월) 08:30~19:30 - 극성수기(7, 8월) 08:30~20:30 ※ 자세한 사항은 홈페이지 참조",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 10000
     },
     {
       "id": "gwangalli-beach",
@@ -358,7 +361,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "jagalchi-market",
@@ -590,7 +594,8 @@
       "open_hours": "- 1월~2월/12월 09:00~20:00- 3월~6월/9월~11월 09:00~21:00- 7월~8월 09:00~22:00※ 탑승권 발권 : 폐장시간 30분 전※ 악천후 또는 불가피한 사정으로 운영시간은 변경될 수 있으니 사전 확인 필수",
       "closed_days": "연중무휴※ 기상 악화시 휴무 (홈페이지를 통한 실시간 공지)",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 17000
     },
     {
       "id": "taejongdae",
@@ -649,7 +654,8 @@
       "open_hours": "[하절기(3월~10월)]04:00~24:00[동절기(11월~2월)]05:00~24:00※ 자세한 사항은 홈페이지 참조",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "onjeoncheon-cafe",
@@ -835,7 +841,8 @@
       "open_hours": "06:00~23:00",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 0
     },
     {
       "id": "amnam-park",
@@ -901,7 +908,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "millac-the-market",
@@ -1026,7 +1034,8 @@
       "open_hours": "09:00~24:00※ 시설별 상이하므로 홈페이지 참고",
       "closed_days": "※ 시설별 상이하므로 홈페이지 참고",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "sea-life-busan-aquarium",
@@ -1145,7 +1154,8 @@
         "{place_name}은(는) 해운대 쪽에서 바다와 도시 풍경을 한 번에 담고 싶을 때 만족도가 높은 장소예요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 27000
     },
     {
       "id": "yongdusan-park",
@@ -1213,7 +1223,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "bosu-book-street",
@@ -1276,7 +1287,8 @@
       "open_hours": "시설 별로 상이함",
       "closed_days": "시설 별로 상이함",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "songdo-yonggung-suspension-bridge",
@@ -1341,7 +1353,8 @@
       "open_hours": "[하절기(3월~9월)]09:00~18:00 (입장 마감 17:30)[동절기(10월~2월)]09:00~17:30 (입장 마감 17:00)",
       "closed_days": "매월 첫째, 셋째 월요일 / 설·추석 당일※ 자세한 사항은 전화문의 요망",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 1000
     },
     {
       "id": "songdo-sky-park",
@@ -1473,7 +1486,8 @@
       "open_hours": "10:00~22:00 (발권 마감 21:30)",
       "closed_days": "연중무휴",
       "setting": "indoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 12000
     },
     {
       "id": "busan-modern-history-museum",
@@ -1531,7 +1545,8 @@
         "{place_name}은(는) 남포 일정에 먹거리와 시장 분위기만이 아니라 부산 도시의 역사 결을 함께 넣고 싶을 때 잘 어울려요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "busan-moca",
@@ -1593,7 +1608,8 @@
       "open_hours": "10:00~18:00 (입장 마감 17:30)",
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 다음 날 휴관) / 1월 1일",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "huinnyeoul-culture-village",
@@ -1658,7 +1674,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 0
     },
     {
       "id": "heosimchung",
@@ -1711,7 +1728,8 @@
       "open_hours": "[온천시설]- 05:30~22:00- 입장 마감 21:30[찜질시설]- 06:30~21:00",
       "closed_days": "연중무휴",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 15000
     },
     {
       "id": "shinsegae-spaland",
@@ -1759,7 +1777,8 @@
         "{place_name}에서 백화점 안 온천과 찜질방을 편하게 즐기기 좋아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "average_cost_krw": 25000
     },
     {
       "id": "club-d-oasis",
@@ -1812,7 +1831,8 @@
         "{place_name}에서 오션뷰 인피니티 풀과 함께 프리미엄 온천을 즐길 수 있어요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "average_cost_krw": 30000
     },
     {
       "id": "busan-restaurant-nampo-icchi",

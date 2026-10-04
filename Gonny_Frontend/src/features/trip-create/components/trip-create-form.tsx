@@ -132,7 +132,6 @@ type PlannerFormState = {
   travelers: number;
   start_date: string;
   duration_label: string;
-  budget_value: string;
   budget_band: BudgetBand;
   concepts: TripConcept[];
   style: TripStyle;
@@ -162,10 +161,10 @@ const travelerOptions = [
   { value: 5, label: "5인 이상 여행" },
 ];
 const nightsOptions = [1, 2, 3, 4, 5, 6];
-const budgetStepOptions = [
-  { value: 100000, label: "+10만원" },
-  { value: 1000000, label: "+100만원" },
-];
+// Trip.budget is a required integer on save, but the planner no longer
+// collects a won amount. 0 is what the backend's report/expense code
+// already treats as "no budget set" (see TripService.get_trip_report).
+const UNSET_TRIP_BUDGET = 0;
 
 const initialForm: PlannerFormState = {
   continent: "",
@@ -174,7 +173,6 @@ const initialForm: PlannerFormState = {
   travelers: 2,
   start_date: new Date().toISOString().slice(0, 10),
   duration_label: "2박 3일",
-  budget_value: "",
   budget_band: "medium",
   concepts: ["sightseeing", "food"],
   style: "easy",
@@ -268,10 +266,10 @@ function labelBudget(value: BudgetBand) {
   return "조금 더 여유 있게";
 }
 
-function budgetRangeLabel(value: BudgetBand) {
-  if (value === "low") return "예: 0원 ~ 100만원";
-  if (value === "medium") return "예: 100만원 ~ 300만원";
-  return "예: 300만원 이상";
+function budgetIntensityLabel(value: BudgetBand) {
+  if (value === "low") return "숙소와 식사를 합리적으로 고르는 절약형";
+  if (value === "medium") return "가격과 만족도의 균형을 맞춘 기본형";
+  return "숙소와 경험에 여유를 더한 프리미엄형";
 }
 
 function budgetHint(value: BudgetBand) {
@@ -312,19 +310,6 @@ function labelTimeSlot(value: TimeSlot) {
   if (value === "morning") return "오전";
   if (value === "afternoon") return "오후";
   return "저녁";
-}
-
-function formatWon(value: number) {
-  return `${value.toLocaleString("ko-KR")}원`;
-}
-
-function parseBudgetValue(value: string) {
-  const parsed = Number(value);
-  if (Number.isNaN(parsed) || parsed < 0) {
-    return 0;
-  }
-
-  return parsed;
 }
 
 function buildDurationLabel(nights: number) {
@@ -709,7 +694,6 @@ export function TripCreateForm() {
 
   const groupedItems = useMemo(() => groupByDay(result?.items ?? []), [result]);
   const mealsByDay = useMemo(() => groupMealsByDay(result?.meal_recommendations ?? []), [result]);
-  const selectedBudgetValue = parseBudgetValue(form.budget_value);
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
   const endDate = buildEndDate(form.start_date, selectedNights);
@@ -789,7 +773,6 @@ export function TripCreateForm() {
     try {
       const response = await apiClient.post<unknown>("/rule-itinerary/generate", {
         ...form,
-        budget_value: form.budget_value ? Number(form.budget_value) : null,
         travelers: Number(form.travelers) || 2,
       });
 
@@ -814,11 +797,6 @@ export function TripCreateForm() {
     setCurrentStep(STEP_COUNT);
   };
 
-  const handleBudgetStep = (amount: number) => {
-    const nextValue = Math.min(50000000, selectedBudgetValue + amount);
-    updateField("budget_value", String(nextValue));
-  };
-
   const handleSaveTrip = async () => {
     if (!result) {
       return;
@@ -833,7 +811,7 @@ export function TripCreateForm() {
         destination: result.city,
         start_date: form.start_date,
         end_date: endDate,
-        budget: selectedBudgetValue,
+        budget: UNSET_TRIP_BUDGET,
         travel_style: result.style,
         companion_type: result.companion_type,
       });
@@ -1177,52 +1155,9 @@ export function TripCreateForm() {
                     </p>
                   </div>
 
-                  <div className="field">
-                    <span>예산 설정</span>
-                    <div className="planner-budget-shell">
-                      <div className="planner-budget-display">
-                        <strong>{formatWon(selectedBudgetValue)}</strong>
-                        <span>버튼으로 빠르게 올리거나 슬라이더로 세밀하게 조정하세요.</span>
-                      </div>
-                      <div className="planner-budget-actions">
-                        {budgetStepOptions.map((option) => (
-                          <button
-                            key={option.value}
-                            className="planner-budget-step"
-                            onClick={() => handleBudgetStep(option.value)}
-                            type="button"
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                        <button
-                          className="planner-budget-step planner-budget-reset"
-                          onClick={() => updateField("budget_value", "0")}
-                          type="button"
-                        >
-                          초기화
-                        </button>
-                      </div>
-                      <label className="planner-slider-wrap">
-                        <span>예산 구간 슬라이더</span>
-                        <input
-                          max="50000000"
-                          min="0"
-                          onChange={(event) => updateField("budget_value", event.target.value)}
-                          step="100000"
-                          type="range"
-                          value={selectedBudgetValue}
-                        />
-                        <div className="planner-slider-labels">
-                          <span>0원</span>
-                          <span>5천만원</span>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
                 </div>
 
-                <div className="planner-choice-grid">
+                <div className="planner-choice-grid planner-choice-grid-budget">
                   {budgetOptions.map((option) => (
                     <button
                       key={option}
@@ -1231,7 +1166,7 @@ export function TripCreateForm() {
                       type="button"
                     >
                       <strong>{labelBudget(option)}</strong>
-                      <small>{budgetRangeLabel(option)}</small>
+                      <small>{budgetIntensityLabel(option)}</small>
                       <span>{budgetHint(option)}</span>
                     </button>
                   ))}
@@ -1331,7 +1266,7 @@ export function TripCreateForm() {
                   <article className="metric">
                     <strong>예산</strong>
                     <p>{labelBudget(form.budget_band)}</p>
-                    <span>{formatWon(selectedBudgetValue)} 기준으로 보정합니다.</span>
+                    <span>{budgetIntensityLabel(form.budget_band)}</span>
                   </article>
 
                   <article className="metric">

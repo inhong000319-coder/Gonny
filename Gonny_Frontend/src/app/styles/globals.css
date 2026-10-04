@@ -932,6 +932,10 @@ body.modal-open {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.planner-choice-grid-budget {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .planner-city-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -1098,66 +1102,6 @@ body.modal-open {
 .planner-section-copy span {
   color: #6a7b90;
   font-size: 0.93rem;
-}
-
-.planner-budget-shell {
-  display: grid;
-  gap: 14px;
-  padding: 18px;
-  border-radius: 24px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 251, 255, 0.98)),
-    linear-gradient(135deg, rgba(97, 216, 255, 0.12), rgba(89, 113, 255, 0.08));
-  border: 1px solid rgba(185, 205, 236, 0.55);
-}
-
-.planner-budget-display {
-  display: grid;
-  gap: 6px;
-}
-
-.planner-budget-display strong {
-  font-size: 1.6rem;
-  color: #153f78;
-}
-
-.planner-budget-display span {
-  color: #657892;
-}
-
-.planner-budget-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.planner-budget-step {
-  padding: 12px 16px;
-  border: 1px solid rgba(189, 203, 226, 0.88);
-  border-radius: 999px;
-  background: white;
-  color: #224d88;
-  font-weight: 700;
-}
-
-.planner-budget-reset {
-  color: #7c3a1d;
-}
-
-.planner-slider-wrap {
-  display: grid;
-  gap: 10px;
-}
-
-.planner-slider-wrap input[type="range"] {
-  width: 100%;
-}
-
-.planner-slider-labels {
-  display: flex;
-  justify-content: space-between;
-  color: #64748b;
-  font-size: 0.9rem;
 }
 
 .planner-map-shell {
@@ -3213,6 +3157,7 @@ body.modal-open {
   .landing-style-grid,
   .planner-step-row,
   .planner-form-grid,
+  .planner-choice-grid-budget,
   .planner-choice-grid,
   .planner-review-grid,
   .planner-status-grid,

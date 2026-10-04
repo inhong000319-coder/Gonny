@@ -5,7 +5,7 @@ from pathlib import Path
 
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
-from app.domains.rule_planner.schemas import NormalizedRuleRequest
+from app.domains.rule_planner.schemas import BudgetBand, NormalizedRuleRequest
 
 from .travel_estimate import haversine_distance_km
 
@@ -19,6 +19,19 @@ ACCOMMODATIONS_DIR = Path(__file__).resolve().parents[4] / "app" / "data" / "acc
 # valid way to feed it through the same model.
 BUDGET_MATCH_BONUS = 6
 BUDGET_MISMATCH_PENALTY = -4
+# When a real nightly rate is known (AccommodationData.average_price_krw), the
+# budget check uses it instead of the coarse budget_level tag - hence a
+# slightly larger exact-match bonus, since it's grounded in data rather than
+# a tag. Adjacent/far penalties scale with how many bands apart the stay and
+# the requested band are.
+PRICE_EXACT_MATCH_BONUS = 10
+PRICE_ADJACENT_PENALTY = -2
+PRICE_FAR_PENALTY = -6
+# Tertile cut-offs over the 27 priced accommodations (min 42,862, median
+# 109,000, max 880,000 KRW): low <= 70,000 < medium <= 200,000 < high.
+LOW_PRICE_MAX_KRW = 70000
+MEDIUM_PRICE_MAX_KRW = 200000
+_PRICE_BAND_ORDER = {"low": 0, "medium": 1, "high": 2}
 COMPANION_MATCH_BONUS = 5
 COMPANION_MISMATCH_PENALTY = -3
 
@@ -83,6 +96,31 @@ def compute_reference_point(
     return average_latitude, average_longitude
 
 
+def classify_price_band(price_krw: int) -> BudgetBand:
+    if price_krw <= LOW_PRICE_MAX_KRW:
+        return "low"
+    if price_krw <= MEDIUM_PRICE_MAX_KRW:
+        return "medium"
+    return "high"
+
+
+def _budget_fit_score(accommodation: AccommodationData, requested_band: BudgetBand) -> int:
+    if accommodation.average_price_krw is not None:
+        band_distance = abs(
+            _PRICE_BAND_ORDER[classify_price_band(accommodation.average_price_krw)]
+            - _PRICE_BAND_ORDER[requested_band]
+        )
+        if band_distance == 0:
+            return PRICE_EXACT_MATCH_BONUS
+        if band_distance == 1:
+            return PRICE_ADJACENT_PENALTY
+        return PRICE_FAR_PENALTY
+
+    if requested_band in accommodation.budget_level:
+        return BUDGET_MATCH_BONUS
+    return BUDGET_MISMATCH_PENALTY
+
+
 def accommodation_score(
     accommodation: AccommodationData,
     request: NormalizedRuleRequest,
@@ -90,17 +128,23 @@ def accommodation_score(
 ) -> int:
     """Rule-based accommodation fitness score.
 
+    Budget fit uses two different bases, intentionally:
+      - If average_price_krw is known, the stay's real nightly rate is
+        classified into low/medium/high (see classify_price_band) and compared
+        against request.budget_band by distance: exact +10, one band off -2,
+        two bands off -6.
+      - If average_price_krw is None (not researched or not confirmed), the
+        coarse budget_level tag is used instead: +6 when it matches, -4 when
+        it doesn't. Unknown prices are never guessed at.
+    So priced and unpriced accommodations are scored on different bases by
+    design - available data is used, missing data isn't inferred.
+
     accommodation_type deliberately does not affect this score (per this
     feature's scope) - it's surfaced in the response for the user to see,
     not used to rank candidates. view is not read here either (data
     quality too low for this round - see AccommodationData.view).
     """
-    score = 0
-
-    if request.budget_band in accommodation.budget_level:
-        score += BUDGET_MATCH_BONUS
-    else:
-        score += BUDGET_MISMATCH_PENALTY
+    score = _budget_fit_score(accommodation, request.budget_band)
 
     if request.companion_type in accommodation.suitable_for:
         score += COMPANION_MATCH_BONUS

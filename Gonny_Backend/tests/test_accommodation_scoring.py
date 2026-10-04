@@ -11,7 +11,14 @@ import pytest
 
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.rule_planner.services.accommodation_scoring import (
+    BUDGET_MATCH_BONUS,
+    BUDGET_MISMATCH_PENALTY,
+    COMPANION_MATCH_BONUS,
+    PRICE_ADJACENT_PENALTY,
+    PRICE_EXACT_MATCH_BONUS,
+    PRICE_FAR_PENALTY,
     accommodation_score,
+    classify_price_band,
     compute_reference_point,
     load_city_accommodations,
     select_accommodation_recommendation,
@@ -123,6 +130,81 @@ def test_missing_coordinates_contribute_no_location_bonus_or_penalty() -> None:
     without_reference = accommodation_score(without_coords, request, None)
 
     assert with_reference == without_reference
+
+
+# Budget fit: real nightly price vs. budget_level tag fallback
+
+
+def _budget_contribution(accommodation: AccommodationData, request: NormalizedRuleRequest) -> int:
+    # build_accommodation()'s default suitable_for includes "couple", and
+    # build_request() uses companion_type="couple", so the companion term is
+    # constant (+COMPANION_MATCH_BONUS). No reference point, so location is 0.
+    # Subtracting the companion term leaves only the budget-fit contribution.
+    return accommodation_score(accommodation, request, None) - COMPANION_MATCH_BONUS
+
+
+def test_priced_stay_in_exact_band_gets_exact_match_bonus() -> None:
+    request = build_request(budget_band="medium")
+    priced_medium = build_accommodation(average_price_krw=109000)
+
+    assert _budget_contribution(priced_medium, request) == PRICE_EXACT_MATCH_BONUS
+
+
+def test_priced_stay_one_band_away_gets_adjacent_penalty() -> None:
+    request = build_request(budget_band="medium")
+    priced_low = build_accommodation(average_price_krw=40000)
+    priced_high = build_accommodation(id="high", average_price_krw=500000)
+
+    assert _budget_contribution(priced_low, request) == PRICE_ADJACENT_PENALTY
+    assert _budget_contribution(priced_high, request) == PRICE_ADJACENT_PENALTY
+
+
+def test_priced_stay_two_bands_away_gets_far_penalty() -> None:
+    low_request = build_request(budget_band="low")
+    high_request = build_request(budget_band="high")
+
+    assert _budget_contribution(build_accommodation(average_price_krw=500000), low_request) == PRICE_FAR_PENALTY
+    assert _budget_contribution(build_accommodation(id="cheap", average_price_krw=40000), high_request) == PRICE_FAR_PENALTY
+
+
+def test_real_price_overrides_a_contradicting_budget_level_tag() -> None:
+    # The tag says high-end, but the researched rate is in the low band - the
+    # price wins, so a "low" request gets the exact-match bonus, not the tag's
+    # mismatch penalty.
+    request = build_request(budget_band="low")
+    tagged_high_but_cheap = build_accommodation(budget_level=["high"], average_price_krw=40000)
+
+    assert _budget_contribution(tagged_high_but_cheap, request) == PRICE_EXACT_MATCH_BONUS
+
+
+def test_unpriced_stay_falls_back_to_budget_level_tag_match() -> None:
+    request = build_request(budget_band="medium")
+    unpriced_matching = build_accommodation(budget_level=["medium"], average_price_krw=None)
+
+    assert _budget_contribution(unpriced_matching, request) == BUDGET_MATCH_BONUS
+
+
+def test_unpriced_stay_falls_back_to_budget_level_tag_mismatch() -> None:
+    request = build_request(budget_band="medium")
+    unpriced_mismatched = build_accommodation(budget_level=["low"], average_price_krw=None)
+
+    assert _budget_contribution(unpriced_mismatched, request) == BUDGET_MISMATCH_PENALTY
+
+
+@pytest.mark.parametrize(
+    ("price_krw", "expected_band"),
+    [
+        (42862, "low"),
+        (70000, "low"),
+        (70001, "medium"),
+        (109000, "medium"),
+        (200000, "medium"),
+        (200001, "high"),
+        (880000, "high"),
+    ],
+)
+def test_classify_price_band_uses_tertile_boundaries(price_krw: int, expected_band: str) -> None:
+    assert classify_price_band(price_krw) == expected_band
 
 
 # select_accommodation_recommendation()

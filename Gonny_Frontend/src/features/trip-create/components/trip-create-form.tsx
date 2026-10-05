@@ -98,6 +98,16 @@ type AccommodationRecommendation = {
   average_price_krw?: number | null;
 };
 
+type RuleCostEstimate = {
+  min_krw: number;
+  max_krw: number;
+  priced_place_count: number;
+  unpriced_place_count: number;
+  accommodation_included: boolean;
+  nights: number;
+  travelers: number;
+};
+
 type FeaturedVideo = {
   video_id: string;
   title: string;
@@ -127,6 +137,7 @@ type RuleItineraryResponse = {
   weather_alerts: RuleWeatherAlert[];
   accommodation_recommendation: AccommodationRecommendation | null;
   meal_recommendations: RuleMealRecommendation[];
+  estimated_cost: RuleCostEstimate | null;
 };
 
 type PlannerFormState = {
@@ -441,8 +452,30 @@ function isAccommodationRecommendation(value: unknown): value is AccommodationRe
   );
 }
 
+function isRuleCostEstimate(value: unknown): value is RuleCostEstimate {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const estimate = value as Record<string, unknown>;
+  return (
+    typeof estimate.min_krw === "number" &&
+    typeof estimate.max_krw === "number" &&
+    typeof estimate.priced_place_count === "number" &&
+    typeof estimate.unpriced_place_count === "number" &&
+    typeof estimate.accommodation_included === "boolean"
+  );
+}
+
 function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
+}
+
+function formatCostRangeLabel(min: number, max: number) {
+  if (min === max) {
+    return `약 ${min.toLocaleString("ko-KR")}원`;
+  }
+  return `약 ${min.toLocaleString("ko-KR")} ~ ${max.toLocaleString("ko-KR")}원`;
 }
 
 function normalizeCatalogResponse(payload: unknown) {
@@ -500,6 +533,7 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     meal_recommendations: Array.isArray(data.meal_recommendations)
       ? data.meal_recommendations.filter(isRuleMealRecommendation)
       : [],
+    estimated_cost: isRuleCostEstimate(data.estimated_cost) ? data.estimated_cost : null,
   };
 }
 
@@ -1404,6 +1438,24 @@ export function TripCreateForm() {
                 </div>
                 {result.accommodation_recommendation.average_price_krw != null ? (
                   <p className="planner-accommodation-price">1박 기준 {formatCostLabel(result.accommodation_recommendation.average_price_krw)}</p>
+                ) : null}
+              </section>
+            ) : null}
+
+            {result.estimated_cost ? (
+              <section className="planner-accommodation-card">
+                <span className="section-kicker">Estimated Cost</span>
+                <strong>{formatCostRangeLabel(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}</strong>
+                <p className="planner-cost-basis">
+                  입장료 확인 {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
+                </p>
+                {result.estimated_cost.unpriced_place_count > 0 ? (
+                  <p className="planner-cost-basis">
+                    가격 미확인 {result.estimated_cost.unpriced_place_count}곳은 상한으로 가정
+                  </p>
+                ) : null}
+                {!result.estimated_cost.accommodation_included ? (
+                  <p className="planner-cost-basis">숙소 가격 미확인으로 숙소 비용 제외</p>
                 ) : null}
               </section>
             ) : null}

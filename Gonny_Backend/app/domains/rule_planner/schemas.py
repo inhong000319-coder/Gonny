@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CatalogCityOption, FeaturedVideoData
@@ -11,6 +11,7 @@ BudgetBand = Literal["low", "medium", "high"]
 TripConcept = Literal["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity", "nightlife", "onsen"]
 TripStyle = Literal["tight", "easy", "near-stay", "mobility-first"]
 CompanionType = Literal["solo", "couple", "friend", "family"]
+AccommodationTypeLabel = Literal["호텔", "모텔", "호스텔", "펜션·민박", "콘도미니엄"]
 TimeSlot = Literal["morning", "afternoon", "evening"]
 
 
@@ -27,6 +28,9 @@ class RuleItineraryRequest(BaseModel):
     concepts: list[TripConcept] | None = None
     style: TripStyle | None = None
     companion_type: CompanionType | None = None
+    # Lodging-only budget. Left unset, accommodation scoring uses budget_band.
+    accommodation_budget_band: BudgetBand | None = None
+    accommodation_types: list[AccommodationTypeLabel] | None = None
     # Trip start date. Optional - without it there's no way to map a
     # day_number to a weekday, so closed-day exclusion (see
     # RuleClosedDayExclusion) simply never triggers.
@@ -108,9 +112,21 @@ class NormalizedRuleRequest(BaseModel):
     concepts: list[TripConcept]
     style: TripStyle
     companion_type: CompanionType
+    # Used only by accommodation scoring. Activities, meals and weather keep
+    # reading budget_band.
+    accommodation_budget_band: BudgetBand
+    # Preference only: matching adds a score bonus, never filters candidates.
+    accommodation_types: list[AccommodationTypeLabel] = Field(default_factory=list)
     start_date: date | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _default_accommodation_budget_band(cls, data):
+        if isinstance(data, dict) and data.get("accommodation_budget_band") is None:
+            return {**data, "accommodation_budget_band": data.get("budget_band")}
+        return data
 
 
 class RuleCostEstimate(BaseModel):

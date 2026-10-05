@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 
 from app.domains.accommodation_catalog.schemas import AccommodationData
@@ -34,6 +35,7 @@ MEDIUM_PRICE_MAX_KRW = 200000
 _PRICE_BAND_ORDER = {"low": 0, "medium": 1, "high": 2}
 COMPANION_MATCH_BONUS = 5
 COMPANION_MISMATCH_PENALTY = -3
+ACCOMMODATION_TYPE_MATCH_BONUS = 8
 
 # Distance tiers mirror travel_estimate.coordinate_area_transition_bonus's
 # magnitudes (14/6/0/-6) for consistency with the rest of the scoring
@@ -104,6 +106,10 @@ def classify_price_band(price_krw: int) -> BudgetBand:
     return "high"
 
 
+def count_accommodation_types(city: str) -> dict[str, int]:
+    return dict(Counter(accommodation.accommodation_type for accommodation in load_city_accommodations(city)))
+
+
 def _budget_fit_score(accommodation: AccommodationData, requested_band: BudgetBand) -> int:
     if accommodation.average_price_krw is not None:
         band_distance = abs(
@@ -128,10 +134,12 @@ def accommodation_score(
 ) -> int:
     """Rule-based accommodation fitness score.
 
-    Budget fit uses two different bases, intentionally:
+    Budget fit uses request.accommodation_budget_band (lodging-only budget,
+    falling back to the activity budget_band when unset) and two different
+    bases, intentionally:
       - If average_price_krw is known, the stay's real nightly rate is
         classified into low/medium/high (see classify_price_band) and compared
-        against request.budget_band by distance: exact +10, one band off -2,
+        against that band by distance: exact +10, one band off -2,
         two bands off -6.
       - If average_price_krw is None (not researched or not confirmed), the
         coarse budget_level tag is used instead: +6 when it matches, -4 when
@@ -139,17 +147,20 @@ def accommodation_score(
     So priced and unpriced accommodations are scored on different bases by
     design - available data is used, missing data isn't inferred.
 
-    accommodation_type deliberately does not affect this score (per this
-    feature's scope) - it's surfaced in the response for the user to see,
-    not used to rank candidates. view is not read here either (data
-    quality too low for this round - see AccommodationData.view).
+    accommodation_type adds ACCOMMODATION_TYPE_MATCH_BONUS only when the user
+    selected types and this stay's type is among them; it is never a penalty
+    or a filter. view is not read here (data quality too low for this round -
+    see AccommodationData.view).
     """
-    score = _budget_fit_score(accommodation, request.budget_band)
+    score = _budget_fit_score(accommodation, request.accommodation_budget_band)
 
     if request.companion_type in accommodation.suitable_for:
         score += COMPANION_MATCH_BONUS
     else:
         score += COMPANION_MISMATCH_PENALTY
+
+    if request.accommodation_types and accommodation.accommodation_type in request.accommodation_types:
+        score += ACCOMMODATION_TYPE_MATCH_BONUS
 
     if reference_point is not None and accommodation.latitude is not None and accommodation.longitude is not None:
         distance_km = haversine_distance_km(

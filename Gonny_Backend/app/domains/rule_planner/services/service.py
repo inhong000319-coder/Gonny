@@ -29,6 +29,7 @@ from .accommodation_scoring import (
     select_accommodation_recommendation,
 )
 from .closed_days import WEEKDAY_LABEL_KO, is_confirmed_closed_on
+from .cost_estimate import estimate_trip_cost_range
 from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
 from .constants import (
     ACTIVITY_CATEGORIES,
@@ -111,6 +112,12 @@ class RuleItineraryService:
             weather_alerts=weather_alerts,
             accommodation_recommendation=accommodation_recommendation,
             meal_recommendations=meal_recommendations,
+            estimated_cost=estimate_trip_cost_range(
+                (place for places in day_place_map.values() for place in places),
+                accommodation_recommendation,
+                travelers=normalized.travelers,
+                nights=normalized.nights,
+            ),
         )
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:

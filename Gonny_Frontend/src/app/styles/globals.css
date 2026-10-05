@@ -2194,6 +2194,12 @@ body.modal-open {
   font-size: 0.78rem;
   font-weight: 600;
 }
+.planner-cost-basis {
+  margin: 4px 0 0;
+  color: #7890a2;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
 .planner-slot-cost,
 .planner-accommodation-price {
   margin: 4px 0 0;

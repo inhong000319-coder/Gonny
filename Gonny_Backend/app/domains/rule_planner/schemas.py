@@ -113,6 +113,25 @@ class NormalizedRuleRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleCostEstimate(BaseModel):
+    """Estimated trip cost range covering tourist admission fees and the
+    recommended accommodation only. Restaurant meals and transportation are
+    deliberately excluded.
+
+    min_krw sums confirmed prices. max_krw adds a conservative per-place cap
+    for admissions whose fee is unknown. The accommodation is included only
+    when its nightly rate is confirmed.
+    """
+
+    min_krw: int
+    max_krw: int
+    priced_place_count: int
+    unpriced_place_count: int
+    accommodation_included: bool
+    nights: int
+    travelers: int
+
+
 class RuleItineraryResponse(BaseModel):
     continent: str
     country: str
@@ -131,6 +150,7 @@ class RuleItineraryResponse(BaseModel):
     weather_alerts: list[RuleWeatherAlert] = Field(default_factory=list)
     accommodation_recommendation: AccommodationData | None = None
     meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
+    estimated_cost: RuleCostEstimate | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

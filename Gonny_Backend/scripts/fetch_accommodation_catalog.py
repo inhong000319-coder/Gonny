@@ -1,3 +1,4 @@
+# 이 스크립트로 다시 받아오면 12곳의 유형 보정(scripts/fix_accommodation_types.py)이 덮어써지므로, 재실행 후 보정 스크립트를 다시 돌려야 한다.
 from __future__ import annotations
 
 import json

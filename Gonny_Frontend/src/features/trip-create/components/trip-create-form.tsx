@@ -16,6 +16,7 @@ type CatalogCityOption = {
   country: string;
   city: string;
   aliases: string[];
+  accommodation_type_counts?: Partial<Record<AccommodationTypeLabel, number>>;
 };
 
 type RuleItineraryCatalogResponse = {
@@ -151,6 +152,8 @@ type PlannerFormState = {
   concepts: TripConcept[];
   style: TripStyle;
   companion_type: CompanionType;
+  accommodation_types: AccommodationTypeLabel[];
+  accommodation_budget_band: BudgetBand | null;
 };
 
 const STEP_COUNT = 4;
@@ -166,6 +169,8 @@ const conceptOptions: TripConcept[] = [
   "onsen",
 ];
 const budgetOptions: BudgetBand[] = ["low", "medium", "high"];
+type AccommodationTypeLabel = "호텔" | "모텔" | "호스텔" | "펜션·민박" | "콘도미니엄";
+const accommodationTypeOptions: AccommodationTypeLabel[] = ["호텔", "모텔", "호스텔", "펜션·민박", "콘도미니엄"];
 const styleOptions: TripStyle[] = ["tight", "easy", "near-stay", "mobility-first"];
 const companionOptions: CompanionType[] = ["solo", "couple", "friend", "family"];
 const travelerOptions = [
@@ -192,6 +197,8 @@ const initialForm: PlannerFormState = {
   concepts: ["sightseeing", "food"],
   style: "easy",
   companion_type: "friend",
+  accommodation_types: [],
+  accommodation_budget_band: null,
 };
 
 const continentKo: Record<string, string> = {
@@ -626,6 +633,7 @@ function splitNoteLines(note: string) {
 export function TripCreateForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<PlannerFormState>(initialForm);
+  const [isAccommodationBudgetOn, setIsAccommodationBudgetOn] = useState(false);
   const [catalog, setCatalog] = useState<CatalogCityOption[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
@@ -738,6 +746,10 @@ export function TripCreateForm() {
   const mealsByDay = useMemo(() => groupMealsByDay(result?.meal_recommendations ?? []), [result]);
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
+  const selectedCatalogCity = cities.find((option) => option.city === form.city);
+  const availableAccommodationTypes = accommodationTypeOptions.filter(
+    (type) => (selectedCatalogCity?.accommodation_type_counts?.[type] ?? 0) > 0,
+  );
   const endDate = buildEndDate(form.start_date, selectedNights);
 
   useEffect(() => {
@@ -747,7 +759,7 @@ export function TripCreateForm() {
 
     const cityStillVisible = cities.some((option) => option.city === form.city);
     if (!cityStillVisible) {
-      setForm((prev) => ({ ...prev, city: "" }));
+      setForm((prev) => ({ ...prev, city: "", accommodation_types: [] }));
     }
   }, [cities, form.city]);
 
@@ -790,7 +802,27 @@ export function TripCreateForm() {
   }, [result]);
 
   const updateField = <K extends keyof PlannerFormState>(key: K, value: PlannerFormState[K]) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+      ...(key === "city" ? { accommodation_types: [] } : {}),
+    }));
+  };
+
+  const toggleAccommodationType = (type: AccommodationTypeLabel) => {
+    setForm((prev) => ({
+      ...prev,
+      accommodation_types: prev.accommodation_types.includes(type)
+        ? prev.accommodation_types.filter((item) => item !== type)
+        : [...prev.accommodation_types, type],
+    }));
+  };
+
+  const handleAccommodationBudgetToggle = (enabled: boolean) => {
+    setIsAccommodationBudgetOn(enabled);
+    if (!enabled) {
+      updateField("accommodation_budget_band", null);
+    }
   };
 
   const toggleConcept = (concept: TripConcept) => {
@@ -813,9 +845,12 @@ export function TripCreateForm() {
     setMessage("");
 
     try {
+      const { accommodation_types, accommodation_budget_band, ...planForm } = form;
       const response = await apiClient.post<unknown>("/rule-itinerary/generate", {
-        ...form,
+        ...planForm,
         travelers: Number(form.travelers) || 2,
+        ...(accommodation_types.length > 0 ? { accommodation_types } : {}),
+        ...(isAccommodationBudgetOn && accommodation_budget_band ? { accommodation_budget_band } : {}),
       });
 
       const nextResult = normalizeGenerateResponse(response.data);
@@ -1213,6 +1248,54 @@ export function TripCreateForm() {
                     </button>
                   ))}
                 </div>
+
+                {availableAccommodationTypes.length > 0 ? (
+                  <div className="field">
+                    <span>숙소 유형 (선택, 여러 개 가능)</span>
+                    <div className="chip-list">
+                      {availableAccommodationTypes.map((type) => (
+                        <button
+                          key={type}
+                          className={form.accommodation_types.includes(type) ? "chip active" : "chip"}
+                          onClick={() => toggleAccommodationType(type)}
+                          type="button"
+                        >
+                          {type} {selectedCatalogCity?.accommodation_type_counts?.[type]}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="field">
+                  <label className="planner-accommodation-toggle">
+                    <input
+                      checked={isAccommodationBudgetOn}
+                      onChange={(event) => handleAccommodationBudgetToggle(event.target.checked)}
+                      type="checkbox"
+                    />
+                    숙소 예산을 따로 설정
+                  </label>
+                  {isAccommodationBudgetOn ? (
+                    <div className="planner-choice-grid planner-choice-grid-budget">
+                      {budgetOptions.map((option) => (
+                        <button
+                          key={option}
+                          className={`planner-choice-card ${form.accommodation_budget_band === option ? "selected" : ""}`}
+                          onClick={() => updateField("accommodation_budget_band", option)}
+                          type="button"
+                        >
+                          <strong>{labelBudget(option)}</strong>
+                          <small>{budgetIntensityLabel(option)}</small>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="planner-inline-note">
+                      숙소는 위에서 고른 활동 예산({labelBudget(form.budget_band)})을 따릅니다.
+                    </p>
+                  )}
+                </div>
               </div>
             ) : null}
 
@@ -1310,6 +1393,22 @@ export function TripCreateForm() {
                     <p>{labelBudget(form.budget_band)}</p>
                     <span>{budgetIntensityLabel(form.budget_band)}</span>
                   </article>
+
+                  {form.accommodation_types.length > 0 ? (
+                    <article className="metric">
+                      <strong>숙소 유형</strong>
+                      <p>{form.accommodation_types.join(", ")}</p>
+                      <span>선택한 유형에 가산점을 줍니다.</span>
+                    </article>
+                  ) : null}
+
+                  {isAccommodationBudgetOn && form.accommodation_budget_band ? (
+                    <article className="metric">
+                      <strong>숙소 예산</strong>
+                      <p>{labelBudget(form.accommodation_budget_band)}</p>
+                      <span>{budgetIntensityLabel(form.accommodation_budget_band)}</span>
+                    </article>
+                  ) : null}
 
                   <article className="metric">
                     <strong>스타일</strong>

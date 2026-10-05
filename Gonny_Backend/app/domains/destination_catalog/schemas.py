@@ -169,3 +169,4 @@ class CatalogCityOption(BaseModel):
     country: str
     city: str
     aliases: list[str]
+    accommodation_type_counts: dict[str, int] = Field(default_factory=dict)

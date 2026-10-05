@@ -2194,6 +2194,16 @@ body.modal-open {
   font-size: 0.78rem;
   font-weight: 600;
 }
+.planner-accommodation-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #294f6a;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
 .planner-cost-basis {
   margin: 4px 0 0;
   color: #7890a2;

@@ -24,6 +24,7 @@ from app.domains.rule_planner.schemas import (
 from app.services.external_clients import OpenWeatherClient
 
 from .accommodation_scoring import (
+    count_accommodation_types,
     compute_reference_point,
     load_city_accommodations,
     select_accommodation_recommendation,
@@ -74,7 +75,10 @@ class RuleItineraryService:
         self.weather_client = weather_client or OpenWeatherClient(settings)
 
     def list_catalog_options(self) -> list[CatalogCityOption]:
-        return self.catalog_provider.list_city_options(visible_only=True)
+        return [
+            option.model_copy(update={"accommodation_type_counts": count_accommodation_types(option.city)})
+            for option in self.catalog_provider.list_city_options(visible_only=True)
+        ]
 
     def generate(self, request: RuleItineraryRequest) -> RuleItineraryResponse:
         normalized = self._normalize_request(request)

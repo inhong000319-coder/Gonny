@@ -189,4 +189,4 @@ def test_catalog_options_include_accommodation_type_counts_for_seoul() -> None:
     options = RuleItineraryService().list_catalog_options()
     seoul = next(option for option in options if option.city == "seoul")
 
-    assert seoul.accommodation_type_counts == {"호텔": 8, "모텔": 3, "호스텔": 3, "펜션·민박": 1}
+    assert seoul.accommodation_type_counts == {"호텔": 11, "호스텔": 3, "펜션·민박": 1}

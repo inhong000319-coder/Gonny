@@ -9,17 +9,19 @@
       "latitude": 33.3178733106,
       "longitude": 126.3875196113,
       "content_id": "1894943",
-      "accommodation_type": "모텔",
+      "accommodation_type": "호텔",
       "amenities": [
         "주차가능"
       ],
       "budget_level": [
-        "low"
+        "high"
       ],
       "budget_level_estimated": true,
       "suitable_for": [
         "solo",
-        "couple"
+        "couple",
+        "friend",
+        "family"
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",
@@ -202,7 +204,7 @@
       "latitude": 33.2368032498,
       "longitude": 126.3088143604,
       "content_id": "2626800",
-      "accommodation_type": "호스텔",
+      "accommodation_type": "펜션·민박",
       "amenities": [
         "주차가능",
         "취사가능",
@@ -210,12 +212,12 @@
         "바비큐"
       ],
       "budget_level": [
-        "low",
         "medium"
       ],
       "budget_level_estimated": true,
       "suitable_for": [
-        "solo",
+        "couple",
+        "family",
         "friend"
       ],
       "checkin_time": "15:00",
@@ -312,7 +314,7 @@
       "latitude": 33.4718785742,
       "longitude": 126.9127177787,
       "content_id": "2624249",
-      "accommodation_type": "호스텔",
+      "accommodation_type": "호텔",
       "amenities": [
         "주차가능",
         "세미나실",
@@ -320,13 +322,14 @@
         "음료서비스"
       ],
       "budget_level": [
-        "low",
         "medium"
       ],
       "budget_level_estimated": true,
       "suitable_for": [
         "solo",
-        "friend"
+        "couple",
+        "friend",
+        "family"
       ],
       "checkin_time": "15:00",
       "checkout_time": "11:00",

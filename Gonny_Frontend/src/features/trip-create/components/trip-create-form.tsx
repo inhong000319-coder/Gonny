@@ -1398,7 +1398,7 @@ export function TripCreateForm() {
                     <article className="metric">
                       <strong>숙소 유형</strong>
                       <p>{form.accommodation_types.join(", ")}</p>
-                      <span>선택한 유형에 가산점을 줍니다.</span>
+                      <span>선택한 유형 안에서 추천합니다.</span>
                     </article>
                   ) : null}
 

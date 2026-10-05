@@ -35,7 +35,6 @@ MEDIUM_PRICE_MAX_KRW = 200000
 _PRICE_BAND_ORDER = {"low": 0, "medium": 1, "high": 2}
 COMPANION_MATCH_BONUS = 5
 COMPANION_MISMATCH_PENALTY = -3
-ACCOMMODATION_TYPE_MATCH_BONUS = 8
 
 # Distance tiers mirror travel_estimate.coordinate_area_transition_bonus's
 # magnitudes (14/6/0/-6) for consistency with the rest of the scoring
@@ -147,10 +146,10 @@ def accommodation_score(
     So priced and unpriced accommodations are scored on different bases by
     design - available data is used, missing data isn't inferred.
 
-    accommodation_type adds ACCOMMODATION_TYPE_MATCH_BONUS only when the user
-    selected types and this stay's type is among them; it is never a penalty
-    or a filter. view is not read here (data quality too low for this round -
-    see AccommodationData.view).
+    accommodation_type does not affect this score - when the user selects
+    types, select_accommodation_recommendation narrows the pool to them first.
+    view is not read here (data quality too low for this round - see
+    AccommodationData.view).
     """
     score = _budget_fit_score(accommodation, request.accommodation_budget_band)
 
@@ -159,8 +158,6 @@ def accommodation_score(
     else:
         score += COMPANION_MISMATCH_PENALTY
 
-    if request.accommodation_types and accommodation.accommodation_type in request.accommodation_types:
-        score += ACCOMMODATION_TYPE_MATCH_BONUS
 
     if reference_point is not None and accommodation.latitude is not None and accommodation.longitude is not None:
         distance_km = haversine_distance_km(
@@ -198,6 +195,11 @@ def select_accommodation_recommendation(
     coordinate-having candidate just by winning on budget/companion fit
     alone. Only when *no* candidate has coordinates does the full pool
     get scored on budget/companion fit alone.
+
+    When the user selected accommodation_types, the coordinate-filtered pool
+    is narrowed to those types first, so only those stays are considered. If
+    none of the pool matches, the type filter is skipped and the pool above
+    is used unchanged, so a selection never empties the recommendation.
     """
     if not accommodations:
         return None
@@ -208,6 +210,14 @@ def select_accommodation_recommendation(
         if accommodation.latitude is not None and accommodation.longitude is not None
     ]
     candidate_pool = with_coordinates or accommodations
+    if request.accommodation_types:
+        typed_pool = [
+            accommodation
+            for accommodation in candidate_pool
+            if accommodation.accommodation_type in request.accommodation_types
+        ]
+        if typed_pool:
+            candidate_pool = typed_pool
 
     ranked = sorted(
         candidate_pool,

@@ -13,10 +13,10 @@ from pydantic import ValidationError
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleItineraryRequest
 from app.domains.rule_planner.services.accommodation_scoring import (
-    ACCOMMODATION_TYPE_MATCH_BONUS,
     PRICE_EXACT_MATCH_BONUS,
     PRICE_FAR_PENALTY,
     accommodation_score,
+    select_accommodation_recommendation,
 )
 from app.domains.rule_planner.services.request_normalizer import normalize_rule_request
 from app.domains.rule_planner.services.service import RuleItineraryService
@@ -53,32 +53,83 @@ def build_request(**overrides) -> NormalizedRuleRequest:
     return NormalizedRuleRequest.model_validate(data)
 
 
-# (a) accommodation_types preference bonus
+# Accommodation type selection narrows the candidate pool
 
 
-def test_selected_type_matching_stay_gets_type_bonus() -> None:
-    hotel = build_accommodation(accommodation_type="호텔")
-    unselected = accommodation_score(hotel, build_request(), None)
+def test_selected_type_is_recommended_even_when_another_type_scores_higher() -> None:
+    request = build_request(accommodation_types=["펜션·민박"])
+    higher_scoring_hotel = build_accommodation(id="hotel", accommodation_type="호텔", budget_level=["medium"], suitable_for=["couple"])
+    selected_pension = build_accommodation(id="pension", accommodation_type="펜션·민박", budget_level=["low"], suitable_for=["solo"])
+    candidates = [higher_scoring_hotel, selected_pension]
 
-    selected = accommodation_score(hotel, build_request(accommodation_types=["호텔"]), None)
-
-    assert selected == unselected + ACCOMMODATION_TYPE_MATCH_BONUS
-
-
-def test_selected_type_non_matching_stay_gets_no_change_and_no_penalty() -> None:
-    motel = build_accommodation(accommodation_type="모텔")
-    unselected = accommodation_score(motel, build_request(), None)
-
-    selected = accommodation_score(motel, build_request(accommodation_types=["호텔"]), None)
-
-    assert selected == unselected
+    assert accommodation_score(higher_scoring_hotel, build_request(), None) > accommodation_score(selected_pension, build_request(), None)
+    assert select_accommodation_recommendation(candidates, request, None).id == "pension"
 
 
-def test_empty_type_selection_matches_baseline_score_exactly() -> None:
-    stay = build_accommodation(accommodation_type="펜션·민박", average_price_krw=109000)
-    baseline = accommodation_score(stay, build_request(), None)
+def test_multiple_selected_types_choose_best_among_them() -> None:
+    request = build_request(accommodation_types=["호텔", "모텔"])
+    hostel_best_overall = build_accommodation(id="hostel", accommodation_type="호스텔", budget_level=["high"], suitable_for=["couple"])
+    hotel = build_accommodation(id="hotel", accommodation_type="호텔", budget_level=["medium"], suitable_for=["couple"])
+    motel = build_accommodation(id="motel", accommodation_type="모텔", budget_level=["low"], suitable_for=["solo"])
 
-    assert accommodation_score(stay, build_request(accommodation_types=[]), None) == baseline
+    selected = select_accommodation_recommendation([hostel_best_overall, hotel, motel], request, None)
+
+    assert selected.id == "hotel"
+
+
+def test_selected_type_missing_from_pool_falls_back_to_full_pool() -> None:
+    request = build_request(accommodation_types=["호스텔"])
+    hotel = build_accommodation(id="hotel", accommodation_type="호텔", budget_level=["medium"], suitable_for=["couple"])
+    motel = build_accommodation(id="motel", accommodation_type="모텔", budget_level=["low"], suitable_for=["solo"])
+
+    selected = select_accommodation_recommendation([hotel, motel], request, None)
+
+    assert selected is not None
+    assert selected.id == select_accommodation_recommendation([hotel, motel], build_request(), None).id
+
+
+def test_no_selected_types_gives_same_recommendation_as_before() -> None:
+    hotel = build_accommodation(id="hotel", accommodation_type="호텔", budget_level=["medium"], suitable_for=["couple"])
+    motel = build_accommodation(id="motel", accommodation_type="모텔", budget_level=["low"], suitable_for=["solo"])
+    candidates = [hotel, motel]
+
+    assert select_accommodation_recommendation(candidates, build_request(accommodation_types=[]), None).id == "hotel"
+    assert select_accommodation_recommendation(candidates, build_request(), None).id == "hotel"
+    assert accommodation_score(motel, build_request(accommodation_types=["모텔"]), None) == accommodation_score(
+        motel, build_request(), None
+    )
+
+
+def test_coordinate_preference_still_applies_with_type_filter() -> None:
+    request = build_request(accommodation_types=["모텔"])
+    coordinate_hotel = build_accommodation(
+        id="coord-hotel", accommodation_type="호텔", budget_level=["medium"], suitable_for=["couple"],
+        latitude=37.5665, longitude=126.9780,
+    )
+    no_coordinate_motel = build_accommodation(
+        id="no-coord-motel", accommodation_type="모텔", budget_level=["medium"], suitable_for=["couple"],
+        latitude=None, longitude=None,
+    )
+
+    selected = select_accommodation_recommendation([coordinate_hotel, no_coordinate_motel], request, None)
+
+    assert selected.id == "coord-hotel"
+
+
+def test_type_filter_applies_inside_coordinate_pool() -> None:
+    request = build_request(accommodation_types=["모텔"])
+    coordinate_hotel = build_accommodation(
+        id="coord-hotel", accommodation_type="호텔", budget_level=["medium"], suitable_for=["couple"],
+        latitude=37.5665, longitude=126.9780,
+    )
+    coordinate_motel = build_accommodation(
+        id="coord-motel", accommodation_type="모텔", budget_level=["low"], suitable_for=["solo"],
+        latitude=37.5670, longitude=126.9790,
+    )
+
+    selected = select_accommodation_recommendation([coordinate_hotel, coordinate_motel], request, None)
+
+    assert selected.id == "coord-motel"
 
 
 # (b) lodging budget vs activity budget

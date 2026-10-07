@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
 export function AuthLayout({ children }: PropsWithChildren) {
@@ -8,6 +9,7 @@ export function AuthLayout({ children }: PropsWithChildren) {
       <main className="auth-layout">
         <div className="auth-card">{children}</div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

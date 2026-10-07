@@ -18,6 +18,12 @@ export function formatApproxManwon(value: number): string {
 }
 
 export function formatApproxManwonRange(min: number, max: number): string {
+  // min === 0 means "some priced places are free" - "약 0원 ~ 약 X" reads as
+  // if even the free part were an estimate, so the confirmed 0 stays exact
+  // and only the upper end gets the "약" treatment.
+  if (min === 0) {
+    return max === 0 ? "0원" : `0원 ~ 약 ${formatApproxManwon(max)}`;
+  }
   const minLabel = formatApproxManwon(min);
   const maxLabel = formatApproxManwon(max);
   return minLabel === maxLabel ? `약 ${minLabel}` : `약 ${minLabel} ~ ${maxLabel}`;

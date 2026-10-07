@@ -110,6 +110,39 @@ type RuleCostEstimate = {
   travelers: number;
 };
 
+type TransportMode = "walk" | "transit" | "car";
+type TravelEstimateSource = "estimate" | "api";
+type TravelLegPointKind = "accommodation" | "place" | "meal";
+
+type RuleTravelOption = {
+  mode: TransportMode;
+  minutes: number;
+};
+
+type RuleTravelLeg = {
+  day_number: number;
+  from_name: string;
+  to_name: string;
+  from_kind: TravelLegPointKind;
+  to_kind: TravelLegPointKind;
+  distance_km: number;
+  options: RuleTravelOption[];
+  source: TravelEstimateSource;
+};
+
+// A day only appears here when expected_leg_count > 0 (the backend's
+// itinerary genuinely has something to estimate for that day) - legs can
+// still be a partial (or empty) subset of expected_leg_count when some
+// place/accommodation lacks coordinates, see missing_leg_count.
+type RuleDayTravel = {
+  day_number: number;
+  legs: RuleTravelLeg[];
+  transit_total_minutes: number;
+  car_total_minutes: number;
+  expected_leg_count: number;
+  missing_leg_count: number;
+};
+
 type FeaturedVideo = {
   video_id: string;
   title: string;
@@ -140,6 +173,7 @@ type RuleItineraryResponse = {
   accommodation_recommendation: AccommodationRecommendation | null;
   meal_recommendations: RuleMealRecommendation[];
   estimated_cost: RuleCostEstimate | null;
+  day_travel: RuleDayTravel[];
 };
 
 type PlannerFormState = {
@@ -475,6 +509,58 @@ function isRuleCostEstimate(value: unknown): value is RuleCostEstimate {
   );
 }
 
+function isRuleTravelOption(value: unknown): value is RuleTravelOption {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const option = value as Record<string, unknown>;
+  return (
+    (option.mode === "walk" || option.mode === "transit" || option.mode === "car") &&
+    typeof option.minutes === "number"
+  );
+}
+
+function isTravelLegPointKind(value: unknown): value is TravelLegPointKind {
+  return value === "accommodation" || value === "place" || value === "meal";
+}
+
+function isRuleTravelLeg(value: unknown): value is RuleTravelLeg {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const leg = value as Record<string, unknown>;
+  return (
+    typeof leg.day_number === "number" &&
+    typeof leg.from_name === "string" &&
+    typeof leg.to_name === "string" &&
+    isTravelLegPointKind(leg.from_kind) &&
+    isTravelLegPointKind(leg.to_kind) &&
+    typeof leg.distance_km === "number" &&
+    Array.isArray(leg.options) &&
+    leg.options.every(isRuleTravelOption) &&
+    (leg.source === "estimate" || leg.source === "api")
+  );
+}
+
+function isRuleDayTravel(value: unknown): value is RuleDayTravel {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const day = value as Record<string, unknown>;
+  return (
+    typeof day.day_number === "number" &&
+    Array.isArray(day.legs) &&
+    day.legs.every(isRuleTravelLeg) &&
+    typeof day.transit_total_minutes === "number" &&
+    typeof day.car_total_minutes === "number" &&
+    typeof day.expected_leg_count === "number" &&
+    typeof day.missing_leg_count === "number"
+  );
+}
+
 function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
 }
@@ -535,6 +621,7 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
       ? data.meal_recommendations.filter(isRuleMealRecommendation)
       : [],
     estimated_cost: isRuleCostEstimate(data.estimated_cost) ? data.estimated_cost : null,
+    day_travel: Array.isArray(data.day_travel) ? data.day_travel.filter(isRuleDayTravel) : [],
   };
 }
 
@@ -565,7 +652,145 @@ function groupMealsByDay(meals: RuleMealRecommendation[]) {
   return byDay;
 }
 
-function MealCard({ meal }: { meal: RuleMealRecommendation }) {
+// --- Mode-aware day travel (day_travel) ------------------------------------
+
+function defaultDayTravelMode(city: string): "transit" | "car" {
+  return city === "jeju" ? "car" : "transit";
+}
+
+function labelTransportMode(mode: "transit" | "car") {
+  return mode === "transit" ? "대중교통" : "자동차";
+}
+
+function formatTravelMinutesLabel(totalMinutes: number) {
+  if (totalMinutes < 60) {
+    return `${totalMinutes}분`;
+  }
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return minutes > 0 ? `${hours}시간 ${minutes}분` : `${hours}시간`;
+}
+
+// Legs are matched by (kind, name) on both ends, never by position - a day
+// with a dropped (coordinate-missing) leg would otherwise shift every
+// later leg out of alignment with the cards it's meant to sit between.
+function travelLegKey(fromKind: TravelLegPointKind, fromName: string, toKind: TravelLegPointKind, toName: string) {
+  return `${fromKind}::${fromName}::${toKind}::${toName}`;
+}
+
+type DayTimelineEntry =
+  | { type: "item"; item: RuleItineraryItem }
+  | { type: "meal"; meal: RuleMealRecommendation };
+
+function buildDayTimelineEntries(
+  items: RuleItineraryItem[],
+  dayMeals: { lunch?: RuleMealRecommendation; dinner?: RuleMealRecommendation } | undefined,
+): DayTimelineEntry[] {
+  const entries: DayTimelineEntry[] = [];
+  for (const item of items) {
+    entries.push({ type: "item", item });
+    if (item.time_slot === "morning" && dayMeals?.lunch) {
+      entries.push({ type: "meal", meal: dayMeals.lunch });
+    }
+    if (item.time_slot === "afternoon" && dayMeals?.dinner) {
+      entries.push({ type: "meal", meal: dayMeals.dinner });
+    }
+  }
+  return entries;
+}
+
+function dayTimelineEntryKind(entry: DayTimelineEntry): "place" | "meal" {
+  return entry.type === "item" ? "place" : "meal";
+}
+
+function dayTimelineEntryName(entry: DayTimelineEntry): string {
+  return entry.type === "item" ? entry.item.place_name : entry.meal.place_name;
+}
+
+function DayTravelPanel({
+  dayTravel,
+  mode,
+  onModeChange,
+}: {
+  dayTravel: RuleDayTravel;
+  mode: "transit" | "car";
+  onModeChange: (mode: "transit" | "car") => void;
+}) {
+  const otherMode: "transit" | "car" = mode === "transit" ? "car" : "transit";
+  const selectedTotal = mode === "transit" ? dayTravel.transit_total_minutes : dayTravel.car_total_minutes;
+  const otherTotal = mode === "transit" ? dayTravel.car_total_minutes : dayTravel.transit_total_minutes;
+  const hasLegs = dayTravel.legs.length > 0;
+
+  return (
+    <div className="planner-day-travel">
+      <div aria-label="이동수단 선택" className="planner-day-travel-toggle" role="group">
+        {(["transit", "car"] as const).map((option) => (
+          <button
+            aria-pressed={mode === option}
+            className={mode === option ? "planner-mode-button is-active" : "planner-mode-button"}
+            key={option}
+            onClick={() => onModeChange(option)}
+            type="button"
+          >
+            {labelTransportMode(option)}
+          </button>
+        ))}
+      </div>
+      {hasLegs ? (
+        <div className="planner-day-travel-summary">
+          <strong>
+            이동 합계 {dayTravel.missing_leg_count > 0 ? "최소 " : ""}약 {formatTravelMinutesLabel(selectedTotal)}
+          </strong>
+          <span className="planner-day-travel-secondary">
+            {labelTransportMode(otherMode)} 약 {formatTravelMinutesLabel(otherTotal)}
+          </span>
+          {dayTravel.missing_leg_count > 0 ? (
+            <p className="planner-day-travel-missing">
+              일부 구간 정보 없음 ({dayTravel.missing_leg_count}개 구간 제외)
+            </p>
+          ) : null}
+        </div>
+      ) : (
+        <p className="planner-day-travel-missing">이동시간 정보가 부족해요</p>
+      )}
+    </div>
+  );
+}
+
+function TravelConnectorRow({
+  leg,
+  mode,
+  label,
+}: {
+  leg: RuleTravelLeg;
+  mode: "transit" | "car";
+  label?: string;
+}) {
+  const modeOption = leg.options.find((option) => option.mode === mode);
+  const walkOption = leg.options.find((option) => option.mode === "walk");
+  const otherMode: "transit" | "car" = mode === "transit" ? "car" : "transit";
+  const otherOption = leg.options.find((option) => option.mode === otherMode);
+  const useWalk = walkOption != null && modeOption != null && walkOption.minutes <= modeOption.minutes;
+  const primaryText = useWalk
+    ? `도보 약 ${walkOption.minutes}분`
+    : modeOption
+      ? `${labelTransportMode(mode)} 약 ${modeOption.minutes}분`
+      : null;
+
+  return (
+    <div className="planner-travel-connector">
+      {label ? <span className="planner-travel-connector-label">{label}</span> : null}
+      {primaryText ? <span className="planner-travel-connector-primary">{primaryText}</span> : null}
+      {otherOption ? (
+        <span className="planner-travel-connector-secondary">
+          {labelTransportMode(otherMode)} 약 {otherOption.minutes}분
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendation; showTravelTime?: boolean }) {
   const note = splitNoteLines(meal.notes);
 
   return (
@@ -574,7 +799,7 @@ function MealCard({ meal }: { meal: RuleMealRecommendation }) {
         <span>{meal.meal_type === "lunch" ? "점심" : "저녁"}</span>
       </div>
       <div className="planner-stop-body">
-        {meal.travel_minutes_from_previous !== null ? (
+        {showTravelTime && meal.travel_minutes_from_previous !== null ? (
           <p className="planner-slot-travel-time">이전 장소에서 약 {meal.travel_minutes_from_previous}분 이동</p>
         ) : null}
         <div className="planner-slot-top">
@@ -636,9 +861,23 @@ export function TripCreateForm() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [result, setResult] = useState<RuleItineraryResponse | null>(null);
+  const [dayTravelMode, setDayTravelMode] = useState<Record<number, "transit" | "car">>({});
   const [docDownload, setDocDownload] = useState<{ href: string; filename: string } | null>(null);
   const [printPreview, setPrintPreview] = useState<{ href: string; filename: string } | null>(null);
   const hasResult = result !== null;
+
+  useEffect(() => {
+    if (!result) {
+      setDayTravelMode({});
+      return;
+    }
+
+    const defaults: Record<number, "transit" | "car"> = {};
+    for (const dayTravel of result.day_travel) {
+      defaults[dayTravel.day_number] = defaultDayTravelMode(result.city);
+    }
+    setDayTravelMode(defaults);
+  }, [result]);
 
   useEffect(() => {
     async function loadCatalog() {
@@ -738,6 +977,16 @@ export function TripCreateForm() {
 
   const groupedItems = useMemo(() => groupByDay(result?.items ?? []), [result]);
   const mealsByDay = useMemo(() => groupMealsByDay(result?.meal_recommendations ?? []), [result]);
+  const dayTravelByDay = useMemo(
+    () => new Map((result?.day_travel ?? []).map((dayTravel) => [dayTravel.day_number, dayTravel])),
+    [result],
+  );
+  const allTravelLegs = useMemo(
+    () => (result?.day_travel ?? []).flatMap((dayTravel) => dayTravel.legs),
+    [result],
+  );
+  const showTravelEstimateNotice =
+    allTravelLegs.length > 0 && allTravelLegs.every((leg) => leg.source === "estimate");
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
   const selectedCatalogCity = cities.find((option) => option.city === form.city);
@@ -1573,7 +1822,47 @@ export function TripCreateForm() {
                   <span>오전, 오후, 저녁 흐름으로 끊어서 보기 쉽게 정리했습니다.</span>
                 </div>
               </div>
-              {groupedItems.map((group) => (
+              {showTravelEstimateNotice ? (
+                <p className="planner-travel-estimate-notice">
+                  이동시간은 직선거리 기반 추정치예요. 실제 경로와 교통 상황에 따라 달라질 수 있어요.
+                </p>
+              ) : null}
+              {groupedItems.map((group) => {
+                const dayTravel = dayTravelByDay.get(group.day);
+                const mode = dayTravelMode[group.day] ?? defaultDayTravelMode(result.city);
+                const dayMeals = mealsByDay.get(group.day);
+                const accommodationName = result.accommodation_recommendation?.name;
+                const timelineEntries = buildDayTimelineEntries(group.items, dayMeals);
+                const legByKey = new Map<string, RuleTravelLeg>();
+                for (const leg of dayTravel?.legs ?? []) {
+                  legByKey.set(travelLegKey(leg.from_kind, leg.from_name, leg.to_kind, leg.to_name), leg);
+                }
+                const firstEntry = timelineEntries[0];
+                const lastEntry = timelineEntries[timelineEntries.length - 1];
+                const startLeg =
+                  accommodationName && firstEntry
+                    ? legByKey.get(
+                        travelLegKey(
+                          "accommodation",
+                          accommodationName,
+                          dayTimelineEntryKind(firstEntry),
+                          dayTimelineEntryName(firstEntry),
+                        ),
+                      )
+                    : undefined;
+                const endLeg =
+                  accommodationName && lastEntry
+                    ? legByKey.get(
+                        travelLegKey(
+                          dayTimelineEntryKind(lastEntry),
+                          dayTimelineEntryName(lastEntry),
+                          "accommodation",
+                          accommodationName,
+                        ),
+                      )
+                    : undefined;
+
+                return (
                 <article key={group.day} className="planner-day-card">
                   <div className="planner-day-header">
                     <div>
@@ -1582,6 +1871,15 @@ export function TripCreateForm() {
                     </div>
                     <p>{summarizeRoute(group.items)}</p>
                   </div>
+                  {dayTravel ? (
+                    <DayTravelPanel
+                      dayTravel={dayTravel}
+                      mode={mode}
+                      onModeChange={(nextMode) =>
+                        setDayTravelMode((previous) => ({ ...previous, [group.day]: nextMode }))
+                      }
+                    />
+                  ) : null}
                   {result.day_duration_warnings
                     .filter((warning) => warning.day_number === group.day)
                     .map((warning) => (
@@ -1605,52 +1903,90 @@ export function TripCreateForm() {
                       <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
                     ))}
                   <div className="planner-day-timeline">
-                    {group.items.map((item) => {
-                      const note = splitNoteLines(item.notes);
-                      const dayMeals = mealsByDay.get(group.day);
+                    {startLeg ? (
+                      <TravelConnectorRow
+                        label={`숙소에서 출발 · ${accommodationName}`}
+                        leg={startLeg}
+                        mode={mode}
+                      />
+                    ) : null}
+                    {timelineEntries.map((entry, index) => {
+                      const previousEntry = index > 0 ? timelineEntries[index - 1] : null;
+                      const connectorLeg = previousEntry
+                        ? legByKey.get(
+                            travelLegKey(
+                              dayTimelineEntryKind(previousEntry),
+                              dayTimelineEntryName(previousEntry),
+                              dayTimelineEntryKind(entry),
+                              dayTimelineEntryName(entry),
+                            ),
+                          )
+                        : undefined;
+
+                      if (entry.type === "item") {
+                        const item = entry.item;
+                        const note = splitNoteLines(item.notes);
+                        const showFallbackTravelTime = !connectorLeg && item.travel_minutes_from_previous !== null;
+
+                        return (
+                          <Fragment key={`${group.day}-${item.time_slot}-${item.place_name}`}>
+                            {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
+                            <article className="planner-stop-card">
+                              <div className="planner-stop-time">
+                                <span>{labelTimeSlot(item.time_slot)}</span>
+                              </div>
+                              <div className="planner-stop-body">
+                                {showFallbackTravelTime ? (
+                                  <p className="planner-slot-travel-time">
+                                    이전 장소에서 약 {item.travel_minutes_from_previous}분 이동
+                                  </p>
+                                ) : null}
+                                <div className="planner-slot-top">
+                                  <strong>{item.place_name}</strong>
+                                  <span className="badge">{item.category}</span>
+                                </div>
+                                <p className="planner-slot-area">{item.area}</p>
+                                {item.average_cost_krw != null ? (
+                                  <p className="planner-slot-cost">{formatCostLabel(item.average_cost_krw)}</p>
+                                ) : null}
+                                <div className="planner-slot-note">
+                                  {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
+                                  {note.details.length > 0 ? (
+                                    <div className="planner-slot-note-body">
+                                      {note.details.map((line, lineIndex) => (
+                                        <p
+                                          key={`${item.place_name}-note-${lineIndex}`}
+                                          className="planner-slot-note-line"
+                                        >
+                                          {line}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </article>
+                          </Fragment>
+                        );
+                      }
+
+                      const meal = entry.meal;
+                      const showFallbackTravelTime = !connectorLeg && meal.travel_minutes_from_previous !== null;
 
                       return (
-                      <Fragment key={`${group.day}-${item.time_slot}-${item.place_name}`}>
-                      <article className="planner-stop-card">
-                        <div className="planner-stop-time">
-                          <span>{labelTimeSlot(item.time_slot)}</span>
-                        </div>
-                        <div className="planner-stop-body">
-                          {item.travel_minutes_from_previous !== null ? (
-                            <p className="planner-slot-travel-time">
-                              이전 장소에서 약 {item.travel_minutes_from_previous}분 이동
-                            </p>
-                          ) : null}
-                          <div className="planner-slot-top">
-                            <strong>{item.place_name}</strong>
-                            <span className="badge">{item.category}</span>
-                          </div>
-                          <p className="planner-slot-area">{item.area}</p>
-                          {item.average_cost_krw != null ? (
-                            <p className="planner-slot-cost">{formatCostLabel(item.average_cost_krw)}</p>
-                          ) : null}
-                          <div className="planner-slot-note">
-                            {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
-                            {note.details.length > 0 ? (
-                              <div className="planner-slot-note-body">
-                                {note.details.map((line, index) => (
-                                  <p key={`${item.place_name}-note-${index}`} className="planner-slot-note-line">
-                                    {line}
-                                  </p>
-                                ))}
-                              </div>
-                            ) : null}
-                          </div>
-                        </div>
-                      </article>
-                      {item.time_slot === "morning" && dayMeals?.lunch ? <MealCard meal={dayMeals.lunch} /> : null}
-                      {item.time_slot === "afternoon" && dayMeals?.dinner ? <MealCard meal={dayMeals.dinner} /> : null}
-                      </Fragment>
+                        <Fragment key={`${group.day}-meal-${meal.meal_type}-${meal.place_name}`}>
+                          {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
+                          <MealCard meal={meal} showTravelTime={showFallbackTravelTime} />
+                        </Fragment>
                       );
                     })}
+                    {endLeg ? (
+                      <TravelConnectorRow label={`숙소로 복귀 · ${accommodationName}`} leg={endLeg} mode={mode} />
+                    ) : null}
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
 
             <div className="planner-result-actions">

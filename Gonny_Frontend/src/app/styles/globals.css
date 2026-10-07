@@ -2194,6 +2194,104 @@ body.modal-open {
   font-size: 0.78rem;
   font-weight: 600;
 }
+
+.planner-travel-estimate-notice {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.planner-day-travel {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(191, 208, 233, 0.68);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.planner-day-travel-toggle {
+  display: inline-flex;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(37, 99, 255, 0.08);
+}
+
+.planner-mode-button {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #3d6380;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.planner-mode-button.is-active {
+  background: #2563ff;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(37, 99, 255, 0.25);
+}
+
+.planner-day-travel-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+.planner-day-travel-summary strong {
+  color: #1d4e89;
+  font-size: 0.95rem;
+}
+
+.planner-day-travel-secondary {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.planner-day-travel-missing {
+  flex-basis: 100%;
+  margin: 0;
+  color: #b4641c;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.planner-travel-connector {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin: -2px 0;
+  padding: 2px 14px 2px 92px;
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+.planner-travel-connector-label {
+  color: #3d6380;
+  font-weight: 700;
+}
+
+.planner-travel-connector-primary {
+  color: #1d57a8;
+  font-weight: 700;
+}
+
+.planner-travel-connector-secondary {
+  color: var(--muted);
+}
+
+@media (max-width: 840px) {
+  .planner-travel-connector {
+    padding-left: 14px;
+  }
+}
 .planner-accommodation-toggle {
   display: flex;
   align-items: center;
@@ -3465,9 +3563,19 @@ body {
   text-decoration: underline;
 }
 
+/* Public page body is 1280px (.site-shell-public .page-container) vs the
+   app shell/auth 1200px - match whichever one this shell actually uses. */
+.site-shell-public .site-footer {
+  width: min(1280px, calc(100% - 40px));
+}
+
 @media (max-width: 620px) {
   .site-footer {
     width: min(100% - 24px, 1200px);
+  }
+
+  .site-shell-public .site-footer {
+    width: min(100% - 24px, 1280px);
   }
 }
 

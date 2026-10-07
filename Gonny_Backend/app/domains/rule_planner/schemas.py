@@ -95,6 +95,16 @@ class RuleDayTravel(BaseModel):
     # totaled.
     transit_total_minutes: int
     car_total_minutes: int
+    # How many legs this day *should* have structurally (one per adjacent
+    # pair in the day's place/meal sequence, plus 2 if an accommodation was
+    # recommended for the trip) - counted independent of whether either end
+    # actually has coordinates. missing_leg_count = expected - len(legs), so
+    # a day whose totals only reflect part of its real travel (because some
+    # place/accommodation lacks coordinates) can be told apart from one
+    # that's genuinely fully estimated. See
+    # RuleItineraryService._build_day_travel.
+    expected_leg_count: int
+    missing_leg_count: int
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

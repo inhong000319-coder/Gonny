@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { Button } from "../../../shared/components/ui/button";
+import { PRICE_REFERENCE_PERIOD, formatApproxManwon, formatApproxManwonRange } from "../../../shared/pricing";
 import { createItineraryItem } from "../../itinerary/api/create-itinerary-item";
 import { WeatherBanner } from "../../itinerary/components/weather-banner";
 import { createTrip } from "../../trips/api/create-trip";
@@ -476,13 +477,6 @@ function isRuleCostEstimate(value: unknown): value is RuleCostEstimate {
 
 function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
-}
-
-function formatCostRangeLabel(min: number, max: number) {
-  if (min === max) {
-    return `약 ${min.toLocaleString("ko-KR")}원`;
-  }
-  return `약 ${min.toLocaleString("ko-KR")} ~ ${max.toLocaleString("ko-KR")}원`;
 }
 
 function normalizeCatalogResponse(payload: unknown) {
@@ -1536,7 +1530,14 @@ export function TripCreateForm() {
                   ) : null}
                 </div>
                 {result.accommodation_recommendation.average_price_krw != null ? (
-                  <p className="planner-accommodation-price">1박 기준 {formatCostLabel(result.accommodation_recommendation.average_price_krw)}</p>
+                  <>
+                    <p className="planner-accommodation-price">
+                      1박 기준 약 {formatApproxManwon(result.accommodation_recommendation.average_price_krw)}
+                    </p>
+                    <p className="planner-cost-basis">
+                      참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요
+                    </p>
+                  </>
                 ) : null}
               </section>
             ) : null}
@@ -1544,7 +1545,10 @@ export function TripCreateForm() {
             {result.estimated_cost ? (
               <section className="planner-accommodation-card">
                 <span className="section-kicker">Estimated Cost</span>
-                <strong>{formatCostRangeLabel(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}</strong>
+                <strong>{formatApproxManwonRange(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}</strong>
+                <p className="planner-cost-basis">
+                  참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요
+                </p>
                 <p className="planner-cost-basis">
                   입장료 확인 {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
                 </p>

@@ -353,7 +353,9 @@
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 33.4592,
+      "longitude": 126.3106
     },
     {
       "id": "hallim-park",
@@ -585,7 +587,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 33.24543,
+      "longitude": 126.41121
     },
     {
       "id": "osulloc",
@@ -696,7 +700,9 @@
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 33.51153,
+      "longitude": 126.52605
     },
     {
       "id": "aqua-planet-jeju",
@@ -884,7 +890,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 18000
+      "average_cost_krw": 18000,
+      "latitude": 33.39669,
+      "longitude": 126.34498
     },
     {
       "id": "jeju-glass-castle",
@@ -944,7 +952,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 9000
+      "average_cost_krw": 9000,
+      "latitude": 33.31458,
+      "longitude": 126.27366
     },
     {
       "id": "yeomiji-botanical-garden",
@@ -1069,7 +1079,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 12000
+      "average_cost_krw": 12000,
+      "latitude": 33.25002,
+      "longitude": 126.41215
     },
     {
       "id": "gwangchigi-beach",

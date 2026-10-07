@@ -137,6 +137,8 @@ def test_leg_count_matches_sequence_length_plus_accommodation_legs() -> None:
     assert legs[0].from_kind == "accommodation" and legs[0].to_kind == "place"
     assert legs[-1].to_kind == "accommodation"
     assert [leg.to_kind for leg in legs[:-1]] == ["place", "meal", "place", "meal", "place"]
+    assert day_travel[0].expected_leg_count == 6
+    assert day_travel[0].missing_leg_count == 0
 
 
 def test_missing_coordinates_drop_only_the_adjacent_legs() -> None:
@@ -160,9 +162,16 @@ def test_missing_coordinates_drop_only_the_adjacent_legs() -> None:
     assert ("lunch", "afternoon") not in pairs
     assert ("afternoon", "dinner") not in pairs
     assert len(legs) == 4
+    # expected_leg_count counts structurally (coordinates or not), so it's
+    # still 6 even though 2 of those legs got dropped.
+    assert day_travel[0].expected_leg_count == 6
+    assert day_travel[0].missing_leg_count == 2
 
 
-def test_day_with_zero_legs_is_excluded_from_day_travel() -> None:
+def test_day_with_no_sequence_at_all_is_excluded_from_day_travel() -> None:
+    # expected_leg_count == 0 (no accommodation, single-entry sequence has
+    # no internal leg) - nothing to estimate, so the day is left out
+    # entirely rather than appearing with an empty legs list.
     service = RuleItineraryService()
     lone_place = build_place("lone", 37.50, 127.00)
     sequence = service._sequence_day_places_with_kind([lone_place], lunch_place=None, dinner_place=None)
@@ -170,6 +179,26 @@ def test_day_with_zero_legs_is_excluded_from_day_travel() -> None:
     day_travel = service._build_day_travel({1: sequence}, None, city="seoul")
 
     assert day_travel == []
+
+
+def test_day_with_expected_legs_but_all_missing_coordinates_still_appears() -> None:
+    # A day the itinerary genuinely has (so expected_leg_count > 0) but
+    # where every leg happens to be undroppable-missing should still show
+    # up - with an empty legs list and missing_leg_count == expected_leg_count
+    # - rather than silently disappearing like a day with no itinerary at all.
+    service = RuleItineraryService()
+    lone_place = build_place("lone", None, None)
+    accommodation = build_accommodation(37.49, 126.99)
+    sequence = service._sequence_day_places_with_kind([lone_place], lunch_place=None, dinner_place=None)
+
+    day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
+
+    assert len(day_travel) == 1
+    assert day_travel[0].legs == []
+    assert day_travel[0].expected_leg_count == 2
+    assert day_travel[0].missing_leg_count == 2
+    assert day_travel[0].transit_total_minutes == 0
+    assert day_travel[0].car_total_minutes == 0
 
 
 def test_totals_use_the_smaller_of_mode_minutes_and_walk_minutes_per_leg() -> None:
@@ -230,7 +259,14 @@ def test_generate_fills_day_travel_with_internally_consistent_totals_for_each_ci
         assert response.day_travel, city
         for day_travel in response.day_travel:
             assert 1 <= day_travel.day_number <= response.days
-            assert day_travel.legs
+            # expected_leg_count > 0 is the only reason a day is in this
+            # list at all; its legs can still be a partial (or even empty)
+            # subset when some place/accommodation lacks coordinates - see
+            # missing_leg_count.
+            assert day_travel.expected_leg_count > 0
+            assert len(day_travel.legs) <= day_travel.expected_leg_count
+            assert day_travel.missing_leg_count == day_travel.expected_leg_count - len(day_travel.legs)
+            assert day_travel.missing_leg_count >= 0
             for leg in day_travel.legs:
                 modes = {option.mode for option in leg.options}
                 assert {"transit", "car"} <= modes
@@ -279,6 +315,13 @@ def test_day_travel_leg_order_matches_the_point_in_day_sequence_for_each_city() 
 
 
 def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
+    # Snapshot re-captured after scripts/fill_place_coordinates.py (35
+    # previously-coordinateless places, 22 of them in Seoul, now have real
+    # lat/lng) - that's an intended data change, not a regression, so most
+    # of Seoul's None values here became real minute estimates. This test
+    # still guards against this feature's *own* wiring breaking
+    # travel_minutes_from_previous by comparing against a fixed snapshot of
+    # the current (post-fill) data.
     service = RuleItineraryService()
     response = service.generate(_build_request("seoul"))
 
@@ -289,20 +332,20 @@ def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
 
     assert item_minutes == [
         (1, "morning", None),
-        (1, "afternoon", None),
+        (1, "afternoon", 7),
         (1, "evening", None),
         (2, "morning", None),
-        (2, "afternoon", None),
-        (2, "evening", None),
+        (2, "afternoon", 23),
+        (2, "evening", 11),
         (3, "morning", None),
         (3, "afternoon", 5),
-        (3, "evening", None),
+        (3, "evening", 33),
     ]
     assert meal_minutes == [
-        (1, "lunch", None),
-        (1, "dinner", 6),
+        (1, "lunch", 5),
+        (1, "dinner", 7),
         (2, "lunch", 8),
-        (2, "dinner", None),
+        (2, "dinner", 16),
         (3, "lunch", 2),
-        (3, "dinner", 18),
+        (3, "dinner", 5),
     ]

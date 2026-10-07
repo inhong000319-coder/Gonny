@@ -764,22 +764,34 @@ class RuleItineraryService:
         *,
         city: str,
     ) -> list[RuleDayTravel]:
-        """Builds one RuleDayTravel per day that has at least one leg with
-        coordinates on both ends. Every day is assumed to start and end at
-        the single recommended accommodation (see
-        RuleItineraryService._recommend_accommodation's one-stay-for-the-
-        whole-trip scope) when it has coordinates; legs missing a
-        coordinate on either end are silently dropped, never an error."""
+        """Builds one RuleDayTravel per day with a structurally non-empty
+        itinerary (expected_leg_count > 0 - see RuleDayTravel). Every day is
+        assumed to start and end at the single recommended accommodation
+        (see RuleItineraryService._recommend_accommodation's one-stay-for-
+        the-whole-trip scope); legs missing a coordinate on either end are
+        silently dropped from `legs`, never an error - expected_leg_count
+        still counts them (coordinates or not), so missing_leg_count tells
+        a day with partial coverage apart from one that's fully estimated.
+        A day is only left out entirely when it has no sequence at all
+        (expected_leg_count == 0 - nothing to estimate, not missing data)."""
+        accommodation_has_coordinates = (
+            accommodation is not None and accommodation.latitude is not None and accommodation.longitude is not None
+        )
         accommodation_node: tuple[str, Literal["accommodation"], float, float] | None = None
-        if accommodation is not None and accommodation.latitude is not None and accommodation.longitude is not None:
+        if accommodation_has_coordinates:
             accommodation_node = (accommodation.name, "accommodation", accommodation.latitude, accommodation.longitude)
 
         day_travel: list[RuleDayTravel] = []
         for day_number in sorted(day_sequence_with_kind):
+            sequence = day_sequence_with_kind[day_number]
+            expected_leg_count = (len(sequence) - 1) + (2 if accommodation is not None else 0)
+            if expected_leg_count <= 0:
+                continue
+
             nodes: list[tuple[str, Literal["accommodation", "place", "meal"], float | None, float | None]] = []
             if accommodation_node is not None:
                 nodes.append(accommodation_node)
-            for place, kind in day_sequence_with_kind[day_number]:
+            for place, kind in sequence:
                 nodes.append((self._localize_place_name(place), kind, place.latitude, place.longitude))
             if accommodation_node is not None:
                 nodes.append(accommodation_node)
@@ -802,8 +814,6 @@ class RuleItineraryService:
                         options=estimate_transport_options(distance_km, city),
                     )
                 )
-            if not legs:
-                continue
 
             day_travel.append(
                 RuleDayTravel(
@@ -811,6 +821,8 @@ class RuleItineraryService:
                     legs=legs,
                     transit_total_minutes=sum(self._leg_mode_minutes(leg, "transit") for leg in legs),
                     car_total_minutes=sum(self._leg_mode_minutes(leg, "car") for leg in legs),
+                    expected_leg_count=expected_leg_count,
+                    missing_leg_count=expected_leg_count - len(legs),
                 )
             )
         return day_travel

@@ -126,7 +126,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 35.15366,
+      "longitude": 129.15232
     },
     {
       "id": "blue-line-park",
@@ -968,7 +970,9 @@
         "{place_name}은(는) 광안리 쪽에서 날씨 영향을 덜 받으면서도 먹거리와 구경할 재미를 챙기고 싶을 때 좋아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 35.15422,
+      "longitude": 129.12704
     },
     {
       "id": "f1963",
@@ -1095,7 +1099,9 @@
         "{place_name}은(는) 해운대 쪽에서 날씨 영향을 덜 받으면서도 만족도 높은 체험을 넣고 싶을 때 좋아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 35.1592,
+      "longitude": 129.16103
     },
     {
       "id": "busan-x-the-sky",
@@ -1155,7 +1161,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 27000
+      "average_cost_krw": 27000,
+      "latitude": 35.159848,
+      "longitude": 129.169791
     },
     {
       "id": "yongdusan-park",
@@ -1546,7 +1554,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 35.10272,
+      "longitude": 129.03216
     },
     {
       "id": "busan-moca",
@@ -1778,7 +1788,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 25000
+      "average_cost_krw": 25000,
+      "latitude": 35.168817,
+      "longitude": 129.129524
     },
     {
       "id": "club-d-oasis",
@@ -1832,7 +1844,9 @@
       ],
       "setting": "mixed",
       "rain_sensitive_light": true,
-      "average_cost_krw": 30000
+      "average_cost_krw": 30000,
+      "latitude": 35.160042,
+      "longitude": 129.168483
     },
     {
       "id": "busan-restaurant-nampo-icchi",

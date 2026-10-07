@@ -185,7 +185,9 @@
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.57374,
+      "longitude": 126.9853
     },
     {
       "id": "myeongdong",
@@ -299,7 +301,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 29000
+      "average_cost_krw": 29000,
+      "latitude": 37.551216,
+      "longitude": 126.988276
     },
     {
       "id": "hongdae",
@@ -353,7 +357,9 @@
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.5552233,
+      "longitude": 126.9235335
     },
     {
       "id": "yeouido-hangang",
@@ -467,7 +473,9 @@
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.497823,
+      "longitude": 127.027746
     },
     {
       "id": "coex",
@@ -816,7 +824,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.5585635,
+      "longitude": 126.9255684
     },
     {
       "id": "itaewon",
@@ -870,7 +880,9 @@
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.539967,
+      "longitude": 126.992012
     },
     {
       "id": "apgujeong-rodeo",
@@ -922,7 +934,9 @@
         "{place_name}은(는) {area} 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
       ],
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.52763,
+      "longitude": 127.04063
     },
     {
       "id": "seokchon-lake",
@@ -979,7 +993,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.5113096,
+      "longitude": 127.1051525
     },
     {
       "id": "ddp",
@@ -1093,7 +1109,9 @@
         "{place_name}은(는) {area} 동선에서 먹거리와 분위기를 함께 즐기고 싶을 때 잘 어울려요."
       ],
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.567195,
+      "longitude": 126.991791
     },
     {
       "id": "lotte-world-adventure",
@@ -1759,7 +1777,9 @@
         "{place_name}은(는) 동대문 쪽에서 구경과 쇼핑을 함께 묶고 싶을 때 자연스럽게 들어가요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.5665256,
+      "longitude": 127.0092236
     },
     {
       "id": "war-memorial-korea",
@@ -1880,7 +1900,9 @@
       ],
       "setting": "mixed",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.533527,
+      "longitude": 126.994384
     },
     {
       "id": "namsan-cable-car",
@@ -2007,7 +2029,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.554911,
+      "longitude": 126.986684
     },
     {
       "id": "seoul-sky",
@@ -2069,7 +2093,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 29000
+      "average_cost_krw": 29000,
+      "latitude": 37.51253,
+      "longitude": 127.102305
     },
     {
       "id": "lotte-world-mall",
@@ -2130,7 +2156,9 @@
         "{place_name}은(는) 잠실 동선에서 쇼핑과 식사를 안정감 있게 묶고 싶을 때 잘 들어가요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.514165,
+      "longitude": 127.104075
     },
     {
       "id": "the-hyundai-seoul",
@@ -2257,7 +2285,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 15000
+      "average_cost_krw": 15000,
+      "latitude": 37.519867,
+      "longitude": 126.940329
     },
     {
       "id": "ktng-sangsangmadang-hongdae",
@@ -2384,7 +2414,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 15000
+      "average_cost_krw": 15000,
+      "latitude": 37.553525,
+      "longitude": 126.921704
     },
     {
       "id": "bongeunsa-temple",
@@ -2512,7 +2544,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 1000
+      "average_cost_krw": 1000,
+      "latitude": 37.50889,
+      "longitude": 127.04917
     },
     {
       "id": "euljiro-nogari-alley",
@@ -2894,7 +2928,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.557746,
+      "longitude": 126.926498
     },
     {
       "id": "hyundai-motorstudio-seoul",
@@ -2956,7 +2992,9 @@
         "{place_name}은(는) 강남 일정에 쇼핑과 식음만이 아니라 조금 더 감각적인 전시형 실내 공간을 넣고 싶을 때 잘 맞아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.52129,
+      "longitude": 127.034314
     },
     {
       "id": "kmca-seoul",
@@ -3078,7 +3116,9 @@
         "{place_name}은(는) 여의도 일정에 한강 풍경 말고도 저녁 문화 결을 하나 더 넣고 싶을 때 잘 맞아요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.524758,
+      "longitude": 126.916868
     },
     {
       "id": "sema-bunker",
@@ -3138,7 +3178,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.525405,
+      "longitude": 126.924208
     },
     {
       "id": "woori-sulfur-spa",
@@ -3236,7 +3278,9 @@
         "{place_name}에서 동네 목욕탕 같은 편안한 온천을 즐길 수 있어요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.48587,
+      "longitude": 126.938447
     },
     {
       "id": "seoul-restaurant-jongno-salon-sulla",

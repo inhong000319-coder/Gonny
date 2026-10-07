@@ -13,6 +13,9 @@ TripStyle = Literal["tight", "easy", "near-stay", "mobility-first"]
 CompanionType = Literal["solo", "couple", "friend", "family"]
 AccommodationTypeLabel = Literal["호텔", "모텔", "호스텔", "펜션·민박", "콘도미니엄"]
 TimeSlot = Literal["morning", "afternoon", "evening"]
+TransportMode = Literal["walk", "transit", "car"]
+TravelEstimateSource = Literal["estimate", "api"]
+TravelLegPointKind = Literal["accommodation", "place", "meal"]
 
 
 class RuleItineraryRequest(BaseModel):
@@ -54,6 +57,44 @@ class RuleItineraryItem(BaseModel):
     # Copied from the source PlaceData.average_cost_krw - see that field's docstring
     # for the 0 (free) vs None (unknown) distinction. Not set for food places.
     average_cost_krw: int | None = None
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RuleTravelOption(BaseModel):
+    mode: TransportMode
+    minutes: int
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RuleTravelLeg(BaseModel):
+    """One point-to-point leg of a day's travel, with every transport
+    mode's estimated time. source is always "estimate" for now
+    (straight-line + mode profile, see services/travel_estimate.py) -
+    "api" is reserved for a future real-routing provider."""
+
+    day_number: int
+    from_name: str
+    to_name: str
+    from_kind: TravelLegPointKind
+    to_kind: TravelLegPointKind
+    distance_km: float
+    options: list[RuleTravelOption]
+    source: TravelEstimateSource = "estimate"
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RuleDayTravel(BaseModel):
+    day_number: int
+    legs: list[RuleTravelLeg]
+    # Each total sums, leg by leg, the smaller of that leg's own mode time
+    # and its walk option's time (when the leg has one) - a leg short
+    # enough to walk is assumed walked regardless of which mode is being
+    # totaled.
+    transit_total_minutes: int
+    car_total_minutes: int
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -167,6 +208,7 @@ class RuleItineraryResponse(BaseModel):
     accommodation_recommendation: AccommodationData | None = None
     meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
     estimated_cost: RuleCostEstimate | None = None
+    day_travel: list[RuleDayTravel] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

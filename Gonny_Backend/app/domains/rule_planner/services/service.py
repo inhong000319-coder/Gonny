@@ -15,10 +15,12 @@ from app.domains.rule_planner.schemas import (
     NormalizedRuleRequest,
     RuleClosedDayExclusion,
     RuleDayDurationWarning,
+    RuleDayTravel,
     RuleItineraryItem,
     RuleItineraryRequest,
     RuleItineraryResponse,
     RuleMealRecommendation,
+    RuleTravelLeg,
     RuleWeatherAlert,
 )
 from app.services.external_clients import OpenWeatherClient
@@ -53,7 +55,12 @@ from .slot_scoring import (
     slot_score,
     style_slot_score,
 )
-from .travel_estimate import estimate_day_total_minutes, estimate_travel_minutes_between
+from .travel_estimate import (
+    estimate_day_total_minutes,
+    estimate_transport_options,
+    estimate_travel_minutes_between,
+    haversine_distance_km,
+)
 from .weather_alerts import build_weather_alerts
 
 # How much higher a next-place-aware refinement candidate's score must be
@@ -90,13 +97,16 @@ class RuleItineraryService:
         )
         items, day_place_map, closed_day_exclusions = self._build_items(normalized, city_catalog)
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
-        meal_recommendations, day_place_map_with_meals = self._recommend_meals(
+        meal_recommendations, day_place_map_with_meals, day_sequence_with_kind = self._recommend_meals(
             normalized, city_catalog, day_place_map
         )
         day_duration_warnings = self._build_day_duration_warnings(
             day_place_map_with_meals, accommodation_recommendation
         )
         weather_alerts = self._build_weather_alerts(normalized, day_place_map, city_catalog)
+        day_travel = self._build_day_travel(
+            day_sequence_with_kind, accommodation_recommendation, city=normalized.city
+        )
 
         return RuleItineraryResponse(
             continent=city_catalog.continent,
@@ -122,6 +132,7 @@ class RuleItineraryService:
                 travelers=normalized.travelers,
                 nights=normalized.nights,
             ),
+            day_travel=day_travel,
         )
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
@@ -497,7 +508,11 @@ class RuleItineraryService:
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
         day_place_map: dict[int, list[PlaceData]],
-    ) -> tuple[list[RuleMealRecommendation], dict[int, list[PlaceData]]]:
+    ) -> tuple[
+        list[RuleMealRecommendation],
+        dict[int, list[PlaceData]],
+        dict[int, list[tuple[PlaceData, Literal["place", "meal"]]]],
+    ]:
         """Independent lunch/dinner recommendation, one pass per day - same
         spirit as _recommend_accommodation() above (a pick made outside the
         morning/afternoon/evening slot competition), just repeated per day
@@ -512,16 +527,19 @@ class RuleItineraryService:
         dinner -> evening_place (a full-day day's single place anchors
         both meals on both sides, since it fills all 3 nominal slots).
 
-        Returns (meal_recommendations, day_place_map_with_meals) - the
-        second is day_place_map with the actually-chosen restaurant
-        PlaceData spliced into each day's place list at that point-in-day
-        position, for _build_day_duration_warnings() to size the day's
-        total time correctly (a day with an unaccounted lunch/dinner would
-        otherwise look shorter than it really is). The original
-        day_place_map (without meals) is still what every other caller
-        (weather alerts, the accommodation reference point above) uses -
-        see this feature's scope note on why duration warnings alone need
-        the augmented version.
+        Returns (meal_recommendations, day_place_map_with_meals,
+        day_sequence_with_kind). The second is day_place_map with the
+        actually-chosen restaurant PlaceData spliced into each day's place
+        list at that point-in-day position, for
+        _build_day_duration_warnings() to size the day's total time
+        correctly (a day with an unaccounted lunch/dinner would otherwise
+        look shorter than it really is). The original day_place_map
+        (without meals) is still what every other caller (weather alerts,
+        the accommodation reference point above) uses - see this feature's
+        scope note on why duration warnings alone need the augmented
+        version. The third is the same point-in-day sequence tagged with
+        each entry's kind, for _build_day_travel() (see
+        _sequence_day_places_with_kind).
         """
         scored_places = sorted(
             [place for place in city_catalog.places if place.is_active],
@@ -536,6 +554,11 @@ class RuleItineraryService:
 
         meal_recommendations: list[RuleMealRecommendation] = []
         day_place_map_with_meals: dict[int, list[PlaceData]] = {}
+        # Same point-in-day order as day_place_map_with_meals above, but
+        # tagged with each entry's kind ("place" vs "meal") so
+        # _build_day_travel can label travel legs without re-deriving the
+        # splice position - see _sequence_day_places_with_kind.
+        day_sequence_with_kind: dict[int, list[tuple[PlaceData, Literal["place", "meal"]]]] = {}
 
         # Iterates every day in the request, not just the days that ended
         # up with an entry in day_place_map: a day where the activity-slot
@@ -610,7 +633,13 @@ class RuleItineraryService:
             if augmented_day_places:
                 day_place_map_with_meals[day_number] = augmented_day_places
 
-        return meal_recommendations, day_place_map_with_meals
+            sequence_with_kind = self._sequence_day_places_with_kind(
+                day_places, lunch_place=lunch_place, dinner_place=dinner_place
+            )
+            if sequence_with_kind:
+                day_sequence_with_kind[day_number] = sequence_with_kind
+
+        return meal_recommendations, day_place_map_with_meals, day_sequence_with_kind
 
     def _pick_meal_place(
         self,
@@ -701,6 +730,96 @@ class RuleItineraryService:
         if len(day_places) > 2:
             augmented.append(day_places[2])
         return augmented
+
+    def _sequence_day_places_with_kind(
+        self,
+        day_places: list[PlaceData],
+        *,
+        lunch_place: PlaceData | None,
+        dinner_place: PlaceData | None,
+    ) -> list[tuple[PlaceData, Literal["place", "meal"]]]:
+        """Same point-in-day interleaving as _splice_meals_into_day_places
+        (morning -> lunch -> afternoon -> dinner -> evening), kept as a
+        separate pass rather than changing that function's return type, so
+        _build_day_duration_warnings's existing list[PlaceData] input is
+        untouched. Used only to label travel legs with "place" vs "meal" in
+        _build_day_travel."""
+        sequence: list[tuple[PlaceData, Literal["place", "meal"]]] = []
+        if day_places:
+            sequence.append((day_places[0], "place"))
+        if lunch_place is not None:
+            sequence.append((lunch_place, "meal"))
+        if len(day_places) > 1:
+            sequence.append((day_places[1], "place"))
+        if dinner_place is not None:
+            sequence.append((dinner_place, "meal"))
+        if len(day_places) > 2:
+            sequence.append((day_places[2], "place"))
+        return sequence
+
+    def _build_day_travel(
+        self,
+        day_sequence_with_kind: dict[int, list[tuple[PlaceData, Literal["place", "meal"]]]],
+        accommodation: AccommodationData | None,
+        *,
+        city: str,
+    ) -> list[RuleDayTravel]:
+        """Builds one RuleDayTravel per day that has at least one leg with
+        coordinates on both ends. Every day is assumed to start and end at
+        the single recommended accommodation (see
+        RuleItineraryService._recommend_accommodation's one-stay-for-the-
+        whole-trip scope) when it has coordinates; legs missing a
+        coordinate on either end are silently dropped, never an error."""
+        accommodation_node: tuple[str, Literal["accommodation"], float, float] | None = None
+        if accommodation is not None and accommodation.latitude is not None and accommodation.longitude is not None:
+            accommodation_node = (accommodation.name, "accommodation", accommodation.latitude, accommodation.longitude)
+
+        day_travel: list[RuleDayTravel] = []
+        for day_number in sorted(day_sequence_with_kind):
+            nodes: list[tuple[str, Literal["accommodation", "place", "meal"], float | None, float | None]] = []
+            if accommodation_node is not None:
+                nodes.append(accommodation_node)
+            for place, kind in day_sequence_with_kind[day_number]:
+                nodes.append((self._localize_place_name(place), kind, place.latitude, place.longitude))
+            if accommodation_node is not None:
+                nodes.append(accommodation_node)
+
+            legs: list[RuleTravelLeg] = []
+            for (from_name, from_kind, from_lat, from_lng), (to_name, to_kind, to_lat, to_lng) in zip(
+                nodes, nodes[1:]
+            ):
+                if from_lat is None or from_lng is None or to_lat is None or to_lng is None:
+                    continue
+                distance_km = haversine_distance_km(from_lat, from_lng, to_lat, to_lng)
+                legs.append(
+                    RuleTravelLeg(
+                        day_number=day_number,
+                        from_name=from_name,
+                        to_name=to_name,
+                        from_kind=from_kind,
+                        to_kind=to_kind,
+                        distance_km=round(distance_km, 2),
+                        options=estimate_transport_options(distance_km, city),
+                    )
+                )
+            if not legs:
+                continue
+
+            day_travel.append(
+                RuleDayTravel(
+                    day_number=day_number,
+                    legs=legs,
+                    transit_total_minutes=sum(self._leg_mode_minutes(leg, "transit") for leg in legs),
+                    car_total_minutes=sum(self._leg_mode_minutes(leg, "car") for leg in legs),
+                )
+            )
+        return day_travel
+
+    @staticmethod
+    def _leg_mode_minutes(leg: RuleTravelLeg, mode: Literal["transit", "car"]) -> int:
+        mode_minutes = next(option.minutes for option in leg.options if option.mode == mode)
+        walk_option = next((option for option in leg.options if option.mode == "walk"), None)
+        return min(mode_minutes, walk_option.minutes) if walk_option is not None else mode_minutes
 
     def _build_meal_recommendation(
         self,

@@ -4,6 +4,7 @@ from math import asin, cos, radians, sin, sqrt
 
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import PlaceData
+from app.domains.rule_planner.schemas import RuleTravelOption
 
 EARTH_RADIUS_KM = 6371.0
 
@@ -191,3 +192,68 @@ def coordinate_next_place_transition_bonus(next_place: PlaceData | None, place: 
     if raw_bonus is None:
         return None
     return round(raw_bonus / 2)
+
+
+# --- Mode-aware travel options (walk/transit/car) -------------------------
+#
+# Separate from estimate_straight_line_travel_minutes() above, which scoring
+# and duration totals keep using unchanged. That single-speed estimate has
+# no per-leg fixed cost, so it can invert near its walk/transit distance
+# threshold (a 1.2km walk and a 1.3km transit ride land close together even
+# though real transit has a wait-and-walk-up overhead a car/bus ride at
+# 1.3km wouldn't actually beat by much). The functions below give each mode
+# its own fixed cost specifically to avoid that.
+#
+# All figures below are assumed values, not measured - recalibrate against
+# a real routing API (e.g. ODSay for transit) once one is wired in.
+WALK_OPTION_MAX_MINUTES = 20
+
+TRANSIT_FIXED_MINUTES = 10
+CAR_FIXED_MINUTES = 8
+DEFAULT_CITY_TRANSPORT_PROFILE = "seoul"
+TRANSIT_SPEED_KMH_BY_CITY: dict[str, float] = {"seoul": 25.0, "busan": 22.0, "jeju": 15.0}
+CAR_SPEED_KMH_BY_CITY: dict[str, float] = {"seoul": 20.0, "busan": 25.0, "jeju": 35.0}
+
+TRANSPORT_PROFILES: dict[str, dict[str, object]] = {
+    "transit": {"fixed_minutes": TRANSIT_FIXED_MINUTES, "speed_kmh_by_city": TRANSIT_SPEED_KMH_BY_CITY},
+    "car": {"fixed_minutes": CAR_FIXED_MINUTES, "speed_kmh_by_city": CAR_SPEED_KMH_BY_CITY},
+}
+
+
+def _mode_speed_kmh(mode: str, city: str) -> float:
+    speeds: dict[str, float] = TRANSPORT_PROFILES[mode]["speed_kmh_by_city"]  # type: ignore[assignment]
+    return speeds.get(city, speeds[DEFAULT_CITY_TRANSPORT_PROFILE])
+
+
+def estimate_mode_minutes(mode: str, distance_km: float, city: str) -> int:
+    """Fixed time (wait/parking/walk-up) plus routed distance at the mode's
+    cruising speed for `city`, falling back to the Seoul profile for any
+    other city. mode must be "transit" or "car" - see estimate_walk_option_minutes
+    for walking, which has no fixed time."""
+    fixed_minutes: int = TRANSPORT_PROFILES[mode]["fixed_minutes"]  # type: ignore[assignment]
+    speed_kmh = _mode_speed_kmh(mode, city)
+    routed_distance_km = distance_km * ROUTE_DETOUR_FACTOR
+    return max(1, round(fixed_minutes + (routed_distance_km / speed_kmh) * 60))
+
+
+def estimate_walk_option_minutes(distance_km: float) -> int:
+    """Walking time for one leg, reusing the same detour factor and walking
+    speed as estimate_straight_line_travel_minutes(). No fixed time - unlike
+    transit/car there's no wait or parking step."""
+    routed_distance_km = distance_km * ROUTE_DETOUR_FACTOR
+    return max(1, round((routed_distance_km / WALK_SPEED_KMH) * 60))
+
+
+def estimate_transport_options(distance_km: float, city: str) -> list[RuleTravelOption]:
+    """Every transport option for one leg: transit and car always, walk only
+    when it's WALK_OPTION_MAX_MINUTES or under (beyond that, nobody
+    realistically walks it, so it's left out rather than shown as a
+    technically-valid but useless choice)."""
+    options = [
+        RuleTravelOption(mode="transit", minutes=estimate_mode_minutes("transit", distance_km, city)),
+        RuleTravelOption(mode="car", minutes=estimate_mode_minutes("car", distance_km, city)),
+    ]
+    walk_minutes = estimate_walk_option_minutes(distance_km)
+    if walk_minutes <= WALK_OPTION_MAX_MINUTES:
+        options.insert(0, RuleTravelOption(mode="walk", minutes=walk_minutes))
+    return options

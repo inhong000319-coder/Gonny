@@ -21,6 +21,14 @@ from .policies.city import (
 from .travel_estimate import coordinate_area_transition_bonus, coordinate_next_place_transition_bonus
 
 
+# Assumed values, not measured - tune once there's real signal on how much
+# a transit day actually penalizes a taxi-needed place or rewards a
+# subway-friendly one. Only applied on a day whose transport mode is
+# explicitly "transit" (request.transport_by_day) - see slot_score().
+TRANSIT_TAXI_NEEDED_PENALTY = -8
+TRANSIT_SUBWAY_FRIENDLY_BONUS = 3
+
+
 def day_phase(request: NormalizedRuleRequest, day_number: int) -> str:
     if request.days <= 1:
         return "arrival"
@@ -77,16 +85,20 @@ def slot_score(
     community_signal: PlaceFeedbackSignal | None = None,
 ) -> int:
     categories = set(place.concept_tags)
+    # That day's picked transport mode, or None if the request didn't
+    # specify one (request.transport_by_day) - None preserves every
+    # mode-aware branch below exactly as it behaved before this feature.
+    mode = request.transport_by_day[day_number - 1] if request.transport_by_day else None
     score = base_score(place, request)
-    score += phase_score(place=place, request=request, day_number=day_number, time_slot=time_slot)
+    score += phase_score(place=place, request=request, day_number=day_number, time_slot=time_slot, mode=mode)
     score += duration_slot_score(place=place, request=request, time_slot=time_slot)
-    score += style_slot_score(place=place, request=request, time_slot=time_slot)
+    score += style_slot_score(place=place, request=request, time_slot=time_slot, mode=mode)
 
     if time_slot in place.time_fit:
         score += 12
     score += slot_bias_score(place=place, time_slot=time_slot)
     score += preferred_area_match_bonus(request, preferred_area, place.area)
-    coordinate_bonus = coordinate_area_transition_bonus(previous_place, place)
+    coordinate_bonus = coordinate_area_transition_bonus(previous_place, place, mode=mode, city=request.city)
     if coordinate_bonus is not None:
         score += coordinate_bonus
     else:
@@ -99,9 +111,14 @@ def slot_score(
     # RuleItineraryService._refine_day_with_next_place_lookahead). No
     # string-based fallback here (unlike previous_place): this is a
     # secondary nudge signal, not the primary continuity bonus.
-    next_place_bonus = coordinate_next_place_transition_bonus(next_place, place)
+    next_place_bonus = coordinate_next_place_transition_bonus(next_place, place, mode=mode, city=request.city)
     if next_place_bonus is not None:
         score += next_place_bonus
+    if mode == "transit":
+        if "taxi-needed" in place.mobility:
+            score += TRANSIT_TAXI_NEEDED_PENALTY
+        if "subway-friendly" in place.mobility:
+            score += TRANSIT_SUBWAY_FRIENDLY_BONUS
     feedback_bonus = community_feedback_bonus(community_signal, time_slot, request.companion_type)
     if feedback_bonus is not None:
         score += feedback_bonus
@@ -237,6 +254,7 @@ def style_slot_score(
     place: PlaceData,
     request: NormalizedRuleRequest,
     time_slot: str,
+    mode: str | None = None,
 ) -> int:
     duration = place.duration_hours
     score = 0
@@ -257,7 +275,10 @@ def style_slot_score(
     elif request.style == "mobility-first":
         if duration <= 3:
             score += 2
-        if "taxi-needed" in place.mobility:
+        # Skipped on a car day (mode == "car"): a car removes the taxi-
+        # access problem this penalty models - see slot_score()'s
+        # TRANSIT_TAXI_NEEDED_PENALTY for the separate transit-day signal.
+        if mode != "car" and "taxi-needed" in place.mobility:
             score -= 3
 
     return score
@@ -279,6 +300,7 @@ def phase_score(
     request: NormalizedRuleRequest,
     day_number: int,
     time_slot: str,
+    mode: str | None = None,
 ) -> int:
     phase = day_phase(request, day_number)
     categories = set(place.concept_tags)
@@ -299,7 +321,9 @@ def phase_score(
             score += 6
         if time_slot == "evening" and "food" in categories:
             score += 8
-        if "taxi-needed" in place.mobility or "train-friendly" in place.mobility:
+        # Skipped on a car day: a car removes the taxi/train access
+        # problem this penalty models.
+        if mode != "car" and ("taxi-needed" in place.mobility or "train-friendly" in place.mobility):
             score -= 4
         return score
 
@@ -325,7 +349,8 @@ def phase_score(
         score -= 14
     elif place.duration_hours <= 2:
         score += 8
-    if "taxi-needed" in place.mobility or "train-friendly" in place.mobility:
+    # Skipped on a car day - see the matching comment in the arrival branch above.
+    if mode != "car" and ("taxi-needed" in place.mobility or "train-friendly" in place.mobility):
         score -= 6
     if time_slot == "morning" and ("shopping" in categories or "food" in categories or "culture" in categories):
         score += 4

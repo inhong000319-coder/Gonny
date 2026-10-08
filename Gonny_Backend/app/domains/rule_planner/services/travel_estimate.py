@@ -84,9 +84,36 @@ def estimate_accommodation_transition_minutes(
     return estimate_straight_line_travel_minutes(distance_km)
 
 
+def _scoring_travel_minutes_between(place_a: PlaceData, place_b: PlaceData, mode: str, city: str) -> int | None:
+    if place_a.latitude is None or place_a.longitude is None:
+        return None
+    if place_b.latitude is None or place_b.longitude is None:
+        return None
+    distance_km = haversine_distance_km(place_a.latitude, place_a.longitude, place_b.latitude, place_b.longitude)
+    return scoring_minutes(mode, distance_km, city)
+
+
+def _scoring_accommodation_transition_minutes(
+    accommodation: AccommodationData | None, place: PlaceData, mode: str, city: str
+) -> int | None:
+    if accommodation is None:
+        return None
+    if accommodation.latitude is None or accommodation.longitude is None:
+        return None
+    if place.latitude is None or place.longitude is None:
+        return None
+    distance_km = haversine_distance_km(
+        accommodation.latitude, accommodation.longitude, place.latitude, place.longitude
+    )
+    return scoring_minutes(mode, distance_km, city)
+
+
 def estimate_day_total_minutes(
     places: list[PlaceData],
     accommodation: AccommodationData | None = None,
+    *,
+    mode: str | None = None,
+    city: str | None = None,
 ) -> int:
     """Total estimated minutes for one day's plan: each place's own
     duration plus estimated travel between consecutive places.
@@ -101,18 +128,36 @@ def estimate_day_total_minutes(
     recommends a single accommodation for the whole trip and the traveler
     is assumed to return there every night - see
     RuleItineraryService._recommend_accommodation.
+
+    mode/city are optional (both default None): when mode is given, every
+    leg uses scoring_minutes(mode, ...) instead of the single-speed
+    estimate, matching the day_travel mode the user actually picked - see
+    RuleItineraryService._build_day_duration_warnings. mode=None keeps the
+    exact prior single-speed behavior (city is then ignored).
     """
     total_minutes = sum(place.duration_hours * 60 for place in places)
+    resolved_city = city or DEFAULT_CITY_TRANSPORT_PROFILE
     for previous_place, place in zip(places, places[1:]):
-        travel_minutes = estimate_travel_minutes_between(previous_place, place)
+        if mode is None:
+            travel_minutes = estimate_travel_minutes_between(previous_place, place)
+        else:
+            travel_minutes = _scoring_travel_minutes_between(previous_place, place, mode, resolved_city)
         if travel_minutes is not None:
             total_minutes += travel_minutes
 
     if places:
-        to_first_place_minutes = estimate_accommodation_transition_minutes(accommodation, places[0])
+        if mode is None:
+            to_first_place_minutes = estimate_accommodation_transition_minutes(accommodation, places[0])
+            from_last_place_minutes = estimate_accommodation_transition_minutes(accommodation, places[-1])
+        else:
+            to_first_place_minutes = _scoring_accommodation_transition_minutes(
+                accommodation, places[0], mode, resolved_city
+            )
+            from_last_place_minutes = _scoring_accommodation_transition_minutes(
+                accommodation, places[-1], mode, resolved_city
+            )
         if to_first_place_minutes is not None:
             total_minutes += to_first_place_minutes
-        from_last_place_minutes = estimate_accommodation_transition_minutes(accommodation, places[-1])
         if from_last_place_minutes is not None:
             total_minutes += from_last_place_minutes
 
@@ -132,7 +177,13 @@ NEARBY_TRANSITION_BONUS = 6
 FAR_TRANSITION_PENALTY = -6
 
 
-def _coordinate_transition_bonus(other_place: PlaceData | None, place: PlaceData) -> int | None:
+def _coordinate_transition_bonus(
+    other_place: PlaceData | None,
+    place: PlaceData,
+    *,
+    mode: str | None = None,
+    city: str | None = None,
+) -> int | None:
     """Distance-based continuity bonus for a transition between `place` and
     `other_place` - shared by the previous-place and next-place bonus
     functions below, since haversine distance (and therefore the estimated
@@ -143,22 +194,57 @@ def _coordinate_transition_bonus(other_place: PlaceData | None, place: PlaceData
     coordinates - callers fall back to something else in that case (the
     string-based same_area_continuity_bonus()/neighbor_area_bonus() for the
     previous-place direction; simply no bonus for the next-place direction).
+
+    mode=None (the default) reuses estimate_travel_minutes_between() and the
+    plain thresholds exactly as before this day-transport-mode feature
+    existed. When mode is given (with city), the transition instead uses
+    scoring_minutes(mode, ...), and every threshold is shifted up by that
+    mode's fixed time (TRANSPORT_PROFILES[mode]["fixed_minutes"]) - without
+    that shift, a mode with a real fixed cost (wait/parking) would make even
+    a one-block transition miss the "close" tier, since the fixed cost alone
+    can exceed CLOSE_TRAVEL_MINUTES_THRESHOLD.
     """
     if other_place is None:
         return None
-    travel_minutes = estimate_travel_minutes_between(other_place, place)
-    if travel_minutes is None:
-        return None
-    if travel_minutes <= CLOSE_TRAVEL_MINUTES_THRESHOLD:
+
+    if mode is None:
+        travel_minutes = estimate_travel_minutes_between(other_place, place)
+        if travel_minutes is None:
+            return None
+        close_threshold = CLOSE_TRAVEL_MINUTES_THRESHOLD
+        nearby_threshold = NEARBY_TRAVEL_MINUTES_THRESHOLD
+        far_threshold = FAR_TRAVEL_MINUTES_THRESHOLD
+    else:
+        if other_place.latitude is None or other_place.longitude is None:
+            return None
+        if place.latitude is None or place.longitude is None:
+            return None
+        distance_km = haversine_distance_km(
+            other_place.latitude, other_place.longitude, place.latitude, place.longitude
+        )
+        resolved_city = city or DEFAULT_CITY_TRANSPORT_PROFILE
+        travel_minutes = scoring_minutes(mode, distance_km, resolved_city)
+        fixed_minutes: int = TRANSPORT_PROFILES[mode]["fixed_minutes"]  # type: ignore[assignment]
+        close_threshold = CLOSE_TRAVEL_MINUTES_THRESHOLD + fixed_minutes
+        nearby_threshold = NEARBY_TRAVEL_MINUTES_THRESHOLD + fixed_minutes
+        far_threshold = FAR_TRAVEL_MINUTES_THRESHOLD + fixed_minutes
+
+    if travel_minutes <= close_threshold:
         return CLOSE_TRANSITION_BONUS
-    if travel_minutes <= NEARBY_TRAVEL_MINUTES_THRESHOLD:
+    if travel_minutes <= nearby_threshold:
         return NEARBY_TRANSITION_BONUS
-    if travel_minutes <= FAR_TRAVEL_MINUTES_THRESHOLD:
+    if travel_minutes <= far_threshold:
         return 0
     return FAR_TRANSITION_PENALTY
 
 
-def coordinate_area_transition_bonus(previous_place: PlaceData | None, place: PlaceData) -> int | None:
+def coordinate_area_transition_bonus(
+    previous_place: PlaceData | None,
+    place: PlaceData,
+    *,
+    mode: str | None = None,
+    city: str | None = None,
+) -> int | None:
     """Distance-based continuity bonus for a slot transition, looking
     *backward* to the previous slot's (already-confirmed) place.
 
@@ -166,11 +252,20 @@ def coordinate_area_transition_bonus(previous_place: PlaceData | None, place: Pl
     coordinates - the caller should fall back to the string-based
     same_area_continuity_bonus()/neighbor_area_bonus() in that case, per
     the gradual per-pair transition described in this feature's scope.
+
+    mode/city: see _coordinate_transition_bonus(). mode=None (default)
+    reproduces the exact pre-existing behavior.
     """
-    return _coordinate_transition_bonus(previous_place, place)
+    return _coordinate_transition_bonus(previous_place, place, mode=mode, city=city)
 
 
-def coordinate_next_place_transition_bonus(next_place: PlaceData | None, place: PlaceData) -> int | None:
+def coordinate_next_place_transition_bonus(
+    next_place: PlaceData | None,
+    place: PlaceData,
+    *,
+    mode: str | None = None,
+    city: str | None = None,
+) -> int | None:
     """Distance-based continuity bonus looking *forward* to the next slot's
     place, mirroring coordinate_area_transition_bonus's backward-looking
     version (same thresholds/estimate, via _coordinate_transition_bonus()).
@@ -187,8 +282,11 @@ def coordinate_next_place_transition_bonus(next_place: PlaceData | None, place: 
     slot could itself still be swapped in the same pass). Halving it keeps
     the confirmed previous-leg bonus the dominant signal rather than having
     this lookahead bonus override it.
+
+    mode/city: see _coordinate_transition_bonus(). mode=None (default)
+    reproduces the exact pre-existing behavior.
     """
-    raw_bonus = _coordinate_transition_bonus(next_place, place)
+    raw_bonus = _coordinate_transition_bonus(next_place, place, mode=mode, city=city)
     if raw_bonus is None:
         return None
     return round(raw_bonus / 2)
@@ -242,6 +340,21 @@ def estimate_walk_option_minutes(distance_km: float) -> int:
     transit/car there's no wait or parking step."""
     routed_distance_km = distance_km * ROUTE_DETOUR_FACTOR
     return max(1, round((routed_distance_km / WALK_SPEED_KMH) * 60))
+
+
+def scoring_minutes(mode: str, distance_km: float, city: str) -> int:
+    """Mode-aware travel time for scoring (coordinate transition bonuses,
+    day-duration warnings - see _coordinate_transition_bonus and
+    estimate_day_total_minutes). Matches the same "walk if it's both
+    faster and realistic" rule day_travel leg totals use (see
+    RuleItineraryService._leg_mode_minutes): the mode's own estimate, or
+    the walk estimate when walking is faster and under
+    WALK_OPTION_MAX_MINUTES."""
+    mode_minutes = estimate_mode_minutes(mode, distance_km, city)
+    walk_minutes = estimate_walk_option_minutes(distance_km)
+    if walk_minutes <= WALK_OPTION_MAX_MINUTES:
+        return min(mode_minutes, walk_minutes)
+    return mode_minutes
 
 
 def estimate_transport_options(distance_km: float, city: str) -> list[RuleTravelOption]:

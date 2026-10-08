@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 
+from fastapi import HTTPException, status
+
 from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleItineraryRequest
 
 from .constants import DEFAULT_CITY_BY_COUNTRY, DEFAULT_COMPANION, DEFAULT_CONCEPTS, DEFAULT_STYLE
@@ -13,6 +15,14 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
         days=request.days,
         duration_label=request.duration_label,
     )
+    if request.transport_by_day is not None and len(request.transport_by_day) != days:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=(
+                f"transport_by_day must have exactly {days} entries (one per day), "
+                f"got {len(request.transport_by_day)}."
+            ),
+        )
     concepts = request.concepts or DEFAULT_CONCEPTS
     style = request.style or DEFAULT_STYLE
     companion_type = request.companion_type or DEFAULT_COMPANION
@@ -47,6 +57,7 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
         companion_type=companion_type,
         accommodation_budget_band=accommodation_budget_band,
         accommodation_types=accommodation_types,
+        transport_by_day=request.transport_by_day,
         start_date=request.start_date,
     )
 

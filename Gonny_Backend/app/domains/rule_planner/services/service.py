@@ -101,7 +101,7 @@ class RuleItineraryService:
             normalized, city_catalog, day_place_map
         )
         day_duration_warnings = self._build_day_duration_warnings(
-            day_place_map_with_meals, accommodation_recommendation
+            day_place_map_with_meals, accommodation_recommendation, request=normalized
         )
         weather_alerts = self._build_weather_alerts(normalized, day_place_map, city_catalog)
         day_travel = self._build_day_travel(
@@ -133,6 +133,7 @@ class RuleItineraryService:
                 nights=normalized.nights,
             ),
             day_travel=day_travel,
+            transport_by_day=normalized.transport_by_day,
         )
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
@@ -462,11 +463,19 @@ class RuleItineraryService:
         self,
         day_place_map: dict[int, list[PlaceData]],
         accommodation: AccommodationData | None = None,
+        *,
+        request: NormalizedRuleRequest | None = None,
     ) -> list[RuleDayDurationWarning]:
         threshold_minutes = DAY_DURATION_WARNING_THRESHOLD_HOURS * 60
         warnings: list[RuleDayDurationWarning] = []
         for day_number, places in sorted(day_place_map.items()):
-            total_minutes = estimate_day_total_minutes(places, accommodation)
+            mode = (
+                request.transport_by_day[day_number - 1]
+                if request is not None and request.transport_by_day is not None
+                else None
+            )
+            city = request.city if request is not None else None
+            total_minutes = estimate_day_total_minutes(places, accommodation, mode=mode, city=city)
             if total_minutes > threshold_minutes:
                 warnings.append(
                     RuleDayDurationWarning(

@@ -48,6 +48,14 @@ CLOSE_LOCATION_BONUS = 14
 NEARBY_LOCATION_BONUS = 6
 FAR_LOCATION_PENALTY = -6
 
+# Assumed values, not measured - tune once there's real signal on how much
+# parking matters relative to the other factors here. Never a penalty for
+# lacking "주차가능": only applies when the trip has at least one car day
+# (request.transport_by_day), and only rewards having it.
+PARKING_AMENITY_LABEL = "주차가능"
+PARKING_BONUS_ALL_CAR = 6
+PARKING_BONUS_SOME_CAR = 3
+
 
 def load_city_accommodations(city: str) -> list[AccommodationData]:
     """Best-effort load of app/data/accommodations/{city}.json. Returns []
@@ -126,6 +134,19 @@ def _budget_fit_score(accommodation: AccommodationData, requested_band: BudgetBa
     return BUDGET_MISMATCH_PENALTY
 
 
+def _parking_bonus(accommodation: AccommodationData, request: NormalizedRuleRequest) -> int:
+    if not request.transport_by_day:
+        return 0
+    car_day_count = sum(1 for mode in request.transport_by_day if mode == "car")
+    if car_day_count == 0:
+        return 0
+    if PARKING_AMENITY_LABEL not in accommodation.amenities:
+        return 0
+    if car_day_count == len(request.transport_by_day):
+        return PARKING_BONUS_ALL_CAR
+    return PARKING_BONUS_SOME_CAR
+
+
 def accommodation_score(
     accommodation: AccommodationData,
     request: NormalizedRuleRequest,
@@ -150,6 +171,12 @@ def accommodation_score(
     types, select_accommodation_recommendation narrows the pool to them first.
     view is not read here (data quality too low for this round - see
     AccommodationData.view).
+
+    When the trip has at least one car day (request.transport_by_day), a
+    stay with the "주차가능" amenity gets PARKING_BONUS_ALL_CAR (every day is
+    a car day) or PARKING_BONUS_SOME_CAR (only some are) - see
+    _parking_bonus(). Never a penalty for lacking it, and never applied at
+    all when transport_by_day is unset or has no car day.
     """
     score = _budget_fit_score(accommodation, request.accommodation_budget_band)
 
@@ -158,6 +185,7 @@ def accommodation_score(
     else:
         score += COMPANION_MISMATCH_PENALTY
 
+    score += _parking_bonus(accommodation, request)
 
     if reference_point is not None and accommodation.latitude is not None and accommodation.longitude is not None:
         distance_km = haversine_distance_km(

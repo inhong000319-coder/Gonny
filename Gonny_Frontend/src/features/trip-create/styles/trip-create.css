@@ -1,0 +1,865 @@
+/* Trip-create form & result redesign (sea & sand palette). Scoped entirely
+   under .tc-root so it never touches globals.css's shared card/field/chip/
+   button rules, which other screens still rely on. All classes here use the
+   tc- prefix; colors are CSS variables only, no hardcoded hex outside this
+   block. */
+
+.tc-root {
+  --tc-bg: #faf7f2;
+  --tc-surface: #ffffff;
+  --tc-text: #1f2a37;
+  --tc-muted: #5b6573;
+  --tc-primary: #0e6e8c;
+  --tc-primary-strong: #0a566e;
+  --tc-primary-soft: #e3f1f5;
+  --tc-accent: #e8743b;
+  --tc-line: #e4ded3;
+  --tc-danger: #b3261e;
+  --tc-danger-soft: #fbeae9;
+  --tc-warning: #8a5a00;
+  --tc-warning-soft: #fbf1e0;
+  --tc-success: #1b7a43;
+  --tc-success-soft: #e7f5ec;
+  --tc-disabled-bg: #e9e5dc;
+  --tc-radius-sm: 8px;
+  --tc-radius-md: 12px;
+  --tc-font: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+
+  display: block;
+  background: var(--tc-bg);
+  color: var(--tc-text);
+  font-family: var(--tc-font);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.tc-root *,
+.tc-root *::before,
+.tc-root *::after {
+  box-sizing: border-box;
+}
+
+.tc-root button,
+.tc-root input {
+  font-family: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-root * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* --- Shell / layout -------------------------------------------------- */
+
+.tc-shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.tc-shell-wide {
+  max-width: 880px;
+}
+
+.tc-form-body {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 96px;
+}
+
+@media (min-width: 640px) {
+  .tc-form-body {
+    padding-bottom: 0;
+  }
+}
+
+.tc-card {
+  background: var(--tc-surface);
+  border: 1px solid var(--tc-line);
+  border-radius: var(--tc-radius-md);
+  padding: 20px;
+}
+
+.tc-card + .tc-card {
+  margin-top: 16px;
+}
+
+.tc-stack {
+  display: grid;
+  gap: 24px;
+}
+
+/* --- Headings ---------------------------------------------------------- */
+
+.tc-title {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.tc-subtitle {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--tc-muted);
+}
+
+.tc-stage-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tc-stage-subtitle {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--tc-muted);
+}
+
+/* --- Progress bar -------------------------------------------------------
+   "1/4 · 여행지" label + a 4-segment bar. Not clickable (a plain progress
+   indicator, not the old 4-card step grid this replaces). */
+
+.tc-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tc-progress-label {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tc-muted);
+  white-space: nowrap;
+}
+
+.tc-progress-track {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+}
+
+.tc-progress-seg {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--tc-line);
+}
+
+.tc-progress-seg.is-done,
+.tc-progress-seg.is-current {
+  background: var(--tc-primary);
+}
+
+/* --- Fields -------------------------------------------------------------- */
+
+.tc-field {
+  display: grid;
+  gap: 8px;
+}
+
+.tc-field-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tc-date-input {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--tc-line);
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-surface);
+  color: var(--tc-text);
+  font-size: 16px;
+}
+
+.tc-date-input:focus-visible {
+  outline: 2px solid var(--tc-primary);
+  outline-offset: 2px;
+}
+
+.tc-note {
+  margin: 0;
+  font-size: 14px;
+  color: var(--tc-muted);
+}
+
+/* --- Chips (rule: selected = primary bg + white text + check mark) ------ */
+
+.tc-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tc-chip {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  border: 1px solid var(--tc-line);
+  border-radius: 999px;
+  background: var(--tc-surface);
+  color: var(--tc-text);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tc-chip:hover {
+  border-color: var(--tc-primary);
+}
+
+.tc-chip.is-selected {
+  background: var(--tc-primary);
+  border-color: var(--tc-primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.tc-chip.is-selected::before {
+  content: "\2713";
+}
+
+.tc-chip:focus-visible,
+.tc-root button:focus-visible,
+.tc-root a:focus-visible,
+.tc-root input:focus-visible {
+  outline: 2px solid var(--tc-primary);
+  outline-offset: 2px;
+}
+
+/* --- Choice cards (budget / style / companion) --------------------------- */
+
+.tc-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .tc-choice-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tc-choice-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tc-choice-card {
+  display: grid;
+  gap: 4px;
+  min-height: 44px;
+  padding: 14px 16px;
+  border: 1px solid var(--tc-line);
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-surface);
+  color: var(--tc-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.tc-choice-card:hover {
+  border-color: var(--tc-primary);
+}
+
+.tc-choice-card strong {
+  font-size: 15px;
+}
+
+.tc-choice-card.is-selected strong::before {
+  content: "\2713 ";
+}
+
+.tc-choice-card small,
+.tc-choice-card span {
+  display: block;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+.tc-choice-card.is-selected {
+  background: var(--tc-primary);
+  border-color: var(--tc-primary);
+  color: #ffffff;
+}
+
+.tc-choice-card.is-selected small,
+.tc-choice-card.is-selected span {
+  color: #ffffff;
+}
+
+/* --- City grid (step 1) --------------------------------------------------- */
+
+.tc-city-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .tc-city-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tc-city-card {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  border: 1px solid var(--tc-line);
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-surface);
+  color: var(--tc-text);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tc-city-card:hover {
+  border-color: var(--tc-primary);
+}
+
+.tc-city-card.is-selected {
+  background: var(--tc-primary);
+  border-color: var(--tc-primary);
+  color: #ffffff;
+}
+
+.tc-city-card.is-selected::before {
+  content: "\2713 ";
+}
+
+/* --- Segmented control (transport mode, per-day assignment) -------------- */
+
+.tc-segment {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.tc-segment-btn {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--tc-line);
+  border-radius: 999px;
+  background: var(--tc-surface);
+  color: var(--tc-text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tc-segment-btn.is-selected {
+  background: var(--tc-primary);
+  border-color: var(--tc-primary);
+  color: #ffffff;
+}
+
+.tc-segment-btn.is-selected::before {
+  content: "\2713 ";
+}
+
+/* --- Toggle row (checkbox + label, one line, 44px touch target) ---------- */
+
+.tc-toggle-row {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.tc-toggle-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--tc-primary);
+}
+
+.tc-toggle-row span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* --- Alerts (left color bar + soft background, no icons) ----------------- */
+
+.tc-alert {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--tc-muted);
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-bg);
+  font-size: 14px;
+}
+
+.tc-alert-warning {
+  border-left-color: var(--tc-warning);
+  background: var(--tc-warning-soft);
+}
+
+.tc-alert-danger {
+  border-left-color: var(--tc-danger);
+  background: var(--tc-danger-soft);
+}
+
+.tc-alert-info {
+  border-left-color: var(--tc-primary);
+  background: var(--tc-primary-soft);
+}
+
+.tc-alert-success {
+  border-left-color: var(--tc-success);
+  background: var(--tc-success-soft);
+}
+
+/* --- Buttons --------------------------------------------------------------
+   Native <button>/<a> + tc-btn - the shared Button component always injects
+   its own "button" class, which this redesign is removing from the form. */
+
+.tc-btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 1px solid transparent;
+  border-radius: var(--tc-radius-sm);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tc-btn-primary {
+  background: var(--tc-primary);
+  color: #ffffff;
+}
+
+.tc-btn-primary:hover:not(:disabled) {
+  background: var(--tc-primary-strong);
+}
+
+.tc-btn-secondary {
+  background: var(--tc-surface);
+  border-color: var(--tc-line);
+  color: var(--tc-text);
+}
+
+.tc-btn-secondary:hover:not(:disabled) {
+  border-color: var(--tc-primary);
+}
+
+.tc-btn-ghost {
+  background: transparent;
+  border-color: var(--tc-line);
+  color: var(--tc-primary);
+}
+
+.tc-btn:disabled {
+  background: var(--tc-disabled-bg);
+  border-color: var(--tc-disabled-bg);
+  color: var(--tc-muted);
+  cursor: not-allowed;
+}
+
+.tc-step-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.tc-step-nav .tc-btn {
+  flex: 1;
+}
+
+@media (max-width: 639px) {
+  .tc-step-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    margin-top: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: var(--tc-bg);
+    border-top: 1px solid var(--tc-line);
+  }
+}
+
+/* --- Review / summary grid (step 4, result header) - flat, no nested card */
+
+.tc-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .tc-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tc-summary-item {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--tc-line);
+}
+
+.tc-summary-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tc-muted);
+}
+
+.tc-summary-value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.tc-summary-note {
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+/* --- Result header --------------------------------------------------- */
+
+.tc-result-header {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tc-result-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.tc-result-desc {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tc-muted);
+}
+
+.tc-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tc-tag {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--tc-primary-soft);
+  color: var(--tc-primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tc-glance-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.tc-glance-item {
+  padding: 10px;
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-bg);
+  text-align: center;
+}
+
+.tc-glance-item span {
+  display: block;
+  font-size: 12px;
+  color: var(--tc-muted);
+}
+
+.tc-glance-item strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 15px;
+}
+
+/* --- Section value blocks (accommodation / estimated cost cards) -------- */
+
+.tc-section-label {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tc-muted);
+}
+
+.tc-section-value {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tc-section-note {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+/* --- Day timeline ---------------------------------------------------- */
+
+.tc-day-card {
+  padding-top: 20px;
+  border-top: 1px solid var(--tc-line);
+}
+
+.tc-day-card:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.tc-day-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tc-day-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--tc-accent);
+}
+
+.tc-day-route {
+  margin: 0;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+.tc-day-mode {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 14px;
+}
+
+.tc-day-mode-summary strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.tc-day-mode-summary span {
+  margin-left: 6px;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+.tc-day-assign-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tc-day-assign-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tc-day-assign-row > span {
+  min-width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tc-muted);
+}
+
+.tc-timeline {
+  display: grid;
+  gap: 4px;
+}
+
+.tc-stop {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 12px;
+}
+
+.tc-stop-time {
+  padding-top: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tc-primary);
+}
+
+.tc-stop.is-meal .tc-stop-time {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tc-stop.is-meal .tc-stop-time::before {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tc-accent);
+  content: "";
+}
+
+.tc-stop-body {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--tc-line);
+}
+
+.tc-stop:last-child .tc-stop-body {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.tc-stop-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.tc-stop-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.tc-stop-chip {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  padding: 1px 9px;
+  border: 1px solid var(--tc-line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tc-muted);
+}
+
+.tc-stop-area {
+  margin: 0;
+  font-size: 14px;
+  color: var(--tc-muted);
+}
+
+.tc-stop-cost {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tc-success);
+}
+
+.tc-stop-note-lead {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tc-stop-note-line {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: var(--tc-muted);
+}
+
+.tc-stop-fallback-travel {
+  margin: 0;
+  font-size: 12px;
+  color: var(--tc-muted);
+}
+
+/* --- Travel connector row (PR #74) - light dashed line, small text ------- */
+
+.tc-connector {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  padding: 6px 0 6px 68px;
+  font-size: 12px;
+  color: var(--tc-muted);
+}
+
+.tc-connector::before {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: 25px;
+  border-left: 1px dashed var(--tc-line);
+  content: "";
+}
+
+.tc-connector-label {
+  font-weight: 700;
+  color: var(--tc-text);
+}
+
+.tc-connector-primary {
+  font-weight: 700;
+  color: var(--tc-primary);
+}
+
+@media (max-width: 639px) {
+  .tc-connector {
+    padding-left: 16px;
+  }
+
+  .tc-connector::before {
+    display: none;
+  }
+}
+
+/* --- Result actions ---------------------------------------------------- */
+
+.tc-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* --- Dev-only raw response panel ---------------------------------------- */
+
+.tc-raw-panel {
+  margin-top: 4px;
+}
+
+.tc-raw-panel summary {
+  font-size: 13px;
+  color: var(--tc-muted);
+  cursor: pointer;
+}
+
+.tc-raw-panel pre {
+  max-height: 320px;
+  margin-top: 8px;
+  padding: 12px;
+  overflow: auto;
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-bg);
+  font-size: 12px;
+}

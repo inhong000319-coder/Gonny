@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
-import { Button } from "../../../shared/components/ui/button";
 import { PRICE_REFERENCE_PERIOD, formatApproxManwon, formatApproxManwonRange } from "../../../shared/pricing";
 import { createItineraryItem } from "../../itinerary/api/create-itinerary-item";
 import { WeatherBanner } from "../../itinerary/components/weather-banner";
@@ -740,12 +739,12 @@ function DayTravelPanel({
   const hasLegs = dayTravel.legs.length > 0;
 
   return (
-    <div className="planner-day-travel">
-      <div aria-label="이동수단 선택" className="planner-day-travel-toggle" role="group">
+    <div className="tc-day-mode">
+      <div aria-label="이동수단 선택" className="tc-segment" role="group">
         {(["transit", "car"] as const).map((option) => (
           <button
             aria-pressed={mode === option}
-            className={mode === option ? "planner-mode-button is-active" : "planner-mode-button"}
+            className={mode === option ? "tc-segment-btn is-selected" : "tc-segment-btn"}
             key={option}
             onClick={() => onModeChange(option)}
             type="button"
@@ -755,22 +754,22 @@ function DayTravelPanel({
         ))}
       </div>
       {hasLegs ? (
-        <div className="planner-day-travel-summary">
+        <p className="tc-day-mode-summary">
           <strong>
             이동 합계 {dayTravel.missing_leg_count > 0 ? "최소 " : ""}약 {formatTravelMinutesLabel(selectedTotal)}
           </strong>
-          <span className="planner-day-travel-secondary">
+          <span>
             {labelTransportMode(otherMode)} 약 {formatTravelMinutesLabel(otherTotal)}
           </span>
-          {dayTravel.missing_leg_count > 0 ? (
-            <p className="planner-day-travel-missing">
-              일부 구간 정보 없음 ({dayTravel.missing_leg_count}개 구간 제외)
-            </p>
-          ) : null}
-        </div>
+        </p>
       ) : (
-        <p className="planner-day-travel-missing">이동시간 정보가 부족해요</p>
+        <div className="tc-alert tc-alert-info">이동시간 정보가 부족해요</div>
       )}
+      {hasLegs && dayTravel.missing_leg_count > 0 ? (
+        <div className="tc-alert tc-alert-warning">
+          일부 구간 정보 없음 ({dayTravel.missing_leg_count}개 구간 제외)
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -796,11 +795,11 @@ function TravelConnectorRow({
       : null;
 
   return (
-    <div className="planner-travel-connector">
-      {label ? <span className="planner-travel-connector-label">{label}</span> : null}
-      {primaryText ? <span className="planner-travel-connector-primary">{primaryText}</span> : null}
+    <div className="tc-connector">
+      {label ? <span className="tc-connector-label">{label}</span> : null}
+      {primaryText ? <span className="tc-connector-primary">{primaryText}</span> : null}
       {otherOption ? (
-        <span className="planner-travel-connector-secondary">
+        <span>
           {labelTransportMode(otherMode)} 약 {otherOption.minutes}분
         </span>
       ) : null}
@@ -812,33 +811,27 @@ function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendatio
   const note = splitNoteLines(meal.notes);
 
   return (
-    <article className="planner-stop-card planner-meal-card">
-      <div className="planner-stop-time">
+    <div className="tc-stop is-meal">
+      <div className="tc-stop-time">
         <span>{meal.meal_type === "lunch" ? "점심" : "저녁"}</span>
       </div>
-      <div className="planner-stop-body">
+      <div className="tc-stop-body">
         {showTravelTime && meal.travel_minutes_from_previous !== null ? (
-          <p className="planner-slot-travel-time">이전 장소에서 약 {meal.travel_minutes_from_previous}분 이동</p>
+          <p className="tc-stop-fallback-travel">이전 장소에서 약 {meal.travel_minutes_from_previous}분 이동</p>
         ) : null}
-        <div className="planner-slot-top">
-          <strong>{meal.place_name}</strong>
-          <span className="badge">식사</span>
+        <div className="tc-stop-name-row">
+          <strong className="tc-stop-name">{meal.place_name}</strong>
+          <span className="tc-stop-chip">식사</span>
         </div>
-        <p className="planner-slot-area">{meal.area}</p>
-        <div className="planner-slot-note">
-          {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
-          {note.details.length > 0 ? (
-            <div className="planner-slot-note-body">
-              {note.details.map((line, index) => (
-                <p key={`${meal.place_name}-note-${index}`} className="planner-slot-note-line">
-                  {line}
-                </p>
-              ))}
-            </div>
-          ) : null}
-        </div>
+        <p className="tc-stop-area">{meal.area}</p>
+        {note.headline ? <p className="tc-stop-note-lead">{note.headline}</p> : null}
+        {note.details.map((line, index) => (
+          <p key={`${meal.place_name}-note-${index}`} className="tc-stop-note-line">
+            {line}
+          </p>
+        ))}
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -1184,531 +1177,519 @@ export function TripCreateForm() {
     }
   };
 
+  const stepLabels = ["여행지", "기본 정보", "여행 스타일", "확인 및 생성"];
+
   return (
-    <div className={`page-grid ${hasResult ? "planner-result-layout" : "planner-form-layout"}`}>
-      <section className="card card-tinted stack planner-card">
+    <div className="tc-root">
+      <div className={`tc-shell ${hasResult ? "tc-shell-wide" : ""}`}>
         {!hasResult ? (
           <>
-            <div className="section-header">
-              <div>
-                <span className="section-kicker">Rule Planner</span>
-                <h2 className="section-title">현재 화면에 맞춘 규칙 기반 일정 생성</h2>
-                <p className="section-subtitle">
-                  여행지, 기간, 예산, 분위기를 고르면 단계별로 확인한 뒤 일정을 생성할 수 있습니다.
-                </p>
-              </div>
-              <div className="planner-api-badges">
-                <span className="badge">도시 데이터 연동</span>
-                <span className="badge">규칙 기반 추천</span>
+            <h1 className="tc-title">어떤 여행을 떠나볼까요?</h1>
+            <p className="tc-subtitle">도시와 기간, 취향을 고르면 하루하루 일정을 만들어 드려요.</p>
+
+            <div className="tc-progress">
+              <span className="tc-progress-label">
+                {currentStep}/{STEP_COUNT} · {stepLabels[currentStep - 1]}
+              </span>
+              <div
+                aria-label="단계 진행"
+                aria-valuemax={STEP_COUNT}
+                aria-valuemin={1}
+                aria-valuenow={currentStep}
+                className="tc-progress-track"
+                role="progressbar"
+              >
+                {[1, 2, 3, 4].map((step) => (
+                  <span
+                    aria-current={step === currentStep ? "step" : undefined}
+                    className={`tc-progress-seg ${step < currentStep ? "is-done" : step === currentStep ? "is-current" : ""}`}
+                    key={step}
+                  />
+                ))}
               </div>
             </div>
 
-            <div className="planner-step-row">
-              {[1, 2, 3, 4].map((step) => (
-                <button
-                  key={step}
-                  className={`planner-step-button ${currentStep === step ? "active" : ""} ${currentStep > step ? "done" : ""}`}
-                  onClick={() => setCurrentStep(step)}
-                  type="button"
-                >
-                  <span>{step}</span>
-                  <strong>
-                    {step === 1 && "여행지"}
-                    {step === 2 && "기본 정보"}
-                    {step === 3 && "여행 스타일"}
-                    {step === 4 && "확인 및 생성"}
-                  </strong>
-                </button>
-              ))}
-            </div>
+            <div className="tc-form-body">
+              <div className="tc-card">
+                {currentStep === 1 ? (
+                  <div className="tc-stack">
+                    <div>
+                      <h2 className="tc-stage-title">어느 도시로 떠나시나요?</h2>
+                    </div>
 
-            {currentStep === 1 ? (
-              <div className="stack">
-                <div>
-                  <h3 className="planner-stage-title">1. 여행지 선택</h3>
-                  <p className="section-subtitle">어느 도시로 떠나시나요?</p>
-                </div>
-
-                {catalogLoading ? (
-                  <p className="planner-inline-note">도시 목록을 불러오는 중입니다.</p>
-                ) : cities.length === 0 ? (
-                  <p className="planner-inline-note">표시할 도시가 없습니다.</p>
-                ) : (
-                  <div className="planner-city-grid">
-                    {cities.map((option) => (
-                      <button
-                        key={option.city}
-                        className={`planner-city-card ${form.city === option.city ? "selected" : ""}`}
-                        onClick={() => updateField("city", option.city)}
-                        type="button"
-                      >
-                        <strong>{toCityLabel(option.city)}</strong>
-                      </button>
-                    ))}
+                    {catalogLoading ? (
+                      <p className="tc-note">도시 목록을 불러오는 중입니다.</p>
+                    ) : cities.length === 0 ? (
+                      <p className="tc-note">표시할 도시가 없습니다.</p>
+                    ) : (
+                      <div className="tc-city-grid" role="radiogroup" aria-label="여행지 선택">
+                        {cities.map((option) => (
+                          <button
+                            aria-checked={form.city === option.city}
+                            className={`tc-city-card ${form.city === option.city ? "is-selected" : ""}`}
+                            key={option.city}
+                            onClick={() => updateField("city", option.city)}
+                            role="radio"
+                            type="button"
+                          >
+                            {toCityLabel(option.city)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            ) : null}
+                ) : null}
 
-            {currentStep === 2 ? (
-              <div className="stack">
-                <div>
-                  <h3 className="planner-stage-title">2. 기본 여행 정보</h3>
-                  <p className="section-subtitle">기간과 인원, 예산 톤을 정하면 일정 밀도가 더 자연스럽게 맞춰집니다.</p>
-                </div>
+                {currentStep === 2 ? (
+                  <div className="tc-stack">
+                    <div>
+                      <h2 className="tc-stage-title">기본 정보</h2>
+                      <p className="tc-stage-subtitle">기간과 인원, 예산 톤을 정하면 일정 밀도가 더 자연스럽게 맞춰집니다.</p>
+                    </div>
 
-                <div className="planner-input-panel">
-                  <div className="field">
-                    <span>여행 시작일</span>
-                    <input
-                      onChange={(event) => updateField("start_date", event.target.value)}
-                      type="date"
-                      value={form.start_date}
-                    />
-                  </div>
-                  <div className="field">
-                    <span>여행 인원</span>
-                    <div className="planner-chip-grid planner-chip-grid-travelers">
-                      {travelerOptions.map((option) => (
-                        <button
-                          key={option.value}
-                          className={`planner-select-chip ${form.travelers === option.value ? "selected" : ""}`}
-                          onClick={() => updateField("travelers", option.value)}
-                          type="button"
-                        >
-                          {option.label}
-                        </button>
-                      ))}
+                    <div className="tc-field">
+                      <span className="tc-field-label">여행 시작일</span>
+                      <input
+                        className="tc-date-input"
+                        onChange={(event) => updateField("start_date", event.target.value)}
+                        type="date"
+                        value={form.start_date}
+                      />
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">여행 인원</span>
+                      <div className="tc-chip-row" role="radiogroup" aria-label="여행 인원">
+                        {travelerOptions.map((option) => (
+                          <button
+                            aria-checked={form.travelers === option.value}
+                            className={`tc-chip ${form.travelers === option.value ? "is-selected" : ""}`}
+                            key={option.value}
+                            onClick={() => updateField("travelers", option.value)}
+                            role="radio"
+                            type="button"
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">여행 기간</span>
+                      <div className="tc-chip-row" role="radiogroup" aria-label="여행 기간">
+                        {nightsOptions.map((night) => (
+                          <button
+                            aria-checked={selectedNights === night}
+                            className={`tc-chip ${selectedNights === night ? "is-selected" : ""}`}
+                            key={night}
+                            onClick={() => updateField("duration_label", buildDurationLabel(night))}
+                            role="radio"
+                            type="button"
+                          >
+                            {night}박
+                          </button>
+                        ))}
+                      </div>
+                      <p className="tc-note">
+                        현재 선택: {form.duration_label} · {form.start_date} ~ {endDate}
+                      </p>
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">예산</span>
+                      <div className="tc-choice-grid tc-choice-grid-3">
+                        {budgetOptions.map((option) => (
+                          <button
+                            aria-checked={form.budget_band === option}
+                            className={`tc-choice-card ${form.budget_band === option ? "is-selected" : ""}`}
+                            key={option}
+                            onClick={() => updateField("budget_band", option)}
+                            role="radio"
+                            type="button"
+                          >
+                            <strong>{labelBudget(option)}</strong>
+                            <small>{budgetIntensityLabel(option)}</small>
+                            <span>{budgetHint(option)}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {availableAccommodationTypes.length > 0 ? (
+                      <div className="tc-field">
+                        <span className="tc-field-label">숙소 유형 (선택, 여러 개 가능)</span>
+                        <div className="tc-chip-row">
+                          {availableAccommodationTypes.map((type) => (
+                            <button
+                              aria-pressed={form.accommodation_types.includes(type)}
+                              className={`tc-chip ${form.accommodation_types.includes(type) ? "is-selected" : ""}`}
+                              key={type}
+                              onClick={() => toggleAccommodationType(type)}
+                              type="button"
+                            >
+                              {type} {selectedCatalogCity?.accommodation_type_counts?.[type]}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+
+                    <div className="tc-field">
+                      <label className="tc-toggle-row">
+                        <input
+                          checked={isAccommodationBudgetOn}
+                          onChange={(event) => handleAccommodationBudgetToggle(event.target.checked)}
+                          type="checkbox"
+                        />
+                        <span>숙소 예산을 따로 설정</span>
+                      </label>
+                      {isAccommodationBudgetOn ? (
+                        <div className="tc-choice-grid tc-choice-grid-3">
+                          {budgetOptions.map((option) => (
+                            <button
+                              aria-checked={form.accommodation_budget_band === option}
+                              className={`tc-choice-card ${form.accommodation_budget_band === option ? "is-selected" : ""}`}
+                              key={option}
+                              onClick={() => updateField("accommodation_budget_band", option)}
+                              role="radio"
+                              type="button"
+                            >
+                              <strong>{labelBudget(option)}</strong>
+                              <small>{budgetIntensityLabel(option)}</small>
+                            </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="tc-note">
+                          숙소는 위에서 고른 활동 예산({labelBudget(form.budget_band)})을 따릅니다.
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">이동수단 (최소 1개)</span>
+                      <div className="tc-chip-row">
+                        {(["transit", "car"] as DayTransportMode[]).map((mode) => (
+                          <button
+                            aria-pressed={form.transport_modes.includes(mode)}
+                            className={`tc-chip ${form.transport_modes.includes(mode) ? "is-selected" : ""}`}
+                            key={mode}
+                            onClick={() => toggleTransportMode(mode)}
+                            type="button"
+                          >
+                            {labelTransportModeChoice(mode)}
+                          </button>
+                        ))}
+                      </div>
+
+                      {form.transport_modes.length > 1 ? (
+                        <div className="tc-day-assign-list">
+                          {form.transport_by_day.map((assignedMode, dayIndex) => (
+                            <div className="tc-day-assign-row" key={dayIndex}>
+                              <span>{dayIndex + 1}일차</span>
+                              <div aria-label={`${dayIndex + 1}일차 이동수단`} className="tc-segment" role="group">
+                                {form.transport_modes.map((mode) => (
+                                  <button
+                                    aria-pressed={assignedMode === mode}
+                                    className={`tc-segment-btn ${assignedMode === mode ? "is-selected" : ""}`}
+                                    key={mode}
+                                    onClick={() => setDayTransportMode(dayIndex, mode)}
+                                    type="button"
+                                  >
+                                    {labelTransportModeChoice(mode)}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      {hasTransportAssignmentGap ? (
+                        <div className="tc-alert tc-alert-warning">
+                          선택한 이동수단({unusedSelectedTransportModes.map(labelTransportModeChoice).join(", ")})이
+                          하루도 배정되지 않았어요. 적어도 하루는 배정해야 일정을 생성할 수 있어요.
+                        </div>
+                      ) : null}
+                      {hasJejuTransitDay ? (
+                        <div className="tc-alert tc-alert-info">제주는 대중교통 이동에 시간이 오래 걸릴 수 있어요.</div>
+                      ) : null}
                     </div>
                   </div>
+                ) : null}
 
-                  <div className="field">
-                    <span>여행 기간</span>
-                    <div className="planner-chip-grid planner-chip-grid-nights">
-                      {nightsOptions.map((night) => (
-                        <button
-                          key={night}
-                          className={`planner-select-chip ${selectedNights === night ? "selected" : ""}`}
-                          onClick={() => updateField("duration_label", buildDurationLabel(night))}
-                          type="button"
-                        >
-                          {night}박
-                        </button>
-                      ))}
+                {currentStep === 3 ? (
+                  <div className="tc-stack">
+                    <div>
+                      <h2 className="tc-stage-title">여행 스타일</h2>
+                      <p className="tc-stage-subtitle">원하는 분위기와 동행 유형에 맞춰 추천 기준을 바꿉니다.</p>
                     </div>
-                    <p className="planner-inline-note">
-                      현재 선택: {form.duration_label} · {form.start_date} ~ {endDate}
-                    </p>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">관심 테마</span>
+                      <div className="tc-chip-row">
+                        {conceptOptions.map((concept) => (
+                          <button
+                            aria-pressed={form.concepts.includes(concept)}
+                            className={`tc-chip ${form.concepts.includes(concept) ? "is-selected" : ""}`}
+                            key={concept}
+                            onClick={() => toggleConcept(concept)}
+                            type="button"
+                          >
+                            {labelTripConcept(concept)}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">일정 운영 방식</span>
+                      <p className="tc-note">동선을 얼마나 촘촘하게 짤지, 이동을 어떻게 다룰지 정합니다.</p>
+                      <div className="tc-choice-grid tc-choice-grid-2" role="radiogroup" aria-label="일정 운영 방식">
+                        {styleOptions.map((option) => (
+                          <button
+                            aria-checked={form.style === option}
+                            className={`tc-choice-card ${form.style === option ? "is-selected" : ""}`}
+                            key={option}
+                            onClick={() => updateField("style", option)}
+                            role="radio"
+                            type="button"
+                          >
+                            <strong>{labelStyle(option)}</strong>
+                            <span>{labelStyleDesc(option)}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">누구와 함께 가나요?</span>
+                      <p className="tc-note">같은 도시라도 동행 유형에 따라 추천 장소와 페이스가 달라집니다.</p>
+                      <div className="tc-choice-grid tc-choice-grid-2" role="radiogroup" aria-label="동행 유형">
+                        {companionOptions.map((option) => (
+                          <button
+                            aria-checked={form.companion_type === option}
+                            className={`tc-choice-card ${form.companion_type === option ? "is-selected" : ""}`}
+                            key={option}
+                            onClick={() => updateField("companion_type", option)}
+                            role="radio"
+                            type="button"
+                          >
+                            <strong>{labelCompanion(option)}</strong>
+                            <span>{labelCompanionDesc(option)}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
+                ) : null}
 
-                </div>
+                {currentStep === 4 ? (
+                  <div className="tc-stack">
+                    <div>
+                      <h2 className="tc-stage-title">확인 후 일정 생성</h2>
+                      <p className="tc-stage-subtitle">입력한 조건을 마지막으로 확인하고 바로 생성할 수 있습니다.</p>
+                    </div>
 
-                <div className="planner-choice-grid planner-choice-grid-budget">
-                  {budgetOptions.map((option) => (
+                    <div className="tc-summary-grid">
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">여행지</span>
+                        <span className="tc-summary-value">{form.city ? toCityLabel(form.city) : "자동 선택"}</span>
+                        <span className="tc-summary-note">선택한 도시 기준으로 일정을 생성합니다.</span>
+                      </div>
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">기간과 인원</span>
+                        <span className="tc-summary-value">
+                          {form.duration_label || "2박 3일"} · {form.travelers === 5 ? "5인 이상" : `${form.travelers}명`}
+                        </span>
+                        <span className="tc-summary-note">일정 길이에 맞춰 하루 단위로 나눠 생성합니다.</span>
+                      </div>
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">예산</span>
+                        <span className="tc-summary-value">{labelBudget(form.budget_band)}</span>
+                        <span className="tc-summary-note">{budgetIntensityLabel(form.budget_band)}</span>
+                      </div>
+
+                      {form.accommodation_types.length > 0 ? (
+                        <div className="tc-summary-item">
+                          <span className="tc-summary-label">숙소 유형</span>
+                          <span className="tc-summary-value">{form.accommodation_types.join(", ")}</span>
+                          <span className="tc-summary-note">선택한 유형 안에서 추천합니다.</span>
+                        </div>
+                      ) : null}
+
+                      {isAccommodationBudgetOn && form.accommodation_budget_band ? (
+                        <div className="tc-summary-item">
+                          <span className="tc-summary-label">숙소 예산</span>
+                          <span className="tc-summary-value">{labelBudget(form.accommodation_budget_band)}</span>
+                          <span className="tc-summary-note">{budgetIntensityLabel(form.accommodation_budget_band)}</span>
+                        </div>
+                      ) : null}
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">스타일</span>
+                        <span className="tc-summary-value">{labelStyle(form.style)}</span>
+                        <span className="tc-summary-note">{form.concepts.map(labelTripConcept).join(", ")}</span>
+                      </div>
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">이동수단</span>
+                        <span className="tc-summary-value">{summarizeTransportByDay(form.transport_by_day)}</span>
+                        <span className="tc-summary-note">하루에 한 수단만 선택할 수 있어요.</span>
+                      </div>
+                    </div>
+
+                    {hasTransportAssignmentGap ? (
+                      <div className="tc-alert tc-alert-warning">
+                        선택한 이동수단을 모두 최소 하루는 배정해야 일정을 생성할 수 있어요.
+                      </div>
+                    ) : null}
+
                     <button
-                      key={option}
-                      className={`planner-choice-card ${form.budget_band === option ? "selected" : ""}`}
-                      onClick={() => updateField("budget_band", option)}
+                      className="tc-btn tc-btn-primary"
+                      disabled={isGenerating || hasTransportAssignmentGap}
+                      onClick={handleGenerate}
                       type="button"
                     >
-                      <strong>{labelBudget(option)}</strong>
-                      <small>{budgetIntensityLabel(option)}</small>
-                      <span>{budgetHint(option)}</span>
+                      {isGenerating ? "일정을 만들고 있어요…" : "일정 만들기"}
                     </button>
-                  ))}
-                </div>
-
-                {availableAccommodationTypes.length > 0 ? (
-                  <div className="field">
-                    <span>숙소 유형 (선택, 여러 개 가능)</span>
-                    <div className="chip-list">
-                      {availableAccommodationTypes.map((type) => (
-                        <button
-                          key={type}
-                          className={form.accommodation_types.includes(type) ? "chip active" : "chip"}
-                          onClick={() => toggleAccommodationType(type)}
-                          type="button"
-                        >
-                          {type} {selectedCatalogCity?.accommodation_type_counts?.[type]}
-                        </button>
-                      ))}
-                    </div>
                   </div>
                 ) : null}
-
-                <div className="field">
-                  <label className="planner-accommodation-toggle">
-                    <input
-                      checked={isAccommodationBudgetOn}
-                      onChange={(event) => handleAccommodationBudgetToggle(event.target.checked)}
-                      type="checkbox"
-                    />
-                    숙소 예산을 따로 설정
-                  </label>
-                  {isAccommodationBudgetOn ? (
-                    <div className="planner-choice-grid planner-choice-grid-budget">
-                      {budgetOptions.map((option) => (
-                        <button
-                          key={option}
-                          className={`planner-choice-card ${form.accommodation_budget_band === option ? "selected" : ""}`}
-                          onClick={() => updateField("accommodation_budget_band", option)}
-                          type="button"
-                        >
-                          <strong>{labelBudget(option)}</strong>
-                          <small>{budgetIntensityLabel(option)}</small>
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="planner-inline-note">
-                      숙소는 위에서 고른 활동 예산({labelBudget(form.budget_band)})을 따릅니다.
-                    </p>
-                  )}
-                </div>
-
-                <div className="field">
-                  <span>이동수단 (최소 1개)</span>
-                  <div className="chip-list">
-                    {(["transit", "car"] as DayTransportMode[]).map((mode) => (
-                      <button
-                        className={form.transport_modes.includes(mode) ? "chip active" : "chip"}
-                        key={mode}
-                        onClick={() => toggleTransportMode(mode)}
-                        type="button"
-                      >
-                        {labelTransportModeChoice(mode)}
-                      </button>
-                    ))}
-                  </div>
-
-                  {form.transport_modes.length > 1 ? (
-                    <div className="planner-transport-day-list">
-                      {form.transport_by_day.map((assignedMode, dayIndex) => (
-                        <div className="planner-transport-day-row" key={dayIndex}>
-                          <span>{dayIndex + 1}일차</span>
-                          <div className="planner-day-travel-toggle" role="group" aria-label={`${dayIndex + 1}일차 이동수단`}>
-                            {form.transport_modes.map((mode) => (
-                              <button
-                                aria-pressed={assignedMode === mode}
-                                className={assignedMode === mode ? "planner-mode-button is-active" : "planner-mode-button"}
-                                key={mode}
-                                onClick={() => setDayTransportMode(dayIndex, mode)}
-                                type="button"
-                              >
-                                {labelTransportModeChoice(mode)}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-
-                  {hasTransportAssignmentGap ? (
-                    <p className="planner-feedback warning">
-                      선택한 이동수단({unusedSelectedTransportModes.map(labelTransportModeChoice).join(", ")})이
-                      하루도 배정되지 않았어요. 적어도 하루는 배정해야 일정을 생성할 수 있어요.
-                    </p>
-                  ) : null}
-                  {hasJejuTransitDay ? (
-                    <p className="planner-inline-note">제주는 대중교통 이동에 시간이 오래 걸릴 수 있어요.</p>
-                  ) : null}
-                </div>
               </div>
-            ) : null}
 
-            {currentStep === 3 ? (
-              <div className="stack">
-                <div>
-                  <h3 className="planner-stage-title">3. 여행 스타일 설정</h3>
-                  <p className="section-subtitle">원하는 분위기와 동행 유형에 맞춰 추천 기준을 바꿉니다.</p>
-                </div>
+              {message ? <div className="tc-alert tc-alert-success">{message}</div> : null}
+              {error ? <div className="tc-alert tc-alert-danger">{error}</div> : null}
+            </div>
 
-                <div className="field">
-                  <span>관심 테마</span>
-                  <div className="chip-list">
-                    {conceptOptions.map((concept) => (
-                      <button
-                        key={concept}
-                        className={form.concepts.includes(concept) ? "chip active" : "chip"}
-                        onClick={() => toggleConcept(concept)}
-                        type="button"
-                      >
-                        {labelTripConcept(concept)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="planner-section-block">
-                  <div className="planner-section-copy">
-                    <strong>일정 운영 방식</strong>
-                    <span>동선을 얼마나 촘촘하게 짤지, 이동을 어떻게 다룰지 정합니다.</span>
-                  </div>
-                  <div className="planner-choice-grid">
-                    {styleOptions.map((option) => (
-                      <button
-                        key={option}
-                        className={`planner-choice-card ${form.style === option ? "selected" : ""}`}
-                        onClick={() => updateField("style", option)}
-                        type="button"
-                      >
-                        <strong>{labelStyle(option)}</strong>
-                        <span>{labelStyleDesc(option)}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="planner-section-block">
-                  <div className="planner-section-copy">
-                    <strong>누구와 함께 가나요?</strong>
-                    <span>같은 도시라도 동행 유형에 따라 추천 장소와 페이스가 달라집니다.</span>
-                  </div>
-                  <div className="planner-choice-grid">
-                    {companionOptions.map((option) => (
-                      <button
-                        key={option}
-                        className={`planner-choice-card ${form.companion_type === option ? "selected" : ""}`}
-                        onClick={() => updateField("companion_type", option)}
-                        type="button"
-                      >
-                        <strong>{labelCompanion(option)}</strong>
-                        <span>{labelCompanionDesc(option)}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : null}
-
-            {currentStep === 4 ? (
-              <div className="stack">
-                <div>
-                  <h3 className="planner-stage-title">4. 확인 후 일정 생성</h3>
-                  <p className="section-subtitle">입력한 조건을 마지막으로 확인하고 바로 생성할 수 있습니다.</p>
-                </div>
-
-                <div className="planner-review-grid">
-                  <article className="metric">
-                    <strong>여행지</strong>
-                    <p>{form.city ? toCityLabel(form.city) : "자동 선택"}</p>
-                    <span>선택한 도시 기준으로 일정을 생성합니다.</span>
-                  </article>
-
-                  <article className="metric">
-                    <strong>기간과 인원</strong>
-                    <p>
-                      {form.duration_label || "2박 3일"} · {form.travelers === 5 ? "5인 이상" : `${form.travelers}명`}
-                    </p>
-                    <span>일정 길이에 맞춰 day 단위로 나눠 생성합니다.</span>
-                  </article>
-
-                  <article className="metric">
-                    <strong>예산</strong>
-                    <p>{labelBudget(form.budget_band)}</p>
-                    <span>{budgetIntensityLabel(form.budget_band)}</span>
-                  </article>
-
-                  {form.accommodation_types.length > 0 ? (
-                    <article className="metric">
-                      <strong>숙소 유형</strong>
-                      <p>{form.accommodation_types.join(", ")}</p>
-                      <span>선택한 유형 안에서 추천합니다.</span>
-                    </article>
-                  ) : null}
-
-                  {isAccommodationBudgetOn && form.accommodation_budget_band ? (
-                    <article className="metric">
-                      <strong>숙소 예산</strong>
-                      <p>{labelBudget(form.accommodation_budget_band)}</p>
-                      <span>{budgetIntensityLabel(form.accommodation_budget_band)}</span>
-                    </article>
-                  ) : null}
-
-                  <article className="metric">
-                    <strong>스타일</strong>
-                    <p>{labelStyle(form.style)}</p>
-                    <span>{form.concepts.map(labelTripConcept).join(", ")}</span>
-                  </article>
-
-                  <article className="metric">
-                    <strong>이동수단</strong>
-                    <p>{summarizeTransportByDay(form.transport_by_day)}</p>
-                    <span>하루에 한 수단만 선택할 수 있어요.</span>
-                  </article>
-                </div>
-
-                {hasTransportAssignmentGap ? (
-                  <p className="planner-feedback warning">
-                    선택한 이동수단을 모두 최소 하루는 배정해야 일정을 생성할 수 있어요.
-                  </p>
-                ) : null}
-
-                <div className="row">
-                  <Button disabled={isGenerating || hasTransportAssignmentGap} onClick={handleGenerate} type="button">
-                    {isGenerating ? "일정 생성 중..." : "규칙 기반 일정 생성"}
-                  </Button>
-                </div>
-              </div>
-            ) : null}
-
-            <div className="row">
-              <Button
+            <div className="tc-step-nav">
+              <button
+                className="tc-btn tc-btn-secondary"
                 disabled={currentStep === 1}
                 onClick={() => setCurrentStep((step) => Math.max(1, step - 1))}
                 type="button"
-                variant="secondary"
               >
                 이전
-              </Button>
-              <Button
+              </button>
+              <button
+                className="tc-btn tc-btn-primary"
                 disabled={currentStep === STEP_COUNT || (currentStep === 1 && !form.city)}
                 onClick={() => setCurrentStep((step) => Math.min(STEP_COUNT, step + 1))}
                 type="button"
-                variant="ghost"
               >
                 다음
-              </Button>
+              </button>
             </div>
-
-            <div className="planner-status-grid">
-              <div className="metric">
-                <strong>도시 카탈로그</strong>
-                <p>{catalogLoading ? "불러오는 중..." : `${catalog.length}개 도시`}</p>
-                <span>백엔드 JSON 데이터셋과 연결되어 있습니다.</span>
-              </div>
-              <div className="metric">
-                <strong>현재 기준 도시</strong>
-                <p>{form.city ? toCityLabel(form.city) : "자동 선택"}</p>
-                <span>선택이 없으면 시스템이 기본 도시를 자동으로 잡습니다.</span>
-              </div>
-            </div>
-
-            {message ? <p className="planner-feedback success">{message}</p> : null}
-            {error ? <p className="planner-feedback error">{error}</p> : null}
           </>
         ) : (
           <>
-            <div className="planner-result-hero">
-              <div className="planner-result-copy">
-                <span className="section-kicker">Generated Itinerary</span>
-                <h2 className="planner-result-title">{toCityLabel(result.city)} 일정이 준비됐어요</h2>
-                <p className="planner-result-description">
-                  {toCityLabel(result.city)}에서 {result.nights}박 {result.days}일 동안 {labelStyle(result.style)} 흐름으로 즐길 수 있게 정리했습니다.
-                </p>
-                <div className="planner-result-tags">
-                  <span className="badge">{labelCompanion(result.companion_type)}</span>
-                  <span className="badge">{labelBudget(result.budget_band)}</span>
-                  {result.concepts.map((concept) => (
-                    <span key={concept} className="badge">
-                      {labelTripConcept(concept)}
-                    </span>
-                  ))}
-                </div>
+            <div className="tc-card tc-result-header">
+              <h1 className="tc-result-title">{toCityLabel(result.city)} 일정이 준비됐어요</h1>
+              <p className="tc-result-desc">
+                {toCityLabel(result.city)}에서 {result.nights}박 {result.days}일 동안 {labelStyle(result.style)} 흐름으로 즐길 수 있게 정리했습니다.
+              </p>
+              <div className="tc-tag-row">
+                <span className="tc-tag">{labelCompanion(result.companion_type)}</span>
+                <span className="tc-tag">{labelBudget(result.budget_band)}</span>
+                {result.concepts.map((concept) => (
+                  <span className="tc-tag" key={concept}>
+                    {labelTripConcept(concept)}
+                  </span>
+                ))}
               </div>
-              <div className="planner-result-glance">
-                <div className="planner-glance-card">
+              <div className="tc-glance-row">
+                <div className="tc-glance-item">
                   <span>추천 장소</span>
                   <strong>{result.items.length}곳</strong>
                 </div>
-                <div className="planner-glance-card">
+                <div className="tc-glance-item">
                   <span>이동 권역</span>
                   <strong>{totalAreaCount}개</strong>
                 </div>
-                <div className="planner-glance-card">
+                <div className="tc-glance-item">
                   <span>대표 코스</span>
                   <strong>{summarizeRoute(result.items)}</strong>
                 </div>
               </div>
-            </div>
-
-            <div className="planner-result-summary">
-              <article className="metric">
-                <strong>여행지</strong>
-                <p>{toCityLabel(result.city)}</p>
-                <span>이 도시를 기준으로 일정을 구성했습니다.</span>
-              </article>
-              <article className="metric">
-                <strong>기간과 인원</strong>
-                <p>
-                  {result.nights}박 {result.days}일 · {result.travelers}명
-                </p>
-                <span>{labelStyle(result.style)} 기준으로 정리되었습니다.</span>
-              </article>
-              <article className="metric">
-                <strong>예산</strong>
-                <p>{labelBudget(result.budget_band)}</p>
-                <span>{result.concepts.map(labelTripConcept).join(", ")}</span>
-              </article>
-              <article className="metric">
-                <strong>동행 유형</strong>
-                <p>{labelCompanion(result.companion_type)}</p>
-                <span>현재 기준에 맞게 동선을 배치했습니다.</span>
-              </article>
+              <div className="tc-summary-grid" style={{ marginTop: 16 }}>
+                <div className="tc-summary-item">
+                  <span className="tc-summary-label">기간과 인원</span>
+                  <span className="tc-summary-value">
+                    {result.nights}박 {result.days}일 · {result.travelers}명
+                  </span>
+                </div>
+                <div className="tc-summary-item">
+                  <span className="tc-summary-label">동행 유형</span>
+                  <span className="tc-summary-value">{labelCompanion(result.companion_type)}</span>
+                </div>
+              </div>
             </div>
 
             {result.accommodation_recommendation ? (
-              <section className="planner-accommodation-card">
-                <span className="section-kicker">Recommended Stay</span>
-                <strong>{result.accommodation_recommendation.name}</strong>
-                <div className="planner-result-tags">
-                  <span className="badge">{result.accommodation_recommendation.accommodation_type}</span>
+              <div className="tc-card">
+                <p className="tc-section-label">추천 숙소</p>
+                <p className="tc-section-value">{result.accommodation_recommendation.name}</p>
+                <div className="tc-tag-row">
+                  <span className="tc-tag">{result.accommodation_recommendation.accommodation_type}</span>
                   {result.accommodation_recommendation.checkin_time ? (
-                    <span className="badge">체크인 {result.accommodation_recommendation.checkin_time}</span>
+                    <span className="tc-tag">체크인 {result.accommodation_recommendation.checkin_time}</span>
                   ) : null}
                   {result.accommodation_recommendation.checkout_time ? (
-                    <span className="badge">체크아웃 {result.accommodation_recommendation.checkout_time}</span>
+                    <span className="tc-tag">체크아웃 {result.accommodation_recommendation.checkout_time}</span>
                   ) : null}
                 </div>
                 {result.accommodation_recommendation.average_price_krw != null ? (
                   <>
-                    <p className="planner-accommodation-price">
+                    <p className="tc-section-note" style={{ marginTop: 10 }}>
                       1박 기준 약 {formatApproxManwon(result.accommodation_recommendation.average_price_krw)}
                     </p>
-                    <p className="planner-cost-basis">
-                      참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요
-                    </p>
+                    <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
                   </>
                 ) : null}
-              </section>
+              </div>
             ) : null}
 
             {result.estimated_cost ? (
-              <section className="planner-accommodation-card">
-                <span className="section-kicker">Estimated Cost</span>
-                <strong>{formatApproxManwonRange(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}</strong>
-                <p className="planner-cost-basis">
-                  참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요
+              <div className="tc-card">
+                <p className="tc-section-label">예상 비용</p>
+                <p className="tc-section-value">
+                  {formatApproxManwonRange(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}
                 </p>
-                <p className="planner-cost-basis">
+                <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
+                <p className="tc-section-note">
                   입장료 확인 {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
                 </p>
                 {result.estimated_cost.unpriced_place_count > 0 ? (
-                  <p className="planner-cost-basis">
+                  <p className="tc-section-note">
                     가격 미확인 {result.estimated_cost.unpriced_place_count}곳은 상한으로 가정
                   </p>
                 ) : null}
                 {!result.estimated_cost.accommodation_included ? (
-                  <p className="planner-cost-basis">숙소 가격 미확인으로 숙소 비용 제외</p>
+                  <p className="tc-section-note">숙소 가격 미확인으로 숙소 비용 제외</p>
                 ) : null}
-              </section>
+              </div>
             ) : null}
 
-            {message ? <p className="planner-feedback success">{message}</p> : null}
-            {error ? <p className="planner-feedback error">{error}</p> : null}
-
-            <div className="planner-days-shell">
-              <div className="planner-days-header">
-                <div>
-                  <strong>일차별 추천 동선</strong>
-                  <span>오전, 오후, 저녁 흐름으로 끊어서 보기 쉽게 정리했습니다.</span>
-                </div>
+            {message ? (
+              <div className="tc-alert tc-alert-success" style={{ marginBottom: 16 }}>
+                {message}
               </div>
+            ) : null}
+            {error ? (
+              <div className="tc-alert tc-alert-danger" style={{ marginBottom: 16 }}>
+                {error}
+              </div>
+            ) : null}
+
+            <div className="tc-card">
+              <h2 className="tc-stage-title">일차별 추천 동선</h2>
+              <p className="tc-stage-subtitle">오전, 오후, 저녁 흐름으로 끊어서 보기 쉽게 정리했습니다.</p>
               {showTravelEstimateNotice ? (
-                <p className="planner-travel-estimate-notice">
+                <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
                   이동시간은 직선거리 기반 추정치예요. 실제 경로와 교통 상황에 따라 달라질 수 있어요.
-                </p>
+                </div>
               ) : null}
               {groupedItems.map((group) => {
                 const dayTravel = dayTravelByDay.get(group.day);
@@ -1746,13 +1727,12 @@ export function TripCreateForm() {
                     : undefined;
 
                 return (
-                <article key={group.day} className="planner-day-card">
-                  <div className="planner-day-header">
+                <div className="tc-day-card" key={group.day}>
+                  <div className="tc-day-head">
                     <div>
-                      <span className="planner-day-label">DAY {group.day}</span>
-                      <strong className="trip-card-title">{group.day}일차</strong>
+                      <h3 className="tc-day-title">{group.day}일차</h3>
+                      <p className="tc-day-route">{summarizeRoute(group.items)}</p>
                     </div>
-                    <p>{summarizeRoute(group.items)}</p>
                   </div>
                   {dayTravel ? (
                     <DayTravelPanel
@@ -1766,26 +1746,27 @@ export function TripCreateForm() {
                   {result.day_duration_warnings
                     .filter((warning) => warning.day_number === group.day)
                     .map((warning) => (
-                      <p key={`duration-warning-${warning.day_number}`} className="planner-feedback warning">
+                      <div className="tc-alert tc-alert-warning" key={`duration-warning-${warning.day_number}`} style={{ marginBottom: 12 }}>
                         {warning.message}
-                      </p>
+                      </div>
                     ))}
                   {result.closed_day_exclusions
                     .filter((exclusion) => exclusion.day_number === group.day)
                     .map((exclusion) => (
-                      <p
+                      <div
+                        className="tc-alert tc-alert-info"
                         key={`closed-day-exclusion-${exclusion.day_number}-${exclusion.place_name}`}
-                        className="planner-feedback info"
+                        style={{ marginBottom: 12 }}
                       >
                         {exclusion.message}
-                      </p>
+                      </div>
                     ))}
                   {result.weather_alerts
                     .filter((alert) => alert.day_number === group.day)
                     .map((alert) => (
                       <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
                     ))}
-                  <div className="planner-day-timeline">
+                  <div className="tc-timeline">
                     {startLeg ? (
                       <TravelConnectorRow
                         label={`숙소에서 출발 · ${accommodationName}`}
@@ -1814,41 +1795,32 @@ export function TripCreateForm() {
                         return (
                           <Fragment key={`${group.day}-${item.time_slot}-${item.place_name}`}>
                             {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
-                            <article className="planner-stop-card">
-                              <div className="planner-stop-time">
+                            <div className="tc-stop">
+                              <div className="tc-stop-time">
                                 <span>{labelTimeSlot(item.time_slot)}</span>
                               </div>
-                              <div className="planner-stop-body">
+                              <div className="tc-stop-body">
                                 {showFallbackTravelTime ? (
-                                  <p className="planner-slot-travel-time">
+                                  <p className="tc-stop-fallback-travel">
                                     이전 장소에서 약 {item.travel_minutes_from_previous}분 이동
                                   </p>
                                 ) : null}
-                                <div className="planner-slot-top">
-                                  <strong>{item.place_name}</strong>
-                                  <span className="badge">{item.category}</span>
+                                <div className="tc-stop-name-row">
+                                  <strong className="tc-stop-name">{item.place_name}</strong>
+                                  <span className="tc-stop-chip">{item.category}</span>
                                 </div>
-                                <p className="planner-slot-area">{item.area}</p>
+                                <p className="tc-stop-area">{item.area}</p>
                                 {item.average_cost_krw != null ? (
-                                  <p className="planner-slot-cost">{formatCostLabel(item.average_cost_krw)}</p>
+                                  <p className="tc-stop-cost">{formatCostLabel(item.average_cost_krw)}</p>
                                 ) : null}
-                                <div className="planner-slot-note">
-                                  {note.headline ? <p className="planner-slot-note-lead">{note.headline}</p> : null}
-                                  {note.details.length > 0 ? (
-                                    <div className="planner-slot-note-body">
-                                      {note.details.map((line, lineIndex) => (
-                                        <p
-                                          key={`${item.place_name}-note-${lineIndex}`}
-                                          className="planner-slot-note-line"
-                                        >
-                                          {line}
-                                        </p>
-                                      ))}
-                                    </div>
-                                  ) : null}
-                                </div>
+                                {note.headline ? <p className="tc-stop-note-lead">{note.headline}</p> : null}
+                                {note.details.map((line, lineIndex) => (
+                                  <p key={`${item.place_name}-note-${lineIndex}`} className="tc-stop-note-line">
+                                    {line}
+                                  </p>
+                                ))}
                               </div>
-                            </article>
+                            </div>
                           </Fragment>
                         );
                       }
@@ -1867,40 +1839,46 @@ export function TripCreateForm() {
                       <TravelConnectorRow label={`숙소로 복귀 · ${accommodationName}`} leg={endLeg} mode={mode} />
                     ) : null}
                   </div>
-                </article>
+                </div>
                 );
               })}
             </div>
 
-            <div className="planner-result-actions">
-              <Button disabled={isSavingTrip} onClick={handleSaveTrip} type="button">
+            <div className="tc-result-actions">
+              <button className="tc-btn tc-btn-primary" disabled={isSavingTrip} onClick={handleSaveTrip} type="button">
                 {isSavingTrip ? "여행 저장 중..." : "이 일정으로 여행 저장"}
-              </Button>
+              </button>
               {docDownload ? (
-                <a className="button ghost" download={docDownload.filename} href={docDownload.href}>
+                <a className="tc-btn tc-btn-ghost" download={docDownload.filename} href={docDownload.href}>
                   문서 파일 다운로드
                 </a>
               ) : null}
               {printPreview ? (
-                <a className="button ghost" href={printPreview.href} rel="noreferrer" target="_blank">
+                <a className="tc-btn tc-btn-ghost" href={printPreview.href} rel="noreferrer" target="_blank">
                   PDF로 저장
                 </a>
               ) : null}
-              <Button onClick={handleEditAgain} type="button" variant="secondary">
+              <button className="tc-btn tc-btn-secondary" onClick={handleEditAgain} type="button">
                 조건 다시 수정하기
-              </Button>
-              <Button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} type="button" variant="ghost">
+              </button>
+              <button
+                className="tc-btn tc-btn-ghost"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                type="button"
+              >
                 상단으로 이동
-              </Button>
+              </button>
             </div>
 
-            <details className="planner-raw-panel">
-              <summary>원본 JSON 보기</summary>
-              <pre>{JSON.stringify(result, null, 2)}</pre>
-            </details>
+            {import.meta.env.DEV ? (
+              <details className="tc-raw-panel">
+                <summary>원본 JSON 보기 (개발 모드 전용)</summary>
+                <pre>{JSON.stringify(result, null, 2)}</pre>
+              </details>
+            ) : null}
           </>
         )}
-      </section>
+      </div>
     </div>
   );
 }

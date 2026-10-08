@@ -6,6 +6,7 @@ import { AuthProvider } from "./app/providers/auth-provider";
 import "./app/styles/tokens.css";
 import "./app/styles/globals.css";
 import "./app/styles/travel-board-overrides.css";
+import "./features/trip-create/styles/trip-create.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

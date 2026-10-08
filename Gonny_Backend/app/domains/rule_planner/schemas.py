@@ -15,6 +15,11 @@ AccommodationTypeLabel = Literal["호텔", "모텔", "호스텔", "펜션·민�
 TimeSlot = Literal["morning", "afternoon", "evening"]
 TransportMode = Literal["walk", "transit", "car"]
 TravelEstimateSource = Literal["estimate", "api"]
+# Per-day transport mode the user actually picks for the trip (no "walk" -
+# that's a per-leg day_travel option, not a day-level plan). Drives scoring
+# (see slot_scoring.py, accommodation_scoring.py) - see
+# services/request_normalizer.py for the length-matches-days validation.
+DayTransportMode = Literal["transit", "car"]
 TravelLegPointKind = Literal["accommodation", "place", "meal"]
 
 
@@ -34,6 +39,11 @@ class RuleItineraryRequest(BaseModel):
     # Lodging-only budget. Left unset, accommodation scoring uses budget_band.
     accommodation_budget_band: BudgetBand | None = None
     accommodation_types: list[AccommodationTypeLabel] | None = None
+    # One entry per day (index 0 = day 1), or None to skip mode-aware
+    # scoring entirely. Length is checked against the normalized day count
+    # in services/request_normalizer.py, not here - this model doesn't know
+    # the trip's duration yet.
+    transport_by_day: list[DayTransportMode] | None = None
     # Trip start date. Optional - without it there's no way to map a
     # day_number to a weekday, so closed-day exclusion (see
     # RuleClosedDayExclusion) simply never triggers.
@@ -168,6 +178,10 @@ class NormalizedRuleRequest(BaseModel):
     accommodation_budget_band: BudgetBand
     # Preference only: matching adds a score bonus, never filters candidates.
     accommodation_types: list[AccommodationTypeLabel] = Field(default_factory=list)
+    # Validated (length == days) in request_normalizer.normalize_rule_request.
+    # None means "no mode-aware scoring" - every code path reading this must
+    # treat None exactly like before this field existed.
+    transport_by_day: list[DayTransportMode] | None = None
     start_date: date | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
@@ -219,6 +233,9 @@ class RuleItineraryResponse(BaseModel):
     meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
     estimated_cost: RuleCostEstimate | None = None
     day_travel: list[RuleDayTravel] = Field(default_factory=list)
+    # Echoes the request's per-day mode back (or None) so the frontend can
+    # use it as the day_travel toggle's starting selection.
+    transport_by_day: list[DayTransportMode] | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

@@ -110,6 +110,10 @@ type RuleCostEstimate = {
   travelers: number;
 };
 
+// The trip-level mode the user actually picks per day (no "walk" - that's
+// a per-leg day_travel option, not a day plan). Matches the backend's
+// RuleItineraryRequest.transport_by_day.
+type DayTransportMode = "transit" | "car";
 type TransportMode = "walk" | "transit" | "car";
 type TravelEstimateSource = "estimate" | "api";
 type TravelLegPointKind = "accommodation" | "place" | "meal";
@@ -174,6 +178,7 @@ type RuleItineraryResponse = {
   meal_recommendations: RuleMealRecommendation[];
   estimated_cost: RuleCostEstimate | null;
   day_travel: RuleDayTravel[];
+  transport_by_day: DayTransportMode[] | null;
 };
 
 type PlannerFormState = {
@@ -189,6 +194,11 @@ type PlannerFormState = {
   companion_type: CompanionType;
   accommodation_types: AccommodationTypeLabel[];
   accommodation_budget_band: BudgetBand | null;
+  // Modes the user has toggled on (at least one, always). transport_by_day
+  // is the day-by-day assignment actually sent to the backend - its length
+  // always equals the trip's day count (nights + 1).
+  transport_modes: DayTransportMode[];
+  transport_by_day: DayTransportMode[];
 };
 
 const STEP_COUNT = 4;
@@ -234,6 +244,8 @@ const initialForm: PlannerFormState = {
   companion_type: "friend",
   accommodation_types: [],
   accommodation_budget_band: null,
+  transport_modes: ["transit"],
+  transport_by_day: ["transit", "transit", "transit"],
 };
 
 const continentKo: Record<string, string> = {
@@ -561,6 +573,10 @@ function isRuleDayTravel(value: unknown): value is RuleDayTravel {
   );
 }
 
+function isDayTransportModeArray(value: unknown): value is DayTransportMode[] {
+  return Array.isArray(value) && value.every((item) => item === "transit" || item === "car");
+}
+
 function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
 }
@@ -622,6 +638,7 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
       : [],
     estimated_cost: isRuleCostEstimate(data.estimated_cost) ? data.estimated_cost : null,
     day_travel: Array.isArray(data.day_travel) ? data.day_travel.filter(isRuleDayTravel) : [],
+    transport_by_day: isDayTransportModeArray(data.transport_by_day) ? data.transport_by_day : null,
   };
 }
 
@@ -656,6 +673,44 @@ function groupMealsByDay(meals: RuleMealRecommendation[]) {
 
 function defaultDayTravelMode(city: string): "transit" | "car" {
   return city === "jeju" ? "car" : "transit";
+}
+
+// --- Transport mode selection (trip-create form) ---------------------------
+
+function labelTransportModeChoice(mode: DayTransportMode) {
+  return mode === "transit" ? "대중교통" : "렌터카·자차";
+}
+
+function summarizeTransportByDay(transportByDay: DayTransportMode[]) {
+  if (transportByDay.length === 0) {
+    return "";
+  }
+  const allSame = transportByDay.every((mode) => mode === transportByDay[0]);
+  if (allSame) {
+    return labelTransportModeChoice(transportByDay[0]);
+  }
+  return transportByDay.map((mode, index) => `${index + 1}일차 ${labelTransportModeChoice(mode)}`).join(" · ");
+}
+
+// Resizes transport_by_day to match a new day count, truncating or padding
+// with the last entry, and swaps any entry that's no longer in
+// allowedModes (e.g. the day count shrank/changed independent of mode
+// selection) for allowedModes[0].
+function resizeTransportByDay(
+  current: DayTransportMode[],
+  days: number,
+  allowedModes: DayTransportMode[],
+): DayTransportMode[] {
+  const fallback = allowedModes[0] ?? "transit";
+  const sanitized = current.map((mode) => (allowedModes.includes(mode) ? mode : fallback));
+  if (sanitized.length === days) {
+    return sanitized;
+  }
+  if (sanitized.length > days) {
+    return sanitized.slice(0, days);
+  }
+  const lastMode = sanitized[sanitized.length - 1] ?? fallback;
+  return [...sanitized, ...Array.from({ length: days - sanitized.length }, () => lastMode)];
 }
 
 function labelTransportMode(mode: "transit" | "car") {
@@ -874,7 +929,7 @@ export function TripCreateForm() {
 
     const defaults: Record<number, "transit" | "car"> = {};
     for (const dayTravel of result.day_travel) {
-      defaults[dayTravel.day_number] = defaultDayTravelMode(result.city);
+      defaults[dayTravel.day_number] = result.transport_by_day?.[dayTravel.day_number - 1] ?? defaultDayTravelMode(result.city);
     }
     setDayTravelMode(defaults);
   }, [result]);
@@ -994,6 +1049,11 @@ export function TripCreateForm() {
     (type) => (selectedCatalogCity?.accommodation_type_counts?.[type] ?? 0) > 0,
   );
   const endDate = buildEndDate(form.start_date, selectedNights);
+  const unusedSelectedTransportModes = form.transport_modes.filter(
+    (mode) => !form.transport_by_day.includes(mode),
+  );
+  const hasTransportAssignmentGap = form.transport_modes.length > 1 && unusedSelectedTransportModes.length > 0;
+  const hasJejuTransitDay = form.city === "jeju" && form.transport_by_day.includes("transit");
 
   useEffect(() => {
     if (!form.city) {
@@ -1002,7 +1062,17 @@ export function TripCreateForm() {
 
     const cityStillVisible = cities.some((option) => option.city === form.city);
     if (!cityStillVisible) {
-      setForm((prev) => ({ ...prev, city: "", accommodation_types: [] }));
+      setForm((prev) => {
+        const defaultMode = defaultDayTravelMode("");
+        const days = parseNights(prev.duration_label) + 1;
+        return {
+          ...prev,
+          city: "",
+          accommodation_types: [],
+          transport_modes: [defaultMode],
+          transport_by_day: Array.from({ length: days }, () => defaultMode),
+        };
+      });
     }
   }, [cities, form.city]);
 
@@ -1045,11 +1115,24 @@ export function TripCreateForm() {
   }, [result]);
 
   const updateField = <K extends keyof PlannerFormState>(key: K, value: PlannerFormState[K]) => {
-    setForm((prev) => ({
-      ...prev,
-      [key]: value,
-      ...(key === "city" ? { accommodation_types: [] } : {}),
-    }));
+    setForm((prev) => {
+      const next: PlannerFormState = { ...prev, [key]: value };
+
+      if (key === "city") {
+        const defaultMode = defaultDayTravelMode(value as string);
+        const days = parseNights(prev.duration_label) + 1;
+        next.accommodation_types = [];
+        next.transport_modes = [defaultMode];
+        next.transport_by_day = Array.from({ length: days }, () => defaultMode);
+      }
+
+      if (key === "duration_label") {
+        const days = parseNights(value as string) + 1;
+        next.transport_by_day = resizeTransportByDay(prev.transport_by_day, days, prev.transport_modes);
+      }
+
+      return next;
+    });
   };
 
   const toggleAccommodationType = (type: AccommodationTypeLabel) => {
@@ -1066,6 +1149,57 @@ export function TripCreateForm() {
     if (!enabled) {
       updateField("accommodation_budget_band", null);
     }
+  };
+
+  const toggleTransportMode = (mode: DayTransportMode) => {
+    setForm((prev) => {
+      const days = parseNights(prev.duration_label) + 1;
+      const isSelected = prev.transport_modes.includes(mode);
+
+      if (days === 1) {
+        // Only one mode chip can be active on a 1-day trip - picking the
+        // other one swaps the selection instead of adding to it.
+        if (isSelected) {
+          return prev;
+        }
+        return { ...prev, transport_modes: [mode], transport_by_day: [mode] };
+      }
+
+      if (isSelected) {
+        if (prev.transport_modes.length === 1) {
+          // At least one mode must always stay selected.
+          return prev;
+        }
+        const nextModes = prev.transport_modes.filter((item) => item !== mode);
+        const fallback = nextModes[0];
+        return {
+          ...prev,
+          transport_modes: nextModes,
+          transport_by_day: prev.transport_by_day.map((assigned) => (assigned === mode ? fallback : assigned)),
+        };
+      }
+
+      // Turning a new mode on: keep the existing day assignments, but make
+      // sure the newly enabled mode is actually used somewhere (the last
+      // day) rather than appearing selected with zero days assigned.
+      const nextByDay = [...prev.transport_by_day];
+      if (nextByDay.length > 0 && !nextByDay.includes(mode)) {
+        nextByDay[nextByDay.length - 1] = mode;
+      }
+      return {
+        ...prev,
+        transport_modes: [...prev.transport_modes, mode],
+        transport_by_day: nextByDay,
+      };
+    });
+  };
+
+  const setDayTransportMode = (dayIndex: number, mode: DayTransportMode) => {
+    setForm((prev) => {
+      const nextByDay = [...prev.transport_by_day];
+      nextByDay[dayIndex] = mode;
+      return { ...prev, transport_by_day: nextByDay };
+    });
   };
 
   const toggleConcept = (concept: TripConcept) => {
@@ -1088,7 +1222,7 @@ export function TripCreateForm() {
     setMessage("");
 
     try {
-      const { accommodation_types, accommodation_budget_band, ...planForm } = form;
+      const { accommodation_types, accommodation_budget_band, transport_modes, ...planForm } = form;
       const response = await apiClient.post<unknown>("/rule-itinerary/generate", {
         ...planForm,
         travelers: Number(form.travelers) || 2,
@@ -1539,6 +1673,55 @@ export function TripCreateForm() {
                     </p>
                   )}
                 </div>
+
+                <div className="field">
+                  <span>이동수단 (최소 1개)</span>
+                  <div className="chip-list">
+                    {(["transit", "car"] as DayTransportMode[]).map((mode) => (
+                      <button
+                        className={form.transport_modes.includes(mode) ? "chip active" : "chip"}
+                        key={mode}
+                        onClick={() => toggleTransportMode(mode)}
+                        type="button"
+                      >
+                        {labelTransportModeChoice(mode)}
+                      </button>
+                    ))}
+                  </div>
+
+                  {form.transport_modes.length > 1 ? (
+                    <div className="planner-transport-day-list">
+                      {form.transport_by_day.map((assignedMode, dayIndex) => (
+                        <div className="planner-transport-day-row" key={dayIndex}>
+                          <span>{dayIndex + 1}일차</span>
+                          <div className="planner-day-travel-toggle" role="group" aria-label={`${dayIndex + 1}일차 이동수단`}>
+                            {form.transport_modes.map((mode) => (
+                              <button
+                                aria-pressed={assignedMode === mode}
+                                className={assignedMode === mode ? "planner-mode-button is-active" : "planner-mode-button"}
+                                key={mode}
+                                onClick={() => setDayTransportMode(dayIndex, mode)}
+                                type="button"
+                              >
+                                {labelTransportModeChoice(mode)}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+
+                  {hasTransportAssignmentGap ? (
+                    <p className="planner-feedback warning">
+                      선택한 이동수단({unusedSelectedTransportModes.map(labelTransportModeChoice).join(", ")})이
+                      하루도 배정되지 않았어요. 적어도 하루는 배정해야 일정을 생성할 수 있어요.
+                    </p>
+                  ) : null}
+                  {hasJejuTransitDay ? (
+                    <p className="planner-inline-note">제주는 대중교통 이동에 시간이 오래 걸릴 수 있어요.</p>
+                  ) : null}
+                </div>
               </div>
             ) : null}
 
@@ -1658,10 +1841,22 @@ export function TripCreateForm() {
                     <p>{labelStyle(form.style)}</p>
                     <span>{form.concepts.map(labelTripConcept).join(", ")}</span>
                   </article>
+
+                  <article className="metric">
+                    <strong>이동수단</strong>
+                    <p>{summarizeTransportByDay(form.transport_by_day)}</p>
+                    <span>하루에 한 수단만 선택할 수 있어요.</span>
+                  </article>
                 </div>
 
+                {hasTransportAssignmentGap ? (
+                  <p className="planner-feedback warning">
+                    선택한 이동수단을 모두 최소 하루는 배정해야 일정을 생성할 수 있어요.
+                  </p>
+                ) : null}
+
                 <div className="row">
-                  <Button disabled={isGenerating} onClick={handleGenerate} type="button">
+                  <Button disabled={isGenerating || hasTransportAssignmentGap} onClick={handleGenerate} type="button">
                     {isGenerating ? "일정 생성 중..." : "규칙 기반 일정 생성"}
                   </Button>
                 </div>

@@ -1,7 +1,5 @@
 type ExportLabels = {
   cityLabel: string;
-  countryLabel: string;
-  continentLabel: string;
   budgetLabel: string;
   styleLabel: string;
   companionLabel: string;
@@ -20,8 +18,6 @@ type ItineraryItem = {
 
 type ItineraryResult = {
   city: string;
-  country: string;
-  continent: string;
   travelers: number;
   nights: number;
   days: number;
@@ -53,7 +49,6 @@ function groupItemsByDay(items: ItineraryItem[]) {
 function buildSummaryLines(result: ItineraryResult, labels: ExportLabels) {
   return [
     `${labels.cityLabel} 여행 일정`,
-    `${labels.countryLabel} · ${labels.continentLabel}`,
     `${result.nights}박 ${result.days}일 · ${result.travelers}명`,
     `예산: ${labels.budgetLabel}`,
     `스타일: ${labels.styleLabel}`,

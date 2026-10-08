@@ -182,8 +182,6 @@ type RuleItineraryResponse = {
 };
 
 type PlannerFormState = {
-  continent: string;
-  country: string;
   city: string;
   travelers: number;
   start_date: string;
@@ -232,8 +230,6 @@ const nightsOptions = [1, 2, 3, 4, 5, 6];
 const UNSET_TRIP_BUDGET = 0;
 
 const initialForm: PlannerFormState = {
-  continent: "",
-  country: "",
   city: "",
   travelers: 2,
   start_date: new Date().toISOString().slice(0, 10),
@@ -246,23 +242,6 @@ const initialForm: PlannerFormState = {
   accommodation_budget_band: null,
   transport_modes: ["transit"],
   transport_by_day: ["transit", "transit", "transit"],
-};
-
-const continentKo: Record<string, string> = {
-  asia: "아시아",
-  europe: "유럽",
-};
-
-const countryKo: Record<string, string> = {
-  korea: "대한민국",
-  japan: "일본",
-  thailand: "태국",
-  france: "프랑스",
-  italy: "이탈리아",
-  spain: "스페인",
-  taiwan: "대만",
-  singapore: "싱가포르",
-  russia: "러시아",
 };
 
 const cityKo: Record<string, string> = {
@@ -287,22 +266,6 @@ const cityKo: Record<string, string> = {
   vladivostok: "블라디보스토크",
   yeosu: "여수",
 };
-
-function toContinentLabel(value: string) {
-  return continentKo[value] ?? value;
-}
-
-const continentStageLayout: Record<
-  string,
-  { left: string; top: string; width: string; height: string; theme: string; accent: string }
-> = {
-  asia: { left: "62%", top: "46%", width: "30%", height: "36%", theme: "theme-asia", accent: "도시 밀집" },
-  europe: { left: "38%", top: "30%", width: "20%", height: "24%", theme: "theme-europe", accent: "감성 루트" },
-};
-
-function toCountryLabel(value: string) {
-  return countryKo[value] ?? value;
-}
 
 function toCityLabel(value: string) {
   return cityKo[value] ?? value;
@@ -959,76 +922,10 @@ export function TripCreateForm() {
     void loadCatalog();
   }, []);
 
-  const continents = useMemo(
-    () => [...new Set(catalog.map((option) => option.continent))].sort(),
+  const cities = useMemo(
+    () => [...catalog].sort((left, right) => toCityLabel(left.city).localeCompare(toCityLabel(right.city), "ko")),
     [catalog],
   );
-
-  const countries = useMemo(() => {
-    const filtered = catalog.filter((option) => !form.continent || option.continent === form.continent);
-    return [...new Set(filtered.map((option) => option.country))].sort();
-  }, [catalog, form.continent]);
-
-  const cities = useMemo(
-    () =>
-      catalog
-        .filter((option) => (!form.continent || option.continent === form.continent) && (!form.country || option.country === form.country))
-        .sort((left, right) => toCityLabel(left.city).localeCompare(toCityLabel(right.city), "ko")),
-    [catalog, form.continent, form.country],
-  );
-
-  const featuredCountries = useMemo(
-    () =>
-      countries.map((country) => {
-        const sample = catalog.find((option) => option.country === country);
-        return {
-          key: country,
-          label: toCountryLabel(country),
-          continent: sample ? toContinentLabel(sample.continent) : "",
-          cityCount: catalog.filter((option) => option.country === country).length,
-        };
-      }),
-    [catalog, countries],
-  );
-
-  const mapContinents = useMemo(
-    () =>
-      continents.map((continent) => {
-        const layout = continentStageLayout[continent] ?? {
-          left: "50%",
-          top: "50%",
-          width: "24%",
-          height: "24%",
-          theme: "theme-generic",
-          accent: "추천 도시",
-        };
-
-        return {
-          key: continent,
-          label: toContinentLabel(continent),
-          countryCount: catalog.filter((option) => option.continent === continent).reduce((set, option) => set.add(option.country), new Set<string>())
-            .size,
-          cityCount: catalog.filter((option) => option.continent === continent).length,
-          ...layout,
-        };
-      }),
-    [catalog, continents],
-  );
-
-  const mapCountries = useMemo(
-    () =>
-      featuredCountries.map((country) => ({
-        ...country,
-        previewCities: catalog
-          .filter((option) => option.country === country.key)
-          .slice(0, 2)
-          .map((option) => toCityLabel(option.city))
-          .join(" · "),
-      })),
-    [catalog, featuredCountries],
-  );
-
-  const mapCities = useMemo(() => cities.slice(0, 8), [cities]);
 
   const groupedItems = useMemo(() => groupByDay(result?.items ?? []), [result]);
   const mealsByDay = useMemo(() => groupMealsByDay(result?.meal_recommendations ?? []), [result]);
@@ -1091,8 +988,6 @@ export function TripCreateForm() {
 
     const labels = {
       cityLabel: toCityLabel(result.city),
-      countryLabel: toCountryLabel(result.country),
-      continentLabel: toContinentLabel(result.continent),
       budgetLabel: labelBudget(result.budget_band),
       styleLabel: labelStyle(result.style),
       companionLabel: labelCompanion(result.companion_type),
@@ -1331,230 +1226,27 @@ export function TripCreateForm() {
               <div className="stack">
                 <div>
                   <h3 className="planner-stage-title">1. 여행지 선택</h3>
-                  <p className="section-subtitle">
-                    대륙을 고른 뒤, 마음이 가는 나라와 도시를 선택해 주세요. 카드로 먼저 둘러보면서 감을 잡아도 좋습니다.
-                  </p>
+                  <p className="section-subtitle">어느 도시로 떠나시나요?</p>
                 </div>
 
-                <section className="planner-map-shell">
-                  <div className="planner-map-copy">
-                    <div>
-                      <span className="section-kicker">Interactive Map</span>
-                      <strong>지도로 먼저 감을 잡아보세요</strong>
-                    </div>
-                    <p>
-                      대륙을 누르면 화면이 자연스럽게 집중되고, 이어서 국가와 도시까지 내려가는 흐름을 한 화면에서 함께
-                      볼 수 있게 구성했습니다.
-                    </p>
-                  </div>
-
-                  <div className={`planner-world-stage ${form.continent ? "is-focused" : ""}`}>
-                    <div className="planner-world-grid" />
-                    <div className="planner-world-orbit planner-world-orbit-one" />
-                    <div className="planner-world-orbit planner-world-orbit-two" />
-                    {mapContinents.map((continent) => (
+                {catalogLoading ? (
+                  <p className="planner-inline-note">도시 목록을 불러오는 중입니다.</p>
+                ) : cities.length === 0 ? (
+                  <p className="planner-inline-note">표시할 도시가 없습니다.</p>
+                ) : (
+                  <div className="planner-city-grid">
+                    {cities.map((option) => (
                       <button
-                        key={continent.key}
-                        className={`planner-continent-node ${continent.theme} ${form.continent === continent.key ? "selected" : ""}`}
-                        onClick={() => {
-                          updateField("continent", continent.key);
-                          updateField("country", "");
-                          updateField("city", "");
-                        }}
-                        style={{
-                          left: continent.left,
-                          top: continent.top,
-                          width: continent.width,
-                          height: continent.height,
-                        }}
+                        key={option.city}
+                        className={`planner-city-card ${form.city === option.city ? "selected" : ""}`}
+                        onClick={() => updateField("city", option.city)}
                         type="button"
                       >
-                        <strong>{continent.label}</strong>
-                        <span>{continent.countryCount}개 국가</span>
-                        <small>{continent.cityCount}개 도시 · {continent.accent}</small>
-                      </button>
-                    ))}
-                    <div className="planner-map-focus">
-                      <span>{form.continent ? `${toContinentLabel(form.continent)} 확대 보기` : "세계 지도 둘러보기"}</span>
-                      <strong>
-                        {form.city
-                          ? `${toCityLabel(form.city)} 선택 완료`
-                          : form.country
-                            ? `${toCountryLabel(form.country)} 도시를 골라주세요`
-                            : "대륙에서 시작해 국가와 도시까지 순서대로 내려가보세요"}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div className="planner-map-layers">
-                    <article className="planner-map-panel">
-                      <div className="planner-map-panel-head">
-                        <span>1</span>
-                        <strong>대륙</strong>
-                      </div>
-                      <div className="planner-map-chip-list">
-                        {mapContinents.map((continent) => (
-                          <button
-                            key={continent.key}
-                            className={`planner-map-chip ${form.continent === continent.key ? "selected" : ""}`}
-                            onClick={() => {
-                              updateField("continent", continent.key);
-                              updateField("country", "");
-                              updateField("city", "");
-                            }}
-                            type="button"
-                          >
-                            {continent.label}
-                          </button>
-                        ))}
-                      </div>
-                    </article>
-
-                    <article className="planner-map-panel">
-                      <div className="planner-map-panel-head">
-                        <span>2</span>
-                        <strong>국가</strong>
-                      </div>
-                      <div className="planner-map-country-list">
-                        {mapCountries.map((country) => (
-                          <button
-                            key={country.key}
-                            className={`planner-map-country-row ${form.country === country.key ? "selected" : ""}`}
-                            onClick={() => {
-                              updateField("country", country.key);
-                              updateField("city", "");
-                            }}
-                            type="button"
-                          >
-                            <div>
-                              <strong>{country.label}</strong>
-                              <span>{country.continent}</span>
-                            </div>
-                            <small>{country.previewCities || "도시 준비 중"}</small>
-                          </button>
-                        ))}
-                      </div>
-                    </article>
-
-                    <article className="planner-map-panel">
-                      <div className="planner-map-panel-head">
-                        <span>3</span>
-                        <strong>도시</strong>
-                      </div>
-                      <div className="planner-map-city-list">
-                        {mapCities.map((option) => (
-                          <button
-                            key={`${option.country}-${option.city}-map`}
-                            className={`planner-map-city-pill ${form.city === option.city ? "selected" : ""}`}
-                            onClick={() => {
-                              updateField("continent", option.continent);
-                              updateField("country", option.country);
-                              updateField("city", option.city);
-                            }}
-                            type="button"
-                          >
-                            <strong>{toCityLabel(option.city)}</strong>
-                            <span>{toCountryLabel(option.country)}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </article>
-                  </div>
-                </section>
-
-                <div className="planner-form-grid">
-                  <label className="field">
-                    <span>대륙</span>
-                    <select
-                      onChange={(event) => {
-                        updateField("continent", event.target.value);
-                        updateField("country", "");
-                        updateField("city", "");
-                      }}
-                      value={form.continent}
-                    >
-                      <option value="">전체 대륙</option>
-                      {continents.map((continent) => (
-                        <option key={continent} value={continent}>
-                          {toContinentLabel(continent)}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label className="field">
-                    <span>국가</span>
-                    <select
-                      onChange={(event) => {
-                        updateField("country", event.target.value);
-                        updateField("city", "");
-                      }}
-                      value={form.country}
-                    >
-                      <option value="">전체 국가</option>
-                      {countries.map((country) => (
-                        <option key={country} value={country}>
-                          {toCountryLabel(country)}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label className="field planner-field-wide">
-                    <span>도시</span>
-                    <select onChange={(event) => updateField("city", event.target.value)} value={form.city}>
-                      <option value="">자동 선택</option>
-                      {cities.map((option) => (
-                        <option key={`${option.country}-${option.city}`} value={option.city}>
-                          {toCityLabel(option.city)}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-
-                <div className="planner-country-section">
-                  <div className="planner-country-heading">
-                    <strong>나라부터 골라볼까요?</strong>
-                    <span>{form.continent ? `${toContinentLabel(form.continent)} 안에서 선택 중` : "전체 국가 보기"}</span>
-                  </div>
-                  <div className="planner-country-grid">
-                    {featuredCountries.map((country) => (
-                      <button
-                        key={country.key}
-                        className={`planner-country-card ${form.country === country.key ? "selected" : ""}`}
-                        onClick={() => {
-                          updateField("country", country.key);
-                          updateField("city", "");
-                        }}
-                        type="button"
-                      >
-                        <strong>{country.label}</strong>
-                        <span>{country.continent}</span>
-                        <small>{country.cityCount}개 도시</small>
+                        <strong>{toCityLabel(option.city)}</strong>
                       </button>
                     ))}
                   </div>
-                </div>
-
-                <div className="planner-city-grid">
-                  {cities.map((option) => (
-                    <button
-                      key={`${option.country}-${option.city}`}
-                      className={`planner-city-card ${form.city === option.city ? "selected" : ""}`}
-                      onClick={() => {
-                        updateField("continent", option.continent);
-                        updateField("country", option.country);
-                        updateField("city", option.city);
-                      }}
-                      type="button"
-                    >
-                      <strong>{toCityLabel(option.city)}</strong>
-                      <span>{toCountryLabel(option.country)}</span>
-                      <small>{toContinentLabel(option.continent)}</small>
-                    </button>
-                  ))}
-                </div>
+                )}
               </div>
             ) : null}
 
@@ -1801,9 +1493,7 @@ export function TripCreateForm() {
                   <article className="metric">
                     <strong>여행지</strong>
                     <p>{form.city ? toCityLabel(form.city) : "자동 선택"}</p>
-                    <span>
-                      {form.country ? toCountryLabel(form.country) : "전체 국가"} · {form.continent ? toContinentLabel(form.continent) : "전체 대륙"}
-                    </span>
+                    <span>선택한 도시 기준으로 일정을 생성합니다.</span>
                   </article>
 
                   <article className="metric">
@@ -1873,7 +1563,7 @@ export function TripCreateForm() {
                 이전
               </Button>
               <Button
-                disabled={currentStep === STEP_COUNT}
+                disabled={currentStep === STEP_COUNT || (currentStep === 1 && !form.city)}
                 onClick={() => setCurrentStep((step) => Math.min(STEP_COUNT, step + 1))}
                 type="button"
                 variant="ghost"
@@ -1905,7 +1595,7 @@ export function TripCreateForm() {
                 <span className="section-kicker">Generated Itinerary</span>
                 <h2 className="planner-result-title">{toCityLabel(result.city)} 일정이 준비됐어요</h2>
                 <p className="planner-result-description">
-                  {toCountryLabel(result.country)}에서 {result.nights}박 {result.days}일 동안 {labelStyle(result.style)} 흐름으로 즐길 수 있게 정리했습니다.
+                  {toCityLabel(result.city)}에서 {result.nights}박 {result.days}일 동안 {labelStyle(result.style)} 흐름으로 즐길 수 있게 정리했습니다.
                 </p>
                 <div className="planner-result-tags">
                   <span className="badge">{labelCompanion(result.companion_type)}</span>
@@ -1937,9 +1627,7 @@ export function TripCreateForm() {
               <article className="metric">
                 <strong>여행지</strong>
                 <p>{toCityLabel(result.city)}</p>
-                <span>
-                  {toCountryLabel(result.country)} · {toContinentLabel(result.continent)}
-                </span>
+                <span>이 도시를 기준으로 일정을 구성했습니다.</span>
               </article>
               <article className="metric">
                 <strong>기간과 인원</strong>

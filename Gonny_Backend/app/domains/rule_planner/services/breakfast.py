@@ -42,7 +42,21 @@ BREAKFAST_KEYWORDS = [
 ]
 
 
+# Reviewed out of the keyword match by hand (see the PR description) -
+# each one only matched because "카페" showed up incidentally in a
+# district/street/beach summary, not because the place itself is
+# somewhere you'd actually get breakfast:
+#   - hongdae: a district ("Hongdae"), not a restaurant.
+#   - apgujeong-rodeo: a shopping street ("압구정 로데오 거리").
+#   - woljeongri: a beach ("월정리 해변") whose summary just mentions
+#     nearby cafes alongside a beach walk.
+BREAKFAST_EXCLUDED_PLACE_IDS = frozenset({"hongdae", "apgujeong-rodeo", "woljeongri"})
+
+
 def is_breakfast_candidate(place: PlaceData) -> bool:
+    if place.id in BREAKFAST_EXCLUDED_PLACE_IDS:
+        return False
+
     name = place.name.lower()
     if any(keyword in name for keyword in BREAKFAST_MARKET_KEYWORDS):
         return True

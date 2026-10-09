@@ -1,4 +1,5 @@
 from datetime import date
+from datetime import date as _CalendarDate
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -162,6 +163,20 @@ class RuleWeatherAlert(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+WeatherCheckStatus = Literal["checked", "out_of_range", "past", "unavailable", "no_start_date"]
+
+
+class RuleDayWeatherStatus(BaseModel):
+    day_number: int
+    date: _CalendarDate | None = None
+    status: WeatherCheckStatus
+    condition: Literal["clear", "cloudy", "rain", "snow"] | None = None
+    min_temp_c: float | None = None
+    max_temp_c: float | None = None
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class NormalizedRuleRequest(BaseModel):
     continent: str
     country: str
@@ -229,6 +244,7 @@ class RuleItineraryResponse(BaseModel):
     day_duration_warnings: list[RuleDayDurationWarning] = Field(default_factory=list)
     closed_day_exclusions: list[RuleClosedDayExclusion] = Field(default_factory=list)
     weather_alerts: list[RuleWeatherAlert] = Field(default_factory=list)
+    weather_status: list[RuleDayWeatherStatus] = Field(default_factory=list)
     accommodation_recommendation: AccommodationData | None = None
     meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
     estimated_cost: RuleCostEstimate | None = None

@@ -9,11 +9,16 @@ closed_day_exclusions.
 
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import date, datetime, timedelta
 from typing import Literal
+from zoneinfo import ZoneInfo
 
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
-from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleWeatherAlert
+from app.domains.rule_planner.schemas import (
+    NormalizedRuleRequest,
+    RuleDayWeatherStatus,
+    RuleWeatherAlert,
+)
 from app.services.external_clients import OpenWeatherClient
 
 from .constants import PLACE_NAME_KO
@@ -121,42 +126,133 @@ def build_weather_alerts(
     city_catalog: CityPlaceCatalog,
     weather_client: OpenWeatherClient,
 ) -> list[RuleWeatherAlert]:
-    """Best-effort, never raises - any failure (no start_date, unmapped
-    city, no API key, network error, unexpected client bug) degrades to
-    an empty list rather than breaking itinerary generation, same
-    contract as load_place_feedback_signals()."""
-    try:
-        return _build_weather_alerts(
-            request=request,
-            day_place_map=day_place_map,
-            city_catalog=city_catalog,
-            weather_client=weather_client,
-        )
-    except Exception:
-        return []
+    """Thin wrapper kept for existing callers/tests - see
+    build_weather_report() for the full (alerts, statuses) contract."""
+    alerts, _statuses = build_weather_report(
+        request=request,
+        day_place_map=day_place_map,
+        city_catalog=city_catalog,
+        weather_client=weather_client,
+    )
+    return alerts
 
 
-def _build_weather_alerts(
+def build_weather_report(
     *,
     request: NormalizedRuleRequest,
     day_place_map: dict[int, list[PlaceData]],
     city_catalog: CityPlaceCatalog,
     weather_client: OpenWeatherClient,
-) -> list[RuleWeatherAlert]:
-    if request.start_date is None or not day_place_map:
-        return []
+    today: date | None = None,
+) -> tuple[list[RuleWeatherAlert], list[RuleDayWeatherStatus]]:
+    """Best-effort, never raises - any failure (unmapped city, no API
+    key, network error, unexpected client bug) degrades to an empty
+    alert list plus a best-guess weather_status rather than breaking
+    itinerary generation, same contract as load_place_feedback_signals().
 
+    Fetches the forecast at most once per call and derives both the
+    alerts (only for days present in day_place_map) and the per-day
+    status (for every day 1..request.days, regardless of day_place_map)
+    from that single fetch.
+    """
+    try:
+        return _build_weather_report(
+            request=request,
+            day_place_map=day_place_map,
+            city_catalog=city_catalog,
+            weather_client=weather_client,
+            today=today,
+        )
+    except Exception:
+        if request.start_date is None:
+            statuses = [
+                RuleDayWeatherStatus(day_number=day_number, date=None, status="no_start_date")
+                for day_number in range(1, request.days + 1)
+            ]
+        else:
+            statuses = [
+                RuleDayWeatherStatus(
+                    day_number=day_number,
+                    date=request.start_date + timedelta(days=day_number - 1),
+                    status="unavailable",
+                )
+                for day_number in range(1, request.days + 1)
+            ]
+        return [], statuses
+
+
+def _resolve_today(today: date | None) -> date:
+    if today is not None:
+        return today
+    return datetime.now(ZoneInfo("Asia/Seoul")).date()
+
+
+def _build_weather_report(
+    *,
+    request: NormalizedRuleRequest,
+    day_place_map: dict[int, list[PlaceData]],
+    city_catalog: CityPlaceCatalog,
+    weather_client: OpenWeatherClient,
+    today: date | None,
+) -> tuple[list[RuleWeatherAlert], list[RuleDayWeatherStatus]]:
+    if request.start_date is None:
+        statuses = [
+            RuleDayWeatherStatus(day_number=day_number, date=None, status="no_start_date")
+            for day_number in range(1, request.days + 1)
+        ]
+        return [], statuses
+
+    resolved_today = _resolve_today(today)
     query_city = WEATHER_QUERY_CITY_BY_CODE.get(request.city)
-    if query_city is None:
-        return []
-
     # allow_mock_fallback=False: a missing key or failed call must mean
-    # "no alerts", never fabricated mock weather (see fetch_5day_forecast).
-    forecasts = weather_client.fetch_5day_forecast(query_city, allow_mock_fallback=False)
-    if not forecasts:
-        return []
-
+    # "no data", never fabricated mock weather (see fetch_5day_forecast).
+    forecasts = weather_client.fetch_5day_forecast(query_city, allow_mock_fallback=False) if query_city else []
     forecast_by_date = {forecast["forecast_date"]: forecast for forecast in forecasts}
+
+    statuses: list[RuleDayWeatherStatus] = []
+    for day_number in range(1, request.days + 1):
+        day_date = request.start_date + timedelta(days=day_number - 1)
+        if day_date < resolved_today:
+            statuses.append(RuleDayWeatherStatus(day_number=day_number, date=day_date, status="past"))
+            continue
+        if query_city is None or not forecasts:
+            statuses.append(RuleDayWeatherStatus(day_number=day_number, date=day_date, status="unavailable"))
+            continue
+        forecast = forecast_by_date.get(day_date)
+        if forecast is None:
+            # Outside the 5-day forecast window (or otherwise not
+            # returned) - the caller can tell this apart from "unavailable".
+            statuses.append(RuleDayWeatherStatus(day_number=day_number, date=day_date, status="out_of_range"))
+            continue
+        statuses.append(
+            RuleDayWeatherStatus(
+                day_number=day_number,
+                date=day_date,
+                status="checked",
+                condition=forecast["condition"],
+                min_temp_c=forecast.get("min_temp_c"),
+                max_temp_c=forecast.get("max_temp_c"),
+            )
+        )
+
+    alerts = _build_alerts_from_forecast(
+        request=request,
+        day_place_map=day_place_map,
+        city_catalog=city_catalog,
+        forecast_by_date=forecast_by_date,
+    )
+    return alerts, statuses
+
+
+def _build_alerts_from_forecast(
+    *,
+    request: NormalizedRuleRequest,
+    day_place_map: dict[int, list[PlaceData]],
+    city_catalog: CityPlaceCatalog,
+    forecast_by_date: dict[date, dict],
+) -> list[RuleWeatherAlert]:
+    if not day_place_map or not forecast_by_date:
+        return []
 
     alerts: list[RuleWeatherAlert] = []
     for day_number, places in sorted(day_place_map.items()):

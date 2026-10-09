@@ -16,6 +16,7 @@ from app.domains.rule_planner.schemas import (
     RuleClosedDayExclusion,
     RuleDayDurationWarning,
     RuleDayTravel,
+    RuleDayWeatherStatus,
     RuleItineraryItem,
     RuleItineraryRequest,
     RuleItineraryResponse,
@@ -61,7 +62,7 @@ from .travel_estimate import (
     estimate_travel_minutes_between,
     haversine_distance_km,
 )
-from .weather_alerts import build_weather_alerts
+from .weather_alerts import build_weather_report
 
 # How much higher a next-place-aware refinement candidate's score must be
 # than the currently-placed item's before _refine_day_with_next_place_lookahead
@@ -103,7 +104,7 @@ class RuleItineraryService:
         day_duration_warnings = self._build_day_duration_warnings(
             day_place_map_with_meals, accommodation_recommendation, request=normalized
         )
-        weather_alerts = self._build_weather_alerts(normalized, day_place_map, city_catalog)
+        weather_alerts, weather_status = self._build_weather_report(normalized, day_place_map, city_catalog)
         day_travel = self._build_day_travel(
             day_sequence_with_kind, accommodation_recommendation, city=normalized.city
         )
@@ -124,6 +125,7 @@ class RuleItineraryService:
             day_duration_warnings=day_duration_warnings,
             closed_day_exclusions=closed_day_exclusions,
             weather_alerts=weather_alerts,
+            weather_status=weather_status,
             accommodation_recommendation=accommodation_recommendation,
             meal_recommendations=meal_recommendations,
             estimated_cost=estimate_trip_cost_range(
@@ -489,13 +491,13 @@ class RuleItineraryService:
                 )
         return warnings
 
-    def _build_weather_alerts(
+    def _build_weather_report(
         self,
         request: NormalizedRuleRequest,
         day_place_map: dict[int, list[PlaceData]],
         city_catalog: CityPlaceCatalog,
-    ) -> list[RuleWeatherAlert]:
-        return build_weather_alerts(
+    ) -> tuple[list[RuleWeatherAlert], list[RuleDayWeatherStatus]]:
+        return build_weather_report(
             request=request,
             day_place_map=day_place_map,
             city_catalog=city_catalog,

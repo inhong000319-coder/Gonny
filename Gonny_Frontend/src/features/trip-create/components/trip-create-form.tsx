@@ -24,6 +24,11 @@ type RuleItineraryCatalogResponse = {
 };
 
 type TimeSlot = "morning" | "afternoon" | "evening";
+// First day's arrival time-of-day / last day's departure time-of-day -
+// null means "no restriction" (omitted from the request entirely, see
+// handleGenerate). Matches the backend's RuleItineraryRequest.
+type ArrivalPeriod = "morning" | "afternoon" | "evening" | "night";
+type DeparturePeriod = "before_lunch" | "afternoon" | "evening_or_later";
 type BudgetBand = "low" | "medium" | "high";
 type TripStyle = "tight" | "easy" | "near-stay" | "mobility-first";
 type CompanionType = "solo" | "couple" | "friend" | "family";
@@ -81,11 +86,30 @@ type RuleWeatherAlert = {
 // repeated per day instead of once for the whole trip.
 type RuleMealRecommendation = {
   day_number: number;
-  meal_type: "lunch" | "dinner";
+  meal_type: "breakfast" | "lunch" | "dinner";
   place_name: string;
   area: string;
   notes: string;
   travel_minutes_from_previous: number | null;
+  // True only for breakfast - the catalog has almost no verified opening
+  // hours for food places, so a breakfast pick is a keyword guess that
+  // may not actually be open that early. Always false for lunch/dinner.
+  hours_unverified: boolean;
+};
+
+// Per-day "did we manage to check the weather" status - see the
+// backend's RuleDayWeatherStatus. Independent of weather_alerts (which
+// stays rain/snow-banner-only, unchanged by this feature).
+type WeatherCheckStatus = "checked" | "out_of_range" | "past" | "unavailable" | "no_start_date";
+type WeatherCondition = "clear" | "cloudy" | "rain" | "snow";
+
+type RuleDayWeatherStatus = {
+  day_number: number;
+  date: string | null;
+  status: WeatherCheckStatus;
+  condition: WeatherCondition | null;
+  min_temp_c: number | null;
+  max_temp_c: number | null;
 };
 
 // view(숙소 조망)는 데이터 신뢰도 문제로 이번 범위에서 표시하지 않는다.
@@ -173,11 +197,15 @@ type RuleItineraryResponse = {
   day_duration_warnings: RuleDayDurationWarning[];
   closed_day_exclusions: RuleClosedDayExclusion[];
   weather_alerts: RuleWeatherAlert[];
+  weather_status: RuleDayWeatherStatus[];
   accommodation_recommendation: AccommodationRecommendation | null;
   meal_recommendations: RuleMealRecommendation[];
   estimated_cost: RuleCostEstimate | null;
   day_travel: RuleDayTravel[];
   transport_by_day: DayTransportMode[] | null;
+  arrival_period: ArrivalPeriod | null;
+  departure_period: DeparturePeriod | null;
+  include_breakfast: boolean;
 };
 
 type PlannerFormState = {
@@ -196,6 +224,11 @@ type PlannerFormState = {
   // always equals the trip's day count (nights + 1).
   transport_modes: DayTransportMode[];
   transport_by_day: DayTransportMode[];
+  // null means "no restriction" - omitted from the request entirely (see
+  // handleGenerate), same as transport_by_day being absent server-side.
+  arrival_period: ArrivalPeriod | null;
+  departure_period: DeparturePeriod | null;
+  include_breakfast: boolean;
 };
 
 const STEP_COUNT = 4;
@@ -241,6 +274,9 @@ const initialForm: PlannerFormState = {
   accommodation_budget_band: null,
   transport_modes: ["transit"],
   transport_by_day: ["transit", "transit", "transit"],
+  arrival_period: null,
+  departure_period: null,
+  include_breakfast: false,
 };
 
 const cityKo: Record<string, string> = {
@@ -341,6 +377,84 @@ function labelTimeSlot(value: TimeSlot) {
   if (value === "morning") return "오전";
   if (value === "afternoon") return "오후";
   return "저녁";
+}
+
+const arrivalPeriodOptions: Array<ArrivalPeriod | null> = [null, "morning", "afternoon", "evening", "night"];
+const departurePeriodOptions: Array<DeparturePeriod | null> = [null, "before_lunch", "afternoon", "evening_or_later"];
+
+function labelArrivalPeriod(value: ArrivalPeriod | null) {
+  if (value === null) return "상관없음";
+  if (value === "morning") return "오전";
+  if (value === "afternoon") return "오후(점심 이후)";
+  if (value === "evening") return "저녁";
+  return "밤";
+}
+
+function labelDeparturePeriod(value: DeparturePeriod | null) {
+  if (value === null) return "상관없음";
+  if (value === "before_lunch") return "점심 전";
+  if (value === "afternoon") return "오후";
+  return "저녁 이후";
+}
+
+// The slot(s) arrival_period/departure_period excludes, for the "비워진
+// 칸" banner shown on day 1 / the last day - see services/arrival_departure.py
+// on the backend for the authoritative rule this mirrors (display only,
+// no scheduling logic lives here).
+function arrivalEmptySlotLabel(value: ArrivalPeriod | null): string | null {
+  if (value === "afternoon") return "오전";
+  if (value === "evening") return "오전·오후";
+  if (value === "night") return "하루 종일";
+  return null;
+}
+
+function departureEmptySlotLabel(value: DeparturePeriod | null): string | null {
+  if (value === "afternoon") return "저녁";
+  if (value === "before_lunch") return "오후·저녁";
+  return null;
+}
+
+function labelMealType(value: RuleMealRecommendation["meal_type"]) {
+  if (value === "breakfast") return "아침";
+  if (value === "lunch") return "점심";
+  return "저녁";
+}
+
+function labelWeatherCondition(value: WeatherCondition) {
+  if (value === "clear") return "맑음";
+  if (value === "cloudy") return "흐림";
+  if (value === "rain") return "비";
+  return "눈";
+}
+
+function formatDayWeatherLine(status: RuleDayWeatherStatus | undefined): string | null {
+  if (!status || status.status !== "checked" || !status.condition) {
+    return null;
+  }
+  const conditionLabel = labelWeatherCondition(status.condition);
+  if (status.min_temp_c == null || status.max_temp_c == null) {
+    return `날씨 예보: ${conditionLabel}`;
+  }
+  return `날씨 예보: ${conditionLabel} · ${status.min_temp_c}°~${status.max_temp_c}°`;
+}
+
+// Place-level category codes shown as a chip on each item card. Every
+// TripConcept value reuses labelTripConcept's exact wording; the rest are
+// PlaceData.activity_type_codes values that can appear in item.category
+// but are never a selectable trip concept (confirmed against real
+// seoul/busan/jeju generation results - see the PR description). Any
+// code not listed here omits the chip entirely rather than showing the
+// raw English string.
+const NON_CONCEPT_CATEGORY_LABELS: Partial<Record<string, string>> = {
+  theme_park: "테마파크",
+  local_experience: "현지 체험",
+};
+
+function labelPlaceCategory(value: string): string | null {
+  if ((conceptOptions as string[]).includes(value)) {
+    return labelTripConcept(value as TripConcept);
+  }
+  return NON_CONCEPT_CATEGORY_LABELS[value] ?? null;
 }
 
 function buildDurationLabel(nights: number) {
@@ -447,12 +561,51 @@ function isRuleMealRecommendation(value: unknown): value is RuleMealRecommendati
   const meal = value as Record<string, unknown>;
   return (
     typeof meal.day_number === "number" &&
-    (meal.meal_type === "lunch" || meal.meal_type === "dinner") &&
+    (meal.meal_type === "breakfast" || meal.meal_type === "lunch" || meal.meal_type === "dinner") &&
     typeof meal.place_name === "string" &&
     typeof meal.area === "string" &&
     typeof meal.notes === "string" &&
-    (meal.travel_minutes_from_previous === null || typeof meal.travel_minutes_from_previous === "number")
+    (meal.travel_minutes_from_previous === null || typeof meal.travel_minutes_from_previous === "number") &&
+    (meal.hours_unverified === undefined || typeof meal.hours_unverified === "boolean")
   );
+}
+
+function isWeatherCheckStatus(value: unknown): value is WeatherCheckStatus {
+  return (
+    value === "checked" ||
+    value === "out_of_range" ||
+    value === "past" ||
+    value === "unavailable" ||
+    value === "no_start_date"
+  );
+}
+
+function isWeatherCondition(value: unknown): value is WeatherCondition {
+  return value === "clear" || value === "cloudy" || value === "rain" || value === "snow";
+}
+
+function isRuleDayWeatherStatus(value: unknown): value is RuleDayWeatherStatus {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const status = value as Record<string, unknown>;
+  return (
+    typeof status.day_number === "number" &&
+    (status.date === null || typeof status.date === "string") &&
+    isWeatherCheckStatus(status.status) &&
+    (status.condition === null || isWeatherCondition(status.condition)) &&
+    (status.min_temp_c === null || typeof status.min_temp_c === "number") &&
+    (status.max_temp_c === null || typeof status.max_temp_c === "number")
+  );
+}
+
+function isArrivalPeriod(value: unknown): value is ArrivalPeriod {
+  return value === "morning" || value === "afternoon" || value === "evening" || value === "night";
+}
+
+function isDeparturePeriod(value: unknown): value is DeparturePeriod {
+  return value === "before_lunch" || value === "afternoon" || value === "evening_or_later";
 }
 
 function isAccommodationRecommendation(value: unknown): value is AccommodationRecommendation {
@@ -592,15 +745,21 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
       ? data.closed_day_exclusions.filter(isRuleClosedDayExclusion)
       : [],
     weather_alerts: Array.isArray(data.weather_alerts) ? data.weather_alerts.filter(isRuleWeatherAlert) : [],
+    weather_status: Array.isArray(data.weather_status) ? data.weather_status.filter(isRuleDayWeatherStatus) : [],
     accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
       ? data.accommodation_recommendation
       : null,
     meal_recommendations: Array.isArray(data.meal_recommendations)
-      ? data.meal_recommendations.filter(isRuleMealRecommendation)
+      ? data.meal_recommendations
+          .filter(isRuleMealRecommendation)
+          .map((meal) => ({ ...meal, hours_unverified: meal.hours_unverified ?? false }))
       : [],
     estimated_cost: isRuleCostEstimate(data.estimated_cost) ? data.estimated_cost : null,
     day_travel: Array.isArray(data.day_travel) ? data.day_travel.filter(isRuleDayTravel) : [],
     transport_by_day: isDayTransportModeArray(data.transport_by_day) ? data.transport_by_day : null,
+    arrival_period: isArrivalPeriod(data.arrival_period) ? data.arrival_period : null,
+    departure_period: isDeparturePeriod(data.departure_period) ? data.departure_period : null,
+    include_breakfast: typeof data.include_breakfast === "boolean" ? data.include_breakfast : false,
   };
 }
 
@@ -617,11 +776,19 @@ function groupByDay(items: RuleItineraryItem[]) {
   }, []);
 }
 
+type DayMealsByType = {
+  breakfast?: RuleMealRecommendation;
+  lunch?: RuleMealRecommendation;
+  dinner?: RuleMealRecommendation;
+};
+
 function groupMealsByDay(meals: RuleMealRecommendation[]) {
-  const byDay = new Map<number, { lunch?: RuleMealRecommendation; dinner?: RuleMealRecommendation }>();
+  const byDay = new Map<number, DayMealsByType>();
   for (const meal of meals) {
     const entry = byDay.get(meal.day_number) ?? {};
-    if (meal.meal_type === "lunch") {
+    if (meal.meal_type === "breakfast") {
+      entry.breakfast = meal;
+    } else if (meal.meal_type === "lunch") {
       entry.lunch = meal;
     } else {
       entry.dinner = meal;
@@ -699,21 +866,42 @@ type DayTimelineEntry =
   | { type: "item"; item: RuleItineraryItem }
   | { type: "meal"; meal: RuleMealRecommendation };
 
-function buildDayTimelineEntries(
-  items: RuleItineraryItem[],
-  dayMeals: { lunch?: RuleMealRecommendation; dinner?: RuleMealRecommendation } | undefined,
-): DayTimelineEntry[] {
-  const entries: DayTimelineEntry[] = [];
-  for (const item of items) {
-    entries.push({ type: "item", item });
-    if (item.time_slot === "morning" && dayMeals?.lunch) {
-      entries.push({ type: "meal", meal: dayMeals.lunch });
-    }
-    if (item.time_slot === "afternoon" && dayMeals?.dinner) {
-      entries.push({ type: "meal", meal: dayMeals.dinner });
-    }
+// Point-in-day order the backend builds a day in: [breakfast] -> morning
+// -> [lunch] -> afternoon -> [dinner] -> evening (see the backend's
+// RuleItineraryService._build_day_sequence_with_kind). Sorting by this
+// key - rather than assuming lunch always follows a "morning" entry and
+// dinner always follows an "afternoon" entry - is what makes dinner show
+// up correctly on a day with no afternoon slot at all (e.g. an evening
+// arrival_period), which the old adjacency-based logic missed.
+const TIMELINE_SORT_KEY: Record<string, number> = {
+  breakfast: 0,
+  morning: 1,
+  lunch: 2,
+  afternoon: 3,
+  dinner: 4,
+  evening: 5,
+};
+
+function timelineEntrySortKey(entry: DayTimelineEntry): number {
+  return TIMELINE_SORT_KEY[entry.type === "item" ? entry.item.time_slot : entry.meal.meal_type];
+}
+
+function buildDayTimelineEntries(items: RuleItineraryItem[], dayMeals: DayMealsByType | undefined): DayTimelineEntry[] {
+  const entries: DayTimelineEntry[] = items.map((item) => ({ type: "item", item }));
+  if (dayMeals?.breakfast) {
+    entries.push({ type: "meal", meal: dayMeals.breakfast });
   }
-  return entries;
+  if (dayMeals?.lunch) {
+    entries.push({ type: "meal", meal: dayMeals.lunch });
+  }
+  if (dayMeals?.dinner) {
+    entries.push({ type: "meal", meal: dayMeals.dinner });
+  }
+  // Array.prototype.sort is a stable sort in all modern JS engines, so
+  // entries that land on the same key (there's no such case today, but
+  // nothing here guarantees one of comparable items can't) keep their
+  // original relative order instead of being shuffled.
+  return entries.sort((left, right) => timelineEntrySortKey(left) - timelineEntrySortKey(right));
 }
 
 function dayTimelineEntryKind(entry: DayTimelineEntry): "place" | "meal" {
@@ -813,7 +1001,7 @@ function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendatio
   return (
     <div className="tc-stop is-meal">
       <div className="tc-stop-time">
-        <span>{meal.meal_type === "lunch" ? "점심" : "저녁"}</span>
+        <span>{labelMealType(meal.meal_type)}</span>
       </div>
       <div className="tc-stop-body">
         {showTravelTime && meal.travel_minutes_from_previous !== null ? (
@@ -824,6 +1012,9 @@ function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendatio
           <span className="tc-stop-chip">식사</span>
         </div>
         <p className="tc-stop-area">{meal.area}</p>
+        {meal.hours_unverified ? (
+          <p className="tc-meal-hours-note">영업시간은 방문 전에 직접 확인해 주세요</p>
+        ) : null}
         {note.headline ? <p className="tc-stop-note-lead">{note.headline}</p> : null}
         {note.details.map((line, index) => (
           <p key={`${meal.place_name}-note-${index}`} className="tc-stop-note-line">
@@ -921,11 +1112,24 @@ export function TripCreateForm() {
   );
 
   const groupedItems = useMemo(() => groupByDay(result?.items ?? []), [result]);
+  const itemsByDay = useMemo(() => new Map(groupedItems.map((group) => [group.day, group.items])), [groupedItems]);
   const mealsByDay = useMemo(() => groupMealsByDay(result?.meal_recommendations ?? []), [result]);
   const dayTravelByDay = useMemo(
     () => new Map((result?.day_travel ?? []).map((dayTravel) => [dayTravel.day_number, dayTravel])),
     [result],
   );
+  const weatherStatusByDay = useMemo(
+    () => new Map((result?.weather_status ?? []).map((status) => [status.day_number, status])),
+    [result],
+  );
+  const outOfRangeWeatherDays = useMemo(
+    () =>
+      (result?.weather_status ?? [])
+        .filter((status) => status.status === "out_of_range")
+        .map((status) => status.day_number),
+    [result],
+  );
+  const hasUnavailableWeatherDay = (result?.weather_status ?? []).some((status) => status.status === "unavailable");
   const allTravelLegs = useMemo(
     () => (result?.day_travel ?? []).flatMap((dayTravel) => dayTravel.legs),
     [result],
@@ -1110,12 +1314,23 @@ export function TripCreateForm() {
     setMessage("");
 
     try {
-      const { accommodation_types, accommodation_budget_band, transport_modes, ...planForm } = form;
+      const {
+        accommodation_types,
+        accommodation_budget_band,
+        transport_modes,
+        arrival_period,
+        departure_period,
+        include_breakfast,
+        ...planForm
+      } = form;
       const response = await apiClient.post<unknown>("/rule-itinerary/generate", {
         ...planForm,
         travelers: Number(form.travelers) || 2,
         ...(accommodation_types.length > 0 ? { accommodation_types } : {}),
         ...(isAccommodationBudgetOn && accommodation_budget_band ? { accommodation_budget_band } : {}),
+        ...(arrival_period ? { arrival_period } : {}),
+        ...(departure_period ? { departure_period } : {}),
+        ...(include_breakfast ? { include_breakfast } : {}),
       });
 
       const nextResult = normalizeGenerateResponse(response.data);
@@ -1124,7 +1339,7 @@ export function TripCreateForm() {
       setMessage(`${toCityLabel(nextResult.city)} 기준으로 ${nextResult.items.length}개의 일정이 생성되었습니다.`);
     } catch (generateError) {
       const nextError =
-        generateError instanceof Error ? generateError.message : "규칙 기반 일정 생성에 실패했습니다.";
+        generateError instanceof Error ? generateError.message : "일정을 만들지 못했어요. 잠시 후 다시 시도해 주세요.";
       setResult(null);
       setError(nextError);
     } finally {
@@ -1293,6 +1508,59 @@ export function TripCreateForm() {
                       </div>
                       <p className="tc-note">
                         현재 선택: {form.duration_label} · {form.start_date} ~ {endDate}
+                      </p>
+                    </div>
+
+                    <div className="tc-field">
+                      <span className="tc-field-label">도착·출발 시간</span>
+                      <div className="tc-field">
+                        <span className="tc-field-sublabel">도착 시간</span>
+                        <div className="tc-chip-row" role="radiogroup" aria-label="도착 시간">
+                          {arrivalPeriodOptions.map((option) => (
+                            <button
+                              aria-checked={form.arrival_period === option}
+                              className={`tc-chip ${form.arrival_period === option ? "is-selected" : ""}`}
+                              key={option ?? "none"}
+                              onClick={() => updateField("arrival_period", option)}
+                              role="radio"
+                              type="button"
+                            >
+                              {labelArrivalPeriod(option)}
+                            </button>
+                          ))}
+                        </div>
+                        <p className="tc-note">도착 시간에 맞춰 첫날 일정이 줄어들어요.</p>
+                      </div>
+
+                      <div className="tc-field">
+                        <span className="tc-field-sublabel">출발 시간</span>
+                        <div className="tc-chip-row" role="radiogroup" aria-label="출발 시간">
+                          {departurePeriodOptions.map((option) => (
+                            <button
+                              aria-checked={form.departure_period === option}
+                              className={`tc-chip ${form.departure_period === option ? "is-selected" : ""}`}
+                              key={option ?? "none"}
+                              onClick={() => updateField("departure_period", option)}
+                              role="radio"
+                              type="button"
+                            >
+                              {labelDeparturePeriod(option)}
+                            </button>
+                          ))}
+                        </div>
+                        <p className="tc-note">출발 시간에 맞춰 마지막 날 일정이 줄어들어요.</p>
+                      </div>
+
+                      <label className="tc-toggle-row">
+                        <input
+                          checked={form.include_breakfast}
+                          onChange={(event) => updateField("include_breakfast", event.target.checked)}
+                          type="checkbox"
+                        />
+                        <span>아침 식사도 추천받기</span>
+                      </label>
+                      <p className="tc-note">
+                        아침에 문을 열 가능성이 높은 시장·카페 위주로 추천해요. 영업시간은 직접 확인이 필요해요.
                       </p>
                     </div>
 
@@ -1540,6 +1808,21 @@ export function TripCreateForm() {
                         <span className="tc-summary-value">{summarizeTransportByDay(form.transport_by_day)}</span>
                         <span className="tc-summary-note">하루에 한 수단만 선택할 수 있어요.</span>
                       </div>
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">도착 시간</span>
+                        <span className="tc-summary-value">{labelArrivalPeriod(form.arrival_period)}</span>
+                      </div>
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">출발 시간</span>
+                        <span className="tc-summary-value">{labelDeparturePeriod(form.departure_period)}</span>
+                      </div>
+
+                      <div className="tc-summary-item">
+                        <span className="tc-summary-label">아침 식사</span>
+                        <span className="tc-summary-value">{form.include_breakfast ? "포함" : "미포함"}</span>
+                      </div>
                     </div>
 
                     {hasTransportAssignmentGap ? (
@@ -1691,12 +1974,53 @@ export function TripCreateForm() {
                   이동시간은 직선거리 기반 추정치예요. 실제 경로와 교통 상황에 따라 달라질 수 있어요.
                 </div>
               ) : null}
-              {groupedItems.map((group) => {
-                const dayTravel = dayTravelByDay.get(group.day);
-                const mode = dayTravelMode[group.day] ?? defaultDayTravelMode(result.city);
-                const dayMeals = mealsByDay.get(group.day);
+              {outOfRangeWeatherDays.length > 0 ? (
+                <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
+                  {outOfRangeWeatherDays.map((day) => `${day}일차`).join("·")}는 아직 날씨 예보로 확인할 수 없어요.
+                  출발 5일 전쯤 다시 확인해 보세요.
+                </div>
+              ) : null}
+              {hasUnavailableWeatherDay ? (
+                <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
+                  날씨 정보를 불러오지 못했어요.
+                </div>
+              ) : null}
+              {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
+                const dayItems = itemsByDay.get(dayNumber) ?? [];
+                const weatherLine = formatDayWeatherLine(weatherStatusByDay.get(dayNumber));
+                const isFirstDay = dayNumber === 1;
+                const isLastDay = dayNumber === result.days;
+                // A 1-day trip has days === 1, so isFirstDay and isLastDay
+                // are both true then - both banners can apply at once
+                // (the backend intersects both rules into that single
+                // day's slots, but each restriction is still worth
+                // explaining on its own).
+                const arrivalSlotLabel = isFirstDay ? arrivalEmptySlotLabel(result.arrival_period) : null;
+                const departureSlotLabel = isLastDay ? departureEmptySlotLabel(result.departure_period) : null;
+
+                if (dayItems.length === 0) {
+                  return (
+                    <div className="tc-day-card" key={dayNumber}>
+                      <div className="tc-day-head">
+                        <div>
+                          <h3 className="tc-day-title">{dayNumber}일차</h3>
+                          {weatherLine ? <p className="tc-day-weather">{weatherLine}</p> : null}
+                        </div>
+                      </div>
+                      <div className="tc-alert tc-alert-info">
+                        {isFirstDay
+                          ? "이날은 도착일이에요. 숙소에서 쉬면서 여행을 시작해 보세요."
+                          : "이 날은 등록된 일정이 없어요."}
+                      </div>
+                    </div>
+                  );
+                }
+
+                const dayTravel = dayTravelByDay.get(dayNumber);
+                const mode = dayTravelMode[dayNumber] ?? defaultDayTravelMode(result.city);
+                const dayMeals = mealsByDay.get(dayNumber);
                 const accommodationName = result.accommodation_recommendation?.name;
-                const timelineEntries = buildDayTimelineEntries(group.items, dayMeals);
+                const timelineEntries = buildDayTimelineEntries(dayItems, dayMeals);
                 const legByKey = new Map<string, RuleTravelLeg>();
                 for (const leg of dayTravel?.legs ?? []) {
                   legByKey.set(travelLegKey(leg.from_kind, leg.from_name, leg.to_kind, leg.to_name), leg);
@@ -1727,31 +2051,42 @@ export function TripCreateForm() {
                     : undefined;
 
                 return (
-                <div className="tc-day-card" key={group.day}>
+                <div className="tc-day-card" key={dayNumber}>
                   <div className="tc-day-head">
                     <div>
-                      <h3 className="tc-day-title">{group.day}일차</h3>
-                      <p className="tc-day-route">{summarizeRoute(group.items)}</p>
+                      <h3 className="tc-day-title">{dayNumber}일차</h3>
+                      <p className="tc-day-route">{summarizeRoute(dayItems)}</p>
+                      {weatherLine ? <p className="tc-day-weather">{weatherLine}</p> : null}
                     </div>
                   </div>
+                  {arrivalSlotLabel ? (
+                    <div className="tc-alert tc-alert-info" style={{ marginBottom: 12 }}>
+                      도착 시간에 맞춰 {arrivalSlotLabel} 일정은 넣지 않았어요.
+                    </div>
+                  ) : null}
+                  {departureSlotLabel ? (
+                    <div className="tc-alert tc-alert-info" style={{ marginBottom: 12 }}>
+                      출발 시간에 맞춰 {departureSlotLabel} 일정은 넣지 않았어요.
+                    </div>
+                  ) : null}
                   {dayTravel ? (
                     <DayTravelPanel
                       dayTravel={dayTravel}
                       mode={mode}
                       onModeChange={(nextMode) =>
-                        setDayTravelMode((previous) => ({ ...previous, [group.day]: nextMode }))
+                        setDayTravelMode((previous) => ({ ...previous, [dayNumber]: nextMode }))
                       }
                     />
                   ) : null}
                   {result.day_duration_warnings
-                    .filter((warning) => warning.day_number === group.day)
+                    .filter((warning) => warning.day_number === dayNumber)
                     .map((warning) => (
                       <div className="tc-alert tc-alert-warning" key={`duration-warning-${warning.day_number}`} style={{ marginBottom: 12 }}>
                         {warning.message}
                       </div>
                     ))}
                   {result.closed_day_exclusions
-                    .filter((exclusion) => exclusion.day_number === group.day)
+                    .filter((exclusion) => exclusion.day_number === dayNumber)
                     .map((exclusion) => (
                       <div
                         className="tc-alert tc-alert-info"
@@ -1762,7 +2097,7 @@ export function TripCreateForm() {
                       </div>
                     ))}
                   {result.weather_alerts
-                    .filter((alert) => alert.day_number === group.day)
+                    .filter((alert) => alert.day_number === dayNumber)
                     .map((alert) => (
                       <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
                     ))}
@@ -1791,9 +2126,10 @@ export function TripCreateForm() {
                         const item = entry.item;
                         const note = splitNoteLines(item.notes);
                         const showFallbackTravelTime = !connectorLeg && item.travel_minutes_from_previous !== null;
+                        const categoryLabel = labelPlaceCategory(item.category);
 
                         return (
-                          <Fragment key={`${group.day}-${item.time_slot}-${item.place_name}`}>
+                          <Fragment key={`${dayNumber}-${item.time_slot}-${item.place_name}`}>
                             {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
                             <div className="tc-stop">
                               <div className="tc-stop-time">
@@ -1807,7 +2143,7 @@ export function TripCreateForm() {
                                 ) : null}
                                 <div className="tc-stop-name-row">
                                   <strong className="tc-stop-name">{item.place_name}</strong>
-                                  <span className="tc-stop-chip">{item.category}</span>
+                                  {categoryLabel ? <span className="tc-stop-chip">{categoryLabel}</span> : null}
                                 </div>
                                 <p className="tc-stop-area">{item.area}</p>
                                 {item.average_cost_krw != null ? (
@@ -1829,7 +2165,7 @@ export function TripCreateForm() {
                       const showFallbackTravelTime = !connectorLeg && meal.travel_minutes_from_previous !== null;
 
                       return (
-                        <Fragment key={`${group.day}-meal-${meal.meal_type}-${meal.place_name}`}>
+                        <Fragment key={`${dayNumber}-meal-${meal.meal_type}-${meal.place_name}`}>
                           {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
                           <MealCard meal={meal} showTravelTime={showFallbackTravelTime} />
                         </Fragment>

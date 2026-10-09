@@ -13,6 +13,10 @@
   --tc-primary-strong: #0a566e;
   --tc-primary-soft: #e3f1f5;
   --tc-accent: #e8743b;
+  /* Same hue family as --tc-accent, darkened for 4.5:1+ contrast on
+     --tc-surface (white) - --tc-accent itself is ~3:1, fine for a small
+     dot/icon but not for the day-title heading text that uses it. */
+  --tc-accent-strong: #a8471a;
   --tc-line: #e4ded3;
   --tc-danger: #b3261e;
   --tc-danger-soft: #fbeae9;
@@ -165,6 +169,12 @@
 .tc-field-label {
   font-size: 14px;
   font-weight: 700;
+}
+
+.tc-field-sublabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tc-muted);
 }
 
 .tc-date-input {
@@ -574,9 +584,15 @@
 
 .tc-glance-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 10px;
   margin-top: 16px;
+}
+
+@media (min-width: 640px) {
+  .tc-glance-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .tc-glance-item {
@@ -644,11 +660,17 @@
   margin: 0;
   font-size: 19px;
   font-weight: 800;
-  color: var(--tc-accent);
+  color: var(--tc-accent-strong);
 }
 
 .tc-day-route {
   margin: 0;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+.tc-day-weather {
+  margin: 2px 0 0;
   font-size: 13px;
   color: var(--tc-muted);
 }
@@ -791,6 +813,13 @@
   margin: 0;
   font-size: 12px;
   color: var(--tc-muted);
+}
+
+.tc-meal-hours-note {
+  margin: 2px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tc-warning);
 }
 
 /* --- Travel connector row (PR #74) - light dashed line, small text ------- */

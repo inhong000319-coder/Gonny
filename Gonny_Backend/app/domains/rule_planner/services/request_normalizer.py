@@ -6,6 +6,7 @@ from fastapi import HTTPException, status
 
 from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleItineraryRequest
 
+from .arrival_departure import has_any_usable_slot
 from .constants import DEFAULT_CITY_BY_COUNTRY, DEFAULT_COMPANION, DEFAULT_CONCEPTS, DEFAULT_STYLE
 
 
@@ -22,6 +23,15 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
                 f"transport_by_day must have exactly {days} entries (one per day), "
                 f"got {len(request.transport_by_day)}."
             ),
+        )
+    if not has_any_usable_slot(
+        arrival_period=request.arrival_period,
+        departure_period=request.departure_period,
+        days=days,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="선택한 도착·출발 시간대로는 일정을 만들 수 없어요.",
         )
     concepts = request.concepts or DEFAULT_CONCEPTS
     style = request.style or DEFAULT_STYLE
@@ -59,6 +69,9 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
         accommodation_types=accommodation_types,
         transport_by_day=request.transport_by_day,
         start_date=request.start_date,
+        arrival_period=request.arrival_period,
+        departure_period=request.departure_period,
+        include_breakfast=request.include_breakfast,
     )
 
 

@@ -8,7 +8,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.domains.destination_catalog.schemas import PlaceData
-from app.domains.rule_planner.services.breakfast import is_breakfast_candidate
+from app.domains.rule_planner.services.breakfast import BREAKFAST_EXCLUDED_PLACE_IDS, is_breakfast_candidate
+from app.domains.rule_planner.services.service import RuleItineraryService
 
 
 def build_place(**overrides) -> PlaceData:
@@ -73,3 +74,47 @@ def test_highlight_tags_and_mood_keywords_are_also_checked() -> None:
 def test_ordinary_dinner_restaurant_is_not_a_candidate() -> None:
     place = build_place(name="장충동왕족발", summary="족발 전문점, 평점 매우 높음")
     assert is_breakfast_candidate(place) is False
+
+
+# --- explicit exclusions (district/street/beach places, not restaurants) ---
+
+
+def test_excluded_ids_are_rejected_even_with_matching_keywords() -> None:
+    for excluded_id in BREAKFAST_EXCLUDED_PLACE_IDS:
+        place = build_place(
+            id=excluded_id,
+            name="아무 카페",
+            summary="브런치와 조식을 즐기기 좋은 카페거리",
+            highlight_tags=["카페"],
+            mood_keywords=["모닝"],
+        )
+        assert is_breakfast_candidate(place) is False, excluded_id
+
+
+def test_same_keywords_outside_the_excluded_ids_still_match() -> None:
+    # Proves the exclusion is id-based, not a change to the keyword rule
+    # itself - identical content under a different id is still a candidate.
+    place = build_place(
+        id="not-excluded",
+        name="아무 카페",
+        summary="브런치와 조식을 즐기기 좋은 카페거리",
+        highlight_tags=["카페"],
+        mood_keywords=["모닝"],
+    )
+    assert is_breakfast_candidate(place) is True
+
+
+# --- real-catalog candidate counts after the exclusion ----------------------
+
+
+def test_real_catalog_candidate_counts_after_exclusion() -> None:
+    provider = RuleItineraryService().catalog_provider
+    expected_counts = {"seoul": 6, "busan": 5, "jeju": 3}
+
+    for city, expected_count in expected_counts.items():
+        catalog = provider.get_city_catalog(continent="asia", country="korea", city=city, visible_only=True)
+        food_places = [place for place in catalog.places if "food" in place.concept_tags]
+        candidates = [place for place in food_places if is_breakfast_candidate(place)]
+
+        assert len(candidates) == expected_count, (city, [place.id for place in candidates])
+        assert BREAKFAST_EXCLUDED_PLACE_IDS.isdisjoint({place.id for place in candidates})

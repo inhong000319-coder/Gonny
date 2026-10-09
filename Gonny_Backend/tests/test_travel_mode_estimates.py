@@ -125,7 +125,10 @@ def test_leg_count_matches_sequence_length_plus_accommodation_legs() -> None:
     evening = build_place("evening", 37.504, 127.004)
     accommodation = build_accommodation(37.49, 126.99)
 
-    sequence = service._sequence_day_places_with_kind([morning, afternoon, evening], lunch_place=lunch, dinner_place=dinner)
+    slot_map = {"morning": morning, "afternoon": afternoon, "evening": evening}
+    sequence = service._build_day_sequence_with_kind(
+        slot_map, breakfast_place=None, lunch_place=lunch, dinner_place=dinner
+    )
     assert len(sequence) == 5
 
     day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
@@ -150,7 +153,10 @@ def test_missing_coordinates_drop_only_the_adjacent_legs() -> None:
     evening = build_place("evening", 37.504, 127.004)
     accommodation = build_accommodation(37.49, 126.99)
 
-    sequence = service._sequence_day_places_with_kind([morning, afternoon, evening], lunch_place=lunch, dinner_place=dinner)
+    slot_map = {"morning": morning, "afternoon": afternoon, "evening": evening}
+    sequence = service._build_day_sequence_with_kind(
+        slot_map, breakfast_place=None, lunch_place=lunch, dinner_place=dinner
+    )
     day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
 
     assert len(day_travel) == 1
@@ -174,7 +180,9 @@ def test_day_with_no_sequence_at_all_is_excluded_from_day_travel() -> None:
     # entirely rather than appearing with an empty legs list.
     service = RuleItineraryService()
     lone_place = build_place("lone", 37.50, 127.00)
-    sequence = service._sequence_day_places_with_kind([lone_place], lunch_place=None, dinner_place=None)
+    sequence = service._build_day_sequence_with_kind(
+        {"morning": lone_place}, breakfast_place=None, lunch_place=None, dinner_place=None
+    )
 
     day_travel = service._build_day_travel({1: sequence}, None, city="seoul")
 
@@ -189,7 +197,9 @@ def test_day_with_expected_legs_but_all_missing_coordinates_still_appears() -> N
     service = RuleItineraryService()
     lone_place = build_place("lone", None, None)
     accommodation = build_accommodation(37.49, 126.99)
-    sequence = service._sequence_day_places_with_kind([lone_place], lunch_place=None, dinner_place=None)
+    sequence = service._build_day_sequence_with_kind(
+        {"morning": lone_place}, breakfast_place=None, lunch_place=None, dinner_place=None
+    )
 
     day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
 
@@ -205,7 +215,9 @@ def test_totals_use_the_smaller_of_mode_minutes_and_walk_minutes_per_leg() -> No
     service = RuleItineraryService()
     near = build_place("near", 37.5000, 127.0000)
     far = build_place("far", 37.5700, 127.0800)  # a few km away, no walk option
-    sequence = service._sequence_day_places_with_kind([near, far], lunch_place=None, dinner_place=None)
+    sequence = service._build_day_sequence_with_kind(
+        {"morning": near, "afternoon": far}, breakfast_place=None, lunch_place=None, dinner_place=None
+    )
 
     day_travel = service._build_day_travel({1: sequence}, None, city="seoul")
 
@@ -228,10 +240,12 @@ def test_sequence_with_kind_matches_meal_splice_order_and_kind_tags() -> None:
     lunch = build_place("lunch", 37.505, 127.005)
     dinner = build_place("dinner", 37.515, 127.015)
 
-    spliced = service._splice_meals_into_day_places([morning, afternoon, evening], lunch_place=lunch, dinner_place=dinner)
-    sequence = service._sequence_day_places_with_kind([morning, afternoon, evening], lunch_place=lunch, dinner_place=dinner)
+    slot_map = {"morning": morning, "afternoon": afternoon, "evening": evening}
+    sequence = service._build_day_sequence_with_kind(
+        slot_map, breakfast_place=None, lunch_place=lunch, dinner_place=dinner
+    )
 
-    assert [place for place, _kind in sequence] == spliced
+    assert [place for place, _kind in sequence] == [morning, lunch, afternoon, dinner, evening]
     assert [kind for _place, kind in sequence] == ["place", "meal", "place", "meal", "place"]
 
 
@@ -290,9 +304,11 @@ def test_day_travel_leg_order_matches_the_point_in_day_sequence_for_each_city() 
         city_catalog = service.catalog_provider.get_city_catalog(
             continent=normalized.continent, country=normalized.country, city=normalized.city, visible_only=True
         )
-        items, day_place_map, _closed = service._build_items(normalized, city_catalog)
+        items, day_place_map, _closed, day_slot_places = service._build_items(normalized, city_catalog)
         accommodation = service._recommend_accommodation(normalized, city_catalog, day_place_map)
-        _meals, _augmented, day_sequence_with_kind = service._recommend_meals(normalized, city_catalog, day_place_map)
+        _meals, _augmented, day_sequence_with_kind = service._recommend_meals(
+            normalized, city_catalog, day_place_map, day_slot_places
+        )
 
         response = service.generate(request)
 

@@ -22,6 +22,14 @@ TravelEstimateSource = Literal["estimate", "api"]
 # services/request_normalizer.py for the length-matches-days validation.
 DayTransportMode = Literal["transit", "car"]
 TravelLegPointKind = Literal["accommodation", "place", "meal"]
+# First day's arrival time-of-day. None/"morning" means "no restriction" -
+# every code path reading this must treat them identically (same as
+# transport_by_day=None meaning "no mode-aware scoring"). See
+# services/arrival_departure.py for what each value excludes.
+ArrivalPeriod = Literal["morning", "afternoon", "evening", "night"]
+# Last day's departure time-of-day. None/"evening_or_later" means "no
+# restriction" - see services/arrival_departure.py.
+DeparturePeriod = Literal["before_lunch", "afternoon", "evening_or_later"]
 
 
 class RuleItineraryRequest(BaseModel):
@@ -49,6 +57,13 @@ class RuleItineraryRequest(BaseModel):
     # day_number to a weekday, so closed-day exclusion (see
     # RuleClosedDayExclusion) simply never triggers.
     start_date: date | None = None
+    # Day-1 arrival / last-day departure time-of-day, and whether to add a
+    # breakfast recommendation. All optional and all default to "no
+    # restriction" - see services/arrival_departure.py for the exact
+    # slot/meal availability each value implies.
+    arrival_period: ArrivalPeriod | None = None
+    departure_period: DeparturePeriod | None = None
+    include_breakfast: bool = False
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -128,11 +143,16 @@ class RuleMealRecommendation(BaseModel):
     # repeated per day instead of once for the whole trip (see
     # RuleItineraryService._recommend_meals).
     day_number: int
-    meal_type: Literal["lunch", "dinner"]
+    meal_type: Literal["breakfast", "lunch", "dinner"]
     place_name: str
     area: str
     notes: str
     travel_minutes_from_previous: int | None = None
+    # True only for breakfast - the catalog has almost no verified opening
+    # hours for food places (see services/breakfast.py), so a breakfast
+    # recommendation is picked by keyword signal alone and may not
+    # actually be open that early. Always False for lunch/dinner.
+    hours_unverified: bool = False
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -198,6 +218,9 @@ class NormalizedRuleRequest(BaseModel):
     # treat None exactly like before this field existed.
     transport_by_day: list[DayTransportMode] | None = None
     start_date: date | None = None
+    arrival_period: ArrivalPeriod | None = None
+    departure_period: DeparturePeriod | None = None
+    include_breakfast: bool = False
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -252,6 +275,11 @@ class RuleItineraryResponse(BaseModel):
     # Echoes the request's per-day mode back (or None) so the frontend can
     # use it as the day_travel toggle's starting selection.
     transport_by_day: list[DayTransportMode] | None = None
+    # Echoes the request's arrival/departure/breakfast choices back, same
+    # spirit as transport_by_day above.
+    arrival_period: ArrivalPeriod | None = None
+    departure_period: DeparturePeriod | None = None
+    include_breakfast: bool = False
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

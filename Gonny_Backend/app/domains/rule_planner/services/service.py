@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import timedelta
-from typing import Literal
+from typing import Callable, Literal
 
 from app.core.settings import settings
 from app.domains.accommodation_catalog.schemas import AccommodationData
@@ -32,6 +32,8 @@ from .accommodation_scoring import (
     load_city_accommodations,
     select_accommodation_recommendation,
 )
+from .arrival_departure import day_slot_rules
+from .breakfast import is_breakfast_candidate
 from .closed_days import WEEKDAY_LABEL_KO, is_confirmed_closed_on
 from .cost_estimate import estimate_trip_cost_range
 from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
@@ -96,10 +98,10 @@ class RuleItineraryService:
             city=normalized.city,
             visible_only=True,
         )
-        items, day_place_map, closed_day_exclusions = self._build_items(normalized, city_catalog)
+        items, day_place_map, closed_day_exclusions, day_slot_places = self._build_items(normalized, city_catalog)
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
         meal_recommendations, day_place_map_with_meals, day_sequence_with_kind = self._recommend_meals(
-            normalized, city_catalog, day_place_map
+            normalized, city_catalog, day_place_map, day_slot_places
         )
         day_duration_warnings = self._build_day_duration_warnings(
             day_place_map_with_meals, accommodation_recommendation, request=normalized
@@ -136,6 +138,9 @@ class RuleItineraryService:
             ),
             day_travel=day_travel,
             transport_by_day=normalized.transport_by_day,
+            arrival_period=normalized.arrival_period,
+            departure_period=normalized.departure_period,
+            include_breakfast=normalized.include_breakfast,
         )
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
@@ -157,7 +162,12 @@ class RuleItineraryService:
         self,
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
-    ) -> tuple[list[RuleItineraryItem], dict[int, list[PlaceData]], list[RuleClosedDayExclusion]]:
+    ) -> tuple[
+        list[RuleItineraryItem],
+        dict[int, list[PlaceData]],
+        list[RuleClosedDayExclusion],
+        dict[int, dict[str, PlaceData]],
+    ]:
         # "food" places are excluded from the 3-slot activity competition
         # entirely, not merely de-preferred - they're recommended
         # independently per day instead (see _recommend_meals), same
@@ -179,18 +189,28 @@ class RuleItineraryService:
         used_day_areas: set[str] = set()
         items: list[RuleItineraryItem] = []
         day_place_map: dict[int, list[PlaceData]] = {}
+        day_slot_places: dict[int, dict[str, PlaceData]] = {}
         closed_day_exclusions: list[RuleClosedDayExclusion] = []
         seen_exclusion_keys: set[tuple[int, str]] = set()
         full_day_used = False
 
         for day_number in range(1, request.days + 1):
             day_weekday = self._day_weekday(request, day_number)
+            slot_rules = day_slot_rules(
+                arrival_period=request.arrival_period,
+                departure_period=request.departure_period,
+                days=request.days,
+                day_number=day_number,
+            )
+            # Full-day places occupy every slot, so they only make sense
+            # on a day where every slot is actually open - see
+            # RuleItineraryRequest.arrival_period/departure_period.
             full_day_place = self._pick_full_day_place(
                 scored_places=scored_places,
                 request=request,
                 used_ids=used_ids,
                 day_number=day_number,
-                allow_full_day=not full_day_used,
+                allow_full_day=not full_day_used and len(slot_rules.allowed_slots) == len(TIME_SLOTS),
                 day_weekday=day_weekday,
                 closed_day_exclusions=closed_day_exclusions,
                 seen_exclusion_keys=seen_exclusion_keys,
@@ -225,6 +245,7 @@ class RuleItineraryService:
                     )
                 used_ids.add(full_day_place.id)
                 day_place_map[day_number] = [full_day_place]
+                day_slot_places[day_number] = {slot: full_day_place for slot in TIME_SLOTS}
                 full_day_used = True
                 continue
 
@@ -242,6 +263,7 @@ class RuleItineraryService:
                 day_weekday=day_weekday,
                 closed_day_exclusions=closed_day_exclusions,
                 seen_exclusion_keys=seen_exclusion_keys,
+                allowed_slots=slot_rules.allowed_slots,
             )
             slot_places = self._refine_day_with_next_place_lookahead(
                 slot_places,
@@ -283,8 +305,9 @@ class RuleItineraryService:
 
             if day_places:
                 day_place_map[day_number] = day_places
+                day_slot_places[day_number] = dict(slot_places)
 
-        return items, day_place_map, closed_day_exclusions
+        return items, day_place_map, closed_day_exclusions, day_slot_places
 
     def _pick_places_for_day(
         self,
@@ -298,16 +321,19 @@ class RuleItineraryService:
         day_weekday: int | None,
         closed_day_exclusions: list[RuleClosedDayExclusion] | None,
         seen_exclusion_keys: set[tuple[int, str]] | None,
+        allowed_slots: list[str],
     ) -> list[tuple[str, PlaceData]]:
-        """Greedy first pass: one slot at a time, morning -> afternoon ->
-        evening. previous_place is known at this point (the prior slot in
-        this same pass); next_place never is - the slot loop can't know
-        what a later slot will hold before picking it. That's what
+        """Greedy first pass: one slot at a time, in allowed_slots order
+        (a subset of morning -> afternoon -> evening - see
+        RuleItineraryRequest.arrival_period/departure_period).
+        previous_place is known at this point (the prior slot in this same
+        pass); next_place never is - the slot loop can't know what a
+        later slot will hold before picking it. That's what
         _refine_day_with_next_place_lookahead() is for, run afterward once
         the whole day is confirmed.
         """
         slot_places: list[tuple[str, PlaceData]] = []
-        for slot in TIME_SLOTS:
+        for slot in allowed_slots:
             previous_place = slot_places[-1][1] if slot_places else None
             chosen = self._pick_place_for_slot(
                 scored_places=scored_places,
@@ -514,43 +540,102 @@ class RuleItineraryService:
         reference_point = compute_reference_point(day_place_map, city_catalog)
         return select_accommodation_recommendation(accommodations, request, reference_point)
 
+    # Boundary position (index into TIME_SLOTS) each meal sits at in the
+    # day's point-in-day order - breakfast before everything (0), lunch
+    # between morning/afternoon (1), dinner between afternoon/evening (2).
+    # See _nearest_activity_before/_nearest_activity_after.
+    _MEAL_BOUNDARY_INDEX: dict[str, int] = {"breakfast": 0, "lunch": 1, "dinner": 2}
+
+    def _nearest_activity_before(self, slot_map: dict[str, PlaceData], boundary_index: int) -> PlaceData | None:
+        """The closest activity place sitting before this meal's boundary,
+        skipping slots this day doesn't actually have (empty due to
+        arrival_period/departure_period, or rare candidate exhaustion) -
+        e.g. dinner (boundary 2) falls back to morning if afternoon has no
+        place. breakfast (boundary 0) always has nothing before it."""
+        for slot in reversed(TIME_SLOTS[:boundary_index]):
+            if slot in slot_map:
+                return slot_map[slot]
+        return None
+
+    def _nearest_activity_after(self, slot_map: dict[str, PlaceData], boundary_index: int) -> PlaceData | None:
+        """Same as _nearest_activity_before, searching forward - e.g.
+        breakfast (boundary 0) anchors on the day's first actually-filled
+        slot, whichever one that is."""
+        for slot in TIME_SLOTS[boundary_index:]:
+            if slot in slot_map:
+                return slot_map[slot]
+        return None
+
+    def _build_day_sequence_with_kind(
+        self,
+        slot_map: dict[str, PlaceData],
+        *,
+        breakfast_place: PlaceData | None,
+        lunch_place: PlaceData | None,
+        dinner_place: PlaceData | None,
+    ) -> list[tuple[PlaceData, Literal["place", "meal"]]]:
+        """Point-in-day order: [breakfast] -> morning -> [lunch] ->
+        afternoon -> [dinner] -> evening, skipping any slot this day
+        doesn't have. A full-day place maps every slot to the same
+        PlaceData (see _build_items) - it's only appended once (by id),
+        right where its first slot falls, so it isn't triple-counted by
+        _build_day_duration_warnings/_build_day_travel despite "occupying"
+        all 3 nominal slots.
+        """
+        sequence: list[tuple[PlaceData, Literal["place", "meal"]]] = []
+        if breakfast_place is not None:
+            sequence.append((breakfast_place, "meal"))
+
+        last_place_id: str | None = None
+        for slot in TIME_SLOTS:
+            place = slot_map.get(slot)
+            if place is not None and place.id != last_place_id:
+                sequence.append((place, "place"))
+                last_place_id = place.id
+            if slot == "morning" and lunch_place is not None:
+                sequence.append((lunch_place, "meal"))
+            if slot == "afternoon" and dinner_place is not None:
+                sequence.append((dinner_place, "meal"))
+        return sequence
+
     def _recommend_meals(
         self,
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
         day_place_map: dict[int, list[PlaceData]],
+        day_slot_places: dict[int, dict[str, PlaceData]],
     ) -> tuple[
         list[RuleMealRecommendation],
         dict[int, list[PlaceData]],
         dict[int, list[tuple[PlaceData, Literal["place", "meal"]]]],
     ]:
-        """Independent lunch/dinner recommendation, one pass per day - same
-        spirit as _recommend_accommodation() above (a pick made outside the
-        morning/afternoon/evening slot competition), just repeated per day
-        instead of once for the whole trip. Runs as its own pass over the
-        already-built itinerary (day_place_map) rather than inside
-        _build_items()'s slot loop: food no longer competes for a slot
-        (see SLOT_CATEGORY_PREFERENCE), so it doesn't belong in that loop
-        at all any more - this replaces the old post-hoc food-guarantee
-        swap that used to live there.
+        """Independent breakfast/lunch/dinner recommendation, one pass per
+        day - same spirit as _recommend_accommodation() above (a pick made
+        outside the morning/afternoon/evening slot competition), just
+        repeated per day instead of once for the whole trip. Runs as its
+        own pass over the already-built itinerary (day_place_map,
+        day_slot_places) rather than inside _build_items()'s slot loop:
+        food no longer competes for a slot (see SLOT_CATEGORY_PREFERENCE),
+        so it doesn't belong in that loop at all any more - this replaces
+        the old post-hoc food-guarantee swap that used to live there.
 
-        Point-in-day order is morning_place -> lunch -> afternoon_place ->
-        dinner -> evening_place (a full-day day's single place anchors
-        both meals on both sides, since it fills all 3 nominal slots).
+        Point-in-day order is [breakfast] -> morning -> [lunch] ->
+        afternoon -> [dinner] -> evening - see
+        _build_day_sequence_with_kind. Each meal anchors on the nearest
+        slot actually filled that day (day_slot_places), not a fixed
+        index - a day with a restricted/empty slot (arrival_period,
+        departure_period) must not silently shift every later slot's
+        place into the wrong meal's "previous"/"next".
 
         Returns (meal_recommendations, day_place_map_with_meals,
         day_sequence_with_kind). The second is day_place_map with the
-        actually-chosen restaurant PlaceData spliced into each day's place
-        list at that point-in-day position, for
-        _build_day_duration_warnings() to size the day's total time
-        correctly (a day with an unaccounted lunch/dinner would otherwise
-        look shorter than it really is). The original day_place_map
-        (without meals) is still what every other caller (weather alerts,
-        the accommodation reference point above) uses - see this feature's
-        scope note on why duration warnings alone need the augmented
-        version. The third is the same point-in-day sequence tagged with
-        each entry's kind, for _build_day_travel() (see
-        _sequence_day_places_with_kind).
+        actually-chosen meals spliced in at their point-in-day position,
+        for _build_day_duration_warnings() to size the day's total time
+        correctly (an unaccounted meal would otherwise look shorter than
+        it really is). The original day_place_map (without meals) is
+        still what every other caller (weather alerts, the accommodation
+        reference point above) uses. The third is the same point-in-day
+        sequence tagged with each entry's kind, for _build_day_travel().
         """
         scored_places = sorted(
             [place for place in city_catalog.places if place.is_active],
@@ -568,87 +653,116 @@ class RuleItineraryService:
         # Same point-in-day order as day_place_map_with_meals above, but
         # tagged with each entry's kind ("place" vs "meal") so
         # _build_day_travel can label travel legs without re-deriving the
-        # splice position - see _sequence_day_places_with_kind.
+        # splice position - see _build_day_sequence_with_kind.
         day_sequence_with_kind: dict[int, list[tuple[PlaceData, Literal["place", "meal"]]]] = {}
 
         # Iterates every day in the request, not just the days that ended
         # up with an entry in day_place_map: a day where the activity-slot
-        # loop somehow placed nothing at all (candidate pool exhaustion -
-        # rare, but possible) should still get its own lunch/dinner
-        # consideration rather than silently having no meals at all.
+        # loop somehow placed nothing at all (candidate pool exhaustion, or
+        # a fully-restricted arrival/departure day) should still get its
+        # own meal consideration rather than silently having none at all.
         for day_number in range(1, request.days + 1):
             day_places = day_place_map.get(day_number, [])
+            slot_map = day_slot_places.get(day_number, {})
             day_weekday = self._day_weekday(request, day_number)
             day_area = day_places[0].area if day_places else None
-
-            if len(day_places) <= 1:
-                # Full-day (or an edge-case empty/single-item day): the one
-                # place anchors both sides of both meals.
-                morning_place = afternoon_place = evening_place = day_places[0] if day_places else None
-            else:
-                morning_place = day_places[0]
-                afternoon_place = day_places[1] if len(day_places) > 1 else None
-                evening_place = day_places[2] if len(day_places) > 2 else None
-
-            lunch_place = self._pick_meal_place(
-                previous_place=morning_place,
-                next_place=afternoon_place,
-                day_area=day_area,
-                city=request.city,
-                scored_places=scored_places,
-                request=request,
-                used_ids=used_ids,
+            slot_rules = day_slot_rules(
+                arrival_period=request.arrival_period,
+                departure_period=request.departure_period,
+                days=request.days,
                 day_number=day_number,
-                day_weekday=day_weekday,
             )
-            if lunch_place is not None:
-                used_ids.add(lunch_place.id)
-                meal_recommendations.append(
-                    self._build_meal_recommendation(
-                        place=lunch_place,
-                        meal_type="lunch",
-                        request=request,
-                        day_number=day_number,
-                        day_area=day_area,
-                        previous_place=morning_place,
-                    )
+
+            breakfast_place = None
+            if request.include_breakfast and slot_rules.breakfast_allowed:
+                breakfast_place = self._pick_meal_place(
+                    previous_place=None,
+                    next_place=self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["breakfast"]),
+                    day_area=day_area,
+                    city=request.city,
+                    scored_places=scored_places,
+                    request=request,
+                    used_ids=used_ids,
+                    day_number=day_number,
+                    day_weekday=day_weekday,
+                    extra_filter=is_breakfast_candidate,
                 )
-
-            dinner_place = self._pick_meal_place(
-                previous_place=afternoon_place,
-                next_place=evening_place,
-                day_area=day_area,
-                city=request.city,
-                scored_places=scored_places,
-                request=request,
-                used_ids=used_ids,
-                day_number=day_number,
-                day_weekday=day_weekday,
-            )
-            if dinner_place is not None:
-                used_ids.add(dinner_place.id)
-                meal_recommendations.append(
-                    self._build_meal_recommendation(
-                        place=dinner_place,
-                        meal_type="dinner",
-                        request=request,
-                        day_number=day_number,
-                        day_area=day_area,
-                        previous_place=afternoon_place,
+                if breakfast_place is not None:
+                    used_ids.add(breakfast_place.id)
+                    meal_recommendations.append(
+                        self._build_meal_recommendation(
+                            place=breakfast_place,
+                            meal_type="breakfast",
+                            request=request,
+                            day_number=day_number,
+                            day_area=day_area,
+                            previous_place=None,
+                        )
                     )
+
+            lunch_place = None
+            if slot_rules.lunch_allowed:
+                lunch_previous = self._nearest_activity_before(slot_map, self._MEAL_BOUNDARY_INDEX["lunch"])
+                lunch_place = self._pick_meal_place(
+                    previous_place=lunch_previous,
+                    next_place=self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["lunch"]),
+                    day_area=day_area,
+                    city=request.city,
+                    scored_places=scored_places,
+                    request=request,
+                    used_ids=used_ids,
+                    day_number=day_number,
+                    day_weekday=day_weekday,
                 )
+                if lunch_place is not None:
+                    used_ids.add(lunch_place.id)
+                    meal_recommendations.append(
+                        self._build_meal_recommendation(
+                            place=lunch_place,
+                            meal_type="lunch",
+                            request=request,
+                            day_number=day_number,
+                            day_area=day_area,
+                            previous_place=lunch_previous,
+                        )
+                    )
 
-            augmented_day_places = self._splice_meals_into_day_places(
-                day_places, lunch_place=lunch_place, dinner_place=dinner_place
-            )
-            if augmented_day_places:
-                day_place_map_with_meals[day_number] = augmented_day_places
+            dinner_place = None
+            if slot_rules.dinner_allowed:
+                dinner_previous = self._nearest_activity_before(slot_map, self._MEAL_BOUNDARY_INDEX["dinner"])
+                dinner_place = self._pick_meal_place(
+                    previous_place=dinner_previous,
+                    next_place=self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["dinner"]),
+                    day_area=day_area,
+                    city=request.city,
+                    scored_places=scored_places,
+                    request=request,
+                    used_ids=used_ids,
+                    day_number=day_number,
+                    day_weekday=day_weekday,
+                )
+                if dinner_place is not None:
+                    used_ids.add(dinner_place.id)
+                    meal_recommendations.append(
+                        self._build_meal_recommendation(
+                            place=dinner_place,
+                            meal_type="dinner",
+                            request=request,
+                            day_number=day_number,
+                            day_area=day_area,
+                            previous_place=dinner_previous,
+                        )
+                    )
 
-            sequence_with_kind = self._sequence_day_places_with_kind(
-                day_places, lunch_place=lunch_place, dinner_place=dinner_place
+            sequence_with_kind = self._build_day_sequence_with_kind(
+                slot_map,
+                breakfast_place=breakfast_place,
+                lunch_place=lunch_place,
+                dinner_place=dinner_place,
             )
             if sequence_with_kind:
                 day_sequence_with_kind[day_number] = sequence_with_kind
+                day_place_map_with_meals[day_number] = [place for place, _ in sequence_with_kind]
 
         return meal_recommendations, day_place_map_with_meals, day_sequence_with_kind
 
@@ -664,12 +778,22 @@ class RuleItineraryService:
         used_ids: set[str],
         day_number: int,
         day_weekday: int | None,
+        extra_filter: Callable[[PlaceData], bool] | None = None,
     ) -> PlaceData | None:
         food_candidates = [
-            place for place in scored_places if place.id not in used_ids and "food" in place.concept_tags
+            place
+            for place in scored_places
+            if place.id not in used_ids
+            and "food" in place.concept_tags
+            and (extra_filter is None or extra_filter(place))
         ]
         if not food_candidates:
-            return None  # no food entity available for this city - data gap, not a bug
+            # No food entity available for this city/filter - data gap
+            # (or, for a breakfast extra_filter, simply no classified
+            # breakfast candidate) rather than a bug. Deliberately never
+            # falls back to the unfiltered food pool - see
+            # RuleItineraryRequest.include_breakfast.
+            return None
 
         candidate_pool = self._meal_candidate_pool(food_candidates, day_area=day_area, city=city)
         ranked = sorted(
@@ -711,62 +835,6 @@ class RuleItineraryService:
             return neighbor_area_candidates
 
         return food_candidates
-
-    def _splice_meals_into_day_places(
-        self,
-        day_places: list[PlaceData],
-        *,
-        lunch_place: PlaceData | None,
-        dinner_place: PlaceData | None,
-    ) -> list[PlaceData]:
-        """Rebuilds one day's place list in point-in-day order (morning ->
-        lunch -> afternoon -> dinner -> evening) with the chosen meals
-        spliced in, for _build_day_duration_warnings() to size the day
-        correctly. A full-day day (day_places has a single entry) has no
-        "afternoon"/"evening" to splice around, so this naturally reduces
-        to [full_day_place, lunch?, dinner?] - the full-day place's own
-        duration_hours already accounts for the whole day's activity time,
-        so it's included exactly once even though it conceptually spans
-        every slot.
-        """
-        augmented: list[PlaceData] = []
-        if day_places:
-            augmented.append(day_places[0])
-        if lunch_place is not None:
-            augmented.append(lunch_place)
-        if len(day_places) > 1:
-            augmented.append(day_places[1])
-        if dinner_place is not None:
-            augmented.append(dinner_place)
-        if len(day_places) > 2:
-            augmented.append(day_places[2])
-        return augmented
-
-    def _sequence_day_places_with_kind(
-        self,
-        day_places: list[PlaceData],
-        *,
-        lunch_place: PlaceData | None,
-        dinner_place: PlaceData | None,
-    ) -> list[tuple[PlaceData, Literal["place", "meal"]]]:
-        """Same point-in-day interleaving as _splice_meals_into_day_places
-        (morning -> lunch -> afternoon -> dinner -> evening), kept as a
-        separate pass rather than changing that function's return type, so
-        _build_day_duration_warnings's existing list[PlaceData] input is
-        untouched. Used only to label travel legs with "place" vs "meal" in
-        _build_day_travel."""
-        sequence: list[tuple[PlaceData, Literal["place", "meal"]]] = []
-        if day_places:
-            sequence.append((day_places[0], "place"))
-        if lunch_place is not None:
-            sequence.append((lunch_place, "meal"))
-        if len(day_places) > 1:
-            sequence.append((day_places[1], "place"))
-        if dinner_place is not None:
-            sequence.append((dinner_place, "meal"))
-        if len(day_places) > 2:
-            sequence.append((day_places[2], "place"))
-        return sequence
 
     def _build_day_travel(
         self,
@@ -844,22 +912,25 @@ class RuleItineraryService:
         walk_option = next((option for option in leg.options if option.mode == "walk"), None)
         return min(mode_minutes, walk_option.minutes) if walk_option is not None else mode_minutes
 
+    _MEAL_NOTE_TIME_SLOT: dict[str, str] = {"breakfast": "morning", "lunch": "afternoon", "dinner": "evening"}
+
     def _build_meal_recommendation(
         self,
         *,
         place: PlaceData,
-        meal_type: Literal["lunch", "dinner"],
+        meal_type: Literal["breakfast", "lunch", "dinner"],
         request: NormalizedRuleRequest,
         day_number: int,
         day_area: str | None,
         previous_place: PlaceData | None,
     ) -> RuleMealRecommendation:
         # Reuses the existing note generator rather than inventing meal-
-        # specific templates - "afternoon"/"evening" flavor the copy
-        # closely enough to lunch/dinner's real-world timing (note_generator's
-        # templates fall back to a neutral generic line for any other
-        # time_slot value anyway, so this never produces something odd).
-        note_time_slot = "afternoon" if meal_type == "lunch" else "evening"
+        # specific templates - "morning"/"afternoon"/"evening" flavor the
+        # copy closely enough to each meal's real-world timing
+        # (note_generator's templates fall back to a neutral generic line
+        # for any other time_slot value anyway, so this never produces
+        # something odd).
+        note_time_slot = self._MEAL_NOTE_TIME_SLOT[meal_type]
         return RuleMealRecommendation(
             day_number=day_number,
             meal_type=meal_type,
@@ -876,6 +947,11 @@ class RuleItineraryService:
             travel_minutes_from_previous=(
                 estimate_travel_minutes_between(previous_place, place) if previous_place is not None else None
             ),
+            # The catalog has almost no verified opening-hours data for
+            # food places, so a breakfast pick (keyword-classified, see
+            # services/breakfast.py) can't be confirmed open that early -
+            # lunch/dinner aren't flagged, same as before this field existed.
+            hours_unverified=meal_type == "breakfast",
         )
 
     def _pick_full_day_place(

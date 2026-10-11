@@ -43,6 +43,14 @@ type TripConcept =
   | "nightlife"
   | "onsen";
 
+// A fact-based "why this place" tag - see the backend's RuleReason. code is
+// a stable key (not shown to the user); label is the ready-to-display
+// Korean text and is rendered verbatim, never re-translated or scored.
+type RuleReason = {
+  code: string;
+  label: string;
+};
+
 type RuleItineraryItem = {
   day_number: number;
   time_slot: TimeSlot;
@@ -56,6 +64,10 @@ type RuleItineraryItem = {
   travel_minutes_from_previous: number | null;
   // Representative adult admission in KRW (0 = confirmed free, null = unknown).
   average_cost_krw?: number | null;
+  // Up to 3 reasons this place was recommended, backend priority order.
+  // Absent on a response from before this field existed (e.g. a cached
+  // result) - normalizeGenerateResponse defaults it to [], never throws.
+  reasons: RuleReason[];
 };
 
 type RuleDayDurationWarning = {
@@ -95,6 +107,22 @@ type RuleMealRecommendation = {
   // hours for food places, so a breakfast pick is a keyword guess that
   // may not actually be open that early. Always false for lunch/dinner.
   hours_unverified: boolean;
+  // See RuleItineraryItem.reasons - meals only ever carry a travel-based
+  // or meal-time-fit reason.
+  reasons: RuleReason[];
+};
+
+// One day's at-a-glance load - see the backend's RuleDaySummary. Covers
+// every day 1..days, including an empty (e.g. arrival) day at
+// place_count=0 - never an "intensity" label, just the raw numbers.
+type RuleDaySummary = {
+  day_number: number;
+  place_count: number;
+  area_count: number;
+  activity_minutes: number;
+  travel_minutes: number | null;
+  travel_is_partial: boolean;
+  transport_mode: "transit" | "car" | null;
 };
 
 // Per-day "did we manage to check the weather" status - see the
@@ -206,6 +234,7 @@ type RuleItineraryResponse = {
   arrival_period: ArrivalPeriod | null;
   departure_period: DeparturePeriod | null;
   include_breakfast: boolean;
+  day_summaries: RuleDaySummary[];
 };
 
 type PlannerFormState = {
@@ -438,6 +467,49 @@ function formatDayWeatherLine(status: RuleDayWeatherStatus | undefined): string 
   return `날씨 예보: ${conditionLabel} · ${status.min_temp_c}°~${status.max_temp_c}°`;
 }
 
+// "장소 N곳 · 활동 약 H시간 M분 · [대중교통/자동차] 이동 약 H시간 M분[ 이상] · 지역 N곳"
+// - see RuleDaySummary. Never an intensity/judgement label, only the raw
+// counts the backend already computed; "약" always precedes a duration
+// since both are estimates (activity_minutes sums catalog durations,
+// travel_minutes is the existing day_travel estimate).
+function formatActivityMinutesSegment(activityMinutes: number): string | null {
+  if (activityMinutes <= 0) {
+    return null;
+  }
+  const hours = Math.floor(activityMinutes / 60);
+  const minutes = activityMinutes % 60;
+  if (hours === 0) {
+    return `활동 약 ${minutes}분`;
+  }
+  if (minutes === 0) {
+    return `활동 약 ${hours}시간`;
+  }
+  return `활동 약 ${hours}시간 ${minutes}분`;
+}
+
+function formatDaySummaryTravelSegment(summary: RuleDaySummary): string | null {
+  if (summary.travel_minutes == null) {
+    return null;
+  }
+  const modePrefix = summary.transport_mode === "transit" ? "대중교통 " : summary.transport_mode === "car" ? "자동차 " : "";
+  const suffix = summary.travel_is_partial ? " 이상" : "";
+  return `${modePrefix}이동 약 ${formatTravelMinutesLabel(summary.travel_minutes)}${suffix}`;
+}
+
+function formatDaySummaryLine(summary: RuleDaySummary): string {
+  const segments = [`장소 ${summary.place_count}곳`];
+  const activitySegment = formatActivityMinutesSegment(summary.activity_minutes);
+  if (activitySegment) {
+    segments.push(activitySegment);
+  }
+  const travelSegment = formatDaySummaryTravelSegment(summary);
+  if (travelSegment) {
+    segments.push(travelSegment);
+  }
+  segments.push(`지역 ${summary.area_count}곳`);
+  return segments.join(" · ");
+}
+
 // Place-level category codes shown as a chip on each item card. Every
 // TripConcept value reuses labelTripConcept's exact wording; the rest are
 // PlaceData.activity_type_codes values that can appear in item.category
@@ -493,6 +565,15 @@ function isCatalogCityOption(value: unknown): value is CatalogCityOption {
   );
 }
 
+function isRuleReason(value: unknown): value is RuleReason {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const reason = value as Record<string, unknown>;
+  return typeof reason.code === "string" && typeof reason.label === "string";
+}
+
 function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
   if (!value || typeof value !== "object") {
     return false;
@@ -506,7 +587,8 @@ function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
     typeof item.category === "string" &&
     typeof item.area === "string" &&
     typeof item.notes === "string" &&
-    (item.travel_minutes_from_previous === null || typeof item.travel_minutes_from_previous === "number")
+    (item.travel_minutes_from_previous === null || typeof item.travel_minutes_from_previous === "number") &&
+    (item.reasons === undefined || Array.isArray(item.reasons))
   );
 }
 
@@ -566,7 +648,25 @@ function isRuleMealRecommendation(value: unknown): value is RuleMealRecommendati
     typeof meal.area === "string" &&
     typeof meal.notes === "string" &&
     (meal.travel_minutes_from_previous === null || typeof meal.travel_minutes_from_previous === "number") &&
-    (meal.hours_unverified === undefined || typeof meal.hours_unverified === "boolean")
+    (meal.hours_unverified === undefined || typeof meal.hours_unverified === "boolean") &&
+    (meal.reasons === undefined || Array.isArray(meal.reasons))
+  );
+}
+
+function isRuleDaySummary(value: unknown): value is RuleDaySummary {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const summary = value as Record<string, unknown>;
+  return (
+    typeof summary.day_number === "number" &&
+    typeof summary.place_count === "number" &&
+    typeof summary.area_count === "number" &&
+    typeof summary.activity_minutes === "number" &&
+    (summary.travel_minutes === null || typeof summary.travel_minutes === "number") &&
+    typeof summary.travel_is_partial === "boolean" &&
+    (summary.transport_mode === null || summary.transport_mode === "transit" || summary.transport_mode === "car")
   );
 }
 
@@ -719,7 +819,10 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     throw new Error("생성된 일정 항목이 없습니다.");
   }
 
-  const items = data.items.filter(isRuleItineraryItem);
+  const items = data.items.filter(isRuleItineraryItem).map((item) => ({
+    ...item,
+    reasons: Array.isArray(item.reasons) ? item.reasons.filter(isRuleReason) : [],
+  }));
   if (items.length === 0) {
     throw new Error("생성된 일정 항목을 해석하지 못했습니다.");
   }
@@ -750,9 +853,11 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
       ? data.accommodation_recommendation
       : null,
     meal_recommendations: Array.isArray(data.meal_recommendations)
-      ? data.meal_recommendations
-          .filter(isRuleMealRecommendation)
-          .map((meal) => ({ ...meal, hours_unverified: meal.hours_unverified ?? false }))
+      ? data.meal_recommendations.filter(isRuleMealRecommendation).map((meal) => ({
+          ...meal,
+          hours_unverified: meal.hours_unverified ?? false,
+          reasons: Array.isArray(meal.reasons) ? meal.reasons.filter(isRuleReason) : [],
+        }))
       : [],
     estimated_cost: isRuleCostEstimate(data.estimated_cost) ? data.estimated_cost : null,
     day_travel: Array.isArray(data.day_travel) ? data.day_travel.filter(isRuleDayTravel) : [],
@@ -760,6 +865,7 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     arrival_period: isArrivalPeriod(data.arrival_period) ? data.arrival_period : null,
     departure_period: isDeparturePeriod(data.departure_period) ? data.departure_period : null,
     include_breakfast: typeof data.include_breakfast === "boolean" ? data.include_breakfast : false,
+    day_summaries: Array.isArray(data.day_summaries) ? data.day_summaries.filter(isRuleDaySummary) : [],
   };
 }
 
@@ -995,6 +1101,51 @@ function TravelConnectorRow({
   );
 }
 
+// Server labels shown verbatim, in server order - never re-translated,
+// re-ranked, or scored here. Renders nothing (not even an empty row) when
+// there are no reasons, so no blank space shows up on a place with none.
+function ReasonChips({ reasons }: { reasons: RuleReason[] }) {
+  if (reasons.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="tc-reason-row">
+      {reasons.map((reason) => (
+        <span className="tc-reason-chip" key={reason.code}>
+          {reason.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+const GONNY_INTRO_LINES = [
+  "선택하신 취향·동행·예산·여행 속도를 기준으로 장소를 고릅니다.",
+  "하루 안에서는 서로 가까운 장소를 묶고, 선택한 이동 수단 기준으로 이동 시간을 계산합니다.",
+  "각 장소 아래 태그는 그 장소를 고른 근거입니다.",
+  "이동 시간은 거리와 평균 속도로 추정한 값이라 실제와 다를 수 있어요.",
+  "AI 외부 서비스를 호출하지 않고 Gonny가 자체 규칙과 학습한 모델로 일정을 만듭니다.",
+];
+
+function GonnyIntro({ isOpen, onToggle }: { isOpen: boolean; onToggle: () => void }) {
+  return (
+    <div className="tc-card tc-intro-card">
+      <button aria-expanded={isOpen} className="tc-intro-toggle" onClick={onToggle} type="button">
+        <span>Gonny는 이렇게 일정을 짜요</span>
+        <span aria-hidden="true">{isOpen ? "접기" : "더 보기"}</span>
+      </button>
+      {isOpen ? (
+        <ul className="tc-intro-list">
+          {GONNY_INTRO_LINES.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendation; showTravelTime?: boolean }) {
   const note = splitNoteLines(meal.notes);
 
@@ -1012,6 +1163,7 @@ function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendatio
           <span className="tc-stop-chip">식사</span>
         </div>
         <p className="tc-stop-area">{meal.area}</p>
+        <ReasonChips reasons={meal.reasons} />
         {meal.hours_unverified ? (
           <p className="tc-meal-hours-note">영업시간은 방문 전에 직접 확인해 주세요</p>
         ) : null}
@@ -1066,6 +1218,7 @@ export function TripCreateForm() {
   const [dayTravelMode, setDayTravelMode] = useState<Record<number, "transit" | "car">>({});
   const [docDownload, setDocDownload] = useState<{ href: string; filename: string } | null>(null);
   const [printPreview, setPrintPreview] = useState<{ href: string; filename: string } | null>(null);
+  const [isIntroOpen, setIsIntroOpen] = useState(false);
   const hasResult = result !== null;
 
   useEffect(() => {
@@ -1130,6 +1283,10 @@ export function TripCreateForm() {
     [result],
   );
   const hasUnavailableWeatherDay = (result?.weather_status ?? []).some((status) => status.status === "unavailable");
+  const daySummaryByDay = useMemo(
+    () => new Map((result?.day_summaries ?? []).map((summary) => [summary.day_number, summary])),
+    [result],
+  );
   const allTravelLegs = useMemo(
     () => (result?.day_travel ?? []).flatMap((dayTravel) => dayTravel.legs),
     [result],
@@ -1966,6 +2123,8 @@ export function TripCreateForm() {
               </div>
             ) : null}
 
+            <GonnyIntro isOpen={isIntroOpen} onToggle={() => setIsIntroOpen((previous) => !previous)} />
+
             <div className="tc-card">
               <h2 className="tc-stage-title">일차별 추천 동선</h2>
               <p className="tc-stage-subtitle">오전, 오후, 저녁 흐름으로 끊어서 보기 쉽게 정리했습니다.</p>
@@ -1988,6 +2147,7 @@ export function TripCreateForm() {
               {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
                 const dayItems = itemsByDay.get(dayNumber) ?? [];
                 const weatherLine = formatDayWeatherLine(weatherStatusByDay.get(dayNumber));
+                const daySummary = daySummaryByDay.get(dayNumber);
                 const isFirstDay = dayNumber === 1;
                 const isLastDay = dayNumber === result.days;
                 // A 1-day trip has days === 1, so isFirstDay and isLastDay
@@ -2055,6 +2215,14 @@ export function TripCreateForm() {
                   <div className="tc-day-head">
                     <div>
                       <h3 className="tc-day-title">{dayNumber}일차</h3>
+                      {daySummary && daySummary.place_count > 0 ? (
+                        <p className="tc-day-summary-line">
+                          {formatDaySummaryLine(daySummary)}
+                          {daySummary.travel_is_partial ? (
+                            <span className="tc-day-summary-note"> (일부 구간 제외)</span>
+                          ) : null}
+                        </p>
+                      ) : null}
                       <p className="tc-day-route">{summarizeRoute(dayItems)}</p>
                       {weatherLine ? <p className="tc-day-weather">{weatherLine}</p> : null}
                     </div>
@@ -2149,6 +2317,7 @@ export function TripCreateForm() {
                                 {item.average_cost_krw != null ? (
                                   <p className="tc-stop-cost">{formatCostLabel(item.average_cost_krw)}</p>
                                 ) : null}
+                                <ReasonChips reasons={item.reasons} />
                                 {note.headline ? <p className="tc-stop-note-lead">{note.headline}</p> : null}
                                 {note.details.map((line, lineIndex) => (
                                   <p key={`${item.place_name}-note-${lineIndex}`} className="tc-stop-note-line">

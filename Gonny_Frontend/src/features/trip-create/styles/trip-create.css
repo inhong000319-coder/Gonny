@@ -675,6 +675,17 @@
   color: var(--tc-muted);
 }
 
+.tc-day-summary-line {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+.tc-day-summary-note {
+  font-size: 12px;
+  color: var(--tc-muted);
+}
+
 .tc-day-mode {
   display: flex;
   flex-wrap: wrap;
@@ -784,6 +795,27 @@
   color: var(--tc-muted);
 }
 
+/* --- Reason chips (place/meal cards) - not selectable, no check mark,
+   so these deliberately don't reuse .tc-chip's is-selected treatment. --- */
+
+.tc-reason-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.tc-reason-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--tc-primary-soft);
+  color: var(--tc-primary-strong);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .tc-stop-area {
   margin: 0;
   font-size: 14px;
@@ -861,6 +893,61 @@
   .tc-connector::before {
     display: none;
   }
+}
+
+/* --- "Gonny는 이렇게 일정을 짜요" intro (collapsed by default) ------------ */
+
+.tc-intro-card {
+  padding: 0;
+}
+
+.tc-intro-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: var(--tc-radius-md);
+  background: transparent;
+  color: var(--tc-text);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tc-intro-toggle span:last-child {
+  flex-shrink: 0;
+  color: var(--tc-primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tc-intro-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0 20px 18px;
+  list-style: none;
+}
+
+.tc-intro-list li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 14px;
+  color: var(--tc-muted);
+  line-height: 1.5;
+}
+
+.tc-intro-list li::before {
+  position: absolute;
+  left: 0;
+  color: var(--tc-primary);
+  font-weight: 700;
+  content: "\00b7";
 }
 
 /* --- Result actions ---------------------------------------------------- */

@@ -68,6 +68,18 @@ class RuleItineraryRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleReason(BaseModel):
+    """One fact-based reason a place was recommended - see
+    services/reasons.py. Never carries a score number or internal
+    weighting, only a stable code (for the frontend to key off of) and a
+    ready-to-display Korean label."""
+
+    code: str
+    label: str
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleItineraryItem(BaseModel):
     day_number: int
     time_slot: TimeSlot
@@ -83,6 +95,9 @@ class RuleItineraryItem(BaseModel):
     # Copied from the source PlaceData.average_cost_krw - see that field's docstring
     # for the 0 (free) vs None (unknown) distinction. Not set for food places.
     average_cost_krw: int | None = None
+    # Up to 3 fact-based reasons this place was recommended - see
+    # services/reasons.py. Empty list is valid (a place can have none).
+    reasons: list[RuleReason] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -153,6 +168,10 @@ class RuleMealRecommendation(BaseModel):
     # recommendation is picked by keyword signal alone and may not
     # actually be open that early. Always False for lunch/dinner.
     hours_unverified: bool = False
+    # Same contract as RuleItineraryItem.reasons - meals only ever get a
+    # travel-based or meal-time-fit reason (see services/reasons.py), never
+    # an hours-related one, since hours_unverified already covers that.
+    reasons: list[RuleReason] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -251,6 +270,34 @@ class RuleCostEstimate(BaseModel):
     travelers: int
 
 
+class RuleDaySummary(BaseModel):
+    """One day's at-a-glance load - place/area counts and estimated time,
+    with no invented "intensity tier" label (see services/reasons.py's
+    day-summary builder - the frontend decides how to phrase/bucket these
+    numbers, this just reports them)."""
+
+    day_number: int
+    # Activity places only (meals excluded) - see day_place_map.
+    place_count: int
+    area_count: int
+    # Sum of each activity place's duration_hours * 60. Meals excluded,
+    # same as place_count.
+    activity_minutes: int
+    # None when there's no RuleDayTravel entry for this day, or it has no
+    # legs at all (nothing to sum) - never 0 in that case, since 0 would
+    # misleadingly claim "no travel time" rather than "no data".
+    travel_minutes: int | None = None
+    # True when the day's RuleDayTravel.missing_leg_count > 0 - travel_minutes
+    # only reflects the legs that could be estimated.
+    travel_is_partial: bool = False
+    # Echoes request.transport_by_day[day_number - 1], or None if the
+    # request didn't set one - see travel_minutes for how a None here still
+    # resolves to a concrete number via a default mode assumption.
+    transport_mode: DayTransportMode | None = None
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleItineraryResponse(BaseModel):
     continent: str
     country: str
@@ -280,6 +327,7 @@ class RuleItineraryResponse(BaseModel):
     arrival_period: ArrivalPeriod | None = None
     departure_period: DeparturePeriod | None = None
     include_breakfast: bool = False
+    day_summaries: list[RuleDaySummary] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

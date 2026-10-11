@@ -304,9 +304,9 @@ def test_day_travel_leg_order_matches_the_point_in_day_sequence_for_each_city() 
         city_catalog = service.catalog_provider.get_city_catalog(
             continent=normalized.continent, country=normalized.country, city=normalized.city, visible_only=True
         )
-        items, day_place_map, _closed, day_slot_places = service._build_items(normalized, city_catalog)
+        items, day_place_map, _closed, day_slot_places, _feedback = service._build_items(normalized, city_catalog)
         accommodation = service._recommend_accommodation(normalized, city_catalog, day_place_map)
-        _meals, _augmented, day_sequence_with_kind = service._recommend_meals(
+        _meals, _augmented, day_sequence_with_kind, _day_meal_places = service._recommend_meals(
             normalized, city_catalog, day_place_map, day_slot_places
         )
 

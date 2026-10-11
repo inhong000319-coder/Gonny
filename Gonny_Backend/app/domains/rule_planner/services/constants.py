@@ -283,3 +283,17 @@ BUDGET_REASON_KO = {
     "medium": "비용과 만족도의 균형이 잘 맞고",
     "high": "조금 더 편안하고 완성도 있는 여행 예산과 잘 맞으며",
 }
+# Plain, short labels (not the full note-generator sentences above) - see
+# services/reasons.py, which builds a short per-place reason tag rather
+# than a prose note.
+COMPANION_LABEL_KO = {
+    "solo": "혼자",
+    "couple": "커플",
+    "friend": "친구",
+    "family": "가족",
+}
+TIME_SLOT_LABEL_KO = {
+    "morning": "오전",
+    "afternoon": "오후",
+    "evening": "저녁",
+}

@@ -23,6 +23,7 @@ from app.domains.rule_planner.schemas import (
     RuleItineraryResponse,
     RuleMealRecommendation,
     RuleReason,
+    RuleTransportComparisonResponse,
     RuleTravelLeg,
     RuleWeatherAlert,
 )
@@ -37,6 +38,7 @@ from .accommodation_scoring import (
 from .arrival_departure import day_slot_rules
 from .breakfast import is_breakfast_candidate
 from .closed_days import WEEKDAY_LABEL_KO, is_confirmed_closed_on
+from .compare_transport import build_transport_comparison
 from .cost_estimate import estimate_trip_cost_range
 from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
 from .constants import (
@@ -93,7 +95,16 @@ class RuleItineraryService:
             for option in self.catalog_provider.list_city_options(visible_only=True)
         ]
 
-    def generate(self, request: RuleItineraryRequest) -> RuleItineraryResponse:
+    def generate(self, request: RuleItineraryRequest, *, include_weather: bool = True) -> RuleItineraryResponse:
+        """include_weather=False skips the forecast lookup entirely (no
+        self.weather_client call at all) and returns empty weather_alerts/
+        weather_status - everything else (item selection, scoring,
+        day_travel, day_summaries) is unaffected, since weather is only
+        ever consumed downstream for the "indoor_ok" reason tag and the
+        weather_alerts/weather_status fields themselves. Used by
+        compare_transport() to avoid duplicate/slow external calls when it
+        re-runs generate() per what-if scenario - the public /generate
+        endpoint always uses the default (True)."""
         normalized = self._normalize_request(request)
         city_catalog = self.catalog_provider.get_city_catalog(
             continent=normalized.continent,
@@ -111,7 +122,10 @@ class RuleItineraryService:
         day_duration_warnings = self._build_day_duration_warnings(
             day_place_map_with_meals, accommodation_recommendation, request=normalized
         )
-        weather_alerts, weather_status = self._build_weather_report(normalized, day_place_map, city_catalog)
+        if include_weather:
+            weather_alerts, weather_status = self._build_weather_report(normalized, day_place_map, city_catalog)
+        else:
+            weather_alerts, weather_status = [], []
         day_travel = self._build_day_travel(
             day_sequence_with_kind, accommodation_recommendation, city=normalized.city
         )
@@ -163,6 +177,21 @@ class RuleItineraryService:
             include_breakfast=normalized.include_breakfast,
             day_summaries=day_summaries,
         )
+
+    def compare_transport(self, request: RuleItineraryRequest) -> RuleTransportComparisonResponse:
+        """"What if every day used transit/car instead" - re-runs generate()
+        once for the actual request and once per differing uniform-mode
+        scenario (see compare_transport.scenarios_to_compare), all with
+        include_weather=False so the forecast API is never called more
+        than the single time a plain /generate call would make (here:
+        zero times, since this endpoint never shows weather at all).
+        Input validation (transport_by_day length, arrival/departure
+        feasibility) is whatever generate()/normalize_rule_request already
+        enforces - nothing comparison-specific is added."""
+        return build_transport_comparison(request, generate=self._generate_for_comparison)
+
+    def _generate_for_comparison(self, request: RuleItineraryRequest) -> RuleItineraryResponse:
+        return self.generate(request, include_weather=False)
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
         return normalize_rule_request(request)

@@ -4,6 +4,7 @@ from app.domains.rule_planner.schemas import (
     RuleItineraryCatalogResponse,
     RuleItineraryRequest,
     RuleItineraryResponse,
+    RuleTransportComparisonResponse,
 )
 from app.domains.rule_planner.services.service import rule_itinerary_service
 
@@ -19,3 +20,8 @@ def list_rule_itinerary_options():
 @router.post("/generate", response_model=RuleItineraryResponse)
 def generate_rule_itinerary(request: RuleItineraryRequest):
     return rule_itinerary_service.generate(request)
+
+
+@router.post("/compare-transport", response_model=RuleTransportComparisonResponse)
+def compare_rule_itinerary_transport(request: RuleItineraryRequest):
+    return rule_itinerary_service.compare_transport(request)

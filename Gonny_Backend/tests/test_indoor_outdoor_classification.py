@@ -68,17 +68,20 @@ def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # rain_sensitive_light data was applied (see feature/indoor-outdoor-
     # labels) - this just guards the count/uniqueness invariant going forward.
     #
-    # 310 = the original 109 indoor/outdoor-classified places plus 201
+    # 334 = the original 109 indoor/outdoor-classified places plus 201
     # individual restaurant entries merged in by
-    # scripts/merge_restaurant_data.py: 192 from the initial merge (see
-    # feature/restaurant-recommendations) plus 9 more added once their
-    # coordinates were confirmed (see chore/add-newly-geocoded-restaurants) -
+    # scripts/merge_restaurant_data.py (192 from the initial merge, see
+    # feature/restaurant-recommendations, plus 9 more added once their
+    # coordinates were confirmed, see chore/add-newly-geocoded-restaurants -
     # those restaurants predate the indoor/outdoor classification CSV, so
     # they're intentionally unclassified (setting=None), checked in
-    # test_all_109_korean_focus_places_are_classified below.
+    # test_all_109_korean_focus_places_are_classified below) plus 24 Jeju
+    # sightseeing/activity places merged in by scripts/merge_jeju_places.py
+    # (feat/jeju-merge-places), which do carry a setting value from their
+    # own CSV.
     ids = [place.id for place in load_korean_focus_places()]
 
-    assert len(ids) == 310
+    assert len(ids) == 334
     assert len(set(ids)) == len(ids), "duplicate place_id found across seoul/busan/jeju catalogs"
 
 
@@ -96,15 +99,23 @@ def test_all_109_korean_focus_places_are_classified() -> None:
     # chore/add-newly-geocoded-restaurants) are deliberately excluded from
     # the classified set - that CSV predates them, so they're expected to
     # have setting=None rather than a guessed classification.
-    EXPECTED_SETTING_COUNTS = {"outdoor": 50, "indoor": 40, "mixed": 19}
-    EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 23
+    #
+    # The 24 Jeju places merged in by scripts/merge_jeju_places.py
+    # (feat/jeju-merge-places) DO carry their own setting value (16
+    # outdoor / 2 indoor / 6 mixed), added on top of the original 109:
+    # outdoor 50+16=66, indoor 40+2=42, mixed 19+6=25. Only one of them
+    # (pyoseon-haevichi-beach, a beach) matches the existing rain_sensitive_
+    # light=True pattern (see merge_jeju_places.py's docstring), so
+    # 23+1=24.
+    EXPECTED_SETTING_COUNTS = {"outdoor": 66, "indoor": 42, "mixed": 25}
+    EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 24
     EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 201
 
     places = load_korean_focus_places()
     classified_places = [place for place in places if place.setting is not None]
     unclassified_places = [place for place in places if place.setting is None]
 
-    assert len(classified_places) == 109
+    assert len(classified_places) == 133
     assert len(unclassified_places) == EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT
 
     setting_counts: dict[str, int] = {}

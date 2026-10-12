@@ -26,21 +26,22 @@ from ...travel_estimate import haversine_distance_km
 # 최대 분산이 13~16km로 비교적 조밀해 추가로 쪼개지 않는다
 # (west-jeju->bukseo, seogwipo-west->jungmun-andeok로 이름만 재부여).
 #
-# namdong(남동/표선·남원)·seogwipo-si(서귀포시내)·daejeong(대정)은 현재
-# destinations/jeju.json·accommodations/jeju.json 어디에도 장소가 없어
-# 실측 중심점을 낼 수 없다 - 좌표를 비워 두면 nearest_zone()이 이 구역을
-# 영원히 고르지 못해(항상 거리 0인 실측 구역이 더 가깝게 측정됨) 구역 부족
-# 진단(이 작업의 4번 항목)에 드러나지도 않으므로, 제주 행정 중심지(읍/동
-# 사무소) 좌표로 근사해 둔다. 장소 데이터가 채워지면 실측 중심점으로
-# 교체해야 한다.
+# namdong(남동/표선·남원)·seogwipo-si(서귀포시내)·daejeong(대정)은 처음
+# 추가될 때 destinations/jeju.json·accommodations/jeju.json 어디에도
+# 장소가 없어 제주 행정 중심지(읍/동 사무소) 좌표로 근사했었다 - 이후
+# scripts/merge_jeju_places.py(2026-10, local_only/data/
+# jeju_places_batch1.csv 24곳)로 세 구역에 실측 데이터가 생겨, 그 24곳 중
+# 이 세 구역의 기존(근사) 중심점에 가장 가깝게 분류된 장소들의 평균
+# 좌표로 교체했다 - 다른 5개 구역(실측 중심점이었던 jeju-city/dongbu/
+# seongsan/jungmun-andeok/bukseo)은 그대로 둔다.
 ZONE_CENTERS: dict[str, tuple[float, float]] = {
     "jeju-city": (33.511545, 126.526385),  # 실측 중심점 (12곳)
     "dongbu": (33.524966, 126.785864),  # 실측 중심점 (14곳)
     "seongsan": (33.445751, 126.915765),  # 실측 중심점 (12곳)
-    "namdong": (33.302100, 126.777600),  # 근사치: 표선면·남원읍사무소 중간점
-    "seogwipo-si": (33.254100, 126.560000),  # 근사치: 서귀포시청 인근
+    "namdong": (33.306786, 126.796417),  # 실측 중심점 (3곳 - jeju_places_batch1.csv)
+    "seogwipo-si": (33.252918, 126.578009),  # 실측 중심점 (8곳 - jeju_places_batch1.csv)
     "jungmun-andeok": (33.261064, 126.397893),  # 실측 중심점 (11곳)
-    "daejeong": (33.213600, 126.250600),  # 근사치: 대정읍사무소(모슬포) 인근
+    "daejeong": (33.219232, 126.299309),  # 실측 중심점 (4곳 - jeju_places_batch1.csv)
     "bukseo": (33.418381, 126.302778),  # 실측 중심점 (15곳)
 }
 

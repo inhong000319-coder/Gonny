@@ -334,3 +334,63 @@ class RuleItineraryResponse(BaseModel):
 
 class RuleItineraryCatalogResponse(BaseModel):
     cities: list[CatalogCityOption]
+
+
+TransportComparisonScenario = Literal["all_transit", "all_car"]
+
+
+class RuleTransportScenarioTotals(BaseModel):
+    """Trip-wide travel totals for one transport scenario (the actual
+    request, or an all-transit/all-car what-if) - see
+    services/compare_transport.py. Numbers are read straight from that
+    scenario's own RuleDaySummary.travel_minutes, never recomputed."""
+
+    transport_by_day: list[DayTransportMode] | None
+    total_travel_minutes: int | None
+    any_partial: bool
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RuleTransportComparisonDay(BaseModel):
+    day_number: int
+    base_mode: DayTransportMode | None
+    scenario_mode: DayTransportMode | None
+    base_travel_minutes: int | None
+    scenario_travel_minutes: int | None
+    base_partial: bool
+    scenario_partial: bool
+    # Place names present on this day in one side but not the other,
+    # compared at (day_number, time_slot) granularity (see
+    # services/compare_transport.py for why place_name is the identity
+    # key - RuleItineraryItem has no catalog id field).
+    only_in_base: list[str] = Field(default_factory=list)
+    only_in_scenario: list[str] = Field(default_factory=list)
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RuleTransportComparison(BaseModel):
+    scenario: TransportComparisonScenario
+    transport_by_day: list[DayTransportMode]
+    total_travel_minutes: int | None
+    any_partial: bool
+    # scenario total - base total; None whenever either side is None (see
+    # RuleTransportScenarioTotals.total_travel_minutes).
+    travel_minutes_delta: int | None
+    # True iff every day's (time_slot -> place_name) set is identical to
+    # base - see RuleTransportComparisonDay.only_in_base/only_in_scenario.
+    same_places: bool
+    days: list[RuleTransportComparisonDay]
+    # Count of days where any meal's place_name differs from base (a day
+    # with 2 changed meals still counts once).
+    meal_changes: int
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RuleTransportComparisonResponse(BaseModel):
+    base: RuleTransportScenarioTotals
+    comparisons: list[RuleTransportComparison] = Field(default_factory=list)
+
+    model_config = ConfigDict(str_strip_whitespace=True)

@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from types import ModuleType
 
+from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
+from ...travel_estimate import haversine_distance_km
 from . import busan, jeju, seoul
 
 
@@ -72,3 +74,35 @@ def evening_food_bonus(
     if policy is not None:
         return policy.evening_food_bonus(time_slot, categories)
     return 0
+
+
+def extreme_distance_penalty(
+    request: NormalizedRuleRequest,
+    other_place: PlaceData | None,
+    place: PlaceData,
+) -> int:
+    """Extra penalty for a transition whose real straight-line distance is
+    large enough that no city's existing coordinate_area_transition_bonus
+    FAR tier (capped at -6, see travel_estimate.py) meaningfully deters it
+    - see policies/city/jeju.py's own threshold/penalty constants for why
+    Jeju specifically needs this on top of the shared bonus.
+
+    0 for any city whose policy module doesn't define
+    extreme_distance_penalty(distance_km) - today that's every city except
+    Jeju, so Seoul/Busan (and any city with no policy module at all) are
+    completely unaffected by construction, not just by convention.
+    """
+    if other_place is None:
+        return 0
+    policy = _policy_for(request)
+    if policy is None or not hasattr(policy, "extreme_distance_penalty"):
+        return 0
+    if (
+        other_place.latitude is None
+        or other_place.longitude is None
+        or place.latitude is None
+        or place.longitude is None
+    ):
+        return 0
+    distance_km = haversine_distance_km(other_place.latitude, other_place.longitude, place.latitude, place.longitude)
+    return policy.extreme_distance_penalty(distance_km)

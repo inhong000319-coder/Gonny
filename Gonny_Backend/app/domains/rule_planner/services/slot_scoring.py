@@ -14,6 +14,7 @@ from .constants import (
 from .fitness_model import get_fitness_scorer
 from .policies.city import (
     evening_food_bonus,
+    extreme_distance_penalty,
     neighbor_area_bonus,
     preferred_area_match_bonus,
     same_area_continuity_bonus,
@@ -114,6 +115,11 @@ def slot_score(
     next_place_bonus = coordinate_next_place_transition_bonus(next_place, place, mode=mode, city=request.city)
     if next_place_bonus is not None:
         score += next_place_bonus
+    # City-specific extra penalty for a genuinely extreme straight-line
+    # distance, on top of (not instead of) coordinate_bonus/next_place_bonus
+    # above - 0 for every city except Jeju, see policies/city/jeju.py.
+    score += extreme_distance_penalty(request, previous_place, place)
+    score += extreme_distance_penalty(request, next_place, place)
     if mode == "transit":
         if "taxi-needed" in place.mobility:
             score += TRANSIT_TAXI_NEEDED_PENALTY
@@ -197,6 +203,14 @@ def meal_candidate_score(
     if next_bonus is not None:
         score += next_bonus
     score += google_rating_bonus_score(place)
+    # Same extra city-specific penalty slot_score() applies - 0 for every
+    # city except Jeju. meal_candidate_score has no "mode"/day_number to
+    # pass coordinate_area_transition_bonus above (meals aren't scored
+    # per-slot), so without this a meal candidate's distance is judged
+    # only by the generic (non-mode-aware) FAR tier, which this
+    # supplements rather than replaces - see policies/city/jeju.py.
+    score += extreme_distance_penalty(request, previous_place, place)
+    score += extreme_distance_penalty(request, next_place, place)
     return score
 
 

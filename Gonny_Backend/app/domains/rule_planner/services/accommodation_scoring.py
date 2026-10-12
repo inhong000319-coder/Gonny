@@ -8,6 +8,7 @@ from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
 from app.domains.rule_planner.schemas import BudgetBand, NormalizedRuleRequest
 
+from .policies.city import accommodation_distance_score
 from .travel_estimate import haversine_distance_km
 
 ACCOMMODATIONS_DIR = Path(__file__).resolve().parents[4] / "app" / "data" / "accommodations"
@@ -105,6 +106,23 @@ def compute_reference_point(
     return average_latitude, average_longitude
 
 
+def compute_day_endpoints(day_place_map: dict[int, list[PlaceData]]) -> list[tuple[float, float]]:
+    """Each day's first and last place coordinates (deduplicated when a
+    day has only one place), for accommodation_distance_score - see
+    policies/city/jeju.py. Places without coordinates are skipped rather
+    than guessed at."""
+    endpoints: list[tuple[float, float]] = []
+    for places in day_place_map.values():
+        with_coordinates = [place for place in places if place.latitude is not None and place.longitude is not None]
+        if not with_coordinates:
+            continue
+        first, last = with_coordinates[0], with_coordinates[-1]
+        endpoints.append((first.latitude, first.longitude))
+        if last is not first:
+            endpoints.append((last.latitude, last.longitude))
+    return endpoints
+
+
 def classify_price_band(price_krw: int) -> BudgetBand:
     if price_krw <= LOW_PRICE_MAX_KRW:
         return "low"
@@ -151,6 +169,7 @@ def accommodation_score(
     accommodation: AccommodationData,
     request: NormalizedRuleRequest,
     reference_point: tuple[float, float] | None,
+    day_endpoints: list[tuple[float, float]] | None = None,
 ) -> int:
     """Rule-based accommodation fitness score.
 
@@ -187,7 +206,14 @@ def accommodation_score(
 
     score += _parking_bonus(accommodation, request)
 
-    if reference_point is not None and accommodation.latitude is not None and accommodation.longitude is not None:
+    # Jeju-only: score by distance to every day's first/last place instead
+    # of the single reference_point below - None for every other city
+    # (Seoul/Busan unaffected by construction), see
+    # policies/city/__init__.py.accommodation_distance_score.
+    jeju_distance_score = accommodation_distance_score(request, accommodation, day_endpoints or [])
+    if jeju_distance_score is not None:
+        score += jeju_distance_score
+    elif reference_point is not None and accommodation.latitude is not None and accommodation.longitude is not None:
         distance_km = haversine_distance_km(
             reference_point[0], reference_point[1], accommodation.latitude, accommodation.longitude
         )
@@ -212,6 +238,7 @@ def select_accommodation_recommendation(
     accommodations: list[AccommodationData],
     request: NormalizedRuleRequest,
     reference_point: tuple[float, float] | None,
+    day_endpoints: list[tuple[float, float]] | None = None,
 ) -> AccommodationData | None:
     """Picks the single best accommodation for the whole trip (this MVP's
     scope - no per-night reassignment).
@@ -249,7 +276,7 @@ def select_accommodation_recommendation(
 
     ranked = sorted(
         candidate_pool,
-        key=lambda accommodation: accommodation_score(accommodation, request, reference_point),
+        key=lambda accommodation: accommodation_score(accommodation, request, reference_point, day_endpoints),
         reverse=True,
     )
     return ranked[0]

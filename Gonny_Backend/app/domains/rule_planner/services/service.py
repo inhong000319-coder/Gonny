@@ -31,6 +31,7 @@ from app.services.external_clients import OpenWeatherClient
 
 from .accommodation_scoring import (
     count_accommodation_types,
+    compute_day_endpoints,
     compute_reference_point,
     load_city_accommodations,
     select_accommodation_recommendation,
@@ -589,7 +590,11 @@ class RuleItineraryService:
     ) -> AccommodationData | None:
         accommodations = load_city_accommodations(city_catalog.city)
         reference_point = compute_reference_point(day_place_map, city_catalog)
-        return select_accommodation_recommendation(accommodations, request, reference_point)
+        # day_endpoints feeds Jeju-only accommodation_distance_score (see
+        # policies/city/jeju.py) - a no-op for every other city, which has
+        # no such scoring and keeps using reference_point alone.
+        day_endpoints = compute_day_endpoints(day_place_map)
+        return select_accommodation_recommendation(accommodations, request, reference_point, day_endpoints)
 
     # Boundary position (index into TIME_SLOTS) each meal sits at in the
     # day's point-in-day order - breakfast before everything (0), lunch

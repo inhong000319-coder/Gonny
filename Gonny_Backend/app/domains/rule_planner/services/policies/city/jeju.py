@@ -84,3 +84,27 @@ def extreme_distance_penalty(distance_km: float) -> int:
         return 0
     overage_km = distance_km - EXTREME_DISTANCE_KM_THRESHOLD
     return EXTREME_DISTANCE_BASE_PENALTY + round(overage_km * EXTREME_DISTANCE_PENALTY_PER_EXTRA_KM)
+
+
+# 가정값: accommodation_scoring.py의 기존 reference_point 거리 등급(1/3/7km
+# 임계값, CLOSE/NEARBY/FAR 보너스)은 "숙소가 하나의 구역 안에 있는가"를
+# 묻는 질문에 맞춰진 값이라, 제주 실측(PR #86 진단 - 숙소->첫 장소 평균
+# 35.5km)처럼 거리 자체가 10~40km대인 경우에 적용하면 거의 모든 후보가
+# "FAR"(-6) 한 구간에 몰려 버려 후보 간 차별이 되지 않는다. 그래서 이산
+# 등급을 재사용하지 않고, 날짜별 첫/마지막 장소까지 거리의 평균에 선형
+# 페널티를 매겨 "거리 합이 작을수록 항상 더 유리하다"는 차별력을 유지한다.
+# accommodation_scoring.py를 import하면 순환 임포트(accommodation_scoring
+# -> policies.city -> jeju)가 생기므로 상수를 독립적으로 둔다.
+#
+# 계수(-0.6/km)는 기존 예산 적합도(최대 ±10)/동행 적합도(±5)/주차(최대 6)
+# 보너스 폭과 비교해, 거리 차가 몇 km 수준이면 기존 보너스가 여전히
+# 결정적이되 거리 차가 수십 km로 벌어지면 거리가 우선하도록 잡은 값이다 -
+# 진단 결과로 조정 가능한 가정값.
+ACCOMMODATION_DISTANCE_PENALTY_PER_KM = -0.6
+
+
+def accommodation_distance_score(distances_km: list[float]) -> int:
+    if not distances_km:
+        return 0
+    average_km = sum(distances_km) / len(distances_km)
+    return round(average_km * ACCOMMODATION_DISTANCE_PENALTY_PER_KM)

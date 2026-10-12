@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from types import ModuleType
 
+from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
@@ -106,3 +107,30 @@ def extreme_distance_penalty(
         return 0
     distance_km = haversine_distance_km(other_place.latitude, other_place.longitude, place.latitude, place.longitude)
     return policy.extreme_distance_penalty(distance_km)
+
+
+def accommodation_distance_score(
+    request: NormalizedRuleRequest,
+    accommodation: AccommodationData,
+    day_endpoints: list[tuple[float, float]],
+) -> int | None:
+    """Extra accommodation score based on the accommodation's distance to
+    every day's first/last place, in addition to (not instead of) the
+    single reference_point tiered bonus in accommodation_scoring.py.
+
+    None - meaning "this city has no such scoring, use the existing
+    reference_point path unchanged" - for any city whose policy module
+    doesn't define accommodation_distance_score(distances_km). Today
+    that's every city except Jeju, so Seoul/Busan are unaffected by
+    construction, not just by convention.
+    """
+    policy = _policy_for(request)
+    if policy is None or not hasattr(policy, "accommodation_distance_score"):
+        return None
+    if accommodation.latitude is None or accommodation.longitude is None or not day_endpoints:
+        return None
+    distances_km = [
+        haversine_distance_km(accommodation.latitude, accommodation.longitude, lat, lng)
+        for lat, lng in day_endpoints
+    ]
+    return policy.accommodation_distance_score(distances_km)

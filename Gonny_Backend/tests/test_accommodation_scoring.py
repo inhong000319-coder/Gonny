@@ -19,6 +19,7 @@ from app.domains.rule_planner.services.accommodation_scoring import (
     PRICE_FAR_PENALTY,
     accommodation_score,
     classify_price_band,
+    compute_day_endpoints,
     compute_reference_point,
     load_city_accommodations,
     select_accommodation_recommendation,
@@ -306,6 +307,89 @@ def test_generate_includes_an_accommodation_recommendation() -> None:
 
     assert response.accommodation_recommendation is not None
     assert response.accommodation_recommendation.city == "seoul"
+
+
+# compute_day_endpoints()
+
+
+def test_compute_day_endpoints_returns_first_and_last_place_per_day() -> None:
+    day_place_map = {
+        1: [
+            build_place(id="a", latitude=33.50, longitude=126.50),
+            build_place(id="b", latitude=33.51, longitude=126.51),
+            build_place(id="c", latitude=33.52, longitude=126.52),
+        ],
+        2: [build_place(id="d", latitude=33.60, longitude=126.60)],
+    }
+
+    endpoints = compute_day_endpoints(day_place_map)
+
+    assert (33.50, 126.50) in endpoints
+    assert (33.52, 126.52) in endpoints
+    assert (33.60, 126.60) in endpoints
+    # Day 2 has a single place - it must not be counted twice.
+    assert endpoints.count((33.60, 126.60)) == 1
+
+
+def test_compute_day_endpoints_skips_places_without_coordinates() -> None:
+    day_place_map = {1: [build_place(id="a", latitude=None, longitude=None)]}
+
+    assert compute_day_endpoints(day_place_map) == []
+
+
+# accommodation_distance_score (Jeju-only day_endpoints scoring)
+
+
+def test_jeju_accommodation_prefers_smaller_day_endpoints_distance_sum() -> None:
+    request = build_request(city="jeju")
+    # Both candidates are far enough from any single reference_point tier
+    # to land in FAR_LOCATION_PENALTY under the old reference_point-only
+    # scoring (see test_closer_accommodation_scores_higher_than_farther_one)
+    # - the day_endpoints-based score is what should separate them here.
+    day_endpoints = [(33.51, 126.53), (33.45, 126.92)]  # jeju-city-ish, seongsan-ish
+    closer = build_accommodation(id="closer", city="jeju", area="east-jeju", latitude=33.50, longitude=126.60)
+    farther = build_accommodation(id="farther", city="jeju", area="west-jeju", latitude=33.30, longitude=126.25)
+
+    closer_score = accommodation_score(closer, request, None, day_endpoints)
+    farther_score = accommodation_score(farther, request, None, day_endpoints)
+
+    assert closer_score > farther_score
+
+
+def test_jeju_accommodation_distance_score_ignores_reference_point() -> None:
+    # Once day_endpoints is non-empty for Jeju, the score should come
+    # entirely from it, not from the old single reference_point tiers -
+    # passing a reference_point right on top of the accommodation must not
+    # change the score.
+    request = build_request(city="jeju")
+    accommodation = build_accommodation(city="jeju", area="east-jeju", latitude=33.50, longitude=126.60)
+    day_endpoints = [(33.51, 126.53)]
+
+    score_without_reference_point = accommodation_score(accommodation, request, None, day_endpoints)
+    score_with_reference_point = accommodation_score(
+        accommodation, request, (accommodation.latitude, accommodation.longitude), day_endpoints
+    )
+
+    assert score_without_reference_point == score_with_reference_point
+
+
+def test_select_accommodation_for_seoul_is_unaffected_by_day_endpoints() -> None:
+    # Seoul has no accommodation_distance_score policy, so passing
+    # day_endpoints must select exactly the same candidate as before this
+    # parameter existed.
+    request = build_request(city="seoul")
+    nearby = build_accommodation(id="nearby", city="seoul", latitude=37.5680, longitude=126.9790)
+    far = build_accommodation(id="far", city="seoul", latitude=37.9000, longitude=127.3000)
+    day_endpoints = [(37.9000, 127.3000)]  # right on top of "far" - would flip the pick if this leaked in
+
+    without_day_endpoints = select_accommodation_recommendation(
+        [nearby, far], request, SEOUL_REFERENCE_POINT
+    )
+    with_day_endpoints = select_accommodation_recommendation(
+        [nearby, far], request, SEOUL_REFERENCE_POINT, day_endpoints
+    )
+
+    assert without_day_endpoints.id == with_day_endpoints.id == "nearby"
 
 
 def test_generate_recommends_different_accommodation_for_different_budget_and_companion() -> None:

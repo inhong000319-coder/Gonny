@@ -198,6 +198,47 @@ type RuleDayTravel = {
   missing_leg_count: number;
 };
 
+// POST /rule-itinerary/compare-transport (see the backend's
+// RuleTransportComparisonResponse) - read-only, computed and returned
+// as-is by the server; nothing here is recomputed on the frontend.
+type TransportComparisonScenario = "all_transit" | "all_car";
+
+type RuleTransportScenarioTotals = {
+  transport_by_day: DayTransportMode[] | null;
+  total_travel_minutes: number | null;
+  any_partial: boolean;
+};
+
+type RuleTransportComparisonDay = {
+  day_number: number;
+  base_mode: DayTransportMode | null;
+  scenario_mode: DayTransportMode | null;
+  base_travel_minutes: number | null;
+  scenario_travel_minutes: number | null;
+  base_partial: boolean;
+  scenario_partial: boolean;
+  only_in_base: string[];
+  only_in_scenario: string[];
+};
+
+type RuleTransportComparison = {
+  scenario: TransportComparisonScenario;
+  transport_by_day: DayTransportMode[];
+  total_travel_minutes: number | null;
+  any_partial: boolean;
+  // scenario total - base total; null whenever either side's total is
+  // null (see RuleTransportScenarioTotals.total_travel_minutes).
+  travel_minutes_delta: number | null;
+  same_places: boolean;
+  days: RuleTransportComparisonDay[];
+  meal_changes: number;
+};
+
+type RuleTransportComparisonResponse = {
+  base: RuleTransportScenarioTotals;
+  comparisons: RuleTransportComparison[];
+};
+
 type FeaturedVideo = {
   video_id: string;
   title: string;
@@ -792,6 +833,93 @@ function isDayTransportModeArray(value: unknown): value is DayTransportMode[] {
   return Array.isArray(value) && value.every((item) => item === "transit" || item === "car");
 }
 
+function isTransportComparisonScenario(value: unknown): value is TransportComparisonScenario {
+  return value === "all_transit" || value === "all_car";
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function isRuleTransportScenarioTotals(value: unknown): value is RuleTransportScenarioTotals {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const totals = value as Record<string, unknown>;
+  return (
+    (totals.transport_by_day === null || isDayTransportModeArray(totals.transport_by_day)) &&
+    (totals.total_travel_minutes === null || typeof totals.total_travel_minutes === "number") &&
+    typeof totals.any_partial === "boolean"
+  );
+}
+
+function isRuleTransportComparisonDay(value: unknown): value is RuleTransportComparisonDay {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const day = value as Record<string, unknown>;
+  return (
+    typeof day.day_number === "number" &&
+    (day.base_mode === null || day.base_mode === "transit" || day.base_mode === "car") &&
+    (day.scenario_mode === null || day.scenario_mode === "transit" || day.scenario_mode === "car") &&
+    (day.base_travel_minutes === null || typeof day.base_travel_minutes === "number") &&
+    (day.scenario_travel_minutes === null || typeof day.scenario_travel_minutes === "number") &&
+    typeof day.base_partial === "boolean" &&
+    typeof day.scenario_partial === "boolean" &&
+    (day.only_in_base === undefined || isStringArray(day.only_in_base)) &&
+    (day.only_in_scenario === undefined || isStringArray(day.only_in_scenario))
+  );
+}
+
+function isRuleTransportComparison(value: unknown): value is RuleTransportComparison {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const comparison = value as Record<string, unknown>;
+  return (
+    isTransportComparisonScenario(comparison.scenario) &&
+    isDayTransportModeArray(comparison.transport_by_day) &&
+    (comparison.total_travel_minutes === null || typeof comparison.total_travel_minutes === "number") &&
+    typeof comparison.any_partial === "boolean" &&
+    (comparison.travel_minutes_delta === null || typeof comparison.travel_minutes_delta === "number") &&
+    typeof comparison.same_places === "boolean" &&
+    Array.isArray(comparison.days) &&
+    comparison.days.every(isRuleTransportComparisonDay) &&
+    typeof comparison.meal_changes === "number"
+  );
+}
+
+// Throws (treated as the "failed to load" state by the caller) only when
+// the response is missing its required `base` totals - an individual
+// malformed comparison entry is filtered out instead, same permissive
+// style as every other list field in normalizeGenerateResponse.
+function normalizeCompareTransportResponse(payload: unknown): RuleTransportComparisonResponse {
+  if (!payload || typeof payload !== "object") {
+    throw new Error("비교 응답 형식이 올바르지 않습니다.");
+  }
+
+  const data = payload as Record<string, unknown>;
+  if (!isRuleTransportScenarioTotals(data.base)) {
+    throw new Error("비교 응답 형식이 올바르지 않습니다.");
+  }
+
+  const comparisons = Array.isArray(data.comparisons) ? data.comparisons.filter(isRuleTransportComparison) : [];
+  return {
+    base: data.base,
+    comparisons: comparisons.map((comparison) => ({
+      ...comparison,
+      days: comparison.days.map((day) => ({
+        ...day,
+        only_in_base: day.only_in_base ?? [],
+        only_in_scenario: day.only_in_scenario ?? [],
+      })),
+    })),
+  };
+}
+
 function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
 }
@@ -959,6 +1087,76 @@ function formatTravelMinutesLabel(totalMinutes: number) {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
   return minutes > 0 ? `${hours}시간 ${minutes}분` : `${hours}시간`;
+}
+
+function formatApproxMinutes(totalMinutes: number) {
+  return `약 ${formatTravelMinutesLabel(totalMinutes)}`;
+}
+
+function labelTransportComparisonScenario(scenario: TransportComparisonScenario) {
+  return scenario === "all_transit" ? "모든 날 대중교통으로 이동하면" : "모든 날 자동차로 이동하면";
+}
+
+// The one sentence at the top of each scenario card - see the task spec's
+// exact wording. Only ever reads base/comparison totals as given by the
+// server, never recomputes a delta itself.
+function buildTransportCompareTravelLines(
+  base: RuleTransportScenarioTotals,
+  comparison: RuleTransportComparison,
+): string[] {
+  const bothComplete = !base.any_partial && !comparison.any_partial;
+  if (bothComplete && comparison.travel_minutes_delta !== null) {
+    const delta = comparison.travel_minutes_delta;
+    if (delta === 0) {
+      return ["이동 시간이 거의 같아요."];
+    }
+    const direction = delta < 0 ? "줄어요" : "늘어요";
+    const baseLabel = base.total_travel_minutes !== null ? formatApproxMinutes(base.total_travel_minutes) : "알 수 없음";
+    const scenarioLabel =
+      comparison.total_travel_minutes !== null ? formatApproxMinutes(comparison.total_travel_minutes) : "알 수 없음";
+    return [`이동 시간이 ${formatApproxMinutes(Math.abs(delta))} ${direction} (현재 ${baseLabel} → ${scenarioLabel})`];
+  }
+
+  const lines = ["일부 구간의 이동시간을 계산하지 못해 정확한 차이는 알 수 없어요."];
+  const totalsParts: string[] = [];
+  if (base.total_travel_minutes !== null) {
+    totalsParts.push(`현재 ${formatApproxMinutes(base.total_travel_minutes)} 이상`);
+  }
+  if (comparison.total_travel_minutes !== null) {
+    totalsParts.push(`시나리오 ${formatApproxMinutes(comparison.total_travel_minutes)} 이상`);
+  }
+  if (totalsParts.length > 0) {
+    lines.push(totalsParts.join(" / "));
+  }
+  return lines;
+}
+
+function buildTransportComparePlaceChangeLines(comparison: RuleTransportComparison): string[] {
+  return comparison.days
+    .filter((day) => day.only_in_base.length > 0 || day.only_in_scenario.length > 0)
+    .map((day) => {
+      const parts: string[] = [];
+      if (day.only_in_base.length > 0) {
+        parts.push(`빠지는 장소 ${day.only_in_base.join(", ")}`);
+      }
+      if (day.only_in_scenario.length > 0) {
+        parts.push(`새로 들어가는 장소 ${day.only_in_scenario.join(", ")}`);
+      }
+      return `${day.day_number}일차: ${parts.join(" · ")}`;
+    });
+}
+
+function formatComparisonDayMinutesCell(minutes: number | null, isPartial: boolean): string {
+  if (minutes === null) {
+    return "계산 불가";
+  }
+  return isPartial ? `${formatApproxMinutes(minutes)} 이상` : formatApproxMinutes(minutes);
+}
+
+function formatComparisonDayModeCell(baseMode: DayTransportMode | null, scenarioMode: DayTransportMode | null) {
+  const baseLabel = baseMode ? labelTransportMode(baseMode) : "-";
+  const scenarioLabel = scenarioMode ? labelTransportMode(scenarioMode) : "-";
+  return baseLabel === scenarioLabel ? baseLabel : `${baseLabel} → ${scenarioLabel}`;
 }
 
 // Legs are matched by (kind, name) on both ends, never by position - a day
@@ -1146,6 +1344,148 @@ function GonnyIntro({ isOpen, onToggle }: { isOpen: boolean; onToggle: () => voi
   );
 }
 
+type TransportCompareStatus = "idle" | "loading" | "success" | "error";
+
+// Server-computed comparison, rendered as-is (see
+// buildTransportCompareTravelLines etc.) - never a "더 좋아요"/"추천해요"
+// style judgement, only the numbers/facts the backend already produced.
+function TransportCompareCard({
+  isOpen,
+  onToggle,
+  status,
+  data,
+  onCompare,
+  expandedScenarios,
+  onToggleScenarioDetail,
+}: {
+  isOpen: boolean;
+  onToggle: () => void;
+  status: TransportCompareStatus;
+  data: RuleTransportComparisonResponse | null;
+  onCompare: () => void;
+  expandedScenarios: Record<string, boolean>;
+  onToggleScenarioDetail: (scenario: TransportComparisonScenario) => void;
+}) {
+  return (
+    <div className="tc-card tc-compare-card">
+      <button aria-expanded={isOpen} className="tc-intro-toggle" onClick={onToggle} type="button">
+        <span>이동 수단을 바꾸면?</span>
+        <span aria-hidden="true">{isOpen ? "접기" : "더 보기"}</span>
+      </button>
+      {isOpen ? (
+        <div className="tc-compare-body">
+          {status === "idle" ? (
+            <button className="tc-btn tc-btn-secondary" onClick={onCompare} type="button">
+              비교해 보기
+            </button>
+          ) : null}
+          {status === "loading" ? (
+            <div role="status">
+              <button className="tc-btn tc-btn-secondary" disabled type="button">
+                비교하는 중…
+              </button>
+            </div>
+          ) : null}
+          {status === "error" ? (
+            <div role="alert">
+              <div className="tc-alert tc-alert-danger" style={{ marginBottom: 12 }}>
+                비교를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.
+              </div>
+              <button className="tc-btn tc-btn-secondary" onClick={onCompare} type="button">
+                다시 시도
+              </button>
+            </div>
+          ) : null}
+          {status === "success" && data ? (
+            data.comparisons.length === 0 ? (
+              <p className="tc-note" role="status">
+                비교할 다른 이동 수단이 없어요.
+              </p>
+            ) : (
+              <div className="tc-compare-scenario-list">
+                {data.comparisons.map((comparison) => (
+                  <TransportCompareScenarioCard
+                    base={data.base}
+                    comparison={comparison}
+                    isDetailOpen={expandedScenarios[comparison.scenario] ?? false}
+                    key={comparison.scenario}
+                    onToggleDetail={() => onToggleScenarioDetail(comparison.scenario)}
+                  />
+                ))}
+              </div>
+            )
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function TransportCompareScenarioCard({
+  base,
+  comparison,
+  isDetailOpen,
+  onToggleDetail,
+}: {
+  base: RuleTransportScenarioTotals;
+  comparison: RuleTransportComparison;
+  isDetailOpen: boolean;
+  onToggleDetail: () => void;
+}) {
+  const travelLines = buildTransportCompareTravelLines(base, comparison);
+  const placeChangeLines = buildTransportComparePlaceChangeLines(comparison);
+
+  return (
+    <div className="tc-compare-scenario">
+      <h3 className="tc-compare-scenario-title">{labelTransportComparisonScenario(comparison.scenario)}</h3>
+      {travelLines.map((line, index) => (
+        <p className="tc-compare-scenario-line" key={`travel-${index}`}>
+          {line}
+        </p>
+      ))}
+      <p className="tc-compare-scenario-line">
+        {comparison.same_places ? "방문하는 장소는 같아요." : "일부 장소가 달라져요."}
+      </p>
+      {placeChangeLines.map((line, index) => (
+        <p className="tc-compare-scenario-line tc-compare-scenario-sub" key={`place-${index}`}>
+          {line}
+        </p>
+      ))}
+      {comparison.meal_changes > 0 ? (
+        <p className="tc-compare-scenario-line">식사 장소가 달라지는 날: {comparison.meal_changes}일</p>
+      ) : null}
+      <p className="tc-compare-scenario-disclaimer">
+        이동 시간은 거리와 평균 속도로 추정한 값이라 실제와 다를 수 있어요.
+      </p>
+      <button
+        aria-expanded={isDetailOpen}
+        className="tc-compare-detail-toggle"
+        onClick={onToggleDetail}
+        type="button"
+      >
+        {isDetailOpen ? "일자별 이동 시간 접기" : "일자별 이동 시간 보기"}
+      </button>
+      {isDetailOpen ? (
+        <div className="tc-compare-day-table">
+          {comparison.days.map((day) => (
+            <div className="tc-compare-day-row" key={day.day_number}>
+              <span className="tc-compare-day-number">{day.day_number}일차</span>
+              <span className="tc-compare-day-mode">
+                {formatComparisonDayModeCell(day.base_mode, day.scenario_mode)}
+              </span>
+              <span className="tc-compare-day-minutes">
+                {formatComparisonDayMinutesCell(day.base_travel_minutes, day.base_partial)}
+                {" → "}
+                {formatComparisonDayMinutesCell(day.scenario_travel_minutes, day.scenario_partial)}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendation; showTravelTime?: boolean }) {
   const note = splitNoteLines(meal.notes);
 
@@ -1219,6 +1559,13 @@ export function TripCreateForm() {
   const [docDownload, setDocDownload] = useState<{ href: string; filename: string } | null>(null);
   const [printPreview, setPrintPreview] = useState<{ href: string; filename: string } | null>(null);
   const [isIntroOpen, setIsIntroOpen] = useState(false);
+  const [lastGeneratePayload, setLastGeneratePayload] = useState<Record<string, unknown> | null>(null);
+  const [isTransportCompareOpen, setIsTransportCompareOpen] = useState(false);
+  const [transportCompareStatus, setTransportCompareStatus] = useState<TransportCompareStatus>("idle");
+  const [transportCompareData, setTransportCompareData] = useState<RuleTransportComparisonResponse | null>(null);
+  const [transportCompareExpandedScenarios, setTransportCompareExpandedScenarios] = useState<Record<string, boolean>>(
+    {},
+  );
   const hasResult = result !== null;
 
   useEffect(() => {
@@ -1232,6 +1579,15 @@ export function TripCreateForm() {
       defaults[dayTravel.day_number] = result.transport_by_day?.[dayTravel.day_number - 1] ?? defaultDayTravelMode(result.city);
     }
     setDayTravelMode(defaults);
+  }, [result]);
+
+  // "한 번 가져온 결과는 같은 일정에 대해 재사용하고, 일정을 다시 만들면
+  // 초기화한다" - every new result (a fresh generate, or clearing back to
+  // the form) drops whatever comparison was fetched for the previous one.
+  useEffect(() => {
+    setTransportCompareStatus("idle");
+    setTransportCompareData(null);
+    setTransportCompareExpandedScenarios({});
   }, [result]);
 
   useEffect(() => {
@@ -1465,47 +1821,82 @@ export function TripCreateForm() {
     });
   };
 
+  // Shared with handleCompareTransport, which must POST the exact same
+  // body to /compare-transport (see lastGeneratePayload) - never
+  // recomputed or drifted from what /generate itself was called with.
+  const buildGenerateRequestPayload = () => {
+    const {
+      accommodation_types,
+      accommodation_budget_band,
+      transport_modes,
+      arrival_period,
+      departure_period,
+      include_breakfast,
+      ...planForm
+    } = form;
+    return {
+      ...planForm,
+      travelers: Number(form.travelers) || 2,
+      ...(accommodation_types.length > 0 ? { accommodation_types } : {}),
+      ...(isAccommodationBudgetOn && accommodation_budget_band ? { accommodation_budget_band } : {}),
+      ...(arrival_period ? { arrival_period } : {}),
+      ...(departure_period ? { departure_period } : {}),
+      ...(include_breakfast ? { include_breakfast } : {}),
+    };
+  };
+
   const handleGenerate = async () => {
     setIsGenerating(true);
     setError("");
     setMessage("");
 
     try {
-      const {
-        accommodation_types,
-        accommodation_budget_band,
-        transport_modes,
-        arrival_period,
-        departure_period,
-        include_breakfast,
-        ...planForm
-      } = form;
-      const response = await apiClient.post<unknown>("/rule-itinerary/generate", {
-        ...planForm,
-        travelers: Number(form.travelers) || 2,
-        ...(accommodation_types.length > 0 ? { accommodation_types } : {}),
-        ...(isAccommodationBudgetOn && accommodation_budget_band ? { accommodation_budget_band } : {}),
-        ...(arrival_period ? { arrival_period } : {}),
-        ...(departure_period ? { departure_period } : {}),
-        ...(include_breakfast ? { include_breakfast } : {}),
-      });
+      const payload = buildGenerateRequestPayload();
+      const response = await apiClient.post<unknown>("/rule-itinerary/generate", payload);
 
       const nextResult = normalizeGenerateResponse(response.data);
       setResult(nextResult);
+      setLastGeneratePayload(payload);
       setCurrentStep(STEP_COUNT);
       setMessage(`${toCityLabel(nextResult.city)} 기준으로 ${nextResult.items.length}개의 일정이 생성되었습니다.`);
     } catch (generateError) {
       const nextError =
         generateError instanceof Error ? generateError.message : "일정을 만들지 못했어요. 잠시 후 다시 시도해 주세요.";
       setResult(null);
+      setLastGeneratePayload(null);
       setError(nextError);
     } finally {
       setIsGenerating(false);
     }
   };
 
+  const handleCompareTransport = async () => {
+    if (!lastGeneratePayload) {
+      return;
+    }
+
+    setTransportCompareStatus("loading");
+    try {
+      const response = await apiClient.post<unknown>("/rule-itinerary/compare-transport", lastGeneratePayload);
+      const normalized = normalizeCompareTransportResponse(response.data);
+      setTransportCompareData(normalized);
+      setTransportCompareStatus("success");
+    } catch {
+      setTransportCompareData(null);
+      setTransportCompareStatus("error");
+    }
+  };
+
+  const handleToggleTransportCompareScenarioDetail = (scenario: TransportComparisonScenario) => {
+    setTransportCompareExpandedScenarios((previous) => ({
+      ...previous,
+      [scenario]: !previous[scenario],
+    }));
+  };
+
   const handleEditAgain = () => {
     setResult(null);
+    setLastGeneratePayload(null);
     setMessage("");
     setError("");
     setCurrentStep(STEP_COUNT);
@@ -2348,6 +2739,16 @@ export function TripCreateForm() {
                 );
               })}
             </div>
+
+            <TransportCompareCard
+              data={transportCompareData}
+              expandedScenarios={transportCompareExpandedScenarios}
+              isOpen={isTransportCompareOpen}
+              onCompare={handleCompareTransport}
+              onToggle={() => setIsTransportCompareOpen((previous) => !previous)}
+              onToggleScenarioDetail={handleToggleTransportCompareScenarioDetail}
+              status={transportCompareStatus}
+            />
 
             <div className="tc-result-actions">
               <button className="tc-btn tc-btn-primary" disabled={isSavingTrip} onClick={handleSaveTrip} type="button">

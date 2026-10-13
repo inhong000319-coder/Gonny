@@ -6,6 +6,9 @@ from dataclasses import dataclass
 from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
+from .korean_particles import resolve_particles
+from .policies.city import jeju_zones
+
 
 TIME_SLOT_OPENING = {
     "morning": "{place_name}, 오전 일정의 시작으로 넣기 좋아요!",
@@ -76,6 +79,11 @@ class RuleNoteContext:
     day_area_name: str | None = None
     previous_place_name: str | None = None
     previous_area_name: str | None = None
+    # Raw previous-slot PlaceData (coordinates included) - used only to
+    # resolve a finer-grained Jeju zone for the "같은 권역" check below
+    # (see _is_same_route_area). None for the day's first slot, same as
+    # previous_place_name/previous_area_name.
+    previous_place: PlaceData | None = None
 
 
 class BaseRuleNoteGenerator:
@@ -151,9 +159,10 @@ class TemplateRuleNoteGenerator(BaseRuleNoteGenerator):
         return f"{context.localized_area_name} 쪽 동선에 넣었을 때 전체 흐름을 안정적으로 잡아주기 좋아요."
 
     def _build_route_sentence(self, context: RuleNoteContext) -> str:
-        if context.previous_place_name and context.previous_area_name == context.localized_area_name:
+        if context.previous_place_name and self._is_same_route_area(context):
+            subject = self._route_sentence_subject(context.previous_place_name)
             return (
-                f"둘러본 뒤에도 {context.previous_place_name}과 같은 권역에서 이어서 움직일 수 있어서 "
+                f"둘러본 뒤에도 {subject}와(과) 같은 권역에서 이어서 움직일 수 있어서 "
                 "하루 동선이 깔끔하게 이어져요."
             )
 
@@ -194,7 +203,7 @@ class TemplateRuleNoteGenerator(BaseRuleNoteGenerator):
         if not sentence:
             return ""
 
-        sentence = self._resolve_particles(sentence)
+        sentence = resolve_particles(sentence)
         sentence = sentence.replace("  ", " ")
         sentence = re.sub(r"[.]{2,}", ".", sentence)
         sentence = re.sub(r"[!]{2,}", "!", sentence)
@@ -215,42 +224,43 @@ class TemplateRuleNoteGenerator(BaseRuleNoteGenerator):
         return sentence + "요."
 
     def _polish_fragment(self, text: str) -> str:
-        fragment = self._resolve_particles(text.strip().rstrip(".!"))
+        fragment = resolve_particles(text.strip().rstrip(".!"))
         fragment = fragment.replace("  ", " ")
         return fragment
 
-    def _resolve_particles(self, text: str) -> str:
-        patterns = {
-            "은(는)": self._topic_particle,
-            "이(가)": self._subject_particle,
-            "을(를)": self._object_particle,
-            "와(과)": self._and_particle,
-        }
-        resolved = text
-        for token, chooser in patterns.items():
-            pattern = re.compile(rf"([가-힣A-Za-z0-9]+){re.escape(token)}")
-            resolved = pattern.sub(lambda match: f"{match.group(1)}{chooser(match.group(1))}", resolved)
-        return resolved
+    def _is_same_route_area(self, context: RuleNoteContext) -> bool:
+        """"같은 권역" 문장을 쓸지 판정한다. 제주(request.city=="jeju")이고
+        이전/현재 장소 모두 좌표가 있으면 세부 구역(policies/city/
+        jeju_zones.py)이 같은지로 판단한다 - 제주의 area는 4개뿐이라 하나의
+        area 안에도 서로 25km 이상 떨어진 장소가 섞여 있어, area 라벨만
+        비교하면 실제로는 먼 장소를 "같은 권역"이라고 잘못 말하게 된다.
+        비제주, 또는 제주라도 좌표가 없는 장소는 기존 area 라벨 비교로
+        돌아간다(응답의 area 필드/라벨 자체는 바꾸지 않는다)."""
+        if context.request.city == "jeju" and context.previous_place is not None:
+            previous_place = context.previous_place
+            current_place = context.place
+            if (
+                previous_place.latitude is not None
+                and previous_place.longitude is not None
+                and current_place.latitude is not None
+                and current_place.longitude is not None
+            ):
+                return jeju_zones.nearest_zone(
+                    previous_place.latitude, previous_place.longitude
+                ) == jeju_zones.nearest_zone(current_place.latitude, current_place.longitude)
 
-    def _topic_particle(self, word: str) -> str:
-        return "은" if self._has_final_consonant(word) else "는"
+        return context.previous_area_name == context.localized_area_name
 
-    def _subject_particle(self, word: str) -> str:
-        return "이" if self._has_final_consonant(word) else "가"
-
-    def _object_particle(self, word: str) -> str:
-        return "을" if self._has_final_consonant(word) else "를"
-
-    def _and_particle(self, word: str) -> str:
-        return "과" if self._has_final_consonant(word) else "와"
-
-    def _has_final_consonant(self, word: str) -> bool:
-        if not word:
-            return False
-        last_char = word[-1]
-        if "가" <= last_char <= "힣":
-            return (ord(last_char) - ord("가")) % 28 != 0
-        return False
+    def _route_sentence_subject(self, name: str) -> str:
+        """"{subject}와(과)"에 쓸 주어 문구. 이름이 한글로 끝나면 이름
+        그대로 돌려줘 resolve_particles가 받침 유무로 와/과를 고르게
+        한다. 영문·숫자·기호로 끝나면(예: "ARTE Museum Jeju") 철자만으로
+        한국어 발음의 받침 유무를 안정적으로 판단할 수 없으므로, 받침이
+        있는 고정 한글 완충어 "쪽"을 붙인다 - "쪽"은 항상 같은 글자라
+        조사가 "쪽과"로 항상 올바르게 고정된다(모호성이 생기지 않는다)."""
+        if name and "가" <= name[-1] <= "힣":
+            return name
+        return f"{name} 쪽"
 
     def _pick(self, options: list[str], context: RuleNoteContext, *, offset: int) -> str:
         if not options:

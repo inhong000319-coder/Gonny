@@ -146,6 +146,38 @@ def test_confirmed_closed_place_is_excluded_from_its_closed_weekday():
     assert "화요일" in exclusion.message
 
 
+def test_confirmed_closed_place_exclusion_message_has_no_unresolved_particle_marker():
+    # The message is built with the "{place_name}은(는)" marker
+    # convention (see korean_particles.resolve_particles) - it must come
+    # out resolved (은 or 는), never the literal marker text.
+    places = [
+        PlaceData(
+            id="closed-tuesday-palace",
+            name="국립제주박물관",  # ends in 관 - has a final consonant -> 은
+            activity_type=["문화·역사"],
+            budget_level=["low", "medium", "high"],
+            suitable_for=["solo", "couple", "friend", "family"],
+            time_fit=["morning", "afternoon", "evening"],
+            area="test-area",
+            duration_hours=2,
+            priority=10,
+            pace=["easy", "tight"],
+            mobility=["walkable"],
+            summary="x",
+            closed_days="매주 화요일 휴무",
+        ),
+        _place("filler-a", priority=5, closed_days=None),
+        _place("filler-b", priority=4, closed_days=None),
+        _place("filler-c", priority=3, closed_days=None),
+    ]
+
+    response = _generate(places, start_date=A_TUESDAY)
+
+    exclusion = next(e for e in response.closed_day_exclusions if e.place_name == "국립제주박물관")
+    assert "은(는)" not in exclusion.message
+    assert exclusion.message.startswith("국립제주박물관은 ")
+
+
 def test_confirmed_closed_place_is_placed_normally_on_other_days():
     places = [
         _place("closed-tuesday-palace", priority=10, closed_days="매주 화요일 휴무"),

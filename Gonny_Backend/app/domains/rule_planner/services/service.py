@@ -42,6 +42,7 @@ from .closed_days import WEEKDAY_LABEL_KO, is_confirmed_closed_on
 from .compare_transport import build_transport_comparison
 from .cost_estimate import estimate_trip_cost_range
 from .community_feedback import PlaceFeedbackSignal, load_place_feedback_signals
+from .korean_particles import resolve_particles
 from .constants import (
     ACTIVITY_CATEGORIES,
     AREA_LABEL_KO,
@@ -531,7 +532,7 @@ class RuleItineraryService:
                     RuleClosedDayExclusion(
                         day_number=day_number,
                         place_name=place_name,
-                        message=(
+                        message=resolve_particles(
                             f"{place_name}은(는) {WEEKDAY_LABEL_KO[day_weekday]}에 휴무로 확인되어 "
                             f"{day_number}일차 일정에서 제외했습니다."
                         ),
@@ -1426,6 +1427,7 @@ class RuleItineraryService:
                 day_area_name=self._localize_area(day_area) if day_area else None,
                 previous_place_name=self._localize_place_name(previous_place) if previous_place else None,
                 previous_area_name=self._localize_area(previous_place.area) if previous_place else None,
+                previous_place=previous_place,
             )
         )
 

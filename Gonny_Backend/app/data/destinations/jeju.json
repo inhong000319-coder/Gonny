@@ -3007,11 +3007,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 자연·트레킹 장소다.",
+      "summary": "하효동의 계곡과 바위 경관을 볼 수 있는 자연 명소로, 입장료 없이 상시 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 하효동의 계곡과 바위 경관을 가볍게 둘러보고 싶을 때 넣기 좋아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "자연 경관",
+        "무료 입장",
+        "상시 개방"
+      ]
     },
     {
       "id": "sanbanggulsa",
@@ -3052,11 +3057,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 문화·역사 장소다.",
+      "summary": "해식동굴 안에 불상이 모셔진 안덕면의 불교 유적으로, 개인 성인 입장료는 1,000원이다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 산방산 일대에서 해식동굴과 불교 유적을 함께 보고 싶을 때 잘 맞아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "해식동굴",
+        "불교 유적",
+        "산방산 일대"
+      ]
     },
     {
       "id": "yongmeori-coast",
@@ -3096,11 +3106,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 자연·트레킹 장소다.",
+      "summary": "사계리 해안의 절벽을 따라 걷는 해안 탐방지로, 날씨에 따라 출입이 통제될 수 있다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 해안 절벽을 따라 걷는 코스예요. 날씨에 따라 출입이 통제될 수 있어서 방문 전에 확인하면 좋아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "해안 절벽",
+        "날씨에 따라 통제",
+        "09:00~17:00"
+      ]
     },
     {
       "id": "cheonjiyeon-falls",
@@ -3141,11 +3156,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 자연·트레킹 장소다.",
+      "summary": "서귀포 서홍동의 폭포로 제주도 국가지질공원에 속하며, 입장 마감 21:20까지 저녁에도 방문할 수 있다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 서귀포 시내에서 폭포를 보고 싶을 때 잘 맞아요. 저녁 시간대에도 방문할 수 있어요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "폭포",
+        "국가지질공원",
+        "저녁 운영(~22:00)"
+      ]
     },
     {
       "id": "jeongbang-falls",
@@ -3185,11 +3205,15 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 자연·트레킹 장소다.",
+      "summary": "서귀포 동홍동의 폭포로, 09:00~17:30에 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 서귀포 시내에서 폭포를 보고 싶을 때 넣기 좋아요. 17:30까지 운영하니 해가 지기 전에 방문하는 일정이 맞아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "폭포",
+        "17:30까지 운영"
+      ]
     },
     {
       "id": "oedolgae",
@@ -3230,11 +3254,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 자연·트레킹 장소다.",
+      "summary": "서귀포 서흥동의 기암괴석 경관 명소로, 무료로 상시 개방되며 일몰 전 이용이 권장된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 서귀포 해안의 기암괴석 경관을 보고 싶을 때 잘 맞아요. 일몰 전에 방문하길 권장해요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "기암괴석",
+        "무료 입장",
+        "일몰 전 이용 권장"
+      ]
     },
     {
       "id": "songaksan",
@@ -3275,11 +3304,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 자연·트레킹 장소다.",
+      "summary": "대정읍의 산 형태 자연경관으로, 무료로 상시 개방된다. 바람이 센 편이라고 안내된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 대정읍 일대에서 자연경관을 즐기고 싶을 때 좋아요. 바람이 센 편이라 겉옷을 챙기면 좋아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "자연 경관",
+        "무료 입장",
+        "바람 주의"
+      ]
     },
     {
       "id": "manjanggul",
@@ -3319,9 +3353,14 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 자연·트레킹 장소다.",
+      "summary": "구좌읍의 용암동굴로 제주도 국가지질공원이자 세계자연유산에 속하며, 매월 첫째 수요일에 쉰다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 구좌읍에서 용암동굴을 둘러보고 싶을 때 잘 맞아요. 매월 첫째 수요일은 쉬어요."
+      ],
+      "highlight_tags": [
+        "용암동굴",
+        "세계자연유산",
+        "첫째 수요일 휴무"
       ]
     },
     {
@@ -3363,11 +3402,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 자연·트레킹 장소다.",
+      "summary": "제주시 용담이동 해안의 절경 명소로, 무료로 상시 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 제주시 해안 경관을 짧게 둘러보고 싶을 때 잘 맞아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "해안 절경",
+        "무료 입장",
+        "제주시"
+      ]
     },
     {
       "id": "jeju-folk-village",
@@ -3407,9 +3451,14 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "성산에 있는 문화·역사 장소다.",
+      "summary": "표선면에 있는 제1종 전문 박물관 분류의 민속촌으로, 개인 성인 입장료는 15,000원이다.",
       "note_templates": [
-        "{place_name}은(는) 성산 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 표선면에서 제주의 민속 문화를 보고 싶을 때 잘 맞아요."
+      ],
+      "highlight_tags": [
+        "민속 박물관",
+        "표선면",
+        "연중무휴"
       ]
     },
     {
@@ -3451,11 +3500,16 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 문화·역사 장소다.",
+      "summary": "서귀동의 이중섭 거주지로, 역사 유적지로 분류되며 10:00~17:00에 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 서귀포 시내에서 역사 유적을 짧게 둘러보고 싶을 때 넣기 좋아요. 17:00까지 운영해요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "역사 유적지",
+        "서귀포 시내",
+        "17:00까지 운영"
+      ]
     },
     {
       "id": "seogwipo-maeil-olle-market",
@@ -3498,11 +3552,16 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 쇼핑 장소다.",
+      "summary": "서귀동의 상설시장으로 농·수·축산물과 공산품을 판다. 하절기 07:00~21:00, 동절기 07:00~20:00에 운영한다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 쇼핑 장소예요."
+        "{place_name}은(는) 서귀포 시내에서 시장을 둘러보고 싶을 때 잘 맞아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "상설시장",
+        "서귀포 시내",
+        "연중무휴"
+      ]
     },
     {
       "id": "saeyeongyo-saeseom",
@@ -3544,11 +3603,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 휴양·힐링 장소다.",
+      "summary": "서홍동의 새섬과 이어지는 새연교는 랜드마크 다리로 상시 개방되며, 조명 시간은 변동된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 휴양·힐링 장소예요."
+        "{place_name}은(는) 서귀포에서 랜드마크 다리를 보고 싶을 때 잘 맞아요. 조명 시간은 달라질 수 있어요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "랜드마크 다리",
+        "상시 개방",
+        "조명 시간 변동"
+      ]
     },
     {
       "id": "jeju-national-museum",
@@ -3588,11 +3652,17 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 문화·역사 장소다.",
+      "summary": "건입동의 고고·역사 박물관으로, 상설전시는 무료(유료 특별전시 제외)이며 매주 월요일에 쉰다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 제주시에서 실내로 역사와 고고 전시를 보고 싶을 때 좋아요. 월요일은 쉬어요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "실내 박물관",
+        "무료 입장",
+        "월요일 휴관",
+        "우천 대안"
+      ]
     },
     {
       "id": "jeju-mokgwana",
@@ -3633,11 +3703,16 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 문화·역사 장소다.",
+      "summary": "제주시 관덕로의 제주목 관아 유적으로, 09:00~18:00 개장하며 5~10월 수~일요일에는 18:00~21:00 야간 개장(무료 입장)도 한다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 제주시에서 역사 유적을 둘러보고 싶을 때 좋아요. 5~10월 수~일요일에는 야간 개장도 해요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "역사 유적지",
+        "야간 개장(5~10월)",
+        "제주시"
+      ]
     },
     {
       "id": "pyoseon-haevichi-beach",
@@ -3678,11 +3753,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "is_active": true,
-      "summary": "성산에 있는 휴양·힐링 장소다.",
+      "summary": "표선면의 해변으로, 무료로 상시 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 성산 일정에 넣을 수 있는 휴양·힐링 장소예요."
+        "{place_name}은(는) 표선면에서 해변을 보고 싶을 때 잘 맞아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "해변",
+        "무료 입장",
+        "상시 개방"
+      ]
     },
     {
       "id": "halla-arboretum",
@@ -3724,11 +3804,16 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 자연·트레킹 장소다.",
+      "summary": "연동의 수목원으로 입장료는 무료이며, 야외 산책로는 상시 개방, 실내시설은 3~11월 09:00~18:00에 운영한다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 제주시에서 수목원 산책을 하고 싶을 때 잘 맞아요. 입장료는 무료예요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "수목원",
+        "무료 입장",
+        "야외 산책로"
+      ]
     },
     {
       "id": "samseonghyeol",
@@ -3768,11 +3853,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 문화·역사 장소다.",
+      "summary": "이도일동의 사적 유적으로, 탐라 시조의 제사를 지내는 곳이다. 개인 성인 입장료는 4,000원이다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 제주시에서 역사 유적을 둘러보고 싶을 때 좋아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "사적",
+        "역사 유적지",
+        "제주시"
+      ]
     },
     {
       "id": "jeju-43-peace-park",
@@ -3813,11 +3903,16 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 문화·역사 장소다.",
+      "summary": "평화·인권 기념공원으로 입장료는 무료이며, 야외 공원은 상시 개방, 4·3평화기념관은 09:00~18:00에 운영한다(매월 첫째·셋째 월요일 휴관).",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 제주시에서 역사를 기억하는 공원을 둘러보고 싶을 때 좋아요. 기념관은 매월 첫째·셋째 월요일에 쉬어요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "평화 인권 공원",
+        "무료 입장",
+        "기념관 운영"
+      ]
     },
     {
       "id": "sangumburi",
@@ -3857,11 +3952,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "제주 동부에 있는 자연·트레킹 장소다.",
+      "summary": "조천읍의 오름 형태 자연관광지로, 개인 성인 입장료는 7,000원이다.",
       "note_templates": [
-        "{place_name}은(는) 제주 동부 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 조천읍에서 오름을 둘러보고 싶을 때 좋아요. 계절에 따라 폐장 시각이 달라요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "오름",
+        "조천읍",
+        "입장료 있음"
+      ]
     },
     {
       "id": "namwon-keuneong",
@@ -3903,11 +4003,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "성산에 있는 자연·트레킹 장소다.",
+      "summary": "남원읍의 해안절경 명소로, 상시 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 성산 일정에 넣을 수 있는 자연·트레킹 장소예요."
+        "{place_name}은(는) 남원읍에서 해안 경관을 즐기고 싶을 때 잘 맞아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "해안 절경",
+        "남원읍",
+        "상시 개방"
+      ]
     },
     {
       "id": "hueree-park",
@@ -3948,9 +4053,14 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 휴양·힐링 장소다.",
+      "summary": "남원읍의 꽃 정원(주제공원)으로, 개인 성인 입장료는 13,000원이다. 3~9월 09:00~19:00, 10~2월 09:00~18:00에 운영한다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 휴양·힐링 장소예요."
+        "{place_name}은(는) 남원읍에서 꽃 정원을 둘러보고 싶을 때 잘 맞아요."
+      ],
+      "highlight_tags": [
+        "꽃 정원",
+        "남원읍",
+        "입장료 있음"
       ]
     },
     {
@@ -3991,11 +4101,16 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 문화·역사 장소다.",
+      "summary": "안덕면의 복합문화공간 박물관으로, 상설전시 성인 요금은 30,000원이다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 안덕면에서 실내 전시를 보고 싶을 때 잘 맞아요. 상설전시 성인 요금이 30,000원이에요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "실내 박물관",
+        "복합문화공간",
+        "우천 대안"
+      ]
     },
     {
       "id": "alddreu-airfield",
@@ -4036,11 +4151,16 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "is_active": true,
-      "summary": "서귀포 서부에 있는 문화·역사 장소다.",
+      "summary": "대정읍 상모리의 일본군 비행기 격납고 유적지로, 무료로 상시 개방된다.",
       "note_templates": [
-        "{place_name}은(는) 서귀포 서부 일정에 넣을 수 있는 문화·역사 장소예요."
+        "{place_name}은(는) 대정읍에서 근대 역사 유적을 둘러보고 싶을 때 좋아요."
       ],
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "highlight_tags": [
+        "근대 유적",
+        "무료 입장",
+        "상시 개방"
+      ]
     }
   ],
   "featured_video": {

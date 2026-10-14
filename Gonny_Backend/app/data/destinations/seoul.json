@@ -3423,7 +3423,8 @@
       "longitude": 126.9866297,
       "google_rating": 4.1,
       "google_rating_count": 1072,
-      "is_active": true
+      "is_active": true,
+      "content_id": "3094138"
     },
     {
       "id": "seoul-restaurant-jongno-oncheonjip",
@@ -3898,7 +3899,8 @@
       "longitude": 126.9798528,
       "google_rating": 4.5,
       "google_rating_count": 3971,
-      "is_active": true
+      "is_active": true,
+      "content_id": "403044"
     },
     {
       "id": "seoul-restaurant-euljiro-sancheong-sutbul",
@@ -4262,7 +4264,8 @@
       "google_rating": 4.0,
       "google_rating_count": 8465,
       "is_active": true,
-      "mvp_tier": "core"
+      "mvp_tier": "core",
+      "content_id": "1325115"
     },
     {
       "id": "seoul-restaurant-dongdaemun-wonjowonhalmae",
@@ -4943,7 +4946,8 @@
       "longitude": 127.0562192,
       "google_rating": 4.8,
       "google_rating_count": 2651,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2837773"
     },
     {
       "id": "seoul-restaurant-seongsu-jojo",
@@ -5011,7 +5015,8 @@
       "longitude": 127.0434697,
       "google_rating": 4.4,
       "google_rating_count": 428,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2894934"
     },
     {
       "id": "seoul-restaurant-seongsu-beton",
@@ -5840,7 +5845,8 @@
       "longitude": 127.0302672,
       "google_rating": 4.3,
       "google_rating_count": 680,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2869760"
     },
     {
       "id": "seoul-restaurant-gangnam-wild-buffalo",
@@ -6302,7 +6308,8 @@
       "mood": [
         "활기참"
       ],
-      "visual_feature": []
+      "visual_feature": [],
+      "content_id": "2871478"
     },
     {
       "id": "seoul-restaurant-gangnam-daol-charcoal",
@@ -6684,7 +6691,8 @@
       "longitude": 127.1037432,
       "google_rating": 4.2,
       "google_rating_count": 1721,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2839397"
     },
     {
       "id": "seoul-restaurant-jamsil-pangzi",
@@ -7103,7 +7111,8 @@
       "longitude": 126.9923557,
       "google_rating": 4.0,
       "google_rating_count": 601,
-      "is_active": true
+      "is_active": true,
+      "content_id": "132832"
     },
     {
       "id": "seoul-restaurant-itaewon-geolgune",

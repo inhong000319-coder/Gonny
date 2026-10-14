@@ -1101,7 +1101,8 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "latitude": 35.1592,
-      "longitude": 129.16103
+      "longitude": 129.16103,
+      "content_id": "229912"
     },
     {
       "id": "busan-x-the-sky",
@@ -2098,7 +2099,8 @@
       "mood": [
         "활기참"
       ],
-      "visual_feature": []
+      "visual_feature": [],
+      "content_id": "133525"
     },
     {
       "id": "busan-restaurant-nampo-jeilsan-kkomjangeo",
@@ -2477,7 +2479,8 @@
       "longitude": 129.1266016,
       "google_rating": 4.5,
       "google_rating_count": 221,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2868940"
     },
     {
       "id": "busan-restaurant-gwangalli-hq-gwangan",
@@ -3131,7 +3134,8 @@
       "longitude": 129.1591675,
       "google_rating": 4.0,
       "google_rating_count": 2351,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2860782"
     },
     {
       "id": "busan-restaurant-haeundae-wonjo-jeonbokjuk",
@@ -3199,7 +3203,8 @@
       "longitude": 129.1594118,
       "google_rating": 4.0,
       "google_rating_count": 388,
-      "is_active": true
+      "is_active": true,
+      "content_id": "851955"
     },
     {
       "id": "busan-restaurant-haeundae-halmaejib",
@@ -3233,7 +3238,8 @@
       "longitude": 129.1650109,
       "google_rating": 4.2,
       "google_rating_count": 1018,
-      "is_active": true
+      "is_active": true,
+      "content_id": "2905141"
     },
     {
       "id": "busan-restaurant-haeundae-kyu-woojeong",

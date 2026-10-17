@@ -9,11 +9,18 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.domains.accommodation_catalog.schemas import AccommodationData, CityAccommodationCatalog
+from app.domains.rule_planner.services.policies.city.jeju_zones import ZONE_CENTERS
 from app.services.external_clients import extract_lodging_amenities
 
 ACCOMMODATIONS_DIR = PROJECT_ROOT / "app" / "data" / "accommodations"
-MIN_SELECTED_PER_CITY = 10
-MAX_SELECTED_PER_CITY = 15
+
+# scripts/add_tour_api_lodging.py (lodging_selection_v4 선택 + 대표 호텔 8곳)
+# 반영 이후의 도시별 최종 숙소 수. 기존 10~15개 범위 체크는 그 숫자 자체를
+# 보호하려는 게 아니라 "합리적인 규모인가"를 보려는 것이었으므로, 반영 후
+# 정확한 기대값으로 바꿔 회귀를 더 정밀하게 잡는다. 서울은 대표 호텔 중
+# "레스케이프 호텔(L'Escape Hotel)"이 풀의 표기(아포스트로피 문자 차이)와
+# 정확히 일치하지 않아 건너뛰어 49가 아닌 48곳만 추가됐다(15+48=63).
+EXPECTED_ACCOMMODATION_COUNT: dict[str, int] = {"seoul": 63, "busan": 38, "jeju": 50}
 
 
 def build_accommodation(**overrides) -> AccommodationData:
@@ -92,10 +99,10 @@ def _load_city_catalog(city: str) -> CityAccommodationCatalog:
     return CityAccommodationCatalog.model_validate(payload)
 
 
-def test_each_city_has_between_min_and_max_accommodations() -> None:
+def test_each_city_has_the_expected_accommodation_count() -> None:
     for city in ["seoul", "busan", "jeju"]:
         catalog = _load_city_catalog(city)
-        assert MIN_SELECTED_PER_CITY <= len(catalog.accommodations) <= MAX_SELECTED_PER_CITY, city
+        assert len(catalog.accommodations) == EXPECTED_ACCOMMODATION_COUNT[city], city
 
 
 def test_each_city_has_at_least_two_accommodation_types() -> None:
@@ -109,10 +116,17 @@ def test_each_city_has_at_least_two_accommodation_types() -> None:
 
 
 def test_accommodation_areas_overlap_existing_destination_catalog_areas() -> None:
+    # area is decorative for scoring/display (the only functional use is
+    # this very check) - see docs/notes around AccommodationData.area.
+    # Jeju accommodations added via scripts/add_tour_api_lodging.py use
+    # jeju_zones's 8 zone codes (not destinations/jeju.json's 4-category
+    # area field), so jeju's known_areas is widened to include those too.
     destinations_dir = PROJECT_ROOT / "app" / "data" / "destinations"
     for city in ["seoul", "busan", "jeju"]:
         destination_payload = json.loads((destinations_dir / f"{city}.json").read_text(encoding="utf-8"))
         known_areas = {place["area"] for place in destination_payload["places"]}
+        if city == "jeju":
+            known_areas |= set(ZONE_CENTERS)
 
         catalog = _load_city_catalog(city)
         for accommodation in catalog.accommodations:

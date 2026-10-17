@@ -1,4 +1,13 @@
 # 이 스크립트로 다시 받아오면 12곳의 유형 보정(scripts/fix_accommodation_types.py)이 덮어써지므로, 재실행 후 보정 스크립트를 다시 돌려야 한다.
+#
+# 경고: 이 스크립트는 재실행하지 않는다. fetch_lodging_candidates()가 쓰는
+# areaBasedList2의 areaCode 필터는 areacode 필드가 빈 레코드를 조용히
+# 빠뜨린다 - 기존 카탈로그 21곳(대형 체인 호텔 포함: 파라다이스 호텔 부산,
+# 그랜드 하얏트 서울 등)이 이 사각지대에 있었다는 사실을 local_only/reports/
+# accommodation_areacode_gap_access_paths.* 조사로 확인했다. 게다가
+# 재실행하면 기존 45곳의 수작업 가격/유형 보정(scripts/fix_accommodation_types.py)도
+# 덮어쓴다. 신규 숙소를 추가할 때는 scripts/add_tour_api_lodging.py(areaCode
+# 대신 lDongRegnCd 사용, 허용 목록 기반 멱등 추가)를 쓴다.
 from __future__ import annotations
 
 import json

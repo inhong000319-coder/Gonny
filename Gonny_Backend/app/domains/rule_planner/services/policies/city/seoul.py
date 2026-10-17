@@ -55,3 +55,23 @@ def evening_food_bonus(time_slot: str, categories: set[str]) -> int:
     if time_slot == "evening" and {"food", "nightlife"} & categories:
         return 6
     return 0
+
+
+# Measured (local_only/reports/headroom_and_variants_analysis.md): replacing
+# the single reference_point tiered bonus with this per-day-endpoint average
+# distance penalty, unrounded, at -4.0/km, took seoul's average
+# accommodation-to-itinerary distance from 5.21km to 4.56km, collapsed the
+# top1/top2 score-tie rate from 49.0% to 2.1% (the old tiered bonus awards
+# only 4 discrete integer values, so unrelated candidates constantly landed
+# on the same score - see accommodation_scoring.py's CLOSE/NEARBY/FAR
+# tiers), and brought budget/companion fit to 100% (from 99%/99%). Left
+# unrounded deliberately - round() is what caused the tie collapse at
+# every coefficient tested, including this one.
+ACCOMMODATION_DISTANCE_PENALTY_PER_KM = -4.0
+
+
+def accommodation_distance_score(distances_km: list[float]) -> float:
+    if not distances_km:
+        return 0.0
+    average_km = sum(distances_km) / len(distances_km)
+    return average_km * ACCOMMODATION_DISTANCE_PENALTY_PER_KM

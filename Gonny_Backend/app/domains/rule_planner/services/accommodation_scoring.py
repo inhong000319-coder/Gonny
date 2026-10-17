@@ -170,7 +170,7 @@ def accommodation_score(
     request: NormalizedRuleRequest,
     reference_point: tuple[float, float] | None,
     day_endpoints: list[tuple[float, float]] | None = None,
-) -> int:
+) -> float:
     """Rule-based accommodation fitness score.
 
     Budget fit uses request.accommodation_budget_band (lodging-only budget,
@@ -206,13 +206,14 @@ def accommodation_score(
 
     score += _parking_bonus(accommodation, request)
 
-    # Jeju-only: score by distance to every day's first/last place instead
-    # of the single reference_point below - None for every other city
-    # (Seoul/Busan unaffected by construction), see
-    # policies/city/__init__.py.accommodation_distance_score.
-    jeju_distance_score = accommodation_distance_score(request, accommodation, day_endpoints or [])
-    if jeju_distance_score is not None:
-        score += jeju_distance_score
+    # Seoul/busan/jeju all define this (see each policies/city/*.py module) -
+    # score by distance to every day's first/last place INSTEAD OF the
+    # single reference_point tiered bonus below. None only for a city whose
+    # policy module doesn't define accommodation_distance_score(distances_km) -
+    # see policies/city/__init__.py.accommodation_distance_score.
+    per_day_endpoint_distance_score = accommodation_distance_score(request, accommodation, day_endpoints or [])
+    if per_day_endpoint_distance_score is not None:
+        score += per_day_endpoint_distance_score
     elif reference_point is not None and accommodation.latitude is not None and accommodation.longitude is not None:
         distance_km = haversine_distance_km(
             reference_point[0], reference_point[1], accommodation.latitude, accommodation.longitude

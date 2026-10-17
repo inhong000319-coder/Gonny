@@ -61,3 +61,22 @@ def evening_food_bonus(time_slot: str, categories: set[str]) -> int:
     if time_slot == "evening" and {"food", "nightlife"} & categories:
         return 5
     return 0
+
+
+# Measured (local_only/reports/headroom_and_variants_analysis.md): busan's
+# candidates already had a large reference_point score gap (median 8.0), so
+# an additive distance term at -0.6~-2.0/km never changed a single pick in
+# the 96-request sweep. Only the replacing form moves anything, and -4.0 was
+# the coefficient where average distance (5.42km -> 5.44km) stayed
+# essentially flat while budget fit improved (66.7% -> 83.3%). Left
+# unrounded for the same reason as seoul (round() caused tie collapse there;
+# busan had 0% ties either way, but there's no reason to round one city and
+# not the other for the same hook).
+ACCOMMODATION_DISTANCE_PENALTY_PER_KM = -4.0
+
+
+def accommodation_distance_score(distances_km: list[float]) -> float:
+    if not distances_km:
+        return 0.0
+    average_km = sum(distances_km) / len(distances_km)
+    return average_km * ACCOMMODATION_DISTANCE_PENALTY_PER_KM

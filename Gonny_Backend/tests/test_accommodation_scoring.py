@@ -292,7 +292,8 @@ def test_load_city_accommodations_returns_empty_list_for_unknown_city() -> None:
 def test_load_city_accommodations_reads_real_seoul_data() -> None:
     accommodations = load_city_accommodations("seoul")
 
-    assert 10 <= len(accommodations) <= 15
+    # scripts/add_tour_api_lodging.py grew seoul from 15 to 63.
+    assert len(accommodations) == 63
     assert all(isinstance(item, AccommodationData) for item in accommodations)
 
 

@@ -422,6 +422,989 @@
       "checkin_time": "14:00",
       "checkout_time": "12:00",
       "view": null
+    },
+    {
+      "id": "137814",
+      "name": "제주 금강산콘도",
+      "city": "jeju",
+      "area": "bukseo",
+      "latitude": 33.3795560084,
+      "longitude": 126.2502552886,
+      "content_id": "137814",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "1403482",
+      "name": "오션스위츠 제주호텔",
+      "city": "jeju",
+      "area": "jeju-city",
+      "latitude": 33.5183414084125,
+      "longitude": 126.523112864166,
+      "content_id": "1403482",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142957",
+      "name": "메종 글래드 제주",
+      "city": "jeju",
+      "area": "jeju-city",
+      "latitude": 33.4856030074,
+      "longitude": 126.4889029058,
+      "content_id": "142957",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "체육시설",
+        "사우나",
+        "음료서비스",
+        "바비큐",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142965",
+      "name": "서귀포KAL호텔",
+      "city": "jeju",
+      "area": "seogwipo-si",
+      "latitude": 33.2443241998,
+      "longitude": 126.5807942929,
+      "content_id": "142965",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "143025",
+      "name": "롯데호텔 제주",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.2486848734,
+      "longitude": 126.4105127718,
+      "content_id": "143025",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "1821483",
+      "name": "제주올레하우스",
+      "city": "jeju",
+      "area": "dongbu",
+      "latitude": 33.5133016713,
+      "longitude": 126.7784364633,
+      "content_id": "1821483",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "1846473",
+      "name": "신신호텔 제주오션",
+      "city": "jeju",
+      "area": "seogwipo-si",
+      "latitude": 33.24595724709794,
+      "longitude": 126.56233627717475,
+      "content_id": "1846473",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "1887546",
+      "name": "프레리아 커플 독채펜션",
+      "city": "jeju",
+      "area": "bukseo",
+      "latitude": 33.4254894659,
+      "longitude": 126.4050490077,
+      "content_id": "1887546",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "232287",
+      "name": "소노벨 제주",
+      "city": "jeju",
+      "area": "dongbu",
+      "latitude": 33.541313,
+      "longitude": 126.671924,
+      "content_id": "232287",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2498637",
+      "name": "용산 제주유스호스텔",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.2434191225,
+      "longitude": 126.4509341451,
+      "content_id": "2498637",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2561880",
+      "name": "제주신화월드 호텔 앤 리조트 랜딩관",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.3056620785,
+      "longitude": 126.3175384996,
+      "content_id": "2561880",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2561909",
+      "name": "제주신화월드 호텔 앤 리조트 메리어트관",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.30723203976931,
+      "longitude": 126.31973665348082,
+      "content_id": "2561909",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2623014",
+      "name": "브릭216",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.2408771391,
+      "longitude": 126.4434470348,
+      "content_id": "2623014",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2623579",
+      "name": "틸다하우스",
+      "city": "jeju",
+      "area": "daejeong",
+      "latitude": 33.311061068705584,
+      "longitude": 126.2377058264125,
+      "content_id": "2623579",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2626708",
+      "name": "해성파크텔",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.2523116402,
+      "longitude": 126.4213570284,
+      "content_id": "2626708",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "바비큐"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2634320",
+      "name": "아인스 호스텔",
+      "city": "jeju",
+      "area": "seogwipo-si",
+      "latitude": 33.2454341363,
+      "longitude": 126.5663918312,
+      "content_id": "2634320",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2667498",
+      "name": "에덴호스텔",
+      "city": "jeju",
+      "area": "jeju-city",
+      "latitude": 33.5184027384,
+      "longitude": 126.4891868158,
+      "content_id": "2667498",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2847272",
+      "name": "제주 항공우주 호텔",
+      "city": "jeju",
+      "area": "daejeong",
+      "latitude": 33.3023914693,
+      "longitude": 126.29458255,
+      "content_id": "2847272",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2876795",
+      "name": "그랜드 하얏트 제주",
+      "city": "jeju",
+      "area": "jeju-city",
+      "latitude": 33.4852623035,
+      "longitude": 126.4814594598,
+      "content_id": "2876795",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "체육시설",
+        "사우나",
+        "미용실",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2940391",
+      "name": "광이멀스테이",
+      "city": "jeju",
+      "area": "bukseo",
+      "latitude": 33.4058844989,
+      "longitude": 126.3048803787,
+      "content_id": "2940391",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "바비큐"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3031581",
+      "name": "카세로지",
+      "city": "jeju",
+      "area": "namdong",
+      "latitude": 33.3453834482,
+      "longitude": 126.7868991189,
+      "content_id": "3031581",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3076467",
+      "name": "담모라 호텔앤리조트",
+      "city": "jeju",
+      "area": "daejeong",
+      "latitude": 33.2497188899302,
+      "longitude": 126.306031842984,
+      "content_id": "3076467",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3076491",
+      "name": "제주티라호텔",
+      "city": "jeju",
+      "area": "seongsan",
+      "latitude": 33.4426841764,
+      "longitude": 126.9184414759,
+      "content_id": "3076491",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3079939",
+      "name": "라마다제주함덕호텔",
+      "city": "jeju",
+      "area": "dongbu",
+      "latitude": 33.54314999627822,
+      "longitude": 126.65987322520544,
+      "content_id": "3079939",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3079952",
+      "name": "제주서우봉비치호텔",
+      "city": "jeju",
+      "area": "dongbu",
+      "latitude": 33.5428304494,
+      "longitude": 126.6602866568,
+      "content_id": "3079952",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3079973",
+      "name": "일성리조트 제주비치",
+      "city": "jeju",
+      "area": "bukseo",
+      "latitude": 33.3856640884,
+      "longitude": 126.2211180134,
+      "content_id": "3079973",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3079994",
+      "name": "MJ리조트",
+      "city": "jeju",
+      "area": "dongbu",
+      "latitude": 33.5292043387,
+      "longitude": 126.8800922865,
+      "content_id": "3079994",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3089169",
+      "name": "호텔스위트캐슬",
+      "city": "jeju",
+      "area": "dongbu",
+      "latitude": 33.5442077624247,
+      "longitude": 126.65690366800033,
+      "content_id": "3089169",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3344565",
+      "name": "JW 메리어트 제주 리조트 & 스파",
+      "city": "jeju",
+      "area": "seogwipo-si",
+      "latitude": 33.243844,
+      "longitude": 126.538638,
+      "content_id": "3344565",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "체육시설",
+        "사우나",
+        "음료서비스",
+        "자전거대여",
+        "피트니스",
+        "PC실",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3520495",
+      "name": "취다선 리조트",
+      "city": "jeju",
+      "area": "seongsan",
+      "latitude": 33.471847887441896,
+      "longitude": 126.91270319146102,
+      "content_id": "3520495",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "733613",
+      "name": "아망뜨펜션(제주)",
+      "city": "jeju",
+      "area": "namdong",
+      "latitude": 33.3060923857,
+      "longitude": 126.806436338,
+      "content_id": "733613",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "취사가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "익일 11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "971331",
+      "name": "오션하우스",
+      "city": "jeju",
+      "area": "daejeong",
+      "latitude": 33.2348043445519,
+      "longitude": 126.31017795513,
+      "content_id": "971331",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "바비큐"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "977101",
+      "name": "애월해안누리(구 하얀둥지)",
+      "city": "jeju",
+      "area": "bukseo",
+      "latitude": 33.4705668076,
+      "longitude": 126.3416562839,
+      "content_id": "977101",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "바비큐"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "983958",
+      "name": "엘리시안 제주",
+      "city": "jeju",
+      "area": "bukseo",
+      "latitude": 33.37307,
+      "longitude": 126.382571,
+      "content_id": "983958",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2819964",
+      "name": "그랜드 조선 제주",
+      "city": "jeju",
+      "area": "jungmun-andeok",
+      "latitude": 33.2524,
+      "longitude": 126.4081,
+      "content_id": "2819964",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
     }
   ]
 }

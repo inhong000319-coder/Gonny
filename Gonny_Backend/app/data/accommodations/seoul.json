@@ -408,6 +408,1356 @@
       "checkout_time": "12:00",
       "view": "city",
       "average_price_krw": 197123
+    },
+    {
+      "id": "142728",
+      "name": "그랜드 워커힐 서울",
+      "city": "seoul",
+      "area": "gwangjin",
+      "latitude": 37.5551673746,
+      "longitude": 127.1107727617,
+      "content_id": "142728",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142729",
+      "name": "더그랜드롯데 서울",
+      "city": "seoul",
+      "area": "euljiro",
+      "latitude": 37.5653471146,
+      "longitude": 126.9810295663,
+      "content_id": "142729",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142730",
+      "name": "웨스틴 조선 서울",
+      "city": "seoul",
+      "area": "myeongdong",
+      "latitude": 37.5644666486,
+      "longitude": 126.9800435765,
+      "content_id": "142730",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142733",
+      "name": "그랜드 하얏트 서울",
+      "city": "seoul",
+      "area": "itaewon",
+      "latitude": 37.5396005504,
+      "longitude": 126.9974509212,
+      "content_id": "142733",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142734",
+      "name": "서울신라호텔",
+      "city": "seoul",
+      "area": "euljiro",
+      "latitude": 37.5558792608339,
+      "longitude": 127.005152483399,
+      "content_id": "142734",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "익일 11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142764",
+      "name": "호텔리베라 청담",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.5238646089,
+      "longitude": 127.0543263813,
+      "content_id": "142764",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "142765",
+      "name": "스위스 그랜드 호텔",
+      "city": "seoul",
+      "area": "hongdae",
+      "latitude": 37.5884666461,
+      "longitude": 126.9357749512,
+      "content_id": "142765",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "143033",
+      "name": "JW 메리어트 호텔 서울",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.5049159926,
+      "longitude": 127.003212459,
+      "content_id": "143033",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "143107",
+      "name": "비스타 워커힐 서울",
+      "city": "seoul",
+      "area": "gwangjin",
+      "latitude": 37.5551673746,
+      "longitude": 127.1107727617,
+      "content_id": "143107",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "사우나",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2505908",
+      "name": "롯데시티호텔 구로",
+      "city": "seoul",
+      "area": "gwanak",
+      "latitude": 37.4850844673,
+      "longitude": 126.8966252225,
+      "content_id": "2505908",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2548198",
+      "name": "L7 강남 바이 롯데호텔",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.505713994,
+      "longitude": 127.0516493827,
+      "content_id": "2548198",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2573944",
+      "name": "Cozy Lodge",
+      "city": "seoul",
+      "area": "gwanak",
+      "latitude": 37.489801568,
+      "longitude": 126.9515978613,
+      "content_id": "2573944",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "17:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2602549",
+      "name": "96번지 트래블러스 롯지",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.5675963138,
+      "longitude": 127.0076655554,
+      "content_id": "2602549",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "음료서비스",
+        "바비큐",
+        "피트니스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2603723",
+      "name": "플랜에이호스텔",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.5668964075,
+      "longitude": 127.0083571794,
+      "content_id": "2603723",
+      "accommodation_type": "호스텔",
+      "amenities": [],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2607806",
+      "name": "나비호스텔",
+      "city": "seoul",
+      "area": "hongdae",
+      "latitude": 37.5580626011,
+      "longitude": 126.9247400491,
+      "content_id": "2607806",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2608038",
+      "name": "USB하우스",
+      "city": "seoul",
+      "area": "euljiro",
+      "latitude": 37.5606526013,
+      "longitude": 127.0035189077,
+      "content_id": "2608038",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "PC실",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2610854",
+      "name": "야코리아호스텔 강남점",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.5046598283,
+      "longitude": 127.0437640507,
+      "content_id": "2610854",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "음료서비스",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2639707",
+      "name": "포포인츠 바이 쉐라톤 서울 구로",
+      "city": "seoul",
+      "area": "gwanak",
+      "latitude": 37.4831778712,
+      "longitude": 126.8988454727,
+      "content_id": "2639707",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2650639",
+      "name": "리버사이드게스트하우스",
+      "city": "seoul",
+      "area": "gwangjin",
+      "latitude": 37.5329878783,
+      "longitude": 127.0873259497,
+      "content_id": "2650639",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2666430",
+      "name": "K-그랜드 호스텔 강남 1(K-GRAND HOSTEL GANGNAM1)",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.5055705015,
+      "longitude": 127.0252740414,
+      "content_id": "2666430",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2700928",
+      "name": "업플로 호스텔",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.4937911663,
+      "longitude": 127.0170584559,
+      "content_id": "2700928",
+      "accommodation_type": "호스텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "low",
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2706047",
+      "name": "한옥 게스트하우스 동촌재",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.5801108465,
+      "longitude": 126.9698547581,
+      "content_id": "2706047",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "PC실"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2707438",
+      "name": "하은재",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.5819384379,
+      "longitude": 126.9712823538,
+      "content_id": "2707438",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "음료서비스"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2907142",
+      "name": "롯데호텔 L7홍대",
+      "city": "seoul",
+      "area": "hongdae",
+      "latitude": 37.5557527684,
+      "longitude": 126.9216689648,
+      "content_id": "2907142",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "익일 12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "2991972",
+      "name": "소테츠 호텔즈 더 스프라지르 서울 동대문",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.5647180025,
+      "longitude": 127.0077619018,
+      "content_id": "2991972",
+      "accommodation_type": "호텔",
+      "amenities": [],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3023167",
+      "name": "브라운스위트 신촌센트럴",
+      "city": "seoul",
+      "area": "hongdae",
+      "latitude": 37.5546682254,
+      "longitude": 126.9355938846,
+      "content_id": "3023167",
+      "accommodation_type": "모텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3072219",
+      "name": "북촌빈관 by 락고재",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.5823469553,
+      "longitude": 126.9842200518,
+      "content_id": "3072219",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "음료서비스"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3076176",
+      "name": "더리센츠동대문호텔",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.5622935951,
+      "longitude": 127.0616501452,
+      "content_id": "3076176",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3076237",
+      "name": "로사나관광호텔",
+      "city": "seoul",
+      "area": "jamsil",
+      "latitude": 37.5060036392,
+      "longitude": 127.097559982,
+      "content_id": "3076237",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3079777",
+      "name": "이비스 앰배서더 서울 인사동",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.5742850481,
+      "longitude": 126.9893784422,
+      "content_id": "3079777",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "14:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3091243",
+      "name": "에이치에비뉴 건대점",
+      "city": "seoul",
+      "area": "gwangjin",
+      "latitude": 37.5460366537,
+      "longitude": 127.0665683828,
+      "content_id": "3091243",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "18:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3337233",
+      "name": "노보텔 앰배서더 서울 동대문 호텔 & 레지던스",
+      "city": "seoul",
+      "area": "euljiro",
+      "latitude": 37.5662979478,
+      "longitude": 127.004377568,
+      "content_id": "3337233",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "취사가능",
+        "세미나실",
+        "사우나",
+        "음료서비스",
+        "피트니스",
+        "PC실"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3337577",
+      "name": "소피텔 앰배서더 서울 호텔&서비스드 레지던스",
+      "city": "seoul",
+      "area": "jamsil",
+      "latitude": 37.5138710442,
+      "longitude": 127.1063644459,
+      "content_id": "3337577",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "체육시설",
+        "사우나",
+        "미용실",
+        "음료서비스",
+        "자전거대여",
+        "피트니스",
+        "PC실",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3339644",
+      "name": "포시즌스 호텔 서울(광화문미래에셋호텔)",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.57069788551184,
+      "longitude": 126.97539819675502,
+      "content_id": "3339644",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "체육시설",
+        "사우나",
+        "미용실",
+        "음료서비스",
+        "피트니스",
+        "대중목욕탕"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3379735",
+      "name": "맹그로브 신설",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.576175133,
+      "longitude": 127.0260729716,
+      "content_id": "3379735",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3387114",
+      "name": "노보텔 앰배서더 서울 용산",
+      "city": "seoul",
+      "area": "itaewon",
+      "latitude": 37.5319525342,
+      "longitude": 126.9630190195,
+      "content_id": "3387114",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "사우나",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3387804",
+      "name": "이비스 스타일 앰배서더 서울 용산",
+      "city": "seoul",
+      "area": "itaewon",
+      "latitude": 37.5319525342,
+      "longitude": 126.9630190195,
+      "content_id": "3387804",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "사우나",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3395428",
+      "name": "보코 서울 명동",
+      "city": "seoul",
+      "area": "myeongdong",
+      "latitude": 37.558418667,
+      "longitude": 126.978544475,
+      "content_id": "3395428",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "음료서비스",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3464755",
+      "name": "시그니엘 서울",
+      "city": "seoul",
+      "area": "jamsil",
+      "latitude": 37.5141138732,
+      "longitude": 127.1040605071,
+      "content_id": "3464755",
+      "accommodation_type": "호텔",
+      "amenities": [],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3464880",
+      "name": "오라카이 인사동 스위츠",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.5730019255,
+      "longitude": 126.9873450645,
+      "content_id": "3464880",
+      "accommodation_type": "콘도미니엄",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "사우나",
+        "피트니스"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3465873",
+      "name": "오라카이 대학로 호텔",
+      "city": "seoul",
+      "area": "jongno",
+      "latitude": 37.5755697862,
+      "longitude": 126.9987177336,
+      "content_id": "3465873",
+      "accommodation_type": "호텔",
+      "amenities": [],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3465927",
+      "name": "글래드 마포",
+      "city": "seoul",
+      "area": "hongdae",
+      "latitude": 37.5432748186,
+      "longitude": 126.9508734801,
+      "content_id": "3465927",
+      "accommodation_type": "호텔",
+      "amenities": [],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3484585",
+      "name": "스테이 패스포트 신당 료칸",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.56656332449022,
+      "longitude": 127.02186794703105,
+      "content_id": "3484585",
+      "accommodation_type": "모텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3570799",
+      "name": "엠디호텔 독산",
+      "city": "seoul",
+      "area": "gwanak",
+      "latitude": 37.4615045289069,
+      "longitude": 126.89722684064154,
+      "content_id": "3570799",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능",
+        "세미나실",
+        "음료서비스",
+        "피트니스",
+        "PC실"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "12:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "4041219",
+      "name": "지후헌",
+      "city": "seoul",
+      "area": "dongdaemun",
+      "latitude": 37.5894511332159,
+      "longitude": 127.003237550676,
+      "content_id": "4041219",
+      "accommodation_type": "펜션·민박",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "couple",
+        "family",
+        "friend"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "143123",
+      "name": "파크 하얏트 서울",
+      "city": "seoul",
+      "area": "gangnam",
+      "latitude": 37.5087693831,
+      "longitude": 127.0641316305,
+      "content_id": "143123",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "3492920",
+      "name": "글래드 여의도",
+      "city": "seoul",
+      "area": "yeouido",
+      "latitude": 37.52740948539226,
+      "longitude": 126.91726519155982,
+      "content_id": "3492920",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "15:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
+    },
+    {
+      "id": "1853800",
+      "name": "콘래드 서울",
+      "city": "seoul",
+      "area": "yeouido",
+      "latitude": 37.5258056625,
+      "longitude": 126.926609581,
+      "content_id": "1853800",
+      "accommodation_type": "호텔",
+      "amenities": [
+        "주차가능"
+      ],
+      "budget_level": [
+        "medium",
+        "high"
+      ],
+      "budget_level_estimated": true,
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "checkin_time": "16:00",
+      "checkout_time": "11:00",
+      "view": null,
+      "average_price_krw": null
     }
   ]
 }

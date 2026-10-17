@@ -189,4 +189,7 @@ def test_catalog_options_include_accommodation_type_counts_for_seoul() -> None:
     options = RuleItineraryService().list_catalog_options()
     seoul = next(option for option in options if option.city == "seoul")
 
-    assert seoul.accommodation_type_counts == {"호텔": 11, "호스텔": 3, "펜션·민박": 1}
+    # scripts/add_tour_api_lodging.py added 45 lodging_selection_v4 picks +
+    # 3 named 대표 호텔(4곳 중 1곳은 표기 불일치로 스킵) to the original 15.
+    # seoul has 63 accommodations now.
+    assert seoul.accommodation_type_counts == {"호텔": 43, "펜션·민박": 5, "호스텔": 12, "모텔": 2, "콘도미니엄": 1}

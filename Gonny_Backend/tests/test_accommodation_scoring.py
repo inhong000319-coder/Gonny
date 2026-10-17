@@ -338,7 +338,7 @@ def test_compute_day_endpoints_skips_places_without_coordinates() -> None:
     assert compute_day_endpoints(day_place_map) == []
 
 
-# accommodation_distance_score (Jeju-only day_endpoints scoring)
+# accommodation_distance_score (per-day-endpoint distance scoring - seoul/busan/jeju)
 
 
 def test_jeju_accommodation_prefers_smaller_day_endpoints_distance_sum() -> None:
@@ -374,14 +374,15 @@ def test_jeju_accommodation_distance_score_ignores_reference_point() -> None:
     assert score_without_reference_point == score_with_reference_point
 
 
-def test_select_accommodation_for_seoul_is_unaffected_by_day_endpoints() -> None:
-    # Seoul has no accommodation_distance_score policy, so passing
-    # day_endpoints must select exactly the same candidate as before this
-    # parameter existed.
+def test_select_accommodation_for_seoul_uses_day_endpoints_instead_of_reference_point() -> None:
+    # Seoul now defines accommodation_distance_score (policies/city/seoul.py),
+    # so once day_endpoints is non-empty the pick flips to whichever
+    # candidate is closer to those endpoints, even if the single
+    # reference_point tiered bonus would have favored the other one.
     request = build_request(city="seoul")
     nearby = build_accommodation(id="nearby", city="seoul", latitude=37.5680, longitude=126.9790)
     far = build_accommodation(id="far", city="seoul", latitude=37.9000, longitude=127.3000)
-    day_endpoints = [(37.9000, 127.3000)]  # right on top of "far" - would flip the pick if this leaked in
+    day_endpoints = [(37.9000, 127.3000)]  # right on top of "far"
 
     without_day_endpoints = select_accommodation_recommendation(
         [nearby, far], request, SEOUL_REFERENCE_POINT
@@ -390,7 +391,63 @@ def test_select_accommodation_for_seoul_is_unaffected_by_day_endpoints() -> None
         [nearby, far], request, SEOUL_REFERENCE_POINT, day_endpoints
     )
 
-    assert without_day_endpoints.id == with_day_endpoints.id == "nearby"
+    assert without_day_endpoints.id == "nearby"
+    assert with_day_endpoints.id == "far"
+
+
+def test_seoul_accommodation_distance_score_is_unrounded() -> None:
+    from app.domains.rule_planner.services.policies.city.seoul import accommodation_distance_score
+
+    # 1/3 km average * -4.0/km = -1.33333...; round()ing this (as jeju does)
+    # would collapse many distinct distances onto the same few integers,
+    # which is what caused seoul's measured 49% top1/top2 tie rate before
+    # this hook existed - see local_only/reports/headroom_and_variants_analysis.md.
+    score = accommodation_distance_score([1 / 3])
+    assert score == pytest.approx(-4 / 3)
+    assert score != round(score)
+
+
+def test_seoul_accommodation_distance_score_empty_endpoints_is_zero() -> None:
+    from app.domains.rule_planner.services.policies.city.seoul import accommodation_distance_score
+
+    assert accommodation_distance_score([]) == 0.0
+
+
+def test_busan_accommodation_distance_score_matches_seoul_coefficient_and_shape() -> None:
+    from app.domains.rule_planner.services.policies.city.busan import accommodation_distance_score as busan_score
+    from app.domains.rule_planner.services.policies.city.seoul import accommodation_distance_score as seoul_score
+
+    assert busan_score([2.0, 4.0]) == seoul_score([2.0, 4.0]) == -12.0
+    assert busan_score([]) == 0.0
+
+
+def test_select_accommodation_for_busan_uses_day_endpoints_instead_of_reference_point() -> None:
+    request = build_request(city="busan")
+    nearby = build_accommodation(id="nearby", city="busan", latitude=35.1595, longitude=129.1605)
+    far = build_accommodation(id="far", city="busan", latitude=35.5000, longitude=129.5000)
+    reference_point = (35.1595, 129.1605)  # right on top of "nearby"
+    day_endpoints = [(35.5000, 129.5000)]  # right on top of "far"
+
+    without_day_endpoints = select_accommodation_recommendation([nearby, far], request, reference_point)
+    with_day_endpoints = select_accommodation_recommendation([nearby, far], request, reference_point, day_endpoints)
+
+    assert without_day_endpoints.id == "nearby"
+    assert with_day_endpoints.id == "far"
+
+
+def test_jeju_accommodation_distance_score_is_still_rounded() -> None:
+    # This hook's existing jeju behavior (jeju.py) must not change -
+    # ACCOMMODATION_DISTANCE_PENALTY_PER_KM stays -0.6 and rounded, unlike
+    # the new unrounded seoul/busan -4.0.
+    from app.domains.rule_planner.services.policies.city.jeju import (
+        ACCOMMODATION_DISTANCE_PENALTY_PER_KM,
+        accommodation_distance_score as jeju_score,
+    )
+
+    assert ACCOMMODATION_DISTANCE_PENALTY_PER_KM == -0.6
+    score = jeju_score([1 / 3])
+    assert score == round(1 / 3 * -0.6)
+    assert isinstance(score, int)
 
 
 def test_generate_recommends_different_accommodation_for_different_budget_and_companion() -> None:

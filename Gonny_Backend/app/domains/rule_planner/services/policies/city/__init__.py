@@ -113,16 +113,18 @@ def accommodation_distance_score(
     request: NormalizedRuleRequest,
     accommodation: AccommodationData,
     day_endpoints: list[tuple[float, float]],
-) -> int | None:
-    """Extra accommodation score based on the accommodation's distance to
-    every day's first/last place, in addition to (not instead of) the
-    single reference_point tiered bonus in accommodation_scoring.py.
+) -> float | None:
+    """Accommodation score based on the accommodation's distance to every
+    day's first/last place, used INSTEAD OF (not in addition to) the
+    single reference_point tiered bonus in accommodation_scoring.py - see
+    the if/elif there. A city opts in simply by defining
+    accommodation_distance_score(distances_km) on its policy module
+    (seoul.py, busan.py, jeju.py all do; jeju rounds to an int, seoul/busan
+    don't - see each module for why).
 
     None - meaning "this city has no such scoring, use the existing
     reference_point path unchanged" - for any city whose policy module
-    doesn't define accommodation_distance_score(distances_km). Today
-    that's every city except Jeju, so Seoul/Busan are unaffected by
-    construction, not just by convention.
+    doesn't define accommodation_distance_score(distances_km).
     """
     policy = _policy_for(request)
     if policy is None or not hasattr(policy, "accommodation_distance_score"):

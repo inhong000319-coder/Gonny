@@ -111,8 +111,11 @@ def test_real_catalog_candidate_counts_after_exclusion() -> None:
     provider = RuleItineraryService().catalog_provider
     # jeju: 3 -> 4 once scripts/merge_jeju_places.py added
     # seogwipo-maeil-olle-market ("서귀포매일올레시장") - its name matches
-    # the "시장" market keyword, same as dongmun-market.
-    expected_counts = {"seoul": 6, "busan": 5, "jeju": 4}
+    # the "시장" market keyword, same as dongmun-market. 4 -> 5 once
+    # scripts/add_tour_api_restaurants_jeju.py added
+    # jeju-restaurant-tour-4110105 ("캡틴클럽하우스 서귀포매일올레시장점"),
+    # whose own name also embeds "시장" for the same reason.
+    expected_counts = {"seoul": 6, "busan": 5, "jeju": 5}
 
     for city, expected_count in expected_counts.items():
         catalog = provider.get_city_catalog(continent="asia", country="korea", city=city, visible_only=True)

@@ -213,12 +213,14 @@ def test_merge_rows_into_catalog_raises_on_duplicate_id_within_the_same_run() ->
 # --- real catalog sanity (merge already applied) -----------------------------
 
 
-def test_real_jeju_catalog_has_89_places_with_required_fields() -> None:
+def test_real_jeju_catalog_has_120_places_with_required_fields() -> None:
     import json
 
     payload = json.loads(
         (PROJECT_ROOT / "app" / "data" / "destinations" / "jeju.json").read_text(encoding="utf-8")
     )
     places = [PlaceData.model_validate(p) for p in payload["places"]]
-    assert len(places) == 89
-    assert len({p.id for p in places}) == 89
+    # 89 was the count before scripts/add_tour_api_restaurants_jeju.py added
+    # 31 more restaurants (see test_add_tour_api_restaurants_jeju.py).
+    assert len(places) == 120
+    assert len({p.id for p in places}) == 120

@@ -68,7 +68,7 @@ def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # rain_sensitive_light data was applied (see feature/indoor-outdoor-
     # labels) - this just guards the count/uniqueness invariant going forward.
     #
-    # 334 = the original 109 indoor/outdoor-classified places plus 201
+    # 365 = the original 109 indoor/outdoor-classified places plus 201
     # individual restaurant entries merged in by
     # scripts/merge_restaurant_data.py (192 from the initial merge, see
     # feature/restaurant-recommendations, plus 9 more added once their
@@ -78,10 +78,12 @@ def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # test_all_109_korean_focus_places_are_classified below) plus 24 Jeju
     # sightseeing/activity places merged in by scripts/merge_jeju_places.py
     # (feat/jeju-merge-places), which do carry a setting value from their
-    # own CSV.
+    # own CSV, plus 31 Jeju restaurants merged in by
+    # scripts/add_tour_api_restaurants_jeju.py, which (being restaurants,
+    # like the 201 above) are also unclassified (setting=None).
     ids = [place.id for place in load_korean_focus_places()]
 
-    assert len(ids) == 334
+    assert len(ids) == 365
     assert len(set(ids)) == len(ids), "duplicate place_id found across seoul/busan/jeju catalogs"
 
 
@@ -107,9 +109,13 @@ def test_all_109_korean_focus_places_are_classified() -> None:
     # (pyoseon-haevichi-beach, a beach) matches the existing rain_sensitive_
     # light=True pattern (see merge_jeju_places.py's docstring), so
     # 23+1=24.
+    #
+    # The 31 Jeju restaurants merged in by
+    # scripts/add_tour_api_restaurants_jeju.py carry no setting value
+    # (restaurants, same as the 201 below) - 201+31=232 unclassified.
     EXPECTED_SETTING_COUNTS = {"outdoor": 66, "indoor": 42, "mixed": 25}
     EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 24
-    EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 201
+    EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 232
 
     places = load_korean_focus_places()
     classified_places = [place for place in places if place.setting is not None]

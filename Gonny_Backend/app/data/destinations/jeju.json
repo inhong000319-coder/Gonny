@@ -4179,6 +4179,1153 @@
         "무료 입장",
         "상시 개방"
       ]
+    },
+    {
+      "id": "jeju-restaurant-tour-2861372",
+      "name": "당포로나인 돈카츠",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "표선 해비치 해변 인근, 대표 메뉴는 제주흑돈카츠",
+      "latitude": 33.3257880323,
+      "longitude": 126.8435882289,
+      "content_id": "2861372",
+      "google_rating": 4.5,
+      "google_rating_count": 318,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-4110105",
+      "name": "캡틴클럽하우스 서귀포매일올레시장점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "서귀포매일올레시장 인근, 대표 메뉴는 시그니처 버거",
+      "latitude": 33.2498223451,
+      "longitude": 126.5637268216,
+      "content_id": "4110105",
+      "google_rating": 4.9,
+      "google_rating_count": 350,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-4092010",
+      "name": "남매네왕갈치",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "서귀포매일올레시장 인근, 대표 메뉴는 18조림(일팔조림)",
+      "latitude": 33.2498913802,
+      "longitude": 126.5639754324,
+      "content_id": "4092010",
+      "google_rating": 4.0,
+      "google_rating_count": 105,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2932531",
+      "name": "장수애섬식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "천지연폭포 인근, 대표 메뉴는 갈치조림",
+      "latitude": 33.2433684182,
+      "longitude": 126.5596823834,
+      "content_id": "2932531",
+      "google_rating": 4.4,
+      "google_rating_count": 174,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2899605",
+      "name": "반디파스타",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "함덕해수욕장 인근, 대표 메뉴는 돌문어 오일 파스타",
+      "latitude": 33.5424881703155,
+      "longitude": 126.669212607777,
+      "content_id": "2899605",
+      "google_rating": 4.7,
+      "google_rating_count": 495,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2783376",
+      "name": "순천미향 제주산방산본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "산방굴사(산방산) 인근, 대표 메뉴는 제왕삼합",
+      "latitude": 33.235700651,
+      "longitude": 126.312494621,
+      "content_id": "2783376",
+      "google_rating": 4.4,
+      "google_rating_count": 550,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2854417",
+      "name": "훈남횟집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "함덕해수욕장 인근, 대표 메뉴는 고등어회",
+      "latitude": 33.5421279676,
+      "longitude": 126.6678651887,
+      "content_id": "2854417",
+      "google_rating": 4.3,
+      "google_rating_count": 451,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2894407",
+      "name": "흑돼지해물삼합",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "정방폭포 인근, 대표 메뉴는 흑돼지해물삼합",
+      "latitude": 33.2456869486,
+      "longitude": 126.5703303734,
+      "content_id": "2894407",
+      "google_rating": 4.2,
+      "google_rating_count": 192,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2870912",
+      "name": "포도원흑돼지",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "한라수목원 인근, 대표 메뉴는 흑돼지오겹살",
+      "latitude": 33.4700581065,
+      "longitude": 126.4901906019,
+      "content_id": "2870912",
+      "google_rating": 4.2,
+      "google_rating_count": 714,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2833244",
+      "name": "솔동산고기국수",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이중섭 거주지 인근, 대표 메뉴는 반반국수",
+      "latitude": 33.2429705005,
+      "longitude": 126.5652336535,
+      "content_id": "2833244",
+      "google_rating": 4.6,
+      "google_rating_count": 49,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2871931",
+      "name": "센트로",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "이중섭 거주지 인근, 대표 메뉴는 감자뇨끼",
+      "latitude": 33.2466895723,
+      "longitude": 126.5675833663,
+      "content_id": "2871931",
+      "google_rating": 4.5,
+      "google_rating_count": 290,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2374199",
+      "name": "나운터횟집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "새섬·새연교 인근, 대표 메뉴는 구문쟁이코스",
+      "latitude": 33.2409187298908,
+      "longitude": 126.561393391195,
+      "content_id": "2374199",
+      "google_rating": 4.2,
+      "google_rating_count": 240,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-4071129",
+      "name": "코바라멘",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "산방굴사(산방산) 인근, 대표 메뉴는 미도리시오라멘",
+      "latitude": 33.2338148223,
+      "longitude": 126.3103562507,
+      "content_id": "4071129",
+      "google_rating": 5.0,
+      "google_rating_count": 23,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2837242",
+      "name": "리보스코화덕피자",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "한라수목원 인근, 대표 메뉴는 해녀톳도우 한라산용암 피자",
+      "latitude": 33.4694748009,
+      "longitude": 126.4878685946,
+      "content_id": "2837242",
+      "google_rating": 4.4,
+      "google_rating_count": 599,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-3030178",
+      "name": "로빙화",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남원 큰엉해안 인근, 대표 메뉴는 피자",
+      "latitude": 33.27511663280418,
+      "longitude": 126.70926191840505,
+      "content_id": "3030178",
+      "google_rating": 4.5,
+      "google_rating_count": 614,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2847791",
+      "name": "사계의시간",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "용머리해안 인근, 대표 메뉴는 장어덮밥",
+      "latitude": 33.2322454224,
+      "longitude": 126.3089977789,
+      "content_id": "2847791",
+      "google_rating": 4.4,
+      "google_rating_count": 430,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2851443",
+      "name": "호자",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해녀박물관 인근, 대표 메뉴는 등심돈까스",
+      "latitude": 33.5215083065,
+      "longitude": 126.8575797487,
+      "content_id": "2851443",
+      "google_rating": 4.5,
+      "google_rating_count": 263,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2911053",
+      "name": "알동네집",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "제주 유리의성 인근, 대표 메뉴는 흑돼지오겹살",
+      "latitude": 33.3164470445,
+      "longitude": 126.2673880277,
+      "content_id": "2911053",
+      "google_rating": 4.4,
+      "google_rating_count": 242,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2876488",
+      "name": "바타타식탁",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "표선 해비치 해변 인근, 대표 메뉴는 바타타 회 세트",
+      "latitude": 33.3271655353,
+      "longitude": 126.8359360817,
+      "content_id": "2876488",
+      "google_rating": 4.6,
+      "google_rating_count": 312,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2906322",
+      "name": "항아리조림",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "해녀박물관 인근, 대표 메뉴는 순살갈치조림",
+      "latitude": 33.5261681085,
+      "longitude": 126.8563955909,
+      "content_id": "2906322",
+      "google_rating": 4.6,
+      "google_rating_count": 147,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-404180",
+      "name": "진미명가",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "high"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "용머리해안 인근, 대표 메뉴는 다금바리",
+      "latitude": 33.2283217239,
+      "longitude": 126.3076061164,
+      "content_id": "404180",
+      "google_rating": 4.2,
+      "google_rating_count": 270,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2359165",
+      "name": "검은여닭도가니",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "정방폭포 인근, 대표 메뉴는 한방도가니",
+      "latitude": 33.2442177466,
+      "longitude": 126.5820620077,
+      "content_id": "2359165",
+      "google_rating": 4.5,
+      "google_rating_count": 198,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2847852",
+      "name": "옛날팥죽",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "성읍민속마을 인근, 대표 메뉴는 새알팥죽",
+      "latitude": 33.3885998263,
+      "longitude": 126.7989489935,
+      "content_id": "2847852",
+      "google_rating": 4.5,
+      "google_rating_count": 470,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2873771",
+      "name": "취향의섬",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seongsan",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "남원 큰엉해안 인근, 대표 메뉴는 고등어오일파스타",
+      "latitude": 33.2744162356,
+      "longitude": 126.6898277081,
+      "content_id": "2873771",
+      "google_rating": 4.5,
+      "google_rating_count": 84,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2851146",
+      "name": "자연스러운식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "medium"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "외돌개 인근, 대표 메뉴는 제주 수블라키와 차지키",
+      "latitude": 33.2435310361,
+      "longitude": 126.5328058954,
+      "content_id": "2851146",
+      "google_rating": 3.9,
+      "google_rating_count": 309,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2853604",
+      "name": "우동카덴",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "산굼부리 인근, 대표 메뉴는 야마카케우동",
+      "latitude": 33.4358676834,
+      "longitude": 126.6793082885,
+      "content_id": "2853604",
+      "google_rating": 3.9,
+      "google_rating_count": 1320,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2809900",
+      "name": "묘한식당",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "west-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "제주 유리의성 인근, 대표 메뉴는 흑돼지돔베카츠",
+      "latitude": 33.3226211550477,
+      "longitude": 126.262127681162,
+      "content_id": "2809900",
+      "google_rating": 4.4,
+      "google_rating_count": 183,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2871897",
+      "name": "뱅인타코 제주본점",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "오설록 티뮤지엄 인근, 대표 메뉴는 타코",
+      "latitude": 33.2886026732,
+      "longitude": 126.2826099295,
+      "content_id": "2871897",
+      "google_rating": 4.5,
+      "google_rating_count": 452,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2840487",
+      "name": "섭섭이네",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "비자림 인근, 대표 메뉴는 흑돼지퐁당커리",
+      "latitude": 33.4715876451,
+      "longitude": 126.7843928004,
+      "content_id": "2840487",
+      "google_rating": 4.2,
+      "google_rating_count": 342,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2902758",
+      "name": "뿌리와열매",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "east-jeju",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "비자림 인근, 대표 메뉴는 버섯 바질루꼴라 감자피자세트",
+      "latitude": 33.471795478,
+      "longitude": 126.7838563636,
+      "content_id": "2902758",
+      "google_rating": 4.8,
+      "google_rating_count": 33,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
+    },
+    {
+      "id": "jeju-restaurant-tour-2837142",
+      "name": "동광메밀짬뽕",
+      "activity_type": [
+        "미식"
+      ],
+      "budget_level": [
+        "low"
+      ],
+      "suitable_for": [
+        "solo",
+        "couple",
+        "friend",
+        "family"
+      ],
+      "time_fit": [
+        "evening"
+      ],
+      "area": "seogwipo-west",
+      "duration_hours": 1,
+      "priority": 6,
+      "pace": [
+        "easy"
+      ],
+      "mobility": [
+        "walkable"
+      ],
+      "summary": "카멜리아힐 인근, 대표 메뉴는 메밀 해물짬뽕",
+      "latitude": 33.3105401917,
+      "longitude": 126.3497119467,
+      "content_id": "2837142",
+      "google_rating": 4.2,
+      "google_rating_count": 210,
+      "is_active": true,
+      "mood": [],
+      "visual_feature": []
     }
   ],
   "featured_video": {

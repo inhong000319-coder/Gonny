@@ -109,6 +109,31 @@ def extreme_distance_penalty(
     return policy.extreme_distance_penalty(distance_km)
 
 
+def price_exact_match_bonus(city: str | None) -> int:
+    """Budget-exact-match bonus for a priced accommodation (see
+    accommodation_scoring._budget_fit_score) - a city opts in to a
+    different value than the shared default simply by defining
+    price_exact_match_bonus() on its policy module (seoul.py/jeju.py do,
+    at 6; busan.py doesn't, see its module for why).
+
+    Takes the accommodation's own city string directly (not a
+    NormalizedRuleRequest) - this bonus is a per-accommodation lookup
+    (AccommodationData.city), not a per-request one, and _budget_fit_score
+    already has the accommodation in hand.
+
+    10 - accommodation_scoring.PRICE_EXACT_MATCH_BONUS's own value, kept as
+    an independent literal here (not imported) for the same reason jeju.py
+    doesn't import accommodation_scoring: that module imports FROM
+    policies.city already, so importing back would be circular - for any
+    city whose policy module doesn't define price_exact_match_bonus(), or
+    when city is None/unrecognized (e.g. a city outside CITY_POLICIES).
+    """
+    policy = CITY_POLICIES.get(city) if city is not None else None
+    if policy is None or not hasattr(policy, "price_exact_match_bonus"):
+        return 10
+    return policy.price_exact_match_bonus()
+
+
 def accommodation_distance_score(
     request: NormalizedRuleRequest,
     accommodation: AccommodationData,

@@ -41,6 +41,15 @@ def preferred_area_order(request: NormalizedRuleRequest, area_scores: dict[str, 
     )
 
 
+# Same measured rationale as seoul.py's price_exact_match_bonus() - see
+# that module's comment and local_only/reports/
+# accommodation_price_bonus_sensitivity.md. Jeju's priced-accommodation
+# selection ratio moved from 92.7%->38.5% (Grid2, vs a 20.0% priced
+# catalog share) and ever-selected went 8->12 of 50.
+def price_exact_match_bonus() -> int:
+    return 6
+
+
 def preferred_area_match_bonus() -> int:
     return 10
 

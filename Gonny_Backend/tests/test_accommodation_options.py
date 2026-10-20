@@ -136,14 +136,18 @@ def test_type_filter_applies_inside_coordinate_pool() -> None:
 
 
 def test_accommodation_budget_band_drives_price_comparison_not_activity_band() -> None:
-    cheap_stay = build_accommodation(average_price_krw=40000)
-    request = build_request(budget_band="high", accommodation_budget_band="low")
+    # city="busan" deliberately - busan doesn't override price_exact_match_
+    # bonus(), so this tests the shared PRICE_EXACT_MATCH_BONUS value itself
+    # (seoul/jeju override it to 6 - see test_accommodation_scoring.py's
+    # per-city tests).
+    cheap_stay = build_accommodation(city="busan", average_price_krw=40000)
+    request = build_request(city="busan", budget_band="high", accommodation_budget_band="low")
 
     score = accommodation_score(cheap_stay, request, None)
 
     # Companion term is +5 (couple matches). Budget term should be exact-band.
     assert score == PRICE_EXACT_MATCH_BONUS + 5
-    assert accommodation_score(cheap_stay, build_request(budget_band="high"), None) == PRICE_FAR_PENALTY + 5
+    assert accommodation_score(cheap_stay, build_request(city="busan", budget_band="high"), None) == PRICE_FAR_PENALTY + 5
 
 
 def test_normalizing_keeps_activity_budget_band_when_lodging_budget_differs() -> None:

@@ -268,16 +268,20 @@ def test_meal_ineligible_mixed_tag_place_is_excluded_from_meals_but_still_eligib
     assert response.meal_recommendations == []
 
 
-def test_real_catalogs_have_exactly_the_10_meal_ineligible_places():
-    # The 10 non-restaurant "food"-tagged places confirmed unsuitable as a
+def test_real_catalogs_have_exactly_the_9_meal_ineligible_places():
+    # The 9 non-restaurant "food"-tagged places confirmed unsuitable as a
     # meal (cafe/dessert/tea-only - see
-    # local_only/reports/non_restaurant_meal_investigation.md). Every other
-    # place in the 3 catalogs must still default to meal_eligible=True.
+    # local_only/reports/non_restaurant_meal_investigation.md). Originally
+    # 10 (PR #97) - gukje-market (국제시장) was reinstated after TourAPI's
+    # detailCommon2 overview turned out to explicitly describe a "먹자골목"
+    # (food-stall alley) inside the market, see
+    # local_only/reports/meal_eligibility_undetermined_places.md. Every
+    # other place in the 3 catalogs must still default to meal_eligible=True.
     import json
 
     EXPECTED_INELIGIBLE_IDS = {
         "seoul": {"insadong", "seongsu", "apgujeong-rodeo"},
-        "busan": {"millak-waterfront", "gukje-market", "onjeoncheon-cafe"},
+        "busan": {"millak-waterfront", "onjeoncheon-cafe"},
         "jeju": {"woljeongri", "aewol-cafe", "osulloc", "delmoondo-gimnyeong"},
     }
     for city, expected_ids in EXPECTED_INELIGIBLE_IDS.items():
@@ -286,3 +290,19 @@ def test_real_catalogs_have_exactly_the_10_meal_ineligible_places():
         ineligible_ids = {p.id for p in places if not p.meal_eligible}
         assert ineligible_ids == expected_ids, (city, ineligible_ids)
         assert all(p.meal_eligible for p in places if p.id not in expected_ids)
+
+
+def test_gukje_market_is_a_meal_candidate_again():
+    # Reinstated by this fix - must default to meal_eligible=True (the
+    # field is removed from its catalog entry entirely) and must still
+    # carry "food" in its concept_tags, so it's actually reachable through
+    # _pick_meal_place's filter again.
+    import json
+
+    payload = json.loads((PROJECT_ROOT / "app" / "data" / "destinations" / "busan.json").read_text(encoding="utf-8"))
+    raw = next(p for p in payload["places"] if p["id"] == "gukje-market")
+    assert "meal_eligible" not in raw
+
+    place = PlaceData.model_validate(raw)
+    assert place.meal_eligible is True
+    assert "food" in place.concept_tags

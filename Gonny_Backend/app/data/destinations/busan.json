@@ -483,8 +483,7 @@
       "open_hours": "09:00~20:00",
       "closed_days": "매주 일요일",
       "setting": "mixed",
-      "rain_sensitive_light": false,
-      "meal_eligible": false
+      "rain_sensitive_light": false
     },
     {
       "id": "biff-square",

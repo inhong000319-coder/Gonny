@@ -8,7 +8,7 @@ from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
 from app.domains.rule_planner.schemas import BudgetBand, NormalizedRuleRequest
 
-from .policies.city import accommodation_distance_score
+from .policies.city import accommodation_distance_score, price_exact_match_bonus
 from .travel_estimate import haversine_distance_km
 
 ACCOMMODATIONS_DIR = Path(__file__).resolve().parents[4] / "app" / "data" / "accommodations"
@@ -26,6 +26,13 @@ BUDGET_MISMATCH_PENALTY = -4
 # slightly larger exact-match bonus, since it's grounded in data rather than
 # a tag. Adjacent/far penalties scale with how many bands apart the stay and
 # the requested band are.
+#
+# PRICE_EXACT_MATCH_BONUS is the shared default - _budget_fit_score() no
+# longer reads it directly for the exact-match case; it goes through
+# policies.city.price_exact_match_bonus(accommodation.city) instead, which
+# falls back to this same value (10) for any city that doesn't override it
+# (today: busan). Kept here (not removed) since it's still that fallback's
+# source of truth and existing callers/tests import it.
 PRICE_EXACT_MATCH_BONUS = 10
 PRICE_ADJACENT_PENALTY = -2
 PRICE_FAR_PENALTY = -6
@@ -142,7 +149,7 @@ def _budget_fit_score(accommodation: AccommodationData, requested_band: BudgetBa
             - _PRICE_BAND_ORDER[requested_band]
         )
         if band_distance == 0:
-            return PRICE_EXACT_MATCH_BONUS
+            return price_exact_match_bonus(accommodation.city)
         if band_distance == 1:
             return PRICE_ADJACENT_PENALTY
         return PRICE_FAR_PENALTY

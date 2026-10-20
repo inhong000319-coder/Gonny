@@ -6,6 +6,14 @@ from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
 from ...constants import BUSAN_AREA_NEIGHBORS, BUSAN_AREA_ROUTE_ORDER
 
+# Deliberately does NOT define price_exact_match_bonus() - busan keeps the
+# shared default (10, policies/city/__init__.py.price_exact_match_bonus's
+# fallback). Measured (local_only/reports/accommodation_price_bonus_
+# sensitivity.md): busan's dominant pick (라발스호텔) wins on the distance
+# term, not price data, so lowering this bonus only removed OTHER
+# candidates' one competitive edge and made the existing concentration
+# worse (top1 share 49.0%->69.8%, Grid2) - the opposite of seoul/jeju.
+
 
 def preferred_area_order(request: NormalizedRuleRequest, area_scores: dict[str, int]) -> list[str]:
     concept_weights: dict[str, int] = defaultdict(int)

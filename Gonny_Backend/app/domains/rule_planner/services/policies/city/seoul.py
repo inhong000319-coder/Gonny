@@ -35,6 +35,22 @@ def preferred_area_order(request: NormalizedRuleRequest, area_scores: dict[str, 
     )
 
 
+# Measured (local_only/reports/accommodation_price_bonus_sensitivity.md):
+# lowering this from the shared default (10, accommodation_scoring.
+# PRICE_EXACT_MATCH_BONUS) to 6 (the same as the unpriced-match bonus,
+# BUDGET_MATCH_BONUS) moved seoul's priced-accommodation selection ratio
+# toward its actual catalog share (Grid2: 58.3%->14.6% vs an 11.1% priced
+# catalog), widened the set of distinct accommodations ever selected
+# (10->13 of 63), and improved companion/style personalization - without
+# this, having price data at all gave a structural +4 edge over every
+# unpriced accommodation regardless of actual fit (local_only/reports/
+# accommodation_price_data_hypothesis.md). See accommodation_price_
+# feasibility.md for why the data itself isn't trustworthy enough to
+# justify that structural edge either.
+def price_exact_match_bonus() -> int:
+    return 6
+
+
 def preferred_area_match_bonus() -> int:
     return 14
 

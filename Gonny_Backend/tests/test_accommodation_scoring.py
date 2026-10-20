@@ -251,6 +251,52 @@ def test_select_returns_none_for_empty_list() -> None:
     assert select_accommodation_recommendation([], build_request(), None) is None
 
 
+def test_select_breaks_an_exact_score_tie_by_id_not_catalog_order() -> None:
+    # Identical budget/companion fit AND identical coordinates (so their
+    # distance term ties too) - a genuine accommodation_score() tie. Without
+    # an explicit tie-break, Python's stable sort would just pick whichever
+    # one happened to come first in the input list - this must NOT happen:
+    # the same accommodation ("aa-earlier-id", the lexicographically
+    # smaller id) must win regardless of input order.
+    request = build_request(budget_band="medium", companion_type="couple")
+    same_point = (37.5665, 126.9780)
+    later_id = build_accommodation(id="zz-later-id", latitude=same_point[0], longitude=same_point[1])
+    earlier_id = build_accommodation(id="aa-earlier-id", latitude=same_point[0], longitude=same_point[1])
+
+    picked_from_one_order = select_accommodation_recommendation([later_id, earlier_id], request, same_point)
+    picked_from_reversed_order = select_accommodation_recommendation([earlier_id, later_id], request, same_point)
+
+    assert picked_from_one_order.id == "aa-earlier-id"
+    assert picked_from_reversed_order.id == "aa-earlier-id"
+
+
+def test_select_breaks_a_tie_by_distance_before_id_when_distance_differs() -> None:
+    # Same total score but NOT the same distance - the nearer one must win
+    # even though its id sorts later, confirming distance is checked before
+    # id. Equal scores are forced without day_endpoints (reference_point
+    # tiers only): both candidates sit in the 1.0~3.0km NEARBY tier
+    # (CLOSE_DISTANCE_KM < d <= NEARBY_DISTANCE_KM), which pays the exact
+    # same +6 bonus despite their different raw distances - same
+    # budget/companion fit on top makes the totals identical.
+    from app.domains.rule_planner.services.travel_estimate import haversine_distance_km
+
+    request = build_request(budget_band="medium", companion_type="couple")
+    reference_point = (37.5665, 126.9780)
+    nearer_but_later_id = build_accommodation(id="zz-nearer", latitude=37.5790, longitude=126.9780)
+    farther_but_earlier_id = build_accommodation(id="aa-farther", latitude=37.5890, longitude=126.9780)
+
+    nearer_km = haversine_distance_km(*reference_point, nearer_but_later_id.latitude, nearer_but_later_id.longitude)
+    farther_km = haversine_distance_km(*reference_point, farther_but_earlier_id.latitude, farther_but_earlier_id.longitude)
+    assert 1.0 < nearer_km < farther_km <= 3.0  # both in the same NEARBY tier, but genuinely different distances
+
+    score_nearer = accommodation_score(nearer_but_later_id, request, reference_point, None)
+    score_farther = accommodation_score(farther_but_earlier_id, request, reference_point, None)
+    assert score_nearer == score_farther  # the tie this test needs
+
+    picked = select_accommodation_recommendation([farther_but_earlier_id, nearer_but_later_id], request, reference_point)
+    assert picked.id == "zz-nearer"
+
+
 # compute_reference_point()
 
 
@@ -435,10 +481,13 @@ def test_select_accommodation_for_busan_uses_day_endpoints_instead_of_reference_
     assert with_day_endpoints.id == "far"
 
 
-def test_jeju_accommodation_distance_score_is_still_rounded() -> None:
-    # This hook's existing jeju behavior (jeju.py) must not change -
-    # ACCOMMODATION_DISTANCE_PENALTY_PER_KM stays -0.6 and rounded, unlike
-    # the new unrounded seoul/busan -4.0.
+def test_jeju_accommodation_distance_score_is_unrounded() -> None:
+    # jeju used to round() this score (-0.6/km), which measurably collapsed
+    # distinct candidates onto the same few integers - 22.9~30% of requests
+    # landed in an exact top1/top2 tie (local_only/reports/
+    # accommodation_concentration_causes.md), each one then decided by
+    # catalog file order alone (see the explicit tie-break test below).
+    # ACCOMMODATION_DISTANCE_PENALTY_PER_KM itself stays -0.6, unchanged.
     from app.domains.rule_planner.services.policies.city.jeju import (
         ACCOMMODATION_DISTANCE_PENALTY_PER_KM,
         accommodation_distance_score as jeju_score,
@@ -446,8 +495,14 @@ def test_jeju_accommodation_distance_score_is_still_rounded() -> None:
 
     assert ACCOMMODATION_DISTANCE_PENALTY_PER_KM == -0.6
     score = jeju_score([1 / 3])
-    assert score == round(1 / 3 * -0.6)
-    assert isinstance(score, int)
+    assert score == pytest.approx(1 / 3 * -0.6)
+    assert score != round(score)
+
+
+def test_jeju_accommodation_distance_score_empty_endpoints_is_zero() -> None:
+    from app.domains.rule_planner.services.policies.city.jeju import accommodation_distance_score as jeju_score
+
+    assert jeju_score([]) == 0.0
 
 
 def test_generate_recommends_different_accommodation_for_different_budget_and_companion() -> None:

@@ -235,6 +235,36 @@ def accommodation_score(
     return score
 
 
+def _tie_break_distance_km(
+    accommodation: AccommodationData,
+    reference_point: tuple[float, float] | None,
+    day_endpoints: list[tuple[float, float]] | None,
+) -> float:
+    """Distance used ONLY to break an exact accommodation_score() tie
+    deterministically - never fed into the score itself. Mirrors whichever
+    distance the score's own distance term would have used (the per-day-
+    endpoint average when the city defines accommodation_distance_score,
+    else the single reference_point distance), so the tie-break stays
+    consistent with "closer is better" instead of an unrelated metric.
+    A candidate with no coordinates (or no reference at all) sorts last
+    among ties via float("inf") - it was already excluded upstream in
+    select_accommodation_recommendation whenever any coordinate-having
+    candidate exists, so this only matters in the all-candidates-lack-
+    coordinates fallback pool.
+    """
+    if accommodation.latitude is None or accommodation.longitude is None:
+        return float("inf")
+    if day_endpoints:
+        distances_km = [
+            haversine_distance_km(accommodation.latitude, accommodation.longitude, lat, lng)
+            for lat, lng in day_endpoints
+        ]
+        return sum(distances_km) / len(distances_km)
+    if reference_point is not None:
+        return haversine_distance_km(reference_point[0], reference_point[1], accommodation.latitude, accommodation.longitude)
+    return float("inf")
+
+
 def select_accommodation_recommendation(
     accommodations: list[AccommodationData],
     request: NormalizedRuleRequest,
@@ -275,9 +305,18 @@ def select_accommodation_recommendation(
         if typed_pool:
             candidate_pool = typed_pool
 
+    # Explicit, deterministic tie-break - never rely on candidate_pool's
+    # incoming (catalog file) order. On an exact accommodation_score() tie,
+    # prefer the closer-to-the-itinerary candidate (_tie_break_distance_km);
+    # if that's ALSO tied, prefer the lexicographically smaller id. Ascending
+    # sort on (-score, distance_km, id) reproduces "score desc, distance asc,
+    # id asc" in one pass without mixing sort directions.
     ranked = sorted(
         candidate_pool,
-        key=lambda accommodation: accommodation_score(accommodation, request, reference_point, day_endpoints),
-        reverse=True,
+        key=lambda accommodation: (
+            -accommodation_score(accommodation, request, reference_point, day_endpoints),
+            _tie_break_distance_km(accommodation, reference_point, day_endpoints),
+            accommodation.id,
+        ),
     )
     return ranked[0]

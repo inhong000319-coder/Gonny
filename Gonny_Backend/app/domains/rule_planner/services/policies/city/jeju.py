@@ -100,11 +100,16 @@ def extreme_distance_penalty(distance_km: float) -> int:
 # 보너스 폭과 비교해, 거리 차가 몇 km 수준이면 기존 보너스가 여전히
 # 결정적이되 거리 차가 수십 km로 벌어지면 거리가 우선하도록 잡은 값이다 -
 # 진단 결과로 조정 가능한 가정값.
+#
+# unrounded 유지 - seoul.py/busan.py와 같은 이유(round()는 서로 다른 거리를
+# 같은 정수 점수로 몰아 동점을 늘린다). 측정 결과(local_only/reports/
+# accommodation_concentration_causes.md) 제주 요청의 22.9~30%가 정확한
+# 동점이었고 그 경우 항상 카탈로그 파일 순서가 승자를 결정했다.
 ACCOMMODATION_DISTANCE_PENALTY_PER_KM = -0.6
 
 
-def accommodation_distance_score(distances_km: list[float]) -> int:
+def accommodation_distance_score(distances_km: list[float]) -> float:
     if not distances_km:
-        return 0
+        return 0.0
     average_km = sum(distances_km) / len(distances_km)
-    return round(average_km * ACCOMMODATION_DISTANCE_PENALTY_PER_KM)
+    return average_km * ACCOMMODATION_DISTANCE_PENALTY_PER_KM

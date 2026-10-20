@@ -126,7 +126,8 @@
       "open_hours": "[해변] - 상시 개방 [해수욕장] - 주간 개장 10:00~19:00 - 야간 개장 10:00~20:00",
       "closed_days": "연중무휴※ 수영 개장 시기는 전화 문의 바람",
       "setting": "outdoor",
-      "rain_sensitive_light": true
+      "rain_sensitive_light": true,
+      "meal_eligible": false
     },
     {
       "id": "seongsan-ilchulbong",
@@ -355,7 +356,8 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "latitude": 33.4592,
-      "longitude": 126.3106
+      "longitude": 126.3106,
+      "meal_eligible": false
     },
     {
       "id": "hallim-park",
@@ -650,7 +652,8 @@
       "open_hours": "- 하절기 09:00~19:00- 동절기 09:00~18:00※ 기상악화 시 운영시간 변경될 수 있음",
       "closed_days": "연중무휴",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "meal_eligible": false
     },
     {
       "id": "dongmun-market",
@@ -1468,7 +1471,8 @@
         "{place_name}은(는) 동제주 일정 끝에 너무 바쁘지 않게 쉬어가면서 바다 풍경을 즐기고 싶을 때 잘 어울려요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "meal_eligible": false
     },
     {
       "id": "9-81-park-jeju",

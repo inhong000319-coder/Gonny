@@ -305,7 +305,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "outdoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "meal_eligible": false
     },
     {
       "id": "gamcheon-culture-village",
@@ -482,7 +483,8 @@
       "open_hours": "09:00~20:00",
       "closed_days": "매주 일요일",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "meal_eligible": false
     },
     {
       "id": "biff-square",
@@ -713,7 +715,8 @@
       "open_hours": "상시 개방",
       "closed_days": "연중무휴",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "meal_eligible": false
     },
     {
       "id": "skyline-luge-busan",

@@ -187,7 +187,8 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "latitude": 37.57374,
-      "longitude": 126.9853
+      "longitude": 126.9853,
+      "meal_eligible": false
     },
     {
       "id": "myeongdong",
@@ -716,7 +717,8 @@
       "open_hours": "점포별로 상이함",
       "closed_days": "점포별로 상이함",
       "setting": "mixed",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "meal_eligible": false
     },
     {
       "id": "mangwon-market",
@@ -936,7 +938,8 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "latitude": 37.52763,
-      "longitude": 127.04063
+      "longitude": 127.04063,
+      "meal_eligible": false
     },
     {
       "id": "seokchon-lake",

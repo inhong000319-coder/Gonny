@@ -88,6 +88,14 @@ class PlaceData(BaseModel):
     setting: Literal["indoor", "outdoor", "mixed"] | None = None
     rain_sensitive_light: bool = False
     is_active: bool = True
+    # True for every place by default. False only for the small set of
+    # non-restaurant "food"-tagged places confirmed unsuitable as a meal
+    # (cafe/dessert/tea-only, no real lunch/dinner facility - see
+    # local_only/reports/non_restaurant_meal_investigation.md) - checked by
+    # RuleItineraryService._pick_meal_place's food_candidates filter only;
+    # the activity-slot competition (service.py's "food" not in
+    # concept_tags filter) is untouched by this field.
+    meal_eligible: bool = True
     mvp_tier: str = "standard"
     full_day_recommended: bool = False
     full_day_notes: dict[str, list[str]] = Field(default_factory=dict)

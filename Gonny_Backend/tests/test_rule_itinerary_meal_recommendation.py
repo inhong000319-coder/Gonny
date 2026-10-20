@@ -23,6 +23,7 @@ def _place(
     full_day_recommended: bool = False,
     duration_hours: int = 1,
     closed_days: str | None = None,
+    meal_eligible: bool = True,
 ) -> PlaceData:
     return PlaceData(
         id=place_id,
@@ -41,6 +42,7 @@ def _place(
         longitude=longitude,
         full_day_recommended=full_day_recommended,
         closed_days=closed_days,
+        meal_eligible=meal_eligible,
     )
 
 
@@ -205,3 +207,82 @@ def test_meal_place_names_never_overlap_with_activity_item_place_names():
     item_place_names = {item.place_name for item in response.items}
     meal_place_names = {meal.place_name for meal in response.meal_recommendations}
     assert item_place_names.isdisjoint(meal_place_names)
+
+
+def test_meal_eligible_defaults_to_true():
+    place = _place("food-0", priority=5, activity_type=["미식"])
+    assert place.meal_eligible is True
+
+
+def test_meal_ineligible_place_is_never_picked_for_a_meal():
+    # Only 2 food places for a 1-day trip (needs exactly 2 meals) - if the
+    # ineligible one could still be picked, both meals would be filled;
+    # with it excluded, only 1 of the 2 needed meals can be filled.
+    fillers = [_place(f"culture-{i}", priority=9, activity_type=["문화·역사"]) for i in range(20)]
+    eligible_food = _place("eligible-food", priority=5, activity_type=["미식"], meal_eligible=True)
+    ineligible_food = _place("ineligible-food", priority=10, activity_type=["미식"], meal_eligible=False)
+
+    response = _generate([eligible_food, ineligible_food, *fillers], days=1)
+
+    place_names = {meal.place_name for meal in response.meal_recommendations}
+    assert place_names == {"eligible-food"}
+    assert "ineligible-food" not in place_names
+
+
+def test_meal_eligible_false_does_not_change_activity_slot_selection():
+    # meal_eligible only gates _pick_meal_place's food_candidates filter -
+    # it must never affect which places win the 3 activity slots. A place
+    # tagged purely "food" is excluded from activity competition either
+    # way (service.py's "food" not in concept_tags filter), so toggling
+    # meal_eligible on it must produce byte-identical response.items.
+    fillers = [_place(f"culture-{i}", priority=9, activity_type=["문화·역사"]) for i in range(20)]
+    food_places = [_place(f"food-{i}", priority=5, activity_type=["미식"]) for i in range(8)]
+
+    response_eligible = _generate([*food_places, *fillers], days=3)
+    ineligible_food_places = [
+        _place(f"food-{i}", priority=5, activity_type=["미식"], meal_eligible=False) for i in range(8)
+    ]
+    response_ineligible = _generate([*ineligible_food_places, *fillers], days=3)
+
+    items_eligible = [(item.day_number, item.time_slot, item.place_name) for item in response_eligible.items]
+    items_ineligible = [(item.day_number, item.time_slot, item.place_name) for item in response_ineligible.items]
+    assert items_eligible == items_ineligible
+
+
+def test_meal_ineligible_mixed_tag_place_is_excluded_from_meals_but_still_eligible_for_activities():
+    # The real-world shape this field targets: a place with "food" plus
+    # another activity_type tag (e.g. 오설록 티뮤지엄's ["미식", "문화·역사"]).
+    # It stays excluded from activity competition regardless (still has
+    # "food" in concept_tags), but meal_eligible=False must keep it out of
+    # meal_recommendations too - so with too few other food places, a meal
+    # slot should go unfilled rather than fall back to it.
+    fillers = [_place(f"culture-{i}", priority=1, activity_type=["문화·역사"]) for i in range(20)]
+    mixed_ineligible = _place(
+        "cafe-museum", priority=10, activity_type=["미식", "문화·역사"], meal_eligible=False
+    )
+
+    response = _generate([mixed_ineligible, *fillers], days=1)
+
+    assert all(item.place_name != "cafe-museum" for item in response.items)
+    assert all(meal.place_name != "cafe-museum" for meal in response.meal_recommendations)
+    assert response.meal_recommendations == []
+
+
+def test_real_catalogs_have_exactly_the_10_meal_ineligible_places():
+    # The 10 non-restaurant "food"-tagged places confirmed unsuitable as a
+    # meal (cafe/dessert/tea-only - see
+    # local_only/reports/non_restaurant_meal_investigation.md). Every other
+    # place in the 3 catalogs must still default to meal_eligible=True.
+    import json
+
+    EXPECTED_INELIGIBLE_IDS = {
+        "seoul": {"insadong", "seongsu", "apgujeong-rodeo"},
+        "busan": {"millak-waterfront", "gukje-market", "onjeoncheon-cafe"},
+        "jeju": {"woljeongri", "aewol-cafe", "osulloc", "delmoondo-gimnyeong"},
+    }
+    for city, expected_ids in EXPECTED_INELIGIBLE_IDS.items():
+        payload = json.loads((PROJECT_ROOT / "app" / "data" / "destinations" / f"{city}.json").read_text(encoding="utf-8"))
+        places = [PlaceData.model_validate(p) for p in payload["places"]]
+        ineligible_ids = {p.id for p in places if not p.meal_eligible}
+        assert ineligible_ids == expected_ids, (city, ineligible_ids)
+        assert all(p.meal_eligible for p in places if p.id not in expected_ids)

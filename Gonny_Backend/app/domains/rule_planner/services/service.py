@@ -1038,6 +1038,7 @@ class RuleItineraryService:
             for place in scored_places
             if place.id not in used_ids
             and "food" in place.concept_tags
+            and place.meal_eligible
             and (extra_filter is None or extra_filter(place))
         ]
         if not food_candidates:

@@ -331,15 +331,14 @@ def test_day_travel_leg_order_matches_the_point_in_day_sequence_for_each_city() 
 
 
 def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
-    # Snapshot re-captured after scripts/apply_slot_bias_s4_real.py (52
-    # previously zero-bias, non-restaurant places - seoul 12, busan 9,
-    # jeju 31 - now have a nonzero slot_bias). That's an intended data
-    # change (see local_only/reports/slot_bias_apply_s4_real.md), so this
-    # fixed seoul request now picks different places for several slots,
+    # Snapshot re-captured after lowering rolling-hall/kbs-hall's evening
+    # slot_bias from 8 to 3 (see local_only/reports/
+    # seoul_venue_slot_bias_apply.md) - an intended data change that makes
+    # this fixed seoul request pick a different evening place on days 2-3,
     # shifting the resulting travel minutes. This test still guards
     # against this feature's *own* wiring breaking
     # travel_minutes_from_previous by comparing against a fixed snapshot
-    # of the current (post-fill) data.
+    # of the current data.
     service = RuleItineraryService()
     response = service.generate(_build_request("seoul"))
 
@@ -354,10 +353,10 @@ def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
         (1, "evening", 30),
         (2, "morning", None),
         (2, "afternoon", 26),
-        (2, "evening", 11),
+        (2, "evening", 6),
         (3, "morning", None),
         (3, "afternoon", 6),
-        (3, "evening", 30),
+        (3, "evening", 7),
     ]
     assert meal_minutes == [
         (1, "lunch", 5),
@@ -365,5 +364,5 @@ def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
         (2, "lunch", 9),
         (2, "dinner", 26),
         (3, "lunch", 8),
-        (3, "dinner", 6),
+        (3, "dinner", 7),
     ]

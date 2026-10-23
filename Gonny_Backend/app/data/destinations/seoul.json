@@ -2895,7 +2895,7 @@
       "booking_hint": "공연 일정에 따라 분위기가 크게 달라져서 방문 전 라인업을 확인하면 좋고, 저녁 식사 뒤 메인 카드로 붙이기 좋아요.",
       "slot_bias": {
         "afternoon": 2,
-        "evening": 8,
+        "evening": 3,
         "morning": -5
       },
       "mood_keywords": [
@@ -3149,7 +3149,7 @@
       "booking_hint": "공연 스케줄에 따라 경험이 달라지니 일정 전 라인업을 확인하면 좋고, 저녁 메인 카드로 붙이면 분위기가 확실해져요.",
       "slot_bias": {
         "afternoon": 3,
-        "evening": 8,
+        "evening": 3,
         "morning": -4
       },
       "mood_keywords": [

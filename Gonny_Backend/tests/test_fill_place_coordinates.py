@@ -17,9 +17,14 @@ from fill_place_coordinates import apply_coordinates
 
 DESTINATIONS_DIR = PROJECT_ROOT / "app" / "data" / "destinations"
 
-# The 4 ids the fix script deliberately leaves unfilled (no confirmed source).
+# The seoul 3 were later filled by scripts/apply_seoul_missing_coordinates.py
+# from Google Maps Plus Codes (see local_only/reports/
+# seoul_missing_coordinates_apply.md) - this script's own COORDINATES
+# table still deliberately excludes them (no source it trusts), but the
+# real catalog no longer lacks them. jeju's delmoondo-gimnyeong remains
+# unresolved by either script.
 EXPECTED_STILL_MISSING = {
-    "seoul": {"e-land-hangang-cruise", "s-factory", "daelim-sangga"},
+    "seoul": set(),
     "busan": set(),
     "jeju": {"delmoondo-gimnyeong"},
 }

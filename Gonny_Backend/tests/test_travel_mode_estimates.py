@@ -331,13 +331,15 @@ def test_day_travel_leg_order_matches_the_point_in_day_sequence_for_each_city() 
 
 
 def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
-    # Snapshot re-captured after scripts/fill_place_coordinates.py (35
-    # previously-coordinateless places, 22 of them in Seoul, now have real
-    # lat/lng) - that's an intended data change, not a regression, so most
-    # of Seoul's None values here became real minute estimates. This test
-    # still guards against this feature's *own* wiring breaking
-    # travel_minutes_from_previous by comparing against a fixed snapshot of
-    # the current (post-fill) data.
+    # Snapshot re-captured after scripts/apply_slot_bias_s4_real.py (52
+    # previously zero-bias, non-restaurant places - seoul 12, busan 9,
+    # jeju 31 - now have a nonzero slot_bias). That's an intended data
+    # change (see local_only/reports/slot_bias_apply_s4_real.md), so this
+    # fixed seoul request now picks different places for several slots,
+    # shifting the resulting travel minutes. This test still guards
+    # against this feature's *own* wiring breaking
+    # travel_minutes_from_previous by comparing against a fixed snapshot
+    # of the current (post-fill) data.
     service = RuleItineraryService()
     response = service.generate(_build_request("seoul"))
 
@@ -348,20 +350,20 @@ def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
 
     assert item_minutes == [
         (1, "morning", None),
-        (1, "afternoon", 7),
-        (1, "evening", None),
+        (1, "afternoon", 9),
+        (1, "evening", 30),
         (2, "morning", None),
-        (2, "afternoon", 23),
+        (2, "afternoon", 26),
         (2, "evening", 11),
         (3, "morning", None),
-        (3, "afternoon", 5),
-        (3, "evening", 33),
+        (3, "afternoon", 6),
+        (3, "evening", 30),
     ]
     assert meal_minutes == [
         (1, "lunch", 5),
-        (1, "dinner", 7),
-        (2, "lunch", 8),
-        (2, "dinner", 16),
-        (3, "lunch", 2),
-        (3, "dinner", 5),
+        (1, "dinner", 8),
+        (2, "lunch", 9),
+        (2, "dinner", 26),
+        (3, "lunch", 8),
+        (3, "dinner", 6),
     ]

@@ -70,7 +70,11 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "evening": 7
+      }
     },
     {
       "id": "dongbaek-island",
@@ -128,7 +132,12 @@
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
       "latitude": 35.15366,
-      "longitude": 129.15232
+      "longitude": 129.15232,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -3
+      }
     },
     {
       "id": "blue-line-park",
@@ -185,7 +194,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 10000
+      "average_cost_krw": 10000,
+      "slot_bias": {
+        "morning": -3,
+        "afternoon": 6,
+        "evening": -3
+      }
     },
     {
       "id": "gwangalli-beach",
@@ -365,7 +379,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -3
+      }
     },
     {
       "id": "jagalchi-market",
@@ -598,7 +617,12 @@
       "closed_days": "연중무휴※ 기상 악화시 휴무 (홈페이지를 통한 실시간 공지)",
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 17000
+      "average_cost_krw": 17000,
+      "slot_bias": {
+        "morning": -3,
+        "afternoon": 6,
+        "evening": 7
+      }
     },
     {
       "id": "taejongdae",
@@ -658,7 +682,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -3
+      }
     },
     {
       "id": "onjeoncheon-cafe",
@@ -1742,7 +1771,12 @@
       "closed_days": "연중무휴",
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 15000
+      "average_cost_krw": 15000,
+      "slot_bias": {
+        "morning": -3,
+        "afternoon": 6,
+        "evening": 7
+      }
     },
     {
       "id": "shinsegae-spaland",
@@ -1793,7 +1827,12 @@
       "rain_sensitive_light": false,
       "average_cost_krw": 25000,
       "latitude": 35.168817,
-      "longitude": 129.129524
+      "longitude": 129.129524,
+      "slot_bias": {
+        "morning": -3,
+        "afternoon": 6,
+        "evening": 7
+      }
     },
     {
       "id": "club-d-oasis",
@@ -1849,7 +1888,12 @@
       "rain_sensitive_light": true,
       "average_cost_krw": 30000,
       "latitude": 35.160042,
-      "longitude": 129.168483
+      "longitude": 129.168483,
+      "slot_bias": {
+        "morning": -3,
+        "afternoon": 6,
+        "evening": 7
+      }
     },
     {
       "id": "busan-restaurant-nampo-icchi",

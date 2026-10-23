@@ -1304,7 +1304,9 @@
       ],
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 18000
+      "average_cost_krw": 18000,
+      "latitude": 37.525712,
+      "longitude": 126.938359
     },
     {
       "id": "sewoon-plaza",
@@ -1566,7 +1568,9 @@
         "{place_name}은(는) 성수 쪽에서 구경과 사진 포인트를 함께 묶고 싶을 때 자연스럽게 들어가요."
       ],
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "latitude": 37.542287,
+      "longitude": 127.059359
     },
     {
       "id": "myeongdong-cathedral",
@@ -2721,7 +2725,9 @@
       ],
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "latitude": 37.567512,
+      "longitude": 126.995422
     },
     {
       "id": "lotte-world-aquarium",

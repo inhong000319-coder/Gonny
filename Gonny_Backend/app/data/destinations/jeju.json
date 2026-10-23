@@ -67,7 +67,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "woljeongri",
@@ -185,7 +190,12 @@
       "closed_days": "매달 첫째 주 월요일※ 공휴일인 경우 다음날 휴무",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 5000
+      "average_cost_krw": 5000,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "seopjikoji",
@@ -244,7 +254,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": -4,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "bijarim",
@@ -301,7 +316,11 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 3000
+      "average_cost_krw": 3000,
+      "slot_bias": {
+        "morning": 5,
+        "evening": -5
+      }
     },
     {
       "id": "aewol-cafe",
@@ -416,7 +435,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 15000
+      "average_cost_krw": 15000,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "hyeopjae-beach",
@@ -477,7 +501,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": true,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": -4,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "camellia-hill",
@@ -534,7 +563,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 10000
+      "average_cost_krw": 10000,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "jungmun-saekdal",
@@ -592,7 +626,12 @@
       "average_cost_krw": 0,
       "latitude": 33.24543,
       "longitude": 126.41121,
-      "content_id": "126449"
+      "content_id": "126449",
+      "slot_bias": {
+        "morning": -4,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "osulloc",
@@ -3028,7 +3067,12 @@
         "자연 경관",
         "무료 입장",
         "상시 개방"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "sanbanggulsa",
@@ -3078,7 +3122,12 @@
         "해식동굴",
         "불교 유적",
         "산방산 일대"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "yongmeori-coast",
@@ -3127,7 +3176,12 @@
         "해안 절벽",
         "날씨에 따라 통제",
         "09:00~17:00"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "cheonjiyeon-falls",
@@ -3177,7 +3231,12 @@
         "폭포",
         "국가지질공원",
         "저녁 운영(~22:00)"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "jeongbang-falls",
@@ -3225,7 +3284,12 @@
       "highlight_tags": [
         "폭포",
         "17:30까지 운영"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "oedolgae",
@@ -3275,7 +3339,12 @@
         "기암괴석",
         "무료 입장",
         "일몰 전 이용 권장"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "songaksan",
@@ -3325,7 +3394,12 @@
         "자연 경관",
         "무료 입장",
         "바람 주의"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "manjanggul",
@@ -3373,7 +3447,12 @@
         "용암동굴",
         "세계자연유산",
         "첫째 수요일 휴무"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "yongduam",
@@ -3423,7 +3502,12 @@
         "해안 절경",
         "무료 입장",
         "제주시"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "jeju-folk-village",
@@ -3471,7 +3555,12 @@
         "민속 박물관",
         "표선면",
         "연중무휴"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "lee-jungseob-residence",
@@ -3521,7 +3610,12 @@
         "역사 유적지",
         "서귀포 시내",
         "17:00까지 운영"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "seogwipo-maeil-olle-market",
@@ -3628,7 +3722,12 @@
       "visual_feature": [
         "야경",
         "포토스팟"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "jeju-national-museum",
@@ -3678,7 +3777,12 @@
         "무료 입장",
         "월요일 휴관",
         "우천 대안"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "jeju-mokgwana",
@@ -3731,7 +3835,12 @@
       ],
       "visual_feature": [
         "야경"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "pyoseon-haevichi-beach",
@@ -3781,7 +3890,12 @@
         "해변",
         "무료 입장",
         "상시 개방"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "halla-arboretum",
@@ -3832,7 +3946,12 @@
         "수목원",
         "무료 입장",
         "야외 산책로"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "samseonghyeol",
@@ -3881,7 +4000,12 @@
         "사적",
         "역사 유적지",
         "제주시"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "jeju-43-peace-park",
@@ -3931,7 +4055,12 @@
         "평화 인권 공원",
         "무료 입장",
         "기념관 운영"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "sangumburi",
@@ -3980,7 +4109,12 @@
         "오름",
         "조천읍",
         "입장료 있음"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "namwon-keuneong",
@@ -4034,7 +4168,12 @@
       ],
       "mood": [
         "조용함"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "hueree-park",
@@ -4083,7 +4222,12 @@
         "꽃 정원",
         "남원읍",
         "입장료 있음"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "bonte-museum",
@@ -4132,7 +4276,12 @@
         "실내 박물관",
         "복합문화공간",
         "우천 대안"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": -5
+      }
     },
     {
       "id": "alddreu-airfield",
@@ -4182,7 +4331,12 @@
         "근대 유적",
         "무료 입장",
         "상시 개방"
-      ]
+      ],
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 6,
+        "evening": 6
+      }
     },
     {
       "id": "jeju-restaurant-tour-2861372",

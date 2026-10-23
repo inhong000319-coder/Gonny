@@ -71,7 +71,12 @@
       "closed_days": "매주 화요일 ※ 단, 정기휴일이 공휴일 및 대체공휴일과 겹칠 경우에는 개방하며, 그 다음의 첫 번째 비공휴일이 정기휴일임",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 3000
+      "average_cost_krw": 3000,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -4
+      }
     },
     {
       "id": "bukchon",
@@ -129,7 +134,12 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -4
+      }
     },
     {
       "id": "insadong",
@@ -304,7 +314,12 @@
       "rain_sensitive_light": true,
       "average_cost_krw": 29000,
       "latitude": 37.551216,
-      "longitude": 126.988276
+      "longitude": 126.988276,
+      "slot_bias": {
+        "morning": -4,
+        "afternoon": 5,
+        "evening": 5
+      }
     },
     {
       "id": "hongdae",
@@ -422,7 +437,11 @@
       "closed_days": "연중무휴",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "evening": 5
+      }
     },
     {
       "id": "gangnam",
@@ -537,7 +556,12 @@
       "closed_days": "연중무휴",
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -4
+      }
     },
     {
       "id": "changdeokgung",
@@ -599,7 +623,12 @@
       "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 개방하며, 그 다음 첫 번째 평일에 휴관)",
       "setting": "outdoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 8000
+      "average_cost_krw": 8000,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -4
+      }
     },
     {
       "id": "ikseon-dong",
@@ -828,7 +857,11 @@
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
       "latitude": 37.5585635,
-      "longitude": 126.9255684
+      "longitude": 126.9255684,
+      "slot_bias": {
+        "morning": 5,
+        "evening": 5
+      }
     },
     {
       "id": "itaewon",
@@ -998,7 +1031,11 @@
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
       "latitude": 37.5113096,
-      "longitude": 127.1051525
+      "longitude": 127.1051525,
+      "slot_bias": {
+        "morning": 5,
+        "evening": 5
+      }
     },
     {
       "id": "ddp",
@@ -1060,7 +1097,12 @@
       "closed_days": "1월 1일 / 설·추석 당일※ 시설 별로 상이하므로 자세한 사항은 홈페이지 참조",
       "setting": "mixed",
       "rain_sensitive_light": false,
-      "average_cost_krw": 0
+      "average_cost_krw": 0,
+      "slot_bias": {
+        "morning": -4,
+        "afternoon": 5,
+        "evening": 5
+      }
     },
     {
       "id": "euljiro",
@@ -1198,7 +1240,12 @@
       "closed_days": "연중무휴※ 기상 상태에 따라 매직아일랜드 일부 어트랙션 중단 가능※ 기상 상태와 별개로 현장 상황에 따라 운휴하거나 중간 점검할 수 있음",
       "setting": "indoor",
       "rain_sensitive_light": false,
-      "average_cost_krw": 67000
+      "average_cost_krw": 67000,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": 5
+      }
     },
     {
       "id": "e-land-hangang-cruise",
@@ -3233,7 +3280,12 @@
       "open_hours": "05:30~21:00",
       "closed_days": "연중무휴",
       "setting": "indoor",
-      "rain_sensitive_light": false
+      "rain_sensitive_light": false,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -4
+      }
     },
     {
       "id": "bongil-spa-land",
@@ -3283,7 +3335,12 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "latitude": 37.48587,
-      "longitude": 126.938447
+      "longitude": 126.938447,
+      "slot_bias": {
+        "morning": 5,
+        "afternoon": 5,
+        "evening": -4
+      }
     },
     {
       "id": "seoul-restaurant-jongno-salon-sulla",

@@ -55,6 +55,7 @@ from .note_generator import RuleNoteContext, build_rule_note_generator
 from .policies.city import preferred_area_order
 from .reasons import build_activity_reason_candidates, build_meal_reason_candidates, select_day_reasons
 from .request_normalizer import normalize_budget, normalize_duration, normalize_rule_request
+from .slot_alternatives import compute_item_alternatives
 from .slot_scoring import (
     base_score,
     day_phase,
@@ -97,7 +98,13 @@ class RuleItineraryService:
             for option in self.catalog_provider.list_city_options(visible_only=True)
         ]
 
-    def generate(self, request: RuleItineraryRequest, *, include_weather: bool = True) -> RuleItineraryResponse:
+    def generate(
+        self,
+        request: RuleItineraryRequest,
+        *,
+        include_weather: bool = True,
+        include_alternatives: bool = True,
+    ) -> RuleItineraryResponse:
         """include_weather=False skips the forecast lookup entirely (no
         self.weather_client call at all) and returns empty weather_alerts/
         weather_status - everything else (item selection, scoring,
@@ -106,7 +113,13 @@ class RuleItineraryService:
         weather_alerts/weather_status fields themselves. Used by
         compare_transport() to avoid duplicate/slow external calls when it
         re-runs generate() per what-if scenario - the public /generate
-        endpoint always uses the default (True)."""
+        endpoint always uses the default (True).
+
+        include_alternatives=False skips RuleItineraryItem.alternatives
+        entirely (every item keeps the empty-list default) - used by
+        _generate_for_comparison so compare_transport's several what-if
+        scenario runs don't each pay the extra re-scoring pass for a
+        field that response never surfaces."""
         normalized = self._normalize_request(request)
         city_catalog = self.catalog_provider.get_city_catalog(
             continent=normalized.continent,
@@ -114,9 +127,25 @@ class RuleItineraryService:
             city=normalized.city,
             visible_only=True,
         )
-        items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals = self._build_items(
+        items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals, day_areas = self._build_items(
             normalized, city_catalog
         )
+        if include_alternatives:
+            day_weekdays = {day_number: self._day_weekday(normalized, day_number) for day_number in day_slot_places}
+            items = compute_item_alternatives(
+                items=items,
+                request=normalized,
+                city_catalog=city_catalog,
+                day_place_map=day_place_map,
+                day_slot_places=day_slot_places,
+                day_areas=day_areas,
+                feedback_signals=feedback_signals,
+                day_weekdays=day_weekdays,
+                localize_place_name=self._localize_place_name,
+                localize_area=self._localize_area,
+                resolve_item_category=self._resolve_item_category,
+                build_note=self._build_note,
+            )
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
         meal_recommendations, day_place_map_with_meals, day_sequence_with_kind, day_meal_places = (
             self._recommend_meals(normalized, city_catalog, day_place_map, day_slot_places)
@@ -193,7 +222,7 @@ class RuleItineraryService:
         return build_transport_comparison(request, generate=self._generate_for_comparison)
 
     def _generate_for_comparison(self, request: RuleItineraryRequest) -> RuleItineraryResponse:
-        return self.generate(request, include_weather=False)
+        return self.generate(request, include_weather=False, include_alternatives=False)
 
     def _normalize_request(self, request: RuleItineraryRequest) -> NormalizedRuleRequest:
         return normalize_rule_request(request)
@@ -220,6 +249,7 @@ class RuleItineraryService:
         list[RuleClosedDayExclusion],
         dict[int, dict[str, PlaceData]],
         dict[str, PlaceFeedbackSignal],
+        dict[int, str | None],
     ]:
         # "food" places are excluded from the 3-slot activity competition
         # entirely, not merely de-preferred - they're recommended
@@ -243,6 +273,14 @@ class RuleItineraryService:
         items: list[RuleItineraryItem] = []
         day_place_map: dict[int, list[PlaceData]] = {}
         day_slot_places: dict[int, dict[str, PlaceData]] = {}
+        # The day_area each day's slots were actually scored against (see
+        # preferred_area_match_bonus) - a day's winning picks don't
+        # necessarily land IN this area, so it can't be reconstructed
+        # after the fact from the picks themselves. Exists purely for
+        # slot_alternatives.py to re-score candidates with the same
+        # context the real picks got; nothing in this method's own logic
+        # reads it back.
+        day_areas: dict[int, str | None] = {}
         closed_day_exclusions: list[RuleClosedDayExclusion] = []
         seen_exclusion_keys: set[tuple[int, str]] = set()
         full_day_used = False
@@ -299,12 +337,14 @@ class RuleItineraryService:
                 used_ids.add(full_day_place.id)
                 day_place_map[day_number] = [full_day_place]
                 day_slot_places[day_number] = {slot: full_day_place for slot in TIME_SLOTS}
+                day_areas[day_number] = full_day_place.area
                 full_day_used = True
                 continue
 
             day_area = self._pick_day_area(preferred_areas, scored_places, used_ids, used_day_areas)
             if day_area:
                 used_day_areas.add(day_area)
+            day_areas[day_number] = day_area
 
             slot_places = self._pick_places_for_day(
                 scored_places=scored_places,
@@ -360,7 +400,7 @@ class RuleItineraryService:
                 day_place_map[day_number] = day_places
                 day_slot_places[day_number] = dict(slot_places)
 
-        return items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals
+        return items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals, day_areas
 
     def _pick_places_for_day(
         self,

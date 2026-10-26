@@ -80,6 +80,22 @@ class RuleReason(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleSlotAlternative(BaseModel):
+    """One other place that could have filled this same slot - see
+    services/slot_alternatives.py. Computed as a read-only post-process
+    after the real selection is final, so its presence/order never
+    changes which place RuleItineraryItem itself picked."""
+
+    place_id: str
+    place_name: str
+    category: str
+    area: str
+    notes: str
+    average_cost_krw: int | None = None
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleItineraryItem(BaseModel):
     day_number: int
     time_slot: TimeSlot
@@ -98,6 +114,12 @@ class RuleItineraryItem(BaseModel):
     # Up to 3 fact-based reasons this place was recommended - see
     # services/reasons.py. Empty list is valid (a place can have none).
     reasons: list[RuleReason] = Field(default_factory=list)
+    # Up to 3 other places that scored well for this same slot - see
+    # services/slot_alternatives.py. Always empty for a full-day item (all
+    # 3 slots are the same place, so there's no meaningful "instead of
+    # this" swap) and whenever generate() was called with
+    # include_alternatives=False (e.g. compare_transport's scenario runs).
+    alternatives: list[RuleSlotAlternative] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

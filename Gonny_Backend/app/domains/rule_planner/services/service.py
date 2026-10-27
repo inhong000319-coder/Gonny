@@ -34,6 +34,7 @@ from .accommodation_scoring import (
     compute_day_endpoints,
     compute_reference_point,
     load_city_accommodations,
+    rank_accommodations,
     select_accommodation_recommendation,
 )
 from .arrival_departure import day_slot_rules
@@ -116,10 +117,11 @@ class RuleItineraryService:
         endpoint always uses the default (True).
 
         include_alternatives=False skips RuleItineraryItem.alternatives
-        entirely (every item keeps the empty-list default) - used by
-        _generate_for_comparison so compare_transport's several what-if
-        scenario runs don't each pay the extra re-scoring pass for a
-        field that response never surfaces."""
+        entirely (every item keeps the empty-list default) and
+        RuleItineraryResponse.accommodation_alternatives (stays empty) -
+        used by _generate_for_comparison so compare_transport's several
+        what-if scenario runs don't each pay the extra re-scoring/re-
+        ranking passes for fields that response never surfaces."""
         normalized = self._normalize_request(request)
         city_catalog = self.catalog_provider.get_city_catalog(
             continent=normalized.continent,
@@ -147,6 +149,11 @@ class RuleItineraryService:
                 build_note=self._build_note,
             )
         accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
+        accommodation_alternatives = (
+            self._recommend_accommodation_alternatives(normalized, city_catalog, day_place_map)
+            if include_alternatives
+            else []
+        )
         meal_recommendations, day_place_map_with_meals, day_sequence_with_kind, day_meal_places = (
             self._recommend_meals(normalized, city_catalog, day_place_map, day_slot_places)
         )
@@ -194,6 +201,7 @@ class RuleItineraryService:
             weather_alerts=weather_alerts,
             weather_status=weather_status,
             accommodation_recommendation=accommodation_recommendation,
+            accommodation_alternatives=accommodation_alternatives,
             meal_recommendations=meal_recommendations,
             estimated_cost=estimate_trip_cost_range(
                 (place for places in day_place_map.values() for place in places),
@@ -636,6 +644,28 @@ class RuleItineraryService:
         # no such scoring and keeps using reference_point alone.
         day_endpoints = compute_day_endpoints(day_place_map)
         return select_accommodation_recommendation(accommodations, request, reference_point, day_endpoints)
+
+    def _recommend_accommodation_alternatives(
+        self,
+        request: NormalizedRuleRequest,
+        city_catalog: CityPlaceCatalog,
+        day_place_map: dict[int, list[PlaceData]],
+    ) -> list[AccommodationData]:
+        """2nd-4th place of the exact same ranking _recommend_accommodation's
+        pick (ranked[0]) comes from - see rank_accommodations. Recomputes
+        load_city_accommodations/compute_reference_point/compute_day_endpoints
+        independently from _recommend_accommodation (all three are pure
+        functions of request/city_catalog/day_place_map, so this reproduces
+        the exact same values deterministically rather than sharing object
+        identity with it) - kept as a separate method rather than changing
+        _recommend_accommodation's signature, so every existing caller/test
+        of it is untouched. Naturally returns [] when the pool is empty or
+        has only one candidate - no special-casing "no recommendation"."""
+        accommodations = load_city_accommodations(city_catalog.city)
+        reference_point = compute_reference_point(day_place_map, city_catalog)
+        day_endpoints = compute_day_endpoints(day_place_map)
+        ranked = rank_accommodations(accommodations, request, reference_point, day_endpoints)
+        return ranked[1:4]
 
     # Boundary position (index into TIME_SLOTS) each meal sits at in the
     # day's point-in-day order - breakfast before everything (0), lunch

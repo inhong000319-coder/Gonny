@@ -13,14 +13,16 @@ import {
 import {
   applySlotSwap,
   buildSaveItemsPayload,
+  computeTimelineTravelHints,
   getActiveAlternativePlaceId,
   getEffectiveItem,
   hasAnySlotSwap,
   isAlternativeNameUsedElsewhere,
+  isSlotSwapped,
   revertSlotSwap,
-  shouldHideTravelMinutes,
   type SlotAlternative,
   type SlotSwapMap,
+  type TimelineRow,
 } from "../utils/slot-swaps";
 
 type CatalogCityOption = {
@@ -2696,14 +2698,28 @@ export function TripCreateForm() {
                 const dayMeals = mealsByDay.get(dayNumber);
                 const accommodationName = result.accommodation_recommendation?.name;
                 const timelineEntries = buildDayTimelineEntries(effectiveDayItems, dayMeals);
+                // 판정은 "활동 슬롯 배열의 이전 항목"이 아니라 "타임라인
+                // 순서상 바로 앞 행"(식사 포함) 기준이어야 한다 - 교체된
+                // 활동 바로 뒤가 식사 행일 수 있기 때문(PR #105의 버그).
+                const timelineRows: TimelineRow[] = timelineEntries.map((entry) =>
+                  entry.type === "item"
+                    ? { kind: "item", dayNumber: entry.item.day_number, timeSlot: entry.item.time_slot }
+                    : { kind: "meal" },
+                );
+                const travelHints = computeTimelineTravelHints(timelineRows, slotSwaps);
                 const legByKey = new Map<string, RuleTravelLeg>();
                 for (const leg of dayTravel?.legs ?? []) {
                   legByKey.set(travelLegKey(leg.from_kind, leg.from_name, leg.to_kind, leg.to_name), leg);
                 }
                 const firstEntry = timelineEntries[0];
                 const lastEntry = timelineEntries[timelineEntries.length - 1];
+                // 교체된 활동 자신으로 들어오는 이동 정보는 앞 행이 무엇이든
+                // (숙소 포함) 숨긴다는 원칙을 하루 경계(숙소 출발/복귀
+                // 커넥터)에도 그대로 적용한다.
+                const firstRowSwapped = firstEntry?.type === "item" && isSlotSwapped(slotSwaps, firstEntry.item);
+                const lastRowSwapped = lastEntry?.type === "item" && isSlotSwapped(slotSwaps, lastEntry.item);
                 const startLeg =
-                  accommodationName && firstEntry
+                  accommodationName && firstEntry && !firstRowSwapped
                     ? legByKey.get(
                         travelLegKey(
                           "accommodation",
@@ -2714,7 +2730,7 @@ export function TripCreateForm() {
                       )
                     : undefined;
                 const endLeg =
-                  accommodationName && lastEntry
+                  accommodationName && lastEntry && !lastRowSwapped
                     ? legByKey.get(
                         travelLegKey(
                           dayTimelineEntryKind(lastEntry),
@@ -2785,6 +2801,11 @@ export function TripCreateForm() {
                       <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
                     ))}
                   <div className="tc-timeline">
+                    {/* 첫 행이 교체됐을 때의 "재계산 안 됨"은 아래 .map()의
+                        index 0 처리(hint.hideIncomingTravel, 자기 자신이
+                        교체됨)가 이미 그린다 - 여기서 또 그리면 중복된다.
+                        startLeg 자체가 firstRowSwapped면 undefined이므로
+                        (위 계산부) 여기서는 자연히 아무것도 안 그려진다. */}
                     {startLeg ? (
                       <TravelConnectorRow
                         label={`숙소에서 출발 · ${accommodationName}`}
@@ -2804,19 +2825,28 @@ export function TripCreateForm() {
                             ),
                           )
                         : undefined;
+                      // 타임라인 순서상 바로 앞 행 기준 판정(활동/식사 공통) -
+                      // 교체된 활동 바로 뒤가 식사 행이어도 그 식사 행의
+                      // 이동정보가 낡은 값으로 남지 않는다 (이전엔 활동 배열
+                      // 기준으로만 봐서 식사가 끼면 틀렸었다).
+                      const hint = travelHints[index];
 
                       if (entry.type === "item") {
                         const item = entry.item; // effective (swap-applied) item
                         const note = splitNoteLines(item.notes);
-                        // 교체된 슬롯 자신, 또는 바로 앞 슬롯이 교체됐으면 이
-                        // 구간의 이동시간은 틀려진 값이라 숨긴다(재계산 안 됨
-                        // 표시로 대체) - dayItems(원본, 같은 날 전체)로 순서를
-                        // 판단한다, day_number/time_slot은 교체돼도 그대로다.
-                        const hideTravel = shouldHideTravelMinutes(dayItems, slotSwaps, item);
+                        const hideTravel = hint.hideIncomingTravel;
                         const showFallbackTravelTime =
                           !hideTravel && !connectorLeg && item.travel_minutes_from_previous !== null;
                         const categoryLabel = labelPlaceCategory(item.category);
                         const activeAlternativePlaceId = getActiveAlternativePlaceId(slotSwaps, item);
+                        // "직전 장소에서 N분" reason 칩(code: "near_previous")은
+                        // 바로 앞 행이 교체된 활동일 때만 낡은 값이 된다 - 이
+                        // 항목 자신이 교체됐다면 reasons는 이미 []
+                        // (getEffectiveItem)라 이 필터는 그 경우 아무 영향이
+                        // 없다.
+                        const visibleReasons = hint.hidePrecedingNearPreviousReason
+                          ? item.reasons.filter((reason) => reason.code !== "near_previous")
+                          : item.reasons;
 
                         return (
                           <Fragment key={`${dayNumber}-${item.time_slot}`}>
@@ -2843,7 +2873,7 @@ export function TripCreateForm() {
                                 {item.average_cost_krw != null ? (
                                   <p className="tc-stop-cost">{formatCostLabel(item.average_cost_krw)}</p>
                                 ) : null}
-                                <ReasonChips reasons={item.reasons} />
+                                <ReasonChips reasons={visibleReasons} />
                                 {note.headline ? <p className="tc-stop-note-lead">{note.headline}</p> : null}
                                 {note.details.map((line, lineIndex) => (
                                   <p key={`${item.place_name}-note-${lineIndex}`} className="tc-stop-note-line">
@@ -2866,16 +2896,24 @@ export function TripCreateForm() {
                       }
 
                       const meal = entry.meal;
-                      const showFallbackTravelTime = !connectorLeg && meal.travel_minutes_from_previous !== null;
+                      const hideTravel = hint.hideIncomingTravel;
+                      const showFallbackTravelTime =
+                        !hideTravel && !connectorLeg && meal.travel_minutes_from_previous !== null;
 
                       return (
                         <Fragment key={`${dayNumber}-meal-${meal.meal_type}-${meal.place_name}`}>
-                          {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
+                          {hideTravel ? (
+                            <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
+                          ) : connectorLeg ? (
+                            <TravelConnectorRow leg={connectorLeg} mode={mode} />
+                          ) : null}
                           <MealCard meal={meal} showTravelTime={showFallbackTravelTime} />
                         </Fragment>
                       );
                     })}
-                    {endLeg ? (
+                    {accommodationName && lastEntry && lastRowSwapped ? (
+                      <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
+                    ) : endLeg ? (
                       <TravelConnectorRow label={`숙소로 복귀 · ${accommodationName}`} leg={endLeg} mode={mode} />
                     ) : null}
                   </div>

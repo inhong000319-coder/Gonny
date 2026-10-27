@@ -10,6 +10,18 @@ import {
   createItineraryPrintPreview,
   revokeItineraryExportUrl,
 } from "../../../shared/itinerary-export";
+import {
+  applySlotSwap,
+  buildSaveItemsPayload,
+  getActiveAlternativePlaceId,
+  getEffectiveItem,
+  hasAnySlotSwap,
+  isAlternativeNameUsedElsewhere,
+  revertSlotSwap,
+  shouldHideTravelMinutes,
+  type SlotAlternative,
+  type SlotSwapMap,
+} from "../utils/slot-swaps";
 
 type CatalogCityOption = {
   continent: string;
@@ -51,6 +63,19 @@ type RuleReason = {
   label: string;
 };
 
+// One other place that could fill this same slot instead - see the
+// backend's RuleSlotAlternative (PR #104). Always a non-empty place_id
+// (unlike RuleItineraryItem, which has no id), since the slot-swap feature
+// needs to tell alternatives apart even when two happen to share a name.
+type RuleSlotAlternative = {
+  place_id: string;
+  place_name: string;
+  category: string;
+  area: string;
+  notes: string;
+  average_cost_krw?: number | null;
+};
+
 type RuleItineraryItem = {
   day_number: number;
   time_slot: TimeSlot;
@@ -68,6 +93,10 @@ type RuleItineraryItem = {
   // Absent on a response from before this field existed (e.g. a cached
   // result) - normalizeGenerateResponse defaults it to [], never throws.
   reasons: RuleReason[];
+  // Up to 3 other places for this same slot - absent on a response from
+  // before this field existed, normalizeGenerateResponse defaults it to
+  // [] the same way it does reasons. Always [] for a full-day item.
+  alternatives: RuleSlotAlternative[];
 };
 
 type RuleDayDurationWarning = {
@@ -615,6 +644,21 @@ function isRuleReason(value: unknown): value is RuleReason {
   return typeof reason.code === "string" && typeof reason.label === "string";
 }
 
+function isRuleSlotAlternative(value: unknown): value is RuleSlotAlternative {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const alternative = value as Record<string, unknown>;
+  return (
+    typeof alternative.place_id === "string" &&
+    typeof alternative.place_name === "string" &&
+    typeof alternative.category === "string" &&
+    typeof alternative.area === "string" &&
+    typeof alternative.notes === "string"
+  );
+}
+
 function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
   if (!value || typeof value !== "object") {
     return false;
@@ -629,7 +673,8 @@ function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
     typeof item.area === "string" &&
     typeof item.notes === "string" &&
     (item.travel_minutes_from_previous === null || typeof item.travel_minutes_from_previous === "number") &&
-    (item.reasons === undefined || Array.isArray(item.reasons))
+    (item.reasons === undefined || Array.isArray(item.reasons)) &&
+    (item.alternatives === undefined || item.alternatives === null || Array.isArray(item.alternatives))
   );
 }
 
@@ -950,6 +995,9 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
   const items = data.items.filter(isRuleItineraryItem).map((item) => ({
     ...item,
     reasons: Array.isArray(item.reasons) ? item.reasons.filter(isRuleReason) : [],
+    // Missing/null on an older cached response (pre-PR #104) - never
+    // throws, same permissive default as reasons above.
+    alternatives: Array.isArray(item.alternatives) ? item.alternatives.filter(isRuleSlotAlternative) : [],
   }));
   if (items.length === 0) {
     throw new Error("생성된 일정 항목을 해석하지 못했습니다.");
@@ -1318,6 +1366,59 @@ function ReasonChips({ reasons }: { reasons: RuleReason[] }) {
   );
 }
 
+// "다른 추천" 칩 목록 - alternatives가 없으면(대안 없음, full-day 항목) 영역
+// 자체를 그리지 않는다. 이미 다른 슬롯에서 쓰이고 있는 이름은 비활성화한다
+// (단, 지금 이 슬롯에 이미 적용된 대안 자신은 제외 - 자기 자신과 겹친다고
+// 비활성화하지 않는다).
+function SlotAlternativesPanel({
+  alternatives,
+  activeAlternativePlaceId,
+  isNameUsedElsewhere,
+  onSelect,
+  onRevert,
+}: {
+  alternatives: RuleSlotAlternative[];
+  activeAlternativePlaceId: string | null;
+  isNameUsedElsewhere: (placeName: string) => boolean;
+  onSelect: (alternative: RuleSlotAlternative) => void;
+  onRevert: () => void;
+}) {
+  if (alternatives.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="tc-alt-panel">
+      <span className="tc-alt-label">다른 추천</span>
+      <div className="tc-chip-row">
+        {alternatives.map((alternative) => {
+          const isActive = alternative.place_id === activeAlternativePlaceId;
+          const isDisabled = !isActive && isNameUsedElsewhere(alternative.place_name);
+          return (
+            <button
+              aria-pressed={isActive}
+              className={`tc-chip tc-alt-chip ${isActive ? "is-selected" : ""}`}
+              disabled={isDisabled}
+              key={alternative.place_id}
+              onClick={() => onSelect(alternative)}
+              title={isDisabled ? "이미 다른 일정에 쓰이고 있어요" : undefined}
+              type="button"
+            >
+              {alternative.place_name}
+              <span className="tc-alt-chip-area"> · {alternative.area}</span>
+            </button>
+          );
+        })}
+        {activeAlternativePlaceId ? (
+          <button className="tc-btn tc-btn-ghost tc-alt-revert" onClick={onRevert} type="button">
+            원래 추천으로 되돌리기
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 const GONNY_INTRO_LINES = [
   "선택하신 취향·동행·예산·여행 속도를 기준으로 장소를 고릅니다.",
   "하루 안에서는 서로 가까운 장소를 묶고, 선택한 이동 수단 기준으로 이동 시간을 계산합니다.",
@@ -1566,7 +1667,16 @@ export function TripCreateForm() {
   const [transportCompareExpandedScenarios, setTransportCompareExpandedScenarios] = useState<Record<string, boolean>>(
     {},
   );
+  // 슬롯별 "다른 추천" 교체 상태 - 결과 화면의 로컬 상태로만 관리한다
+  // (localStorage 등 영속 저장은 쓰지 않는다 - 과제 constraint). 아래
+  // useEffect가 새 result마다(새로 생성하거나 handleEditAgain으로 폼에
+  // 돌아가도) 초기화한다.
+  const [slotSwaps, setSlotSwaps] = useState<SlotSwapMap>({});
   const hasResult = result !== null;
+
+  useEffect(() => {
+    setSlotSwaps({});
+  }, [result]);
 
   useEffect(() => {
     if (!result) {
@@ -1902,6 +2012,18 @@ export function TripCreateForm() {
     setCurrentStep(STEP_COUNT);
   };
 
+  // item은 항상 원본(RuleItineraryItem) - day_number/time_slot만 키로 쓰고
+  // alternatives는 교체와 무관하게 원본 그대로이므로, 이미 교체된 슬롯에서
+  // 다른 대안을 또 고르는 것도 그대로 동작한다("교체 → 다른 대안 → 되돌리기
+  // 반복 가능" - 과제 constraint).
+  const handleSelectAlternative = (item: RuleItineraryItem, alternative: RuleSlotAlternative) => {
+    setSlotSwaps((previous) => applySlotSwap(previous, item, alternative));
+  };
+
+  const handleRevertAlternative = (item: RuleItineraryItem) => {
+    setSlotSwaps((previous) => revertSlotSwap(previous, item));
+  };
+
   const handleSaveTrip = async () => {
     if (!result) {
       return;
@@ -1921,14 +2043,10 @@ export function TripCreateForm() {
         companion_type: result.companion_type,
       });
 
-      for (const item of result.items) {
-        await createItineraryItem(String(createdTrip.id), {
-          day_number: item.day_number,
-          time_slot: item.time_slot,
-          place_name: item.place_name,
-          category: item.category,
-          notes: item.notes,
-        });
+      // 화면에 표시된(교체 반영된) 값으로 저장한다 - payload 형태(5개 필드)는
+      // 그대로다 (과제 constraint).
+      for (const item of buildSaveItemsPayload(result.items, slotSwaps)) {
+        await createItineraryItem(String(createdTrip.id), item);
       }
 
       navigate(`/trips/${createdTrip.id}`);
@@ -2535,8 +2653,14 @@ export function TripCreateForm() {
                   날씨 정보를 불러오지 못했어요.
                 </div>
               ) : null}
+              {hasAnySlotSwap(slotSwaps) ? (
+                <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
+                  장소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.
+                </div>
+              ) : null}
               {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
                 const dayItems = itemsByDay.get(dayNumber) ?? [];
+                const effectiveDayItems = dayItems.map((item) => getEffectiveItem(item, slotSwaps));
                 const weatherLine = formatDayWeatherLine(weatherStatusByDay.get(dayNumber));
                 const daySummary = daySummaryByDay.get(dayNumber);
                 const isFirstDay = dayNumber === 1;
@@ -2571,7 +2695,7 @@ export function TripCreateForm() {
                 const mode = dayTravelMode[dayNumber] ?? defaultDayTravelMode(result.city);
                 const dayMeals = mealsByDay.get(dayNumber);
                 const accommodationName = result.accommodation_recommendation?.name;
-                const timelineEntries = buildDayTimelineEntries(dayItems, dayMeals);
+                const timelineEntries = buildDayTimelineEntries(effectiveDayItems, dayMeals);
                 const legByKey = new Map<string, RuleTravelLeg>();
                 for (const leg of dayTravel?.legs ?? []) {
                   legByKey.set(travelLegKey(leg.from_kind, leg.from_name, leg.to_kind, leg.to_name), leg);
@@ -2614,7 +2738,7 @@ export function TripCreateForm() {
                           ) : null}
                         </p>
                       ) : null}
-                      <p className="tc-day-route">{summarizeRoute(dayItems)}</p>
+                      <p className="tc-day-route">{summarizeRoute(effectiveDayItems)}</p>
                       {weatherLine ? <p className="tc-day-weather">{weatherLine}</p> : null}
                     </div>
                   </div>
@@ -2682,14 +2806,25 @@ export function TripCreateForm() {
                         : undefined;
 
                       if (entry.type === "item") {
-                        const item = entry.item;
+                        const item = entry.item; // effective (swap-applied) item
                         const note = splitNoteLines(item.notes);
-                        const showFallbackTravelTime = !connectorLeg && item.travel_minutes_from_previous !== null;
+                        // 교체된 슬롯 자신, 또는 바로 앞 슬롯이 교체됐으면 이
+                        // 구간의 이동시간은 틀려진 값이라 숨긴다(재계산 안 됨
+                        // 표시로 대체) - dayItems(원본, 같은 날 전체)로 순서를
+                        // 판단한다, day_number/time_slot은 교체돼도 그대로다.
+                        const hideTravel = shouldHideTravelMinutes(dayItems, slotSwaps, item);
+                        const showFallbackTravelTime =
+                          !hideTravel && !connectorLeg && item.travel_minutes_from_previous !== null;
                         const categoryLabel = labelPlaceCategory(item.category);
+                        const activeAlternativePlaceId = getActiveAlternativePlaceId(slotSwaps, item);
 
                         return (
-                          <Fragment key={`${dayNumber}-${item.time_slot}-${item.place_name}`}>
-                            {connectorLeg ? <TravelConnectorRow leg={connectorLeg} mode={mode} /> : null}
+                          <Fragment key={`${dayNumber}-${item.time_slot}`}>
+                            {hideTravel ? (
+                              <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
+                            ) : connectorLeg ? (
+                              <TravelConnectorRow leg={connectorLeg} mode={mode} />
+                            ) : null}
                             <div className="tc-stop">
                               <div className="tc-stop-time">
                                 <span>{labelTimeSlot(item.time_slot)}</span>
@@ -2715,6 +2850,15 @@ export function TripCreateForm() {
                                     {line}
                                   </p>
                                 ))}
+                                <SlotAlternativesPanel
+                                  activeAlternativePlaceId={activeAlternativePlaceId}
+                                  alternatives={item.alternatives}
+                                  isNameUsedElsewhere={(placeName) =>
+                                    isAlternativeNameUsedElsewhere(result.items, slotSwaps, item, placeName)
+                                  }
+                                  onRevert={() => handleRevertAlternative(item)}
+                                  onSelect={(alternative) => handleSelectAlternative(item, alternative)}
+                                />
                               </div>
                             </div>
                           </Fragment>

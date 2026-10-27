@@ -338,6 +338,12 @@ class RuleItineraryResponse(BaseModel):
     weather_alerts: list[RuleWeatherAlert] = Field(default_factory=list)
     weather_status: list[RuleDayWeatherStatus] = Field(default_factory=list)
     accommodation_recommendation: AccommodationData | None = None
+    # Up to 3 other stays, ranked 2nd-4th by the exact same pool/score/tie-
+    # break as accommodation_recommendation itself (see
+    # accommodation_scoring.rank_accommodations) - never a separately
+    # computed ranking. Empty whenever include_alternatives=False (e.g.
+    # compare_transport's scenario runs) or there's no recommendation at all.
+    accommodation_alternatives: list[AccommodationData] = Field(default_factory=list)
     meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
     estimated_cost: RuleCostEstimate | None = None
     day_travel: list[RuleDayTravel] = Field(default_factory=list)

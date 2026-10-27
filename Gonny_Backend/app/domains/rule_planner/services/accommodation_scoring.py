@@ -272,14 +272,18 @@ def _tie_break_distance_km(
     return float("inf")
 
 
-def select_accommodation_recommendation(
+def rank_accommodations(
     accommodations: list[AccommodationData],
     request: NormalizedRuleRequest,
     reference_point: tuple[float, float] | None,
     day_endpoints: list[tuple[float, float]] | None = None,
-) -> AccommodationData | None:
-    """Picks the single best accommodation for the whole trip (this MVP's
-    scope - no per-night reassignment).
+) -> list[AccommodationData]:
+    """Builds the same candidate pool and ordering select_accommodation_
+    recommendation's top pick comes from - the single source of truth for
+    accommodation ranking, so the recommendation (ranked[0]) and the
+    "다른 추천" alternatives (ranked[1:4] - see
+    RuleItineraryService._recommend_accommodation_alternatives) can never
+    drift apart into two separately-implemented rankings.
 
     If at least one candidate has coordinates, candidates without
     coordinates are dropped entirely rather than merely scored lower: a
@@ -293,9 +297,13 @@ def select_accommodation_recommendation(
     is narrowed to those types first, so only those stays are considered. If
     none of the pool matches, the type filter is skipped and the pool above
     is used unchanged, so a selection never empties the recommendation.
+
+    Returns [] for an empty input (never raises) - select_accommodation_
+    recommendation turns that into None; alternatives callers just get an
+    empty list naturally from slicing it.
     """
     if not accommodations:
-        return None
+        return []
 
     with_coordinates = [
         accommodation
@@ -318,7 +326,7 @@ def select_accommodation_recommendation(
     # if that's ALSO tied, prefer the lexicographically smaller id. Ascending
     # sort on (-score, distance_km, id) reproduces "score desc, distance asc,
     # id asc" in one pass without mixing sort directions.
-    ranked = sorted(
+    return sorted(
         candidate_pool,
         key=lambda accommodation: (
             -accommodation_score(accommodation, request, reference_point, day_endpoints),
@@ -326,4 +334,16 @@ def select_accommodation_recommendation(
             accommodation.id,
         ),
     )
-    return ranked[0]
+
+
+def select_accommodation_recommendation(
+    accommodations: list[AccommodationData],
+    request: NormalizedRuleRequest,
+    reference_point: tuple[float, float] | None,
+    day_endpoints: list[tuple[float, float]] | None = None,
+) -> AccommodationData | None:
+    """Picks the single best accommodation for the whole trip (this MVP's
+    scope - no per-night reassignment). See rank_accommodations for the
+    pool/ordering rules this is built on."""
+    ranked = rank_accommodations(accommodations, request, reference_point, day_endpoints)
+    return ranked[0] if ranked else None

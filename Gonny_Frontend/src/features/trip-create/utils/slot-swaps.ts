@@ -122,25 +122,47 @@ export function isAlternativeNameUsedElsewhere(
   });
 }
 
-// 이동 시간을 "재계산 안 됨"으로 표시해야 하는 슬롯인지 - 교체된 슬롯 자신
-// (그 전 장소에서 여기로 오는 이동시간이 틀려짐) 또는 같은 날 바로 다음
-// 시간대 슬롯(바뀐 장소에서 거기로 가는 이동시간이 틀려짐). dayItems는 한
-// 일차의 항목들이고, time_slot 순서(= 배열 순서)가 이미 그 날의 실제 순서와
-// 같다고 가정한다(buildDayTimelineEntries에 넘기기 전의 원본 순서).
-export function shouldHideTravelMinutes(
-  dayItems: SwappableItem[],
-  swaps: SlotSwapMap,
-  item: Pick<SwappableItem, "day_number" | "time_slot">,
-): boolean {
-  const index = dayItems.findIndex((candidate) => slotKeyForItem(candidate) === slotKeyForItem(item));
-  if (index === -1) {
-    return false;
-  }
-  if (isSlotSwapped(swaps, dayItems[index])) {
-    return true;
-  }
-  const previous = index > 0 ? dayItems[index - 1] : null;
-  return previous ? isSlotSwapped(swaps, previous) : false;
+// 타임라인(활동 슬롯 + 식사가 시간순으로 섞인 실제 화면 순서) 한 행 - 식사는
+// 교체 대상이 아니라 자기 식별자가 필요 없다. 활동 행만 day_number/time_slot
+// 으로 교체 여부를 조회한다.
+export type TimelineRow = { kind: "item"; dayNumber: number; timeSlot: string } | { kind: "meal" };
+
+export type TimelineTravelHint = {
+  // 이 행으로 "들어오는" 이동 정보(커넥터, 폴백 "이전 장소에서 N분" 문구)가
+  // 낡은 값이라 "이동 시간 재계산 안 됨"으로 바꿔야 하면 true - 이 행 자신이
+  // 교체된 활동이거나(도착지가 바뀌었으니 앞에서 오는 이동정보 전체가 무효 -
+  // 앞 행이 무엇이든), 바로 앞 행이 교체된 활동이면(출발지가 바뀌었으니)
+  // 해당된다.
+  hideIncomingTravel: boolean;
+  // 활동 행의 reasons 중 code: "near_previous"(백엔드 reasons.py의
+  // _near_previous_reason - "직전 장소에서 N분"/"숙소에서 N분" 두 라벨
+  // 변형을 모두 이 code로 묶는다) 칩을 지워야 하면 true - 바로 앞 행이
+  // 교체된 활동일 때만. "숙소에서 N분" 변형은 하루의 첫 행에만 붙는데, 첫
+  // 행은 구조상 "바로 앞 행"이 있을 수 없으므로(활동 행 앞은 전날이거나
+  // 없음) 이 조건에 걸리지 않는다 - 즉 이 필드는 "직전 장소에서" 라벨에만
+  // 실질적으로 적용된다(라벨 문자열이 아니라 code로 구분해 더 안정적이다).
+  // 이 행 자신이 교체된 활동이면 reasons 자체가 getEffectiveItem에서 이미
+  // []로 비워지므로 이 필드는 그 경우엔 아무 영향이 없다.
+  hidePrecedingNearPreviousReason: boolean;
+};
+
+function isTimelineRowSwapped(row: TimelineRow, swaps: SlotSwapMap): boolean {
+  return row.kind === "item" && isSlotSwapped(swaps, { day_number: row.dayNumber, time_slot: row.timeSlot });
+}
+
+// 판정 기준: "활동 슬롯 배열의 이전 항목"이 아니라 "타임라인 순서상 바로 앞
+// 행"(식사 포함) - rows는 화면에 실제로 그려지는 순서(buildDayTimelineEntries
+// 결과와 같은 순서)여야 한다.
+export function computeTimelineTravelHints(rows: TimelineRow[], swaps: SlotSwapMap): TimelineTravelHint[] {
+  return rows.map((row, index) => {
+    const previous = index > 0 ? rows[index - 1] : null;
+    const previousSwapped = previous ? isTimelineRowSwapped(previous, swaps) : false;
+    const selfSwapped = isTimelineRowSwapped(row, swaps);
+    return {
+      hideIncomingTravel: selfSwapped || previousSwapped,
+      hidePrecedingNearPreviousReason: previousSwapped,
+    };
+  });
 }
 
 export type SaveItineraryItemPayload = {

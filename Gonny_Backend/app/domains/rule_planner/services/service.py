@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import Callable, Literal
 
+from fastapi import HTTPException, status
+
 from app.core.settings import settings
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
@@ -19,6 +21,7 @@ from app.domains.rule_planner.schemas import (
     RuleDayTravel,
     RuleDayWeatherStatus,
     RuleItineraryItem,
+    RuleItineraryRecalculateRequest,
     RuleItineraryRequest,
     RuleItineraryResponse,
     RuleMealRecommendation,
@@ -55,6 +58,7 @@ from .constants import (
 from .note_generator import RuleNoteContext, build_rule_note_generator
 from .policies.city import preferred_area_order
 from .reasons import build_activity_reason_candidates, build_meal_reason_candidates, select_day_reasons
+from .recalculate import build_fixed_slots_lookup
 from .request_normalizer import normalize_budget, normalize_duration, normalize_rule_request
 from .slot_alternatives import compute_item_alternatives
 from .slot_scoring import (
@@ -132,6 +136,90 @@ class RuleItineraryService:
         items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals, day_areas = self._build_items(
             normalized, city_catalog
         )
+        return self._assemble_response(
+            normalized,
+            city_catalog,
+            items=items,
+            day_place_map=day_place_map,
+            closed_day_exclusions=closed_day_exclusions,
+            day_slot_places=day_slot_places,
+            feedback_signals=feedback_signals,
+            day_areas=day_areas,
+            include_weather=include_weather,
+            include_alternatives=include_alternatives,
+        )
+
+    def recalculate(self, request: RuleItineraryRecalculateRequest) -> RuleItineraryResponse:
+        """POST /rule-itinerary/recalculate - the place selection (greedy
+        pick + lookahead refinement) that generate() normally runs is
+        skipped entirely; every slot is pinned to request.fixed_slots
+        (validated by services/recalculate.build_fixed_slots_lookup, which
+        raises HTTPException(422) on the first rule it finds broken) and
+        every derived field downstream (travel times, meals, accommodation-
+        derived values, cost, weather, day summaries, warnings,
+        alternatives) is recomputed through the exact same _assemble_
+        response() pipeline generate() uses - see _build_items's
+        fixed_slots parameter for how the day loop replays unchanged
+        around the pinned picks."""
+        normalized = self._normalize_request(request)
+        city_catalog = self.catalog_provider.get_city_catalog(
+            continent=normalized.continent,
+            country=normalized.country,
+            city=normalized.city,
+            visible_only=True,
+        )
+        fixed_slots = build_fixed_slots_lookup(
+            fixed_slots=request.fixed_slots, request=normalized, city_catalog=city_catalog
+        )
+        if request.accommodation_id is not None:
+            known_accommodation_ids = {
+                accommodation.id for accommodation in load_city_accommodations(city_catalog.city)
+            }
+            if request.accommodation_id not in known_accommodation_ids:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"알 수 없는 숙소 id입니다: {request.accommodation_id}",
+                )
+        items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals, day_areas = self._build_items(
+            normalized, city_catalog, fixed_slots=fixed_slots
+        )
+        return self._assemble_response(
+            normalized,
+            city_catalog,
+            items=items,
+            day_place_map=day_place_map,
+            closed_day_exclusions=closed_day_exclusions,
+            day_slot_places=day_slot_places,
+            feedback_signals=feedback_signals,
+            day_areas=day_areas,
+            include_weather=True,
+            include_alternatives=True,
+            fixed_accommodation_id=request.accommodation_id,
+        )
+
+    def _assemble_response(
+        self,
+        normalized: NormalizedRuleRequest,
+        city_catalog: CityPlaceCatalog,
+        *,
+        items: list[RuleItineraryItem],
+        day_place_map: dict[int, list[PlaceData]],
+        closed_day_exclusions: list[RuleClosedDayExclusion],
+        day_slot_places: dict[int, dict[str, PlaceData]],
+        feedback_signals: dict[str, PlaceFeedbackSignal],
+        day_areas: dict[int, str | None],
+        include_weather: bool,
+        include_alternatives: bool,
+        fixed_accommodation_id: str | None = None,
+    ) -> RuleItineraryResponse:
+        """Everything generate() and recalculate() both do once item
+        selection (greedy or fixed-slot replay) is finished - moved out of
+        generate() verbatim so recalculate() can reuse the exact same
+        downstream pipeline rather than a second, separately-maintained
+        copy of it. fixed_accommodation_id is recalculate()'s only extra
+        input; None (generate()'s only caller) reproduces generate()'s
+        original behavior exactly - see _recommend_accommodation/
+        _recommend_accommodation_alternatives."""
         if include_alternatives:
             day_weekdays = {day_number: self._day_weekday(normalized, day_number) for day_number in day_slot_places}
             items = compute_item_alternatives(
@@ -148,9 +236,13 @@ class RuleItineraryService:
                 resolve_item_category=self._resolve_item_category,
                 build_note=self._build_note,
             )
-        accommodation_recommendation = self._recommend_accommodation(normalized, city_catalog, day_place_map)
+        accommodation_recommendation = self._recommend_accommodation(
+            normalized, city_catalog, day_place_map, fixed_accommodation_id=fixed_accommodation_id
+        )
         accommodation_alternatives = (
-            self._recommend_accommodation_alternatives(normalized, city_catalog, day_place_map)
+            self._recommend_accommodation_alternatives(
+                normalized, city_catalog, day_place_map, exclude_id=fixed_accommodation_id
+            )
             if include_alternatives
             else []
         )
@@ -251,6 +343,20 @@ class RuleItineraryService:
         self,
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
+        *,
+        # POST /rule-itinerary/recalculate's pinned (day_number, time_slot)
+        # -> PlaceData map (see services/recalculate.build_fixed_slots_lookup,
+        # which validates and builds this before calling in - every allowed
+        # slot of every day is guaranteed present). None (generate()'s only
+        # caller) reproduces the exact original behavior: only the
+        # selection step (_pick_full_day_place / _pick_places_for_day /
+        # _refine_day_with_next_place_lookahead) is skipped when this is
+        # given - the day loop otherwise replays unchanged (_pick_day_area,
+        # item construction, used_ids/used_day_areas bookkeeping), so a
+        # fixed_slots that reproduces generate()'s own picks reproduces its
+        # exact output (see Done-when #2 in local_only/reports/
+        # recalculate_endpoint.md).
+        fixed_slots: dict[tuple[int, str], PlaceData] | None = None,
     ) -> tuple[
         list[RuleItineraryItem],
         dict[int, list[PlaceData]],
@@ -301,25 +407,46 @@ class RuleItineraryService:
                 days=request.days,
                 day_number=day_number,
             )
-            # Full-day places occupy every slot, so they only make sense
-            # on a day where every slot is actually open - see
-            # RuleItineraryRequest.arrival_period/departure_period.
-            full_day_place = self._pick_full_day_place(
-                scored_places=scored_places,
-                request=request,
-                used_ids=used_ids,
-                day_number=day_number,
-                allow_full_day=not full_day_used and len(slot_rules.allowed_slots) == len(TIME_SLOTS),
-                day_weekday=day_weekday,
-                closed_day_exclusions=closed_day_exclusions,
-                seen_exclusion_keys=seen_exclusion_keys,
-            )
+            if fixed_slots is None:
+                # Full-day places occupy every slot, so they only make sense
+                # on a day where every slot is actually open - see
+                # RuleItineraryRequest.arrival_period/departure_period.
+                full_day_place = self._pick_full_day_place(
+                    scored_places=scored_places,
+                    request=request,
+                    used_ids=used_ids,
+                    day_number=day_number,
+                    allow_full_day=not full_day_used and len(slot_rules.allowed_slots) == len(TIME_SLOTS),
+                    day_weekday=day_weekday,
+                    closed_day_exclusions=closed_day_exclusions,
+                    seen_exclusion_keys=seen_exclusion_keys,
+                )
+                day_fixed_places: dict[str, PlaceData] | None = None
+            else:
+                # build_fixed_slots_lookup already validated that a day's
+                # pinned places are either all distinct or (only possible
+                # when the day has exactly 3 allowed slots) all the same
+                # place - full-day recognition here is a pure structural
+                # match on that already-validated pattern, not a re-scoring
+                # decision (no full_day_used/allow_full_day gating - the
+                # caller already decided this, recalculate() never second-
+                # guesses which/how many days get to be full-day).
+                day_fixed_places = {
+                    slot: fixed_slots[(day_number, slot)] for slot in slot_rules.allowed_slots
+                }
+                distinct_fixed_places = {place.id: place for place in day_fixed_places.values()}
+                full_day_place = (
+                    next(iter(distinct_fixed_places.values()))
+                    if len(distinct_fixed_places) == 1 and len(day_fixed_places) == 3
+                    else None
+                )
             if full_day_place is not None:
                 for slot in TIME_SLOTS:
                     items.append(
                         RuleItineraryItem(
                             day_number=day_number,
                             time_slot=slot,
+                            place_id=full_day_place.id,
                             place_name=self._localize_place_name(full_day_place),
                             category=(
                                 full_day_place.activity_type_codes[0]
@@ -354,28 +481,37 @@ class RuleItineraryService:
                 used_day_areas.add(day_area)
             day_areas[day_number] = day_area
 
-            slot_places = self._pick_places_for_day(
-                scored_places=scored_places,
-                request=request,
-                day_number=day_number,
-                used_ids=used_ids,
-                day_area=day_area,
-                feedback_signals=feedback_signals,
-                day_weekday=day_weekday,
-                closed_day_exclusions=closed_day_exclusions,
-                seen_exclusion_keys=seen_exclusion_keys,
-                allowed_slots=slot_rules.allowed_slots,
-            )
-            slot_places = self._refine_day_with_next_place_lookahead(
-                slot_places,
-                scored_places=scored_places,
-                request=request,
-                day_number=day_number,
-                used_ids=used_ids,
-                day_area=day_area,
-                feedback_signals=feedback_signals,
-                day_weekday=day_weekday,
-            )
+            if fixed_slots is None:
+                slot_places = self._pick_places_for_day(
+                    scored_places=scored_places,
+                    request=request,
+                    day_number=day_number,
+                    used_ids=used_ids,
+                    day_area=day_area,
+                    feedback_signals=feedback_signals,
+                    day_weekday=day_weekday,
+                    closed_day_exclusions=closed_day_exclusions,
+                    seen_exclusion_keys=seen_exclusion_keys,
+                    allowed_slots=slot_rules.allowed_slots,
+                )
+                slot_places = self._refine_day_with_next_place_lookahead(
+                    slot_places,
+                    scored_places=scored_places,
+                    request=request,
+                    day_number=day_number,
+                    used_ids=used_ids,
+                    day_area=day_area,
+                    feedback_signals=feedback_signals,
+                    day_weekday=day_weekday,
+                )
+            else:
+                # day_fixed_places was built above from slot_rules.allowed_slots
+                # (TIME_SLOTS order already), so this list is already in the
+                # same order _pick_places_for_day/_refine_day_with_next_place_
+                # lookahead would have produced it in.
+                slot_places = [(slot, day_fixed_places[slot]) for slot in slot_rules.allowed_slots]
+                for _, place in slot_places:
+                    used_ids.add(place.id)
 
             day_places = [place for _, place in slot_places]
             for index, (slot, chosen) in enumerate(slot_places):
@@ -388,6 +524,7 @@ class RuleItineraryService:
                     RuleItineraryItem(
                         day_number=day_number,
                         time_slot=slot,
+                        place_id=chosen.id,
                         place_name=self._localize_place_name(chosen),
                         category=main_category,
                         area=self._localize_area(chosen.area),
@@ -636,8 +773,18 @@ class RuleItineraryService:
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
         day_place_map: dict[int, list[PlaceData]],
+        *,
+        # recalculate()'s accommodation_id, already validated to exist in
+        # this city's own accommodations list before this is called - when
+        # set, scoring/ranking is skipped entirely and this exact stay is
+        # returned (or None if somehow absent, which the upstream
+        # validation already rules out in practice). None (generate()'s
+        # only caller) reproduces the original behavior exactly.
+        fixed_accommodation_id: str | None = None,
     ) -> AccommodationData | None:
         accommodations = load_city_accommodations(city_catalog.city)
+        if fixed_accommodation_id is not None:
+            return next((a for a in accommodations if a.id == fixed_accommodation_id), None)
         reference_point = compute_reference_point(day_place_map, city_catalog)
         # day_endpoints feeds Jeju-only accommodation_distance_score (see
         # policies/city/jeju.py) - a no-op for every other city, which has
@@ -650,6 +797,18 @@ class RuleItineraryService:
         request: NormalizedRuleRequest,
         city_catalog: CityPlaceCatalog,
         day_place_map: dict[int, list[PlaceData]],
+        *,
+        # recalculate()'s accommodation_id (see _recommend_accommodation) -
+        # the alternatives are still the same ranking's top 3, just with
+        # this one excluded instead of dropping ranked[0] (it might not
+        # even be ranked[0] - the user could have picked any of the
+        # alternatives generate() originally offered). None reproduces the
+        # original ranked[1:4] behavior exactly (equivalent to excluding
+        # ranked[0].id, since every accommodation's id is unique in the
+        # ranking, but spelled out as the original slice rather than
+        # relying on that equivalence, to keep generate()'s own path
+        # untouched).
+        exclude_id: str | None = None,
     ) -> list[AccommodationData]:
         """2nd-4th place of the exact same ranking _recommend_accommodation's
         pick (ranked[0]) comes from - see rank_accommodations. Recomputes
@@ -665,6 +824,8 @@ class RuleItineraryService:
         reference_point = compute_reference_point(day_place_map, city_catalog)
         day_endpoints = compute_day_endpoints(day_place_map)
         ranked = rank_accommodations(accommodations, request, reference_point, day_endpoints)
+        if exclude_id is not None:
+            return [accommodation for accommodation in ranked if accommodation.id != exclude_id][:3]
         return ranked[1:4]
 
     # Boundary position (index into TIME_SLOTS) each meal sits at in the

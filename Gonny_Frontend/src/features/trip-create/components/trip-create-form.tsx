@@ -24,6 +24,18 @@ import {
   type SlotSwapMap,
   type TimelineRow,
 } from "../utils/slot-swaps";
+import {
+  formatAccommodationAlternativePriceLabel,
+  getEffectiveAccommodation,
+  isAccommodationSwapped,
+  shouldHideAccommodationBoundaryConnector,
+  shouldHideAccommodationNearPreviousReason,
+  shouldHideDayTravelTotal,
+  shouldShowAccommodationEndLegStale,
+  shouldShowAccommodationStartLegStale,
+  type AccommodationAlternative,
+  type AccommodationSwapState,
+} from "../utils/accommodation-swap";
 
 type CatalogCityOption = {
   continent: string;
@@ -299,6 +311,11 @@ type RuleItineraryResponse = {
   weather_alerts: RuleWeatherAlert[];
   weather_status: RuleDayWeatherStatus[];
   accommodation_recommendation: AccommodationRecommendation | null;
+  // Up to 3 other stays, same ranking accommodation_recommendation itself
+  // came from (see the backend's accommodation_scoring.rank_accommodations)
+  // - absent on a response from before this field existed,
+  // normalizeGenerateResponse defaults it to [].
+  accommodation_alternatives: AccommodationAlternative[];
   meal_recommendations: RuleMealRecommendation[];
   estimated_cost: RuleCostEstimate | null;
   day_travel: RuleDayTravel[];
@@ -568,13 +585,17 @@ function formatDaySummaryTravelSegment(summary: RuleDaySummary): string | null {
   return `${modePrefix}이동 약 ${formatTravelMinutesLabel(summary.travel_minutes)}${suffix}`;
 }
 
-function formatDaySummaryLine(summary: RuleDaySummary): string {
+// hideTravelSegment: 숙소가 바뀌면 summary.travel_minutes(숙소 출발/복귀
+// 구간 포함 - 백엔드 확인한 사실, shouldHideDayTravelTotal 참고)도 낡은
+// 값이라 그 세그먼트만 빼고 보여준다(장소·활동·지역 수는 숙소와 무관해
+// 그대로 둔다).
+function formatDaySummaryLine(summary: RuleDaySummary, hideTravelSegment = false): string {
   const segments = [`장소 ${summary.place_count}곳`];
   const activitySegment = formatActivityMinutesSegment(summary.activity_minutes);
   if (activitySegment) {
     segments.push(activitySegment);
   }
-  const travelSegment = formatDaySummaryTravelSegment(summary);
+  const travelSegment = hideTravelSegment ? null : formatDaySummaryTravelSegment(summary);
   if (travelSegment) {
     segments.push(travelSegment);
   }
@@ -1030,6 +1051,12 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
       ? data.accommodation_recommendation
       : null,
+    // Missing/null on an older cached response (pre accommodation-
+    // alternatives backend change) - never throws, same permissive default
+    // as every other list field here.
+    accommodation_alternatives: Array.isArray(data.accommodation_alternatives)
+      ? data.accommodation_alternatives.filter(isAccommodationRecommendation)
+      : [],
     meal_recommendations: Array.isArray(data.meal_recommendations)
       ? data.meal_recommendations.filter(isRuleMealRecommendation).map((meal) => ({
           ...meal,
@@ -1270,10 +1297,15 @@ function DayTravelPanel({
   dayTravel,
   mode,
   onModeChange,
+  hideTotal = false,
 }: {
   dayTravel: RuleDayTravel;
   mode: "transit" | "car";
   onModeChange: (mode: "transit" | "car") => void;
+  // 숙소가 바뀌면 이 합계(숙소 출발/복귀 구간이 포함된 값 - 백엔드
+  // _build_day_travel 확인한 사실, accommodation-swap.ts의
+  // shouldHideDayTravelTotal 참고)는 낡은 값이라 숨긴다.
+  hideTotal?: boolean;
 }) {
   const otherMode: "transit" | "car" = mode === "transit" ? "car" : "transit";
   const selectedTotal = mode === "transit" ? dayTravel.transit_total_minutes : dayTravel.car_total_minutes;
@@ -1295,7 +1327,12 @@ function DayTravelPanel({
           </button>
         ))}
       </div>
-      {hasLegs ? (
+      {hideTotal ? (
+        <p className="tc-day-mode-summary">
+          <strong>이동 합계 재계산 안 됨</strong>
+          <span>숙소 이동 구간 포함 값은 재계산되지 않았어요</span>
+        </p>
+      ) : hasLegs ? (
         <p className="tc-day-mode-summary">
           <strong>
             이동 합계 {dayTravel.missing_leg_count > 0 ? "최소 " : ""}약 {formatTravelMinutesLabel(selectedTotal)}
@@ -1414,6 +1451,56 @@ function SlotAlternativesPanel({
         {activeAlternativePlaceId ? (
           <button className="tc-btn tc-btn-ghost tc-alt-revert" onClick={onRevert} type="button">
             원래 추천으로 되돌리기
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+// "다른 숙소" 칩 목록 - 대안이 없으면(풀이 작아 2~4위가 없는 경우) 영역
+// 자체를 그리지 않는다. 활동 슬롯과 달리 숙소는 트립 전체에 하나뿐이라
+// "다른 슬롯에서 이미 쓰임" 같은 중복 비활성화 규칙이 없다.
+function AccommodationAlternativesPanel({
+  alternatives,
+  activeAlternativeId,
+  onSelect,
+  onRevert,
+}: {
+  alternatives: AccommodationAlternative[];
+  activeAlternativeId: string | null;
+  onSelect: (alternative: AccommodationAlternative) => void;
+  onRevert: () => void;
+}) {
+  if (alternatives.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="tc-alt-panel">
+      <span className="tc-alt-label">다른 숙소</span>
+      <div className="tc-chip-row">
+        {alternatives.map((alternative) => {
+          const isActive = alternative.id === activeAlternativeId;
+          return (
+            <button
+              aria-pressed={isActive}
+              className={`tc-chip tc-alt-chip ${isActive ? "is-selected" : ""}`}
+              key={alternative.id}
+              onClick={() => onSelect(alternative)}
+              type="button"
+            >
+              {alternative.name}
+              <span className="tc-alt-chip-area">
+                {" "}
+                · {alternative.accommodation_type} · {formatAccommodationAlternativePriceLabel(alternative.average_price_krw)}
+              </span>
+            </button>
+          );
+        })}
+        {activeAlternativeId ? (
+          <button className="tc-btn tc-btn-ghost tc-alt-revert" onClick={onRevert} type="button">
+            원래 추천 숙소로 되돌리기
           </button>
         ) : null}
       </div>
@@ -1674,10 +1761,15 @@ export function TripCreateForm() {
   // useEffect가 새 result마다(새로 생성하거나 handleEditAgain으로 폼에
   // 돌아가도) 초기화한다.
   const [slotSwaps, setSlotSwaps] = useState<SlotSwapMap>({});
+  // 숙소 교체 상태 - activity 슬롯과 독립적인 별도 상태(slotSwaps와 서로
+  // 읽지 않는다), 같은 시점(아래 useEffect)에 같이 초기화된다. null = 원래
+  // 추천 숙소 그대로.
+  const [accommodationSwap, setAccommodationSwap] = useState<AccommodationSwapState>(null);
   const hasResult = result !== null;
 
   useEffect(() => {
     setSlotSwaps({});
+    setAccommodationSwap(null);
   }, [result]);
 
   useEffect(() => {
@@ -1763,6 +1855,14 @@ export function TripCreateForm() {
     allTravelLegs.length > 0 && allTravelLegs.every((leg) => leg.source === "estimate");
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
+  const accommodationIsSwapped = isAccommodationSwapped(accommodationSwap);
+  const effectiveAccommodation = result?.accommodation_recommendation
+    ? getEffectiveAccommodation(result.accommodation_recommendation, accommodationSwap)
+    : null;
+  // 숙소 출발/복귀 커넥터·일차 이동 합계 라벨에 쓸 "현재 화면에 보여야
+  // 하는" 숙소 이름 - 교체 중이면 대안 이름이 아니라 "재계산 안 됨"
+  // 표시로 대체되므로 애초에 쓰지 않는다(아래 일차 루프에서 바로 이
+  // accommodationIsSwapped를 직접 참조한다).
   const selectedCatalogCity = cities.find((option) => option.city === form.city);
   const availableAccommodationTypes = accommodationTypeOptions.filter(
     (type) => (selectedCatalogCity?.accommodation_type_counts?.[type] ?? 0) > 0,
@@ -2024,6 +2124,14 @@ export function TripCreateForm() {
 
   const handleRevertAlternative = (item: RuleItineraryItem) => {
     setSlotSwaps((previous) => revertSlotSwap(previous, item));
+  };
+
+  const handleSelectAccommodationAlternative = (alternative: AccommodationAlternative) => {
+    setAccommodationSwap(alternative);
+  };
+
+  const handleRevertAccommodation = () => {
+    setAccommodationSwap(null);
   };
 
   const handleSaveTrip = async () => {
@@ -2578,27 +2686,33 @@ export function TripCreateForm() {
               </div>
             </div>
 
-            {result.accommodation_recommendation ? (
+            {effectiveAccommodation ? (
               <div className="tc-card">
                 <p className="tc-section-label">추천 숙소</p>
-                <p className="tc-section-value">{result.accommodation_recommendation.name}</p>
+                <p className="tc-section-value">{effectiveAccommodation.name}</p>
                 <div className="tc-tag-row">
-                  <span className="tc-tag">{result.accommodation_recommendation.accommodation_type}</span>
-                  {result.accommodation_recommendation.checkin_time ? (
-                    <span className="tc-tag">체크인 {result.accommodation_recommendation.checkin_time}</span>
+                  <span className="tc-tag">{effectiveAccommodation.accommodation_type}</span>
+                  {effectiveAccommodation.checkin_time ? (
+                    <span className="tc-tag">체크인 {effectiveAccommodation.checkin_time}</span>
                   ) : null}
-                  {result.accommodation_recommendation.checkout_time ? (
-                    <span className="tc-tag">체크아웃 {result.accommodation_recommendation.checkout_time}</span>
+                  {effectiveAccommodation.checkout_time ? (
+                    <span className="tc-tag">체크아웃 {effectiveAccommodation.checkout_time}</span>
                   ) : null}
                 </div>
-                {result.accommodation_recommendation.average_price_krw != null ? (
+                {effectiveAccommodation.average_price_krw != null ? (
                   <>
                     <p className="tc-section-note" style={{ marginTop: 10 }}>
-                      1박 기준 약 {formatApproxManwon(result.accommodation_recommendation.average_price_krw)}
+                      1박 기준 약 {formatApproxManwon(effectiveAccommodation.average_price_krw)}
                     </p>
                     <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
                   </>
                 ) : null}
+                <AccommodationAlternativesPanel
+                  activeAlternativeId={accommodationSwap?.id ?? null}
+                  alternatives={result.accommodation_alternatives}
+                  onRevert={handleRevertAccommodation}
+                  onSelect={handleSelectAccommodationAlternative}
+                />
               </div>
             ) : null}
 
@@ -2617,7 +2731,13 @@ export function TripCreateForm() {
                     가격 미확인 {result.estimated_cost.unpriced_place_count}곳은 상한으로 가정
                   </p>
                 ) : null}
-                {!result.estimated_cost.accommodation_included ? (
+                {accommodationIsSwapped ? (
+                  // 기존 "숙소 가격 미확인으로 숙소 비용 제외" 문구는 원래
+                  // 추천 숙소의 accommodation_included 기준이라, 숙소를
+                  // 바꾸면 바뀐 숙소 기준과 어긋날 수 있어 숨기고 이 안내로
+                  // 갈음한다(과제 constraint).
+                  <p className="tc-section-note">숙소를 바꿔서 숙박비는 반영되지 않았어요</p>
+                ) : !result.estimated_cost.accommodation_included ? (
                   <p className="tc-section-note">숙소 가격 미확인으로 숙소 비용 제외</p>
                 ) : null}
               </div>
@@ -2655,9 +2775,9 @@ export function TripCreateForm() {
                   날씨 정보를 불러오지 못했어요.
                 </div>
               ) : null}
-              {hasAnySlotSwap(slotSwaps) ? (
+              {hasAnySlotSwap(slotSwaps) || accommodationIsSwapped ? (
                 <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
-                  장소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.
+                  장소나 숙소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.
                 </div>
               ) : null}
               {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
@@ -2713,13 +2833,27 @@ export function TripCreateForm() {
                 }
                 const firstEntry = timelineEntries[0];
                 const lastEntry = timelineEntries[timelineEntries.length - 1];
+                // 그 날의 "맨 처음 활동 항목" - firstEntry와 다를 수 있다
+                // (아침 식사가 먼저 그려지면 firstEntry는 식사 행이다). 숙소
+                // 교체 시 "숙소에서 N분" reason 칩을 숨길 대상 판정에 쓴다.
+                const firstActivityEntry = timelineEntries.find((entry) => entry.type === "item");
                 // 교체된 활동 자신으로 들어오는 이동 정보는 앞 행이 무엇이든
                 // (숙소 포함) 숨긴다는 원칙을 하루 경계(숙소 출발/복귀
-                // 커넥터)에도 그대로 적용한다.
-                const firstRowSwapped = firstEntry?.type === "item" && isSlotSwapped(slotSwaps, firstEntry.item);
-                const lastRowSwapped = lastEntry?.type === "item" && isSlotSwapped(slotSwaps, lastEntry.item);
+                // 커넥터)에도 그대로 적용한다. 숙소가 바뀌었을 때도 같은
+                // 경계가 낡은 값이 된다(accommodation-swap.ts 참고) -
+                // 활동/숙소 둘 다 독립적으로 판정해 OR로 합친다.
+                const firstRowActivitySwapped = firstEntry?.type === "item" && isSlotSwapped(slotSwaps, firstEntry.item);
+                const lastRowActivitySwapped = lastEntry?.type === "item" && isSlotSwapped(slotSwaps, lastEntry.item);
+                const hideStartLegConnector = shouldHideAccommodationBoundaryConnector(
+                  accommodationIsSwapped,
+                  firstRowActivitySwapped,
+                );
+                const hideEndLegConnector = shouldHideAccommodationBoundaryConnector(
+                  accommodationIsSwapped,
+                  lastRowActivitySwapped,
+                );
                 const startLeg =
-                  accommodationName && firstEntry && !firstRowSwapped
+                  accommodationName && firstEntry && !hideStartLegConnector
                     ? legByKey.get(
                         travelLegKey(
                           "accommodation",
@@ -2730,7 +2864,7 @@ export function TripCreateForm() {
                       )
                     : undefined;
                 const endLeg =
-                  accommodationName && lastEntry && !lastRowSwapped
+                  accommodationName && lastEntry && !hideEndLegConnector
                     ? legByKey.get(
                         travelLegKey(
                           dayTimelineEntryKind(lastEntry),
@@ -2748,8 +2882,10 @@ export function TripCreateForm() {
                       <h3 className="tc-day-title">{dayNumber}일차</h3>
                       {daySummary && daySummary.place_count > 0 ? (
                         <p className="tc-day-summary-line">
-                          {formatDaySummaryLine(daySummary)}
-                          {daySummary.travel_is_partial ? (
+                          {formatDaySummaryLine(daySummary, shouldHideDayTravelTotal(accommodationIsSwapped))}
+                          {accommodationIsSwapped ? (
+                            <span className="tc-day-summary-note"> · 이동 시간 재계산 안 됨</span>
+                          ) : daySummary.travel_is_partial ? (
                             <span className="tc-day-summary-note"> (일부 구간 제외)</span>
                           ) : null}
                         </p>
@@ -2771,6 +2907,7 @@ export function TripCreateForm() {
                   {dayTravel ? (
                     <DayTravelPanel
                       dayTravel={dayTravel}
+                      hideTotal={shouldHideDayTravelTotal(accommodationIsSwapped)}
                       mode={mode}
                       onModeChange={(nextMode) =>
                         setDayTravelMode((previous) => ({ ...previous, [dayNumber]: nextMode }))
@@ -2801,12 +2938,17 @@ export function TripCreateForm() {
                       <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
                     ))}
                   <div className="tc-timeline">
-                    {/* 첫 행이 교체됐을 때의 "재계산 안 됨"은 아래 .map()의
+                    {/* 첫 활동이 교체됐을 때의 "재계산 안 됨"은 아래 .map()의
                         index 0 처리(hint.hideIncomingTravel, 자기 자신이
                         교체됨)가 이미 그린다 - 여기서 또 그리면 중복된다.
-                        startLeg 자체가 firstRowSwapped면 undefined이므로
-                        (위 계산부) 여기서는 자연히 아무것도 안 그려진다. */}
-                    {startLeg ? (
+                        그래서 숙소만 바뀐 경우(첫 활동은 그대로)에만 여기서
+                        따로 보여준다 - shouldShowAccommodationStartLegStale
+                        참고. startLeg 자체는 둘 중 하나라도 바뀌면
+                        undefined이므로(위 계산부) 연결 실패로 자연히 아무것도
+                        안 그려지는 일은 없다(이 블록이 그 자리를 대신 채운다). */}
+                    {shouldShowAccommodationStartLegStale(accommodationIsSwapped, firstRowActivitySwapped) ? (
+                      <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
+                    ) : startLeg ? (
                       <TravelConnectorRow
                         label={`숙소에서 출발 · ${accommodationName}`}
                         leg={startLeg}
@@ -2843,8 +2985,13 @@ export function TripCreateForm() {
                         // 바로 앞 행이 교체된 활동일 때만 낡은 값이 된다 - 이
                         // 항목 자신이 교체됐다면 reasons는 이미 []
                         // (getEffectiveItem)라 이 필터는 그 경우 아무 영향이
-                        // 없다.
-                        const visibleReasons = hint.hidePrecedingNearPreviousReason
+                        // 없다. 그 날의 첫 활동 항목이면 "숙소에서 N분"
+                        // 변형일 수 있어, 숙소가 바뀌었을 때도 같은 code를
+                        // 지운다(accommodation-swap.ts 참고).
+                        const hideNearPreviousReason =
+                          hint.hidePrecedingNearPreviousReason ||
+                          shouldHideAccommodationNearPreviousReason(entry === firstActivityEntry, accommodationIsSwapped);
+                        const visibleReasons = hideNearPreviousReason
                           ? item.reasons.filter((reason) => reason.code !== "near_previous")
                           : item.reasons;
 
@@ -2911,7 +3058,9 @@ export function TripCreateForm() {
                         </Fragment>
                       );
                     })}
-                    {accommodationName && lastEntry && lastRowSwapped ? (
+                    {accommodationName &&
+                    lastEntry &&
+                    shouldShowAccommodationEndLegStale(accommodationIsSwapped, lastRowActivitySwapped) ? (
                       <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
                     ) : endLeg ? (
                       <TravelConnectorRow label={`숙소로 복귀 · ${accommodationName}`} leg={endLeg} mode={mode} />

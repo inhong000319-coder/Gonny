@@ -32,6 +32,19 @@ ArrivalPeriod = Literal["morning", "afternoon", "evening", "night"]
 DeparturePeriod = Literal["before_lunch", "afternoon", "evening_or_later"]
 
 
+class RuleFixedSlotAssignment(BaseModel):
+    """One (day, slot) -> place pin for POST /rule-itinerary/recalculate -
+    see RuleItineraryRecalculateRequest. Every allowed slot of every day
+    must be pinned exactly once (see services/recalculate.py's
+    validation) - there is no partial-fix mode."""
+
+    day_number: int
+    time_slot: TimeSlot
+    place_id: str
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleItineraryRequest(BaseModel):
     continent: str | None = None
     country: str | None = None
@@ -68,6 +81,26 @@ class RuleItineraryRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleItineraryRecalculateRequest(RuleItineraryRequest):
+    """POST /rule-itinerary/recalculate - every RuleItineraryRequest field
+    (same trip-level context: city/budget/concepts/.../start_date) plus a
+    full, explicit slot-by-slot place pinning. See services/recalculate.py
+    for the validation this goes through before RuleItineraryService.
+    _build_items ever sees it (unknown/inactive/food place, disallowed or
+    missing/duplicate slot, cross-day or partial-day place reuse, closed-
+    day place) and RuleItineraryService.recalculate for how it's used.
+    Inherits RuleItineraryRequest's own fields/model_config rather than
+    duplicating them, so the two request shapes can never drift apart."""
+
+    fixed_slots: list[RuleFixedSlotAssignment]
+    # None = pick the accommodation the normal way (same as generate()).
+    # When set, must be one of the city's own accommodations (see
+    # services/recalculate.py) - the recommendation is pinned to it and
+    # the alternatives are the top 3 of the same ranking with this one
+    # excluded, same spirit as fixed_slots pinning an activity place.
+    accommodation_id: str | None = None
+
+
 class RuleReason(BaseModel):
     """One fact-based reason a place was recommended - see
     services/reasons.py. Never carries a score number or internal
@@ -99,6 +132,12 @@ class RuleSlotAlternative(BaseModel):
 class RuleItineraryItem(BaseModel):
     day_number: int
     time_slot: TimeSlot
+    # Added alongside POST /rule-itinerary/recalculate (additive, backward
+    # compatible) - set on every item (normal and full-day alike) by
+    # RuleItineraryService._build_items, so a client can round-trip a
+    # generate() response straight into a recalculate() request's
+    # fixed_slots without needing a separate name/id lookup.
+    place_id: str | None = None
     place_name: str
     category: str
     area: str

@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.domains.rule_planner.schemas import (
     RuleItineraryCatalogResponse,
+    RuleItineraryRecalculateRequest,
     RuleItineraryRequest,
     RuleItineraryResponse,
     RuleTransportComparisonResponse,
@@ -25,3 +26,8 @@ def generate_rule_itinerary(request: RuleItineraryRequest):
 @router.post("/compare-transport", response_model=RuleTransportComparisonResponse)
 def compare_rule_itinerary_transport(request: RuleItineraryRequest):
     return rule_itinerary_service.compare_transport(request)
+
+
+@router.post("/recalculate", response_model=RuleItineraryResponse)
+def recalculate_rule_itinerary(request: RuleItineraryRecalculateRequest):
+    return rule_itinerary_service.recalculate(request)

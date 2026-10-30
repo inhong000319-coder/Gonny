@@ -52,6 +52,12 @@ async def lifespan(app: FastAPI):
                 connection.execute(text("ALTER TABLE trips ADD COLUMN satisfaction_rating INTEGER"))
             if "retrospective_note" not in trip_columns:
                 connection.execute(text("ALTER TABLE trips ADD COLUMN retrospective_note VARCHAR"))
+            if "accommodation_id" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN accommodation_id VARCHAR"))
+            if "accommodation_name" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN accommodation_name VARCHAR"))
+            if "accommodation_type" not in trip_columns:
+                connection.execute(text("ALTER TABLE trips ADD COLUMN accommodation_type VARCHAR"))
             trip_todo_columns = {column["name"] for column in inspector.get_columns("trip_todos")} if "trip_todos" in inspector.get_table_names() else set()
             if "day_number" not in trip_todo_columns:
                 connection.execute(text("ALTER TABLE trip_todos ADD COLUMN day_number INTEGER NOT NULL DEFAULT 1"))

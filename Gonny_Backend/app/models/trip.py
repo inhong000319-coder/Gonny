@@ -28,6 +28,16 @@ class Trip(Base):
     # get_trip_report) - both optional, set via PATCH /trips/{id}/retrospective.
     satisfaction_rating = Column(Integer, nullable=True)
     retrospective_note = Column(String, nullable=True)
+    # Saved-at-creation-time snapshot of the chosen accommodation (see
+    # TripService.create_trip) - no way to change it after the trip is
+    # created (no PATCH endpoint, out of scope). All three NULL means "no
+    # accommodation chosen", the only possibility before this feature and
+    # still valid for any trip created without accommodation_id. name/type
+    # are a snapshot rather than a live lookup: app/data/accommodations/*.json
+    # can change later without altering what was actually saved.
+    accommodation_id = Column(String, nullable=True)
+    accommodation_name = Column(String, nullable=True)
+    accommodation_type = Column(String, nullable=True)
 
     itinerary_items = relationship(
         "ItineraryItem",

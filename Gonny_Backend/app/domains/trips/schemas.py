@@ -14,6 +14,11 @@ class TripCreate(BaseModel):
     budget: int
     travel_style: str
     companion_type: str
+    # Looked up by id against destination's accommodation list at save
+    # time (see TripService.create_trip) - the client never sends a name
+    # or type directly, both are server-filled snapshots. None (default)
+    # saves no accommodation, same as every trip before this field existed.
+    accommodation_id: str | None = None
 
 
 class TripResponse(BaseModel):
@@ -29,6 +34,12 @@ class TripResponse(BaseModel):
     created_at: datetime
     satisfaction_rating: int | None = None
     retrospective_note: str | None = None
+    # Snapshot taken at save time (see Trip.accommodation_id's docstring) -
+    # null on any trip saved without an accommodation_id, including every
+    # trip created before this field existed.
+    accommodation_id: str | None = None
+    accommodation_name: str | None = None
+    accommodation_type: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 

@@ -19,6 +19,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.core.settings import settings
+from app.domains.rule_planner.services.accommodation_scoring import load_city_accommodations
 from app.domains.rule_planner.services.travel_estimate import haversine_distance_km
 from app.domains.trips.schemas import (
     ExpenseCreate,
@@ -223,8 +224,9 @@ def _build_trip_pdf_bytes(
     """Renders the trip's saved itinerary + budget summary to an A4 PDF.
 
     Only fields that actually exist on Trip/ItineraryItem are used - no
-    address, operating hours, contact info, or accommodation, since none
-    of that is stored anywhere yet (see this feature's scope note).
+    address, operating hours, or contact info, since none of that is
+    stored anywhere yet. Accommodation (name/type) is shown as a single
+    line right above the itinerary when the trip has one saved.
     """
     title_style = ParagraphStyle("Title", fontName=PDF_FONT_NAME, fontSize=20, leading=26)
     meta_style = ParagraphStyle("Meta", fontName=PDF_FONT_NAME, fontSize=10, textColor=colors.grey, leading=14)
@@ -237,9 +239,14 @@ def _build_trip_pdf_bytes(
     elements = [
         Paragraph(trip.title, title_style),
         Paragraph(f"{trip.destination} · {trip.start_date.isoformat()} ~ {trip.end_date.isoformat()}", meta_style),
-        Spacer(1, 10 * mm),
-        Paragraph("일정", heading_style),
     ]
+    if trip.accommodation_name:
+        accommodation_line = trip.accommodation_name
+        if trip.accommodation_type:
+            accommodation_line = f"{accommodation_line} ({trip.accommodation_type})"
+        elements.append(Paragraph(f"숙소: {accommodation_line}", meta_style))
+    elements.append(Spacer(1, 10 * mm))
+    elements.append(Paragraph("일정", heading_style))
 
     if not itinerary_items:
         elements.append(Paragraph("저장된 일정이 없습니다.", body_style))
@@ -322,6 +329,19 @@ def _build_trip_pdf_bytes(
 
 class TripService:
     def create_trip(self, *, db: Session, request: TripCreate) -> Trip:
+        accommodation_name = None
+        accommodation_type = None
+        if request.accommodation_id is not None:
+            accommodations = load_city_accommodations(request.destination)
+            accommodation = next((a for a in accommodations if a.id == request.accommodation_id), None)
+            if accommodation is None:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"알 수 없는 숙소 id입니다: {request.accommodation_id}",
+                )
+            accommodation_name = accommodation.name
+            accommodation_type = accommodation.accommodation_type
+
         db_trip = Trip(
             title=request.title or f"{request.destination} 여행",
             destination=request.destination,
@@ -330,6 +350,9 @@ class TripService:
             budget=request.budget,
             travel_style=request.travel_style,
             companion_type=request.companion_type,
+            accommodation_id=request.accommodation_id,
+            accommodation_name=accommodation_name,
+            accommodation_type=accommodation_type,
         )
         db.add(db_trip)
         db.commit()

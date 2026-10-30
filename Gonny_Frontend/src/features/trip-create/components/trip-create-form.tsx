@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { PRICE_REFERENCE_PERIOD, formatApproxManwon, formatApproxManwonRange } from "../../../shared/pricing";
@@ -36,6 +36,7 @@ import {
   type AccommodationAlternative,
   type AccommodationSwapState,
 } from "../utils/accommodation-swap";
+import { buildRecalculateRequestPayload, canBuildFixedSlotsForRecalculate } from "../utils/recalculate-request";
 
 type CatalogCityOption = {
   continent: string;
@@ -93,6 +94,11 @@ type RuleSlotAlternative = {
 type RuleItineraryItem = {
   day_number: number;
   time_slot: TimeSlot;
+  // POST /rule-itinerary/recalculate용 장소 식별자(PR #109) - 구버전 응답
+  // (캐시 등)에는 없을 수 있어 옵셔널. 비어 있는 항목이 하나라도 있으면
+  // "바뀐 일정으로 다시 계산" 버튼을 보여주지 않는다 - 아래
+  // canBuildFixedSlotsForRecalculate 참고.
+  place_id?: string | null;
   place_name: string;
   category: string;
   area: string;
@@ -696,6 +702,7 @@ function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
     typeof item.area === "string" &&
     typeof item.notes === "string" &&
     (item.travel_minutes_from_previous === null || typeof item.travel_minutes_from_previous === "number") &&
+    (item.place_id === undefined || item.place_id === null || typeof item.place_id === "string") &&
     (item.reasons === undefined || Array.isArray(item.reasons)) &&
     (item.alternatives === undefined || item.alternatives === null || Array.isArray(item.alternatives))
   );
@@ -1017,6 +1024,10 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
 
   const items = data.items.filter(isRuleItineraryItem).map((item) => ({
     ...item,
+    // Missing/null on an older response (pre-PR #109) - normalized to
+    // null rather than left undefined, so every call site can do a plain
+    // truthiness/typeof check (see canBuildFixedSlotsForRecalculate).
+    place_id: typeof item.place_id === "string" ? item.place_id : null,
     reasons: Array.isArray(item.reasons) ? item.reasons.filter(isRuleReason) : [],
     // Missing/null on an older cached response (pre-PR #104) - never
     // throws, same permissive default as reasons above.
@@ -1765,16 +1776,34 @@ export function TripCreateForm() {
   // 읽지 않는다), 같은 시점(아래 useEffect)에 같이 초기화된다. null = 원래
   // 추천 숙소 그대로.
   const [accommodationSwap, setAccommodationSwap] = useState<AccommodationSwapState>(null);
+  // "바뀐 일정으로 다시 계산"(POST /rule-itinerary/recalculate, PR #109) 상태.
+  // isRecalculating은 중복 호출 방지용, recalculateError는 결과 화면 안
+  // 버튼 근처에 보여줄 실패 메시지 - handleGenerate 실패와 달리 result는
+  // 지우지 않는다(과제 constraint).
+  const [isRecalculating, setIsRecalculating] = useState(false);
+  const [recalculateError, setRecalculateError] = useState("");
+  // 재계산 성공 직후에만 true로 세팅 - 아래 dayTravelMode useEffect가 이
+  // 플래그를 보고 "기본값으로 초기화"를 한 번 건너뛴다(사용자가 고른
+  // 일차별 이동수단 토글을 재계산 후에도 유지하기 위함 - 과제 constraint).
+  // 새 /generate 결과에서는 이 플래그가 세팅되지 않으므로 기존대로
+  // 초기화된다.
+  const preserveDayTravelModeOnNextResultRef = useRef(false);
   const hasResult = result !== null;
 
   useEffect(() => {
     setSlotSwaps({});
     setAccommodationSwap(null);
+    setRecalculateError("");
   }, [result]);
 
   useEffect(() => {
     if (!result) {
       setDayTravelMode({});
+      return;
+    }
+
+    if (preserveDayTravelModeOnNextResultRef.current) {
+      preserveDayTravelModeOnNextResultRef.current = false;
       return;
     }
 
@@ -1856,6 +1885,7 @@ export function TripCreateForm() {
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
   const accommodationIsSwapped = isAccommodationSwapped(accommodationSwap);
+  const canRecalculate = result !== null && canBuildFixedSlotsForRecalculate(result.items);
   const effectiveAccommodation = result?.accommodation_recommendation
     ? getEffectiveAccommodation(result.accommodation_recommendation, accommodationSwap)
     : null;
@@ -2079,6 +2109,60 @@ export function TripCreateForm() {
       setError(nextError);
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  // FastAPI의 422 detail 메시지를 꺼낸다 - 같은 패턴을 이미
+  // features/trips/api/update-trip-favorite.ts가 쓰고 있다(axios
+  // AxiosError에는 response.data.detail만 있고 error.message는 일반
+  // 문구라, 이 프로젝트에서 서버 detail을 보여줄 때 쓰는 공통 관례).
+  function extractErrorDetail(error: unknown, fallback: string): string {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "response" in error &&
+      typeof (error as { response?: { data?: { detail?: string } } }).response?.data?.detail === "string"
+    ) {
+      return (error as { response: { data: { detail: string } } }).response.data.detail;
+    }
+    return fallback;
+  }
+
+  const handleRecalculate = async () => {
+    if (!result || !lastGeneratePayload || isRecalculating) {
+      return;
+    }
+
+    setRecalculateError("");
+
+    // 지금 화면에 표시 중인 숙소 id - 교체됐으면 그 숙소, 아니면 원래
+    // 추천 숙소. 추천 숙소 자체가 없으면 생략한다(과제 constraint).
+    const accommodationId = accommodationSwap?.id ?? result.accommodation_recommendation?.id ?? null;
+    const assembly = buildRecalculateRequestPayload({
+      basePayload: lastGeneratePayload,
+      items: result.items,
+      slotSwaps,
+      accommodationId,
+    });
+    if (!assembly.ok) {
+      setRecalculateError(assembly.reason);
+      return;
+    }
+
+    setIsRecalculating(true);
+
+    try {
+      const response = await apiClient.post<unknown>("/rule-itinerary/recalculate", assembly.payload);
+      const nextResult = normalizeGenerateResponse(response.data);
+      preserveDayTravelModeOnNextResultRef.current = true;
+      setResult(nextResult);
+      setMessage("바뀐 일정으로 다시 계산했어요.");
+    } catch (recalculateErrorCaught) {
+      setRecalculateError(
+        extractErrorDetail(recalculateErrorCaught, "일정을 다시 계산하지 못했어요. 잠시 후 다시 시도해 주세요."),
+      );
+    } finally {
+      setIsRecalculating(false);
     }
   };
 
@@ -2777,7 +2861,24 @@ export function TripCreateForm() {
               ) : null}
               {hasAnySlotSwap(slotSwaps) || accommodationIsSwapped ? (
                 <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
-                  장소나 숙소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.
+                  <p>장소나 숙소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.</p>
+                  {canRecalculate ? (
+                    <button
+                      aria-busy={isRecalculating}
+                      className="tc-btn tc-btn-secondary"
+                      disabled={isRecalculating}
+                      onClick={handleRecalculate}
+                      style={{ marginTop: 8, justifySelf: "start" }}
+                      type="button"
+                    >
+                      {isRecalculating ? "다시 계산하고 있어요…" : "바뀐 일정으로 다시 계산"}
+                    </button>
+                  ) : null}
+                </div>
+              ) : null}
+              {recalculateError ? (
+                <div className="tc-alert tc-alert-danger" style={{ marginBottom: 16 }}>
+                  {recalculateError}
                 </div>
               ) : null}
               {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {

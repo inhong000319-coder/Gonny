@@ -24,6 +24,7 @@ export function TripHeader({ trip }: TripHeaderProps) {
           <div className="row">
             <Badge>{trip.dateRangeLabel}</Badge>
             <Badge>{trip.destination}</Badge>
+            {trip.accommodationLabel ? <Badge>숙소: {trip.accommodationLabel}</Badge> : null}
           </div>
           <h1 className="section-title" style={{ fontSize: "2.2rem", margin: 0 }}>
             {trip.title}

@@ -2,6 +2,16 @@ import { apiClient } from "../../../shared/api/client";
 import { DayPlan, TripOverview } from "../../../shared/types/domain";
 import { TripDetailResponseDto } from "../types/trips";
 
+// 숙소 없이 저장된 여행(구버전 응답 포함)에서는 accommodation_name이
+// 없거나 null이다 - 그 경우 undefined를 돌려줘 호출부가 아무것도
+// 그리지 않게 한다(빈 카드/문구 없이 조용히 생략 - 과제 constraint).
+function formatAccommodationLabel(dto: TripDetailResponseDto): string | undefined {
+  if (!dto.accommodation_name) {
+    return undefined;
+  }
+  return dto.accommodation_type ? `${dto.accommodation_name}(${dto.accommodation_type})` : dto.accommodation_name;
+}
+
 function mapTripOverview(dto: TripDetailResponseDto): TripOverview {
   return {
     id: String(dto.id),
@@ -11,6 +21,7 @@ function mapTripOverview(dto: TripDetailResponseDto): TripOverview {
     weatherSummary: "날씨 정보 준비 중",
     budgetLabel: `${dto.budget.toLocaleString()}원`,
     companionLabel: dto.companion_type,
+    accommodationLabel: formatAccommodationLabel(dto),
   };
 }
 

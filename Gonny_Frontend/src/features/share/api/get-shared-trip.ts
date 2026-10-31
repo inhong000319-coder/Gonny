@@ -16,6 +16,9 @@ export type SharedTripDetail = {
   end_date: string;
   companion_type: string;
   itinerary_items: SharedItineraryItem[];
+  // 숙소 없이 저장된 여행(구버전 응답 포함)에서는 없거나 null.
+  accommodation_name: string | null;
+  accommodation_type: string | null;
 };
 
 function isSharedItineraryItem(value: unknown): value is SharedItineraryItem {
@@ -50,6 +53,8 @@ function normalizeSharedTripDetail(payload: unknown): SharedTripDetail {
     end_date: typeof data.end_date === "string" ? data.end_date : "",
     companion_type: typeof data.companion_type === "string" ? data.companion_type : "",
     itinerary_items: Array.isArray(data.itinerary_items) ? data.itinerary_items.filter(isSharedItineraryItem) : [],
+    accommodation_name: typeof data.accommodation_name === "string" ? data.accommodation_name : null,
+    accommodation_type: typeof data.accommodation_type === "string" ? data.accommodation_type : null,
   };
 }
 

@@ -1732,6 +1732,17 @@ function summarizeRoute(items: RuleItineraryItem[]) {
   return highlights.join(" · ");
 }
 
+// 지금 화면에 표시 중인 숙소의 id - 교체됐으면 그 숙소, 아니면 원래
+// 추천 숙소, 추천 숙소 자체가 없으면 null. handleRecalculate와
+// handleSaveTrip 둘 다 "저장/재계산 요청에 보낼 숙소"를 이 식 하나로
+// 통일한다(과제 constraint - 중복 정의 금지).
+function resolveDisplayedAccommodationId(
+  result: RuleItineraryResponse | null,
+  accommodationSwap: AccommodationSwapState,
+): string | null {
+  return accommodationSwap?.id ?? result?.accommodation_recommendation?.id ?? null;
+}
+
 function splitNoteLines(note: string) {
   const lines = note
     .split(/\r?\n/)
@@ -2135,9 +2146,7 @@ export function TripCreateForm() {
 
     setRecalculateError("");
 
-    // 지금 화면에 표시 중인 숙소 id - 교체됐으면 그 숙소, 아니면 원래
-    // 추천 숙소. 추천 숙소 자체가 없으면 생략한다(과제 constraint).
-    const accommodationId = accommodationSwap?.id ?? result.accommodation_recommendation?.id ?? null;
+    const accommodationId = resolveDisplayedAccommodationId(result, accommodationSwap);
     const assembly = buildRecalculateRequestPayload({
       basePayload: lastGeneratePayload,
       items: result.items,
@@ -2227,6 +2236,7 @@ export function TripCreateForm() {
     setError("");
 
     try {
+      const accommodationId = resolveDisplayedAccommodationId(result, accommodationSwap);
       const createdTrip = await createTrip({
         title: `${toCityLabel(result.city)} ${form.duration_label} 일정`,
         destination: result.city,
@@ -2235,6 +2245,9 @@ export function TripCreateForm() {
         budget: UNSET_TRIP_BUDGET,
         travel_style: result.style,
         companion_type: result.companion_type,
+        // 추천 숙소가 없으면 생략한다 - 서버 기본 동작(숙소 없이 저장)과
+        // 같다(과제 constraint).
+        ...(accommodationId ? { accommodation_id: accommodationId } : {}),
       });
 
       // 화면에 표시된(교체 반영된) 값으로 저장한다 - payload 형태(5개 필드)는
@@ -2245,7 +2258,10 @@ export function TripCreateForm() {
 
       navigate(`/trips/${createdTrip.id}`);
     } catch (saveError) {
-      const nextError = saveError instanceof Error ? saveError.message : "여행 저장에 실패했습니다.";
+      const nextError = extractErrorDetail(
+        saveError,
+        saveError instanceof Error ? saveError.message : "여행 저장에 실패했습니다.",
+      );
       setError(nextError);
     } finally {
       setIsSavingTrip(false);

@@ -26,6 +26,9 @@ export type TripOverview = {
   weatherSummary: string;
   budgetLabel: string;
   companionLabel: string;
+  // "이름(유형)" 형태로 미리 포맷된 라벨 - 숙소 없이 저장된 여행(구버전
+  // 포함)에서는 undefined, 그 경우 호출부는 아무것도 그리지 않는다.
+  accommodationLabel?: string;
 };
 
 export type ItineraryItem = {

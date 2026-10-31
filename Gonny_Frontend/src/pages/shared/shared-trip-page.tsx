@@ -76,6 +76,12 @@ export function SharedTripPage() {
             <p className="section-subtitle" style={{ marginBottom: 0 }}>
               {data.destination} · {data.start_date} ~ {data.end_date}
             </p>
+            {data.accommodation_name ? (
+              <p className="section-subtitle" style={{ marginBottom: 0 }}>
+                숙소: {data.accommodation_name}
+                {data.accommodation_type ? `(${data.accommodation_type})` : ""}
+              </p>
+            ) : null}
           </div>
           <div className="landing-feature-icon-wrap">
             <GlobeIcon />

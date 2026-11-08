@@ -3,6 +3,7 @@ export const queryKeys = {
   trips: ["trips"] as const,
   trip: (tripId: string) => ["trip", tripId] as const,
   tripCommunity: (tripId: string) => ["trip", tripId, "community"] as const,
+  tripAccommodationOptions: (tripId: string) => ["trip", tripId, "accommodation-options"] as const,
   communityFeed: ["community-feed"] as const,
   weather: (destination: string) => ["weather", destination] as const,
   expenses: (tripId: string) => ["expenses", tripId] as const,

@@ -1,16 +1,7 @@
 import { apiClient } from "../../../shared/api/client";
 import { DayPlan, TripOverview } from "../../../shared/types/domain";
 import { TripDetailResponseDto } from "../types/trips";
-
-// 숙소 없이 저장된 여행(구버전 응답 포함)에서는 accommodation_name이
-// 없거나 null이다 - 그 경우 undefined를 돌려줘 호출부가 아무것도
-// 그리지 않게 한다(빈 카드/문구 없이 조용히 생략 - 과제 constraint).
-function formatAccommodationLabel(dto: TripDetailResponseDto): string | undefined {
-  if (!dto.accommodation_name) {
-    return undefined;
-  }
-  return dto.accommodation_type ? `${dto.accommodation_name}(${dto.accommodation_type})` : dto.accommodation_name;
-}
+import { formatAccommodationLabel } from "../utils/format-accommodation-label";
 
 function mapTripOverview(dto: TripDetailResponseDto): TripOverview {
   return {
@@ -22,6 +13,11 @@ function mapTripOverview(dto: TripDetailResponseDto): TripOverview {
     budgetLabel: `${dto.budget.toLocaleString()}원`,
     companionLabel: dto.companion_type,
     accommodationLabel: formatAccommodationLabel(dto),
+    // 숙소 변경 패널이 "현재 선택된 후보"를 이름 문자열이 아니라 id로
+    // 비교하기 위한 원본 값 - accommodationLabel은 표시용 포맷 문자열일
+    // 뿐이라 이걸로는 후보 목록의 어떤 항목이 지금 저장된 숙소인지
+    // 안정적으로 구분할 수 없다.
+    accommodationId: dto.accommodation_id ?? undefined,
   };
 }
 

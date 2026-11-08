@@ -131,12 +131,26 @@ type RuleClosedDayExclusion = {
   message: string;
 };
 
+// 경보 하나의 affected_place_names를 "그 장소가 놓인 슬롯마다 1개씩" 펼친
+// 항목 - see the backend's RuleWeatherAffectedItem (PR #115). place_id는
+// RuleSlotAlternative와 달리 항상 채워진다(경보가 가리키는 실제 장소라
+// 식별자가 늘 있음).
+type RuleWeatherAffectedItem = {
+  time_slot: TimeSlot;
+  place_id: string;
+  place_name: string;
+  swap_candidates: RuleSlotAlternative[];
+};
+
 type RuleWeatherAlert = {
   day_number: number;
   condition: "rain" | "snow";
   precipitation_mm: number;
   affected_place_names: string[];
   suggested_alternatives: string[];
+  // PR #115 - 구버전 응답(캐시 등)에는 없을 수 있어 옵셔널. 없거나 비어
+  // 있으면 WeatherBanner가 suggested_alternatives 배지 표시로 폴백한다.
+  affected_items?: RuleWeatherAffectedItem[];
 };
 
 // Field shape deliberately mirrors RuleItineraryItem (minus category,
@@ -734,6 +748,20 @@ function isRuleClosedDayExclusion(value: unknown): value is RuleClosedDayExclusi
   );
 }
 
+function isRuleWeatherAffectedItem(value: unknown): value is RuleWeatherAffectedItem {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const item = value as Record<string, unknown>;
+  return (
+    typeof item.time_slot === "string" &&
+    typeof item.place_id === "string" &&
+    typeof item.place_name === "string" &&
+    Array.isArray(item.swap_candidates)
+  );
+}
+
 function isRuleWeatherAlert(value: unknown): value is RuleWeatherAlert {
   if (!value || typeof value !== "object") {
     return false;
@@ -747,7 +775,8 @@ function isRuleWeatherAlert(value: unknown): value is RuleWeatherAlert {
     Array.isArray(alert.affected_place_names) &&
     alert.affected_place_names.every((name) => typeof name === "string") &&
     Array.isArray(alert.suggested_alternatives) &&
-    alert.suggested_alternatives.every((name) => typeof name === "string")
+    alert.suggested_alternatives.every((name) => typeof name === "string") &&
+    (alert.affected_items === undefined || alert.affected_items === null || Array.isArray(alert.affected_items))
   );
 }
 
@@ -1057,7 +1086,21 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     closed_day_exclusions: Array.isArray(data.closed_day_exclusions)
       ? data.closed_day_exclusions.filter(isRuleClosedDayExclusion)
       : [],
-    weather_alerts: Array.isArray(data.weather_alerts) ? data.weather_alerts.filter(isRuleWeatherAlert) : [],
+    weather_alerts: Array.isArray(data.weather_alerts)
+      ? data.weather_alerts.filter(isRuleWeatherAlert).map((alert) => ({
+          ...alert,
+          // 구버전 응답(필드 자체가 없음)은 빈 배열로 취급한다 - 과제
+          // constraint.
+          affected_items: Array.isArray(alert.affected_items)
+            ? alert.affected_items.filter(isRuleWeatherAffectedItem).map((item) => ({
+                ...item,
+                swap_candidates: Array.isArray(item.swap_candidates)
+                  ? item.swap_candidates.filter(isRuleSlotAlternative)
+                  : [],
+              }))
+            : [],
+        }))
+      : [],
     weather_status: Array.isArray(data.weather_status) ? data.weather_status.filter(isRuleDayWeatherStatus) : [],
     accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
       ? data.accommodation_recommendation
@@ -2219,6 +2262,22 @@ export function TripCreateForm() {
     setSlotSwaps((previous) => revertSlotSwap(previous, item));
   };
 
+  // 날씨 경보 배너용 - affected item은 RuleItineraryItem 전체가 아니라
+  // (day_number, time_slot)만 있으므로 applySlotSwap/revertSlotSwap이
+  // 실제로 쓰는 키 형태만 받는다. slotSwaps를 공유하므로 일반 "다른 추천"
+  // 패널(handleSelectAlternative/handleRevertAlternative)과 동일하게
+  // 동작한다.
+  const handleSelectWeatherAlternative = (
+    affectedItem: Pick<RuleItineraryItem, "day_number" | "time_slot">,
+    alternative: RuleSlotAlternative,
+  ) => {
+    setSlotSwaps((previous) => applySlotSwap(previous, affectedItem, alternative));
+  };
+
+  const handleRevertWeatherAlternative = (affectedItem: Pick<RuleItineraryItem, "day_number" | "time_slot">) => {
+    setSlotSwaps((previous) => revertSlotSwap(previous, affectedItem));
+  };
+
   const handleSelectAccommodationAlternative = (alternative: AccommodationAlternative) => {
     setAccommodationSwap(alternative);
   };
@@ -3052,7 +3111,33 @@ export function TripCreateForm() {
                   {result.weather_alerts
                     .filter((alert) => alert.day_number === dayNumber)
                     .map((alert) => (
-                      <WeatherBanner alert={alert} key={`weather-alert-${alert.day_number}-${alert.condition}`} />
+                      <WeatherBanner
+                        alert={alert}
+                        getActiveSwapPlaceId={(affectedItem) =>
+                          getActiveAlternativePlaceId(slotSwaps, {
+                            day_number: alert.day_number,
+                            time_slot: affectedItem.time_slot,
+                          })
+                        }
+                        isSwapNameUsedElsewhere={(affectedItem, candidateName) =>
+                          isAlternativeNameUsedElsewhere(
+                            result.items,
+                            slotSwaps,
+                            { day_number: alert.day_number, time_slot: affectedItem.time_slot },
+                            candidateName,
+                          )
+                        }
+                        key={`weather-alert-${alert.day_number}-${alert.condition}`}
+                        onRevertSwap={(affectedItem) =>
+                          handleRevertWeatherAlternative({ day_number: alert.day_number, time_slot: affectedItem.time_slot })
+                        }
+                        onSelectSwap={(affectedItem, candidate) =>
+                          handleSelectWeatherAlternative(
+                            { day_number: alert.day_number, time_slot: affectedItem.time_slot },
+                            candidate,
+                          )
+                        }
+                      />
                     ))}
                   <div className="tc-timeline">
                     {/* 첫 활동이 교체됐을 때의 "재계산 안 됨"은 아래 .map()의

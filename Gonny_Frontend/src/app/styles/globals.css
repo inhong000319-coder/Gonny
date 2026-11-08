@@ -743,6 +743,24 @@ select {
   padding-top: 4px;
 }
 
+.weather-banner-affected-list {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 14px;
+  padding-top: 4px;
+}
+
+.weather-banner-affected-row {
+  display: grid;
+  gap: 6px;
+}
+
+.weather-banner-affected-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2a3b63;
+}
+
 .auth-hero {
   display: grid;
   gap: 18px;

@@ -29,6 +29,8 @@ from app.domains.trips.schemas import (
     ExpenseSummaryData,
     ShareLinkCreateRequest,
     ShareLinkResponse,
+    TripAccommodationOption,
+    TripAccommodationUpdate,
     TripCategoryBreakdownItem,
     TripCreate,
     TripFavoriteUpdate,
@@ -327,20 +329,33 @@ def _build_trip_pdf_bytes(
     return buffer.getvalue()
 
 
+def _resolve_accommodation_snapshot(
+    destination: str, accommodation_id: str | None
+) -> tuple[str | None, str | None]:
+    """Looks up accommodation_id in destination's accommodation list and
+    returns the (name, accommodation_type) snapshot to store - shared by
+    TripService.create_trip and update_trip_accommodation so the lookup
+    and 422 behavior can never drift between the two. accommodation_id=None
+    short-circuits to (None, None), no lookup (destination need not even
+    have accommodation data in that case)."""
+    if accommodation_id is None:
+        return None, None
+
+    accommodations = load_city_accommodations(destination)
+    accommodation = next((a for a in accommodations if a.id == accommodation_id), None)
+    if accommodation is None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"알 수 없는 숙소 id입니다: {accommodation_id}",
+        )
+    return accommodation.name, accommodation.accommodation_type
+
+
 class TripService:
     def create_trip(self, *, db: Session, request: TripCreate) -> Trip:
-        accommodation_name = None
-        accommodation_type = None
-        if request.accommodation_id is not None:
-            accommodations = load_city_accommodations(request.destination)
-            accommodation = next((a for a in accommodations if a.id == request.accommodation_id), None)
-            if accommodation is None:
-                raise HTTPException(
-                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                    detail=f"알 수 없는 숙소 id입니다: {request.accommodation_id}",
-                )
-            accommodation_name = accommodation.name
-            accommodation_type = accommodation.accommodation_type
+        accommodation_name, accommodation_type = _resolve_accommodation_snapshot(
+            request.destination, request.accommodation_id
+        )
 
         db_trip = Trip(
             title=request.title or f"{request.destination} 여행",
@@ -386,6 +401,48 @@ class TripService:
                 )
 
         trip.is_favorite = payload.is_favorite
+        db.commit()
+        db.refresh(trip)
+        return trip
+
+    def list_accommodation_options(self, *, db: Session, trip_id: int) -> list[TripAccommodationOption]:
+        trip = self.get_trip_or_404(db=db, trip_id=trip_id)
+
+        accommodations = load_city_accommodations(trip.destination)
+        options = [
+            TripAccommodationOption(
+                id=accommodation.id,
+                name=accommodation.name,
+                accommodation_type=accommodation.accommodation_type,
+                area=accommodation.area,
+                average_price_krw=accommodation.average_price_krw,
+            )
+            for accommodation in accommodations
+        ]
+        # (type, area, name) - fixed, deterministic order; no "distance
+        # from reference point" or any other scoring, since this list has
+        # no itinerary/reference point of its own to score against (see
+        # accommodation_scoring.rank_accommodations for the ranking
+        # generation itself uses, which this endpoint deliberately
+        # doesn't reproduce).
+        options.sort(key=lambda option: (option.accommodation_type, option.area, option.name))
+        return options
+
+    def update_trip_accommodation(
+        self,
+        *,
+        db: Session,
+        trip_id: int,
+        payload: TripAccommodationUpdate,
+    ) -> Trip:
+        trip = self.get_trip_or_404(db=db, trip_id=trip_id)
+
+        accommodation_name, accommodation_type = _resolve_accommodation_snapshot(
+            trip.destination, payload.accommodation_id
+        )
+        trip.accommodation_id = payload.accommodation_id
+        trip.accommodation_name = accommodation_name
+        trip.accommodation_type = accommodation_type
         db.commit()
         db.refresh(trip)
         return trip

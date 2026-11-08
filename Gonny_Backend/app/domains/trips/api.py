@@ -12,6 +12,8 @@ from app.domains.trips.schemas import (
     ExpenseSummaryData,
     ShareLinkCreateRequest,
     ShareLinkResponse,
+    TripAccommodationOption,
+    TripAccommodationUpdate,
     TripCreate,
     TripDetailResponse,
     TripFavoriteUpdate,
@@ -65,6 +67,20 @@ def update_trip_favorite(
     db: Session = Depends(get_db),
 ):
     return trip_service.update_trip_favorite(db=db, trip_id=trip_id, payload=payload)
+
+
+@router.get("/{trip_id}/accommodation-options", response_model=list[TripAccommodationOption])
+def list_trip_accommodation_options(trip_id: int, db: Session = Depends(get_db)):
+    return trip_service.list_accommodation_options(db=db, trip_id=trip_id)
+
+
+@router.patch("/{trip_id}/accommodation", response_model=TripResponse)
+def update_trip_accommodation(
+    trip_id: int,
+    payload: TripAccommodationUpdate,
+    db: Session = Depends(get_db),
+):
+    return trip_service.update_trip_accommodation(db=db, trip_id=trip_id, payload=payload)
 
 
 @router.post("/{trip_id}/share", response_model=ShareLinkResponse)

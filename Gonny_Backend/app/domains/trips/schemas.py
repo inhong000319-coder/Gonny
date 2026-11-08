@@ -52,6 +52,37 @@ class TripFavoriteUpdate(BaseModel):
     is_favorite: bool
 
 
+# --- Accommodation change (after save) -----------------------------------
+# A saved trip never keeps the generation-time accommodation_alternatives
+# (those live only in RuleItineraryResponse, never persisted) - these two
+# endpoints are how a client re-picks or clears the accommodation after
+# the fact. See TripService.list_accommodation_options /
+# update_trip_accommodation.
+
+
+class TripAccommodationOption(BaseModel):
+    """One candidate for PATCH /trips/{id}/accommodation's accommodation_id
+    - deliberately narrower than AccommodationData (no coordinates/
+    amenities/etc.), since this is a picker list, not the full catalog
+    record."""
+
+    id: str
+    name: str
+    accommodation_type: str
+    area: str
+    average_price_krw: int | None = None
+
+
+class TripAccommodationUpdate(BaseModel):
+    # No default - the body must always say explicitly either an id or
+    # null, mirroring the endpoint's own contract
+    # ({"accommodation_id": string | null}). null clears all three
+    # snapshot columns; the client can never send name/type directly
+    # (no such fields on this schema - same reasoning as TripCreate's
+    # accommodation_id).
+    accommodation_id: str | None
+
+
 class ShareLinkCreateRequest(BaseModel):
     expires_in: Literal["1d", "7d", "unlimited"] = "7d"
 

@@ -253,12 +253,41 @@ class RuleClosedDayExclusion(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleWeatherAffectedItem(BaseModel):
+    """One (day, slot) pinned to one of this alert's affected_place_names -
+    see services/weather_alerts.py. One entry per slot the place occupies
+    (a full-day place occupies all 3 slots, so it gets 3 entries, each
+    with an empty swap_candidates - a full-day item can't be partially
+    swapped, see RuleItineraryRecalculateRequest's full-day validation
+    rule). swap_candidates uses the exact RuleItineraryRecalculateRequest.
+    fixed_slots shape already does (day_number/time_slot/place_id), so the
+    frontend can point POST /rule-itinerary/recalculate's fixed_slots at
+    swap_candidates[i].place_id for this item's (day_number, time_slot)
+    directly - no separate lookup."""
+
+    time_slot: TimeSlot
+    place_id: str
+    place_name: str
+    # Up to 3 indoor candidates for this slot, same ranking rule as
+    # items[].alternatives (RuleSlotAlternative) with an added "indoor"
+    # filter - see services.slot_alternatives.rank_slot_candidates. Empty
+    # for a full-day item, or when nothing indoor fits this slot.
+    swap_candidates: list[RuleSlotAlternative] = Field(default_factory=list)
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleWeatherAlert(BaseModel):
     day_number: int
     condition: Literal["rain", "snow"]
     precipitation_mm: float
     affected_place_names: list[str]
     suggested_alternatives: list[str] = Field(default_factory=list)
+    # Additive, backward compatible - only populated when the response was
+    # built with include_alternatives=True (same gate items[].alternatives
+    # and accommodation_alternatives use); [] in every other case,
+    # including every response built before this field existed.
+    affected_items: list[RuleWeatherAffectedItem] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

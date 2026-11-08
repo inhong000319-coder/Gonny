@@ -9,19 +9,24 @@ closed_day_exclusions.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import date, datetime, timedelta
-from typing import Literal
+from typing import Callable, Literal
 from zoneinfo import ZoneInfo
 
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
 from app.domains.rule_planner.schemas import (
     NormalizedRuleRequest,
     RuleDayWeatherStatus,
+    RuleSlotAlternative,
+    RuleWeatherAffectedItem,
     RuleWeatherAlert,
 )
 from app.services.external_clients import OpenWeatherClient
 
-from .constants import PLACE_NAME_KO
+from .community_feedback import PlaceFeedbackSignal
+from .constants import PLACE_NAME_KO, TIME_SLOTS
+from .slot_alternatives import neighbors_in_slot_sequence, rank_slot_candidates
 
 # OpenWeatherMap's `q` query param, for the only cities the rule_planner
 # actually serves (DestinationCatalogRepository.VISIBLE_CITY_CODES). Any
@@ -119,6 +124,28 @@ def _suggest_indoor_alternatives(
     return [_localize_place_name(place) for place in ranked[:MAX_ALTERNATIVES_PER_PLACE]]
 
 
+@dataclass(frozen=True)
+class WeatherSwapContext:
+    """Everything RuleWeatherAffectedItem.swap_candidates needs beyond
+    what build_weather_report already takes - the same per-trip context
+    compute_item_alternatives uses (see RuleItineraryService._assemble_
+    response), bundled so build_weather_report/_build_weather_report/
+    _build_alerts_from_forecast don't have to thread 8 separate kwargs
+    through 3 call layers. Passing None (every pre-existing caller,
+    including every test in test_weather_alerts.py/test_weather_status.py)
+    means "don't compute affected_items" - see _build_alerts_from_forecast.
+    """
+
+    day_slot_places: dict[int, dict[str, PlaceData]]
+    day_areas: dict[int, str | None]
+    feedback_signals: dict[str, PlaceFeedbackSignal] | None
+    day_weekdays: dict[int, int | None]
+    localize_place_name: Callable[[PlaceData], str]
+    localize_area: Callable[[str], str]
+    resolve_item_category: Callable[[PlaceData, NormalizedRuleRequest], str]
+    build_note: Callable[..., str]
+
+
 def build_weather_alerts(
     *,
     request: NormalizedRuleRequest,
@@ -127,7 +154,8 @@ def build_weather_alerts(
     weather_client: OpenWeatherClient,
 ) -> list[RuleWeatherAlert]:
     """Thin wrapper kept for existing callers/tests - see
-    build_weather_report() for the full (alerts, statuses) contract."""
+    build_weather_report() for the full (alerts, statuses) contract.
+    affected_items is always [] through this wrapper (no WeatherSwapContext)."""
     alerts, _statuses = build_weather_report(
         request=request,
         day_place_map=day_place_map,
@@ -144,6 +172,7 @@ def build_weather_report(
     city_catalog: CityPlaceCatalog,
     weather_client: OpenWeatherClient,
     today: date | None = None,
+    swap_context: WeatherSwapContext | None = None,
 ) -> tuple[list[RuleWeatherAlert], list[RuleDayWeatherStatus]]:
     """Best-effort, never raises - any failure (unmapped city, no API
     key, network error, unexpected client bug) degrades to an empty
@@ -162,6 +191,7 @@ def build_weather_report(
             city_catalog=city_catalog,
             weather_client=weather_client,
             today=today,
+            swap_context=swap_context,
         )
     except Exception:
         if request.start_date is None:
@@ -194,6 +224,7 @@ def _build_weather_report(
     city_catalog: CityPlaceCatalog,
     weather_client: OpenWeatherClient,
     today: date | None,
+    swap_context: WeatherSwapContext | None = None,
 ) -> tuple[list[RuleWeatherAlert], list[RuleDayWeatherStatus]]:
     if request.start_date is None:
         statuses = [
@@ -240,6 +271,7 @@ def _build_weather_report(
         day_place_map=day_place_map,
         city_catalog=city_catalog,
         forecast_by_date=forecast_by_date,
+        swap_context=swap_context,
     )
     return alerts, statuses
 
@@ -250,9 +282,22 @@ def _build_alerts_from_forecast(
     day_place_map: dict[int, list[PlaceData]],
     city_catalog: CityPlaceCatalog,
     forecast_by_date: dict[date, dict],
+    swap_context: WeatherSwapContext | None = None,
 ) -> list[RuleWeatherAlert]:
     if not day_place_map or not forecast_by_date:
         return []
+
+    # swap_context가 있을 때만 쓰는 전역(이 날씨 보고서 전체 공통) 컨텍스트 -
+    # compute_item_alternatives와 완전히 같은 "활성·비식당" 전체 풀, 같은
+    # "트립 전체에서 이미 쓰인 장소" 집합. 매 (날짜, 장소) 쌍마다 다시
+    # 계산하지 않고 한 번만 만든다.
+    all_used_ids: set[str] | None = None
+    scored_places_by_id: dict[str, PlaceData] | None = None
+    if swap_context is not None:
+        all_used_ids = {place.id for places in day_place_map.values() for place in places}
+        scored_places_by_id = {
+            place.id: place for place in city_catalog.places if place.is_active and "food" not in place.concept_tags
+        }
 
     alerts: list[RuleWeatherAlert] = []
     for day_number, places in sorted(day_place_map.items()):
@@ -282,6 +327,19 @@ def _build_alerts_from_forecast(
                 if suggestion not in suggested_alternatives:
                     suggested_alternatives.append(suggestion)
 
+        affected_items = (
+            _build_affected_items(
+                day_number=day_number,
+                affected=affected,
+                request=request,
+                swap_context=swap_context,
+                all_used_ids=all_used_ids,
+                scored_places_by_id=scored_places_by_id,
+            )
+            if swap_context is not None
+            else []
+        )
+
         alerts.append(
             RuleWeatherAlert(
                 day_number=day_number,
@@ -289,7 +347,71 @@ def _build_alerts_from_forecast(
                 precipitation_mm=precipitation_mm,
                 affected_place_names=[_localize_place_name(place) for place in affected],
                 suggested_alternatives=suggested_alternatives,
+                affected_items=affected_items,
             )
         )
 
     return alerts
+
+
+def _build_affected_items(
+    *,
+    day_number: int,
+    affected: list[PlaceData],
+    request: NormalizedRuleRequest,
+    swap_context: WeatherSwapContext,
+    all_used_ids: set[str],
+    scored_places_by_id: dict[str, PlaceData],
+) -> list[RuleWeatherAffectedItem]:
+    """One RuleWeatherAffectedItem per (slot this affected place occupies
+    that day) - a full-day place occupies all 3 TIME_SLOTS (see
+    RuleItineraryService._build_items' full-day branch: day_slot_places[d]
+    maps every slot to the same PlaceData), so it gets 3 entries, each
+    with swap_candidates=[] (a full-day item can't be partially swapped -
+    see RuleItineraryRecalculateRequest's full-day validation rule in
+    services/recalculate.py)."""
+    slot_places_for_day = swap_context.day_slot_places.get(day_number, {})
+    is_full_day = len(slot_places_for_day) == len(TIME_SLOTS) and len(
+        {place.id for place in slot_places_for_day.values()}
+    ) == 1
+    day_weekday = swap_context.day_weekdays.get(day_number)
+    preferred_area = swap_context.day_areas.get(day_number)
+
+    items: list[RuleWeatherAffectedItem] = []
+    for affected_place in affected:
+        matching_slots = [
+            slot
+            for slot in TIME_SLOTS
+            if slot_places_for_day.get(slot) is not None and slot_places_for_day[slot].id == affected_place.id
+        ]
+        for slot in matching_slots:
+            if is_full_day:
+                swap_candidates: list[RuleSlotAlternative] = []
+            else:
+                previous_place, next_place = neighbors_in_slot_sequence(slot_places_for_day, slot)
+                swap_candidates = rank_slot_candidates(
+                    scored_places_by_id=scored_places_by_id,
+                    exclude_ids=all_used_ids,
+                    request=request,
+                    time_slot=slot,
+                    day_number=day_number,
+                    day_weekday=day_weekday,
+                    preferred_area=preferred_area,
+                    previous_place=previous_place,
+                    next_place=next_place,
+                    feedback_signals=swap_context.feedback_signals,
+                    localize_place_name=swap_context.localize_place_name,
+                    localize_area=swap_context.localize_area,
+                    resolve_item_category=swap_context.resolve_item_category,
+                    build_note=swap_context.build_note,
+                    extra_predicate=lambda place: place.setting == "indoor",
+                )
+            items.append(
+                RuleWeatherAffectedItem(
+                    time_slot=slot,
+                    place_id=affected_place.id,
+                    place_name=swap_context.localize_place_name(affected_place),
+                    swap_candidates=swap_candidates,
+                )
+            )
+    return items

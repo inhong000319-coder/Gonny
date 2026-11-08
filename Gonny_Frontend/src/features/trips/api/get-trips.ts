@@ -1,6 +1,7 @@
 import { apiClient } from "../../../shared/api/client";
 import { TripSummaryItem } from "../../../shared/types/domain";
 import { TripsListItemDto } from "../types/trips";
+import { formatAccommodationLabel } from "../utils/format-accommodation-label";
 
 function resolveStatus(startDate: string, endDate: string): TripSummaryItem["status"] {
   const today = new Date().toISOString().slice(0, 10);
@@ -24,6 +25,7 @@ function mapTripSummary(dto: TripsListItemDto): TripSummaryItem {
     budget: dto.budget,
     companionCount: dto.companion_type === "family" ? 4 : dto.companion_type === "friend" ? 2 : 1,
     isFavorite: dto.is_favorite ?? false,
+    accommodationLabel: formatAccommodationLabel(dto),
   };
 }
 

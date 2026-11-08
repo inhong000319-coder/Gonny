@@ -16,6 +16,17 @@ export type TripsListItemDto = {
   accommodation_type?: string | null;
 };
 
+// GET /trips/{id}/accommodation-options 항목 (PR #113) - 좌표·편의시설
+// 등은 없음(선택 목록용으로 일부러 좁힌 응답). 정렬은 서버가
+// (accommodation_type, area, name) 순으로 고정해서 보낸다.
+export type TripAccommodationOptionDto = {
+  id: string;
+  name: string;
+  accommodation_type: string;
+  area: string;
+  average_price_krw: number | null;
+};
+
 export type TripDetailItemDto = {
   id: number;
   trip_id: number;

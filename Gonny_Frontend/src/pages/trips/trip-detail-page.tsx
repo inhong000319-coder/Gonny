@@ -16,6 +16,7 @@ import { ReportInsights } from "../../features/report/components/report-insights
 import { ReportSummary } from "../../features/report/components/report-summary";
 import { useTripReportQuery } from "../../features/report/hooks/use-trip-report-query";
 import { ShareLinkModal } from "../../features/share/components/share-link-modal";
+import { AccommodationChangePanel } from "../../features/trips/components/accommodation-change-panel";
 import { TripHeader } from "../../features/trips/components/trip-header";
 import { TripSummary } from "../../features/trips/components/trip-summary";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
@@ -193,6 +194,11 @@ export function TripDetailPage() {
           />
         </div>
         <div className="stack">
+          <AccommodationChangePanel
+            currentAccommodationId={tripDetail.overview.accommodationId}
+            currentAccommodationLabel={tripDetail.overview.accommodationLabel}
+            tripId={tripId}
+          />
           <BudgetSummaryCard budget={budget} />
           <ExpenseList expenses={expenses} />
           <AddExpenseForm tripId={tripId} />

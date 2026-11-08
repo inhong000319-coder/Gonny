@@ -13,6 +13,7 @@ export function TripCard({ trip, pending = false, onToggleFavorite }: TripCardPr
       <div className="trip-card-copy">
         <div className="trip-card-title-row"><div><span className="trip-card-destination">{trip.destination}</span><h3>{trip.title}</h3></div><Badge>{statusLabelMap[trip.status]}</Badge></div>
         <p className="trip-card-date">{trip.startDate} - {trip.endDate}</p>
+        {trip.accommodationLabel ? <p className="trip-card-date">숙소 {trip.accommodationLabel}</p> : null}
         <div className="trip-card-meta"><span>예산 {trip.budget.toLocaleString()}원</span><span>동행 {trip.companionCount}명</span></div>
         <div className="trip-card-actions">
           <Link className="text-link" to={`/trips/${trip.id}`}>일정 보기</Link>

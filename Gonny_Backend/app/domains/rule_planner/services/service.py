@@ -77,7 +77,7 @@ from .travel_estimate import (
     estimate_travel_minutes_between,
     haversine_distance_km,
 )
-from .weather_alerts import build_weather_report
+from .weather_alerts import WeatherSwapContext, build_weather_report
 
 # How much higher a next-place-aware refinement candidate's score must be
 # than the currently-placed item's before _refine_day_with_next_place_lookahead
@@ -253,7 +253,31 @@ class RuleItineraryService:
             day_place_map_with_meals, accommodation_recommendation, request=normalized
         )
         if include_weather:
-            weather_alerts, weather_status = self._build_weather_report(normalized, day_place_map, city_catalog)
+            # affected_items (indoor swap candidates) is only ever worth
+            # computing when the response also carries items[].alternatives
+            # - same gate include_alternatives already applies there and
+            # to accommodation_alternatives. day_weekdays only exists in
+            # this scope when include_alternatives is True (see above) -
+            # the ternary's False branch never evaluates the True branch,
+            # so referencing it here is safe even when include_alternatives
+            # is False.
+            swap_context = (
+                WeatherSwapContext(
+                    day_slot_places=day_slot_places,
+                    day_areas=day_areas,
+                    feedback_signals=feedback_signals,
+                    day_weekdays=day_weekdays,
+                    localize_place_name=self._localize_place_name,
+                    localize_area=self._localize_area,
+                    resolve_item_category=self._resolve_item_category,
+                    build_note=self._build_note,
+                )
+                if include_alternatives
+                else None
+            )
+            weather_alerts, weather_status = self._build_weather_report(
+                normalized, day_place_map, city_catalog, swap_context=swap_context
+            )
         else:
             weather_alerts, weather_status = [], []
         day_travel = self._build_day_travel(
@@ -760,12 +784,15 @@ class RuleItineraryService:
         request: NormalizedRuleRequest,
         day_place_map: dict[int, list[PlaceData]],
         city_catalog: CityPlaceCatalog,
+        *,
+        swap_context: WeatherSwapContext | None = None,
     ) -> tuple[list[RuleWeatherAlert], list[RuleDayWeatherStatus]]:
         return build_weather_report(
             request=request,
             day_place_map=day_place_map,
             city_catalog=city_catalog,
             weather_client=self.weather_client,
+            swap_context=swap_context,
         )
 
     def _recommend_accommodation(

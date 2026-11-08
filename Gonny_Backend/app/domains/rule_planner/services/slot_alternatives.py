@@ -55,6 +55,94 @@ def _slot_sequence(day_slot_places: dict[str, PlaceData]) -> list[tuple[str, Pla
     return [(slot, day_slot_places[slot]) for slot in TIME_SLOTS if slot in day_slot_places]
 
 
+def neighbors_in_slot_sequence(
+    day_slot_places: dict[str, PlaceData], time_slot: str
+) -> tuple[PlaceData | None, PlaceData | None]:
+    """(previous_place, next_place) for time_slot within that day's actual
+    slot sequence (TIME_SLOTS order, only slots that exist) - shared by
+    compute_item_alternatives and weather_alerts.py's swap-candidate
+    ranking so both score a slot against the same real neighbors."""
+    sequence = _slot_sequence(day_slot_places)
+    index = next(i for i, (slot, _) in enumerate(sequence) if slot == time_slot)
+    previous_place = sequence[index - 1][1] if index > 0 else None
+    next_place = sequence[index + 1][1] if index + 1 < len(sequence) else None
+    return previous_place, next_place
+
+
+def rank_slot_candidates(
+    *,
+    scored_places_by_id: dict[str, PlaceData],
+    exclude_ids: set[str],
+    request: NormalizedRuleRequest,
+    time_slot: str,
+    day_number: int,
+    day_weekday: int | None,
+    preferred_area: str | None,
+    previous_place: PlaceData | None,
+    next_place: PlaceData | None,
+    feedback_signals: dict[str, PlaceFeedbackSignal] | None,
+    localize_place_name: Callable[[PlaceData], str],
+    localize_area: Callable[[str], str],
+    resolve_item_category: Callable[[PlaceData, NormalizedRuleRequest], str],
+    build_note: Callable[..., str],
+    extra_predicate: Callable[[PlaceData], bool] | None = None,
+    limit: int = MAX_ALTERNATIVES,
+) -> list[RuleSlotAlternative]:
+    """Candidate selection + slot_score ranking, factored out of
+    compute_item_alternatives so weather_alerts.py's indoor swap
+    candidates can reuse the exact same rule (plus an extra_predicate,
+    e.g. setting == "indoor") instead of a second, separately-maintained
+    copy. extra_predicate=None (compute_item_alternatives' own call)
+    reproduces the original candidate rule exactly - see
+    local_only/reports/weather_alert_swap_backend.md for the invariance
+    check this depends on."""
+    candidates = [
+        place
+        for place_id, place in scored_places_by_id.items()
+        if place_id not in exclude_ids
+        and time_slot in place.time_fit
+        and _is_open_on_day(place, day_weekday)
+        and (extra_predicate is None or extra_predicate(place))
+    ]
+    candidates = _filter_phase_candidates(places=candidates, request=request, day_number=day_number)
+
+    ranked = sorted(
+        candidates,
+        key=lambda place: (
+            -slot_score(
+                place=place,
+                request=request,
+                time_slot=time_slot,
+                day_number=day_number,
+                preferred_area=preferred_area,
+                previous_place=previous_place,
+                next_place=next_place,
+                community_signal=(feedback_signals or {}).get(place.id),
+            ),
+            place.id,
+        ),
+    )
+
+    return [
+        RuleSlotAlternative(
+            place_id=place.id,
+            place_name=localize_place_name(place),
+            category=resolve_item_category(place, request),
+            area=localize_area(place.area),
+            notes=build_note(
+                place=place,
+                request=request,
+                time_slot=time_slot,
+                day_number=day_number,
+                day_area=preferred_area,
+                previous_place=previous_place,
+            ),
+            average_cost_krw=place.average_cost_krw,
+        )
+        for place in ranked[:limit]
+    ]
+
+
 def compute_item_alternatives(
     *,
     items: list[RuleItineraryItem],
@@ -100,60 +188,25 @@ def compute_item_alternatives(
             new_items.append(item)
             continue
 
-        sequence = _slot_sequence(slot_places)
-        index = next(i for i, (slot, _) in enumerate(sequence) if slot == item.time_slot)
-        previous_place = sequence[index - 1][1] if index > 0 else None
-        next_place = sequence[index + 1][1] if index + 1 < len(sequence) else None
-
-        day_weekday = day_weekdays.get(item.day_number)
-        preferred_area = day_areas.get(item.day_number)
-
         # all_used_ids already includes this slot's own chosen place, so
         # excluding it also satisfies "현재 선택 장소 제외" for free.
-        candidates = [
-            place
-            for place_id, place in scored_places_by_id.items()
-            if place_id not in all_used_ids
-            and item.time_slot in place.time_fit
-            and _is_open_on_day(place, day_weekday)
-        ]
-        candidates = _filter_phase_candidates(places=candidates, request=request, day_number=item.day_number)
-
-        ranked = sorted(
-            candidates,
-            key=lambda place: (
-                -slot_score(
-                    place=place,
-                    request=request,
-                    time_slot=item.time_slot,
-                    day_number=item.day_number,
-                    preferred_area=preferred_area,
-                    previous_place=previous_place,
-                    next_place=next_place,
-                    community_signal=(feedback_signals or {}).get(place.id),
-                ),
-                place.id,
-            ),
+        previous_place, next_place = neighbors_in_slot_sequence(slot_places, item.time_slot)
+        alternatives = rank_slot_candidates(
+            scored_places_by_id=scored_places_by_id,
+            exclude_ids=all_used_ids,
+            request=request,
+            time_slot=item.time_slot,
+            day_number=item.day_number,
+            day_weekday=day_weekdays.get(item.day_number),
+            preferred_area=day_areas.get(item.day_number),
+            previous_place=previous_place,
+            next_place=next_place,
+            feedback_signals=feedback_signals,
+            localize_place_name=localize_place_name,
+            localize_area=localize_area,
+            resolve_item_category=resolve_item_category,
+            build_note=build_note,
         )
-
-        alternatives = [
-            RuleSlotAlternative(
-                place_id=place.id,
-                place_name=localize_place_name(place),
-                category=resolve_item_category(place, request),
-                area=localize_area(place.area),
-                notes=build_note(
-                    place=place,
-                    request=request,
-                    time_slot=item.time_slot,
-                    day_number=item.day_number,
-                    day_area=preferred_area,
-                    previous_place=previous_place,
-                ),
-                average_cost_krw=place.average_cost_krw,
-            )
-            for place in ranked[:MAX_ALTERNATIVES]
-        ]
         new_items.append(item.model_copy(update={"alternatives": alternatives}))
 
     return new_items

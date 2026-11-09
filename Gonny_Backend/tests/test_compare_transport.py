@@ -58,6 +58,7 @@ def build_meal(**overrides) -> RuleMealRecommendation:
     data = {
         "day_number": 1,
         "meal_type": "lunch",
+        "place_id": "food-a",
         "place_name": "Food A",
         "area": "gangnam",
         "notes": "note",

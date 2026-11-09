@@ -26,6 +26,7 @@ from app.domains.rule_planner.schemas import (
     RuleItineraryResponse,
     RuleMealRecommendation,
     RuleReason,
+    RuleSlotAlternative,
     RuleTransportComparisonResponse,
     RuleTravelLeg,
     RuleWeatherAlert,
@@ -58,9 +59,9 @@ from .constants import (
 from .note_generator import RuleNoteContext, build_rule_note_generator
 from .policies.city import preferred_area_order
 from .reasons import build_activity_reason_candidates, build_meal_reason_candidates, select_day_reasons
-from .recalculate import build_fixed_slots_lookup
+from .recalculate import build_fixed_meals_lookup, build_fixed_slots_lookup
 from .request_normalizer import normalize_budget, normalize_duration, normalize_rule_request
-from .slot_alternatives import compute_item_alternatives
+from .slot_alternatives import MAX_ALTERNATIVES, compute_item_alternatives
 from .slot_scoring import (
     base_score,
     day_phase,
@@ -180,6 +181,12 @@ class RuleItineraryService:
                     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     detail=f"알 수 없는 숙소 id입니다: {request.accommodation_id}",
                 )
+        fixed_meals = build_fixed_meals_lookup(
+            fixed_meals=request.fixed_meals,
+            request=normalized,
+            city_catalog=city_catalog,
+            fixed_slots_lookup=fixed_slots,
+        )
         items, day_place_map, closed_day_exclusions, day_slot_places, feedback_signals, day_areas = self._build_items(
             normalized, city_catalog, fixed_slots=fixed_slots
         )
@@ -195,6 +202,7 @@ class RuleItineraryService:
             include_weather=True,
             include_alternatives=True,
             fixed_accommodation_id=request.accommodation_id,
+            fixed_meals=fixed_meals,
         )
 
     def _assemble_response(
@@ -211,15 +219,17 @@ class RuleItineraryService:
         include_weather: bool,
         include_alternatives: bool,
         fixed_accommodation_id: str | None = None,
+        fixed_meals: dict[tuple[int, str], PlaceData] | None = None,
     ) -> RuleItineraryResponse:
         """Everything generate() and recalculate() both do once item
         selection (greedy or fixed-slot replay) is finished - moved out of
         generate() verbatim so recalculate() can reuse the exact same
         downstream pipeline rather than a second, separately-maintained
-        copy of it. fixed_accommodation_id is recalculate()'s only extra
-        input; None (generate()'s only caller) reproduces generate()'s
-        original behavior exactly - see _recommend_accommodation/
-        _recommend_accommodation_alternatives."""
+        copy of it. fixed_accommodation_id/fixed_meals are recalculate()'s
+        only extra input; None (generate()'s only caller for both)
+        reproduces generate()'s original behavior exactly - see
+        _recommend_accommodation/_recommend_accommodation_alternatives and
+        _recommend_meals's own fixed_meals parameter."""
         if include_alternatives:
             day_weekdays = {day_number: self._day_weekday(normalized, day_number) for day_number in day_slot_places}
             items = compute_item_alternatives(
@@ -247,7 +257,14 @@ class RuleItineraryService:
             else []
         )
         meal_recommendations, day_place_map_with_meals, day_sequence_with_kind, day_meal_places = (
-            self._recommend_meals(normalized, city_catalog, day_place_map, day_slot_places)
+            self._recommend_meals(
+                normalized,
+                city_catalog,
+                day_place_map,
+                day_slot_places,
+                include_alternatives=include_alternatives,
+                fixed_meals=fixed_meals,
+            )
         )
         day_duration_warnings = self._build_day_duration_warnings(
             day_place_map_with_meals, accommodation_recommendation, request=normalized
@@ -919,6 +936,17 @@ class RuleItineraryService:
         city_catalog: CityPlaceCatalog,
         day_place_map: dict[int, list[PlaceData]],
         day_slot_places: dict[int, dict[str, PlaceData]],
+        *,
+        include_alternatives: bool = True,
+        # POST /rule-itinerary/recalculate's optional, partial restaurant
+        # pinning - see services/recalculate.build_fixed_meals_lookup and
+        # RuleFixedMealSlot. None/empty (generate()'s own call) reproduces
+        # the original behavior exactly: every meal is picked the normal
+        # way via _pick_meal_place. A (day_number, meal_type) present here
+        # skips that pick entirely and uses the given PlaceData directly -
+        # same "accept the caller's placement as given" spirit as
+        # _build_items's fixed_slots parameter.
+        fixed_meals: dict[tuple[int, str], PlaceData] | None = None,
     ) -> tuple[
         list[RuleMealRecommendation],
         dict[int, list[PlaceData]],
@@ -963,8 +991,14 @@ class RuleItineraryService:
         # Restaurants must never repeat across days/meals within the same
         # trip, and must never collide with an already-placed activity
         # place - seed this from every activity place already in the
-        # itinerary, then grow it as meals get picked below.
+        # itinerary, then grow it as meals get picked below. Every
+        # fixed_meals restaurant is reserved here too, *before* any meal
+        # (fixed or freely picked, in any day) is actually processed below
+        # - a day 1 dinner picked before day 2's fixed breakfast is
+        # iterated must still never collide with it.
         used_ids: set[str] = {place.id for places in day_place_map.values() for place in places}
+        if fixed_meals:
+            used_ids |= {place.id for place in fixed_meals.values()}
 
         meal_recommendations: list[RuleMealRecommendation] = []
         day_place_map_with_meals: dict[int, list[PlaceData]] = {}
@@ -998,19 +1032,40 @@ class RuleItineraryService:
 
             breakfast_place = None
             if request.include_breakfast and slot_rules.breakfast_allowed:
-                breakfast_place = self._pick_meal_place(
-                    previous_place=None,
-                    next_place=self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["breakfast"]),
-                    day_area=day_area,
-                    city=request.city,
-                    scored_places=scored_places,
-                    request=request,
-                    used_ids=used_ids,
-                    day_number=day_number,
-                    day_weekday=day_weekday,
-                    extra_filter=is_breakfast_candidate,
+                breakfast_next = self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["breakfast"])
+                fixed_breakfast = fixed_meals.get((day_number, "breakfast")) if fixed_meals else None
+                breakfast_place = (
+                    fixed_breakfast
+                    if fixed_breakfast is not None
+                    else self._pick_meal_place(
+                        previous_place=None,
+                        next_place=breakfast_next,
+                        day_area=day_area,
+                        city=request.city,
+                        scored_places=scored_places,
+                        request=request,
+                        used_ids=used_ids,
+                        day_number=day_number,
+                        day_weekday=day_weekday,
+                        extra_filter=is_breakfast_candidate,
+                    )
                 )
                 if breakfast_place is not None:
+                    breakfast_alternatives: list[PlaceData] = []
+                    if include_alternatives:
+                        breakfast_alternatives = self._meal_alternatives_for(
+                            selected=breakfast_place,
+                            previous_place=None,
+                            next_place=breakfast_next,
+                            day_area=day_area,
+                            city=request.city,
+                            scored_places=scored_places,
+                            request=request,
+                            used_ids=used_ids,
+                            day_number=day_number,
+                            day_weekday=day_weekday,
+                            extra_filter=is_breakfast_candidate,
+                        )
                     used_ids.add(breakfast_place.id)
                     meal_recommendations.append(
                         self._build_meal_recommendation(
@@ -1020,24 +1075,45 @@ class RuleItineraryService:
                             day_number=day_number,
                             day_area=day_area,
                             previous_place=None,
+                            alternatives=breakfast_alternatives,
                         )
                     )
 
             lunch_place = None
             if slot_rules.lunch_allowed:
                 lunch_previous = self._nearest_activity_before(slot_map, self._MEAL_BOUNDARY_INDEX["lunch"])
-                lunch_place = self._pick_meal_place(
-                    previous_place=lunch_previous,
-                    next_place=self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["lunch"]),
-                    day_area=day_area,
-                    city=request.city,
-                    scored_places=scored_places,
-                    request=request,
-                    used_ids=used_ids,
-                    day_number=day_number,
-                    day_weekday=day_weekday,
+                lunch_next = self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["lunch"])
+                fixed_lunch = fixed_meals.get((day_number, "lunch")) if fixed_meals else None
+                lunch_place = (
+                    fixed_lunch
+                    if fixed_lunch is not None
+                    else self._pick_meal_place(
+                        previous_place=lunch_previous,
+                        next_place=lunch_next,
+                        day_area=day_area,
+                        city=request.city,
+                        scored_places=scored_places,
+                        request=request,
+                        used_ids=used_ids,
+                        day_number=day_number,
+                        day_weekday=day_weekday,
+                    )
                 )
                 if lunch_place is not None:
+                    lunch_alternatives: list[PlaceData] = []
+                    if include_alternatives:
+                        lunch_alternatives = self._meal_alternatives_for(
+                            selected=lunch_place,
+                            previous_place=lunch_previous,
+                            next_place=lunch_next,
+                            day_area=day_area,
+                            city=request.city,
+                            scored_places=scored_places,
+                            request=request,
+                            used_ids=used_ids,
+                            day_number=day_number,
+                            day_weekday=day_weekday,
+                        )
                     used_ids.add(lunch_place.id)
                     meal_recommendations.append(
                         self._build_meal_recommendation(
@@ -1047,24 +1123,45 @@ class RuleItineraryService:
                             day_number=day_number,
                             day_area=day_area,
                             previous_place=lunch_previous,
+                            alternatives=lunch_alternatives,
                         )
                     )
 
             dinner_place = None
             if slot_rules.dinner_allowed:
                 dinner_previous = self._nearest_activity_before(slot_map, self._MEAL_BOUNDARY_INDEX["dinner"])
-                dinner_place = self._pick_meal_place(
-                    previous_place=dinner_previous,
-                    next_place=self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["dinner"]),
-                    day_area=day_area,
-                    city=request.city,
-                    scored_places=scored_places,
-                    request=request,
-                    used_ids=used_ids,
-                    day_number=day_number,
-                    day_weekday=day_weekday,
+                dinner_next = self._nearest_activity_after(slot_map, self._MEAL_BOUNDARY_INDEX["dinner"])
+                fixed_dinner = fixed_meals.get((day_number, "dinner")) if fixed_meals else None
+                dinner_place = (
+                    fixed_dinner
+                    if fixed_dinner is not None
+                    else self._pick_meal_place(
+                        previous_place=dinner_previous,
+                        next_place=dinner_next,
+                        day_area=day_area,
+                        city=request.city,
+                        scored_places=scored_places,
+                        request=request,
+                        used_ids=used_ids,
+                        day_number=day_number,
+                        day_weekday=day_weekday,
+                    )
                 )
                 if dinner_place is not None:
+                    dinner_alternatives: list[PlaceData] = []
+                    if include_alternatives:
+                        dinner_alternatives = self._meal_alternatives_for(
+                            selected=dinner_place,
+                            previous_place=dinner_previous,
+                            next_place=dinner_next,
+                            day_area=day_area,
+                            city=request.city,
+                            scored_places=scored_places,
+                            request=request,
+                            used_ids=used_ids,
+                            day_number=day_number,
+                            day_weekday=day_weekday,
+                        )
                     used_ids.add(dinner_place.id)
                     meal_recommendations.append(
                         self._build_meal_recommendation(
@@ -1074,6 +1171,7 @@ class RuleItineraryService:
                             day_number=day_number,
                             day_area=day_area,
                             previous_place=dinner_previous,
+                            alternatives=dinner_alternatives,
                         )
                     )
 
@@ -1327,6 +1425,68 @@ class RuleItineraryService:
             seen_exclusion_keys=None,
         )
 
+    def _meal_alternatives_for(
+        self,
+        *,
+        selected: PlaceData,
+        previous_place: PlaceData | None,
+        next_place: PlaceData | None,
+        day_area: str | None,
+        city: str,
+        scored_places: list[PlaceData],
+        request: NormalizedRuleRequest,
+        used_ids: set[str],
+        day_number: int,
+        day_weekday: int | None,
+        extra_filter: Callable[[PlaceData], bool] | None = None,
+    ) -> list[PlaceData]:
+        """Up to MAX_ALTERNATIVES other restaurants for the meal that just
+        picked `selected` - see RuleMealRecommendation.alternatives. Builds
+        the exact same candidate pool and ranking _pick_meal_place just
+        used for this meal (same used_ids/filters/_meal_candidate_pool/
+        meal_candidate_score), so this is never a second, differently-
+        tuned notion of "good for this meal". `used_ids` must be the same
+        set _pick_meal_place was called with (selected not yet added) -
+        when `selected` came from fixed_meals instead, it's already seeded
+        into used_ids up front (see _recommend_meals), which simply keeps
+        it out of food_candidates here too, same effect as the explicit
+        skip below for the freshly-picked case.
+
+        Never widens the pool to hit 3 (same "a real but short list beats
+        a padded one" spirit as slot_alternatives.rank_slot_candidates) -
+        a short or empty result is valid.
+        """
+        food_candidates = [
+            place
+            for place in scored_places
+            if place.id not in used_ids
+            and "food" in place.concept_tags
+            and place.meal_eligible
+            and (extra_filter is None or extra_filter(place))
+        ]
+        if not food_candidates:
+            return []
+
+        candidate_pool = self._meal_candidate_pool(food_candidates, day_area=day_area, city=city)
+        ranked = sorted(
+            candidate_pool,
+            key=lambda place: meal_candidate_score(
+                place, request, previous_place=previous_place, next_place=next_place
+            ),
+            reverse=True,
+        )
+
+        alternatives: list[PlaceData] = []
+        for candidate in ranked:
+            if candidate.id == selected.id:
+                continue
+            if day_weekday is not None and is_confirmed_closed_on(candidate.closed_days, day_weekday):
+                continue
+            alternatives.append(candidate)
+            if len(alternatives) >= MAX_ALTERNATIVES:
+                break
+        return alternatives
+
     def _meal_candidate_pool(
         self, food_candidates: list[PlaceData], *, day_area: str | None, city: str
     ) -> list[PlaceData]:
@@ -1435,6 +1595,7 @@ class RuleItineraryService:
         day_number: int,
         day_area: str | None,
         previous_place: PlaceData | None,
+        alternatives: list[PlaceData] | None = None,
     ) -> RuleMealRecommendation:
         # Reuses the existing note generator rather than inventing meal-
         # specific templates - "morning"/"afternoon"/"evening" flavor the
@@ -1446,6 +1607,7 @@ class RuleItineraryService:
         return RuleMealRecommendation(
             day_number=day_number,
             meal_type=meal_type,
+            place_id=place.id,
             place_name=self._localize_place_name(place),
             area=self._localize_area(place.area),
             notes=self._build_note(
@@ -1464,6 +1626,28 @@ class RuleItineraryService:
             # services/breakfast.py) can't be confirmed open that early -
             # lunch/dinner aren't flagged, same as before this field existed.
             hours_unverified=meal_type == "breakfast",
+            # Same (previous_place, day_area, day_number) the real pick was
+            # scored/noted against - see _meal_alternatives_for. Category
+            # is always "food" (unlike RuleSlotAlternative's activity-item
+            # use, a meal alternative is never anything else).
+            alternatives=[
+                RuleSlotAlternative(
+                    place_id=alternative.id,
+                    place_name=self._localize_place_name(alternative),
+                    category="food",
+                    area=self._localize_area(alternative.area),
+                    notes=self._build_note(
+                        place=alternative,
+                        request=request,
+                        time_slot=note_time_slot,
+                        day_number=day_number,
+                        day_area=day_area,
+                        previous_place=previous_place,
+                    ),
+                    average_cost_krw=alternative.average_cost_krw,
+                )
+                for alternative in (alternatives or [])
+            ],
         )
 
     def _pick_full_day_place(

@@ -45,6 +45,24 @@ class RuleFixedSlotAssignment(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class RuleFixedMealSlot(BaseModel):
+    """One (day, meal_type) -> restaurant pin for POST
+    /rule-itinerary/recalculate - see RuleItineraryRecalculateRequest.
+    fixed_meals and services/recalculate.build_fixed_meals_lookup. Unlike
+    RuleFixedSlotAssignment (every allowed activity slot must be pinned
+    exactly once), this is optional and partial: a (day_number, meal_type)
+    left out of fixed_meals is simply picked the normal way (see
+    RuleItineraryService._recommend_meals) and is guaranteed not to collide
+    with a pinned restaurant (reserved via used_ids before the normal pick
+    runs)."""
+
+    day_number: int
+    meal_type: Literal["breakfast", "lunch", "dinner"]
+    place_id: str
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleItineraryRequest(BaseModel):
     continent: str | None = None
     country: str | None = None
@@ -99,6 +117,12 @@ class RuleItineraryRecalculateRequest(RuleItineraryRequest):
     # the alternatives are the top 3 of the same ranking with this one
     # excluded, same spirit as fixed_slots pinning an activity place.
     accommodation_id: str | None = None
+    # Optional, partial restaurant pinning - see RuleFixedMealSlot and
+    # services/recalculate.build_fixed_meals_lookup. Empty/omitted (the
+    # default) reproduces RuleItineraryService._recommend_meals's own
+    # picks exactly, same as fixed_slots reproducing generate()'s own item
+    # picks when it echoes generate()'s own place_ids back unchanged.
+    fixed_meals: list[RuleFixedMealSlot] = Field(default_factory=list)
 
 
 class RuleReason(BaseModel):
@@ -220,6 +244,13 @@ class RuleMealRecommendation(BaseModel):
     # RuleItineraryService._recommend_meals).
     day_number: int
     meal_type: Literal["breakfast", "lunch", "dinner"]
+    # POST /rule-itinerary/recalculate's fixed_meals pin target - see
+    # RuleItineraryItem.place_id's docstring for the same round-trip
+    # rationale. Always populated (RuleItineraryService._build_meal_
+    # recommendation sets it on every meal, unlike RuleItineraryItem.
+    # place_id which stays optional for pre-existing-field backward
+    # compatibility reasons that don't apply to a brand-new field).
+    place_id: str
     place_name: str
     area: str
     notes: str
@@ -233,6 +264,12 @@ class RuleMealRecommendation(BaseModel):
     # travel-based or meal-time-fit reason (see services/reasons.py), never
     # an hours-related one, since hours_unverified already covers that.
     reasons: list[RuleReason] = Field(default_factory=list)
+    # Up to 3 other restaurants that scored well for this same meal - see
+    # RuleItineraryService._meal_alternatives_for. Always category "food".
+    # Empty when include_alternatives=False (see RuleItineraryService.
+    # generate) or the candidate pool is empty - same contract as
+    # RuleItineraryItem.alternatives.
+    alternatives: list[RuleSlotAlternative] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

@@ -13,7 +13,6 @@ import {
 import {
   applySlotSwap,
   buildSaveItemsPayload,
-  computeTimelineTravelHints,
   getActiveAlternativePlaceId,
   getEffectiveItem,
   hasAnySlotSwap,
@@ -22,8 +21,19 @@ import {
   revertSlotSwap,
   type SlotAlternative,
   type SlotSwapMap,
-  type TimelineRow,
 } from "../utils/slot-swaps";
+import {
+  applyMealSwap,
+  buildMealKey,
+  getActiveMealAlternativeId,
+  getEffectiveMeal,
+  hasAnyMealSwap,
+  isMealNameUsedElsewhere,
+  isMealSwapped,
+  revertMealSwap,
+  type MealSwapMap,
+} from "../utils/meal-swaps";
+import { computeTimelineTravelHints, type TimelineRow } from "../utils/timeline-hints";
 import {
   formatAccommodationAlternativePriceLabel,
   getEffectiveAccommodation,
@@ -162,6 +172,10 @@ type RuleWeatherAlert = {
 type RuleMealRecommendation = {
   day_number: number;
   meal_type: "breakfast" | "lunch" | "dinner";
+  // PR #118 - 구버전 응답(캐시 등)에는 없을 수 있어 옵셔널. recalculate의
+  // fixed_meals로 이 식사를 고정할 때 쓴다(RuleItineraryItem.place_id와
+  // 같은 왕복 용도).
+  place_id?: string | null;
   place_name: string;
   area: string;
   notes: string;
@@ -173,6 +187,9 @@ type RuleMealRecommendation = {
   // See RuleItineraryItem.reasons - meals only ever carry a travel-based
   // or meal-time-fit reason.
   reasons: RuleReason[];
+  // PR #118 - 없거나 비어 있으면(구버전 포함) "다른 추천" 패널을 그리지
+  // 않는다. category는 항상 "food".
+  alternatives?: RuleSlotAlternative[];
 };
 
 // One day's at-a-glance load - see the backend's RuleDaySummary. Covers
@@ -789,12 +806,14 @@ function isRuleMealRecommendation(value: unknown): value is RuleMealRecommendati
   return (
     typeof meal.day_number === "number" &&
     (meal.meal_type === "breakfast" || meal.meal_type === "lunch" || meal.meal_type === "dinner") &&
+    (meal.place_id === undefined || meal.place_id === null || typeof meal.place_id === "string") &&
     typeof meal.place_name === "string" &&
     typeof meal.area === "string" &&
     typeof meal.notes === "string" &&
     (meal.travel_minutes_from_previous === null || typeof meal.travel_minutes_from_previous === "number") &&
     (meal.hours_unverified === undefined || typeof meal.hours_unverified === "boolean") &&
-    (meal.reasons === undefined || Array.isArray(meal.reasons))
+    (meal.reasons === undefined || Array.isArray(meal.reasons)) &&
+    (meal.alternatives === undefined || meal.alternatives === null || Array.isArray(meal.alternatives))
   );
 }
 
@@ -1114,8 +1133,10 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     meal_recommendations: Array.isArray(data.meal_recommendations)
       ? data.meal_recommendations.filter(isRuleMealRecommendation).map((meal) => ({
           ...meal,
+          place_id: typeof meal.place_id === "string" ? meal.place_id : null,
           hours_unverified: meal.hours_unverified ?? false,
           reasons: Array.isArray(meal.reasons) ? meal.reasons.filter(isRuleReason) : [],
+          alternatives: Array.isArray(meal.alternatives) ? meal.alternatives.filter(isRuleSlotAlternative) : [],
         }))
       : [],
     estimated_cost: isRuleCostEstimate(data.estimated_cost) ? data.estimated_cost : null,
@@ -1730,8 +1751,29 @@ function TransportCompareScenarioCard({
   );
 }
 
-function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendation; showTravelTime?: boolean }) {
+function MealCard({
+  meal,
+  showTravelTime = true,
+  visibleReasons,
+  changedNote = false,
+  activeAlternativePlaceId,
+  isNameUsedElsewhere,
+  onSelect,
+  onRevert,
+}: {
+  meal: RuleMealRecommendation; // effective(교체 반영) 식사
+  showTravelTime?: boolean;
+  // hint.hidePrecedingNearPreviousReason 반영 - 생략하면 meal.reasons 그대로.
+  visibleReasons?: RuleReason[];
+  // 사용자가 고정하지 않았는데 재계산으로 이 식사의 추천이 바뀌었는지.
+  changedNote?: boolean;
+  activeAlternativePlaceId: string | null;
+  isNameUsedElsewhere: (placeName: string) => boolean;
+  onSelect: (alternative: RuleSlotAlternative) => void;
+  onRevert: () => void;
+}) {
   const note = splitNoteLines(meal.notes);
+  const reasons = visibleReasons ?? meal.reasons;
 
   return (
     <div className="tc-stop is-meal">
@@ -1747,7 +1789,7 @@ function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendatio
           <span className="tc-stop-chip">식사</span>
         </div>
         <p className="tc-stop-area">{meal.area}</p>
-        <ReasonChips reasons={meal.reasons} />
+        <ReasonChips reasons={reasons} />
         {meal.hours_unverified ? (
           <p className="tc-meal-hours-note">영업시간은 방문 전에 직접 확인해 주세요</p>
         ) : null}
@@ -1757,6 +1799,18 @@ function MealCard({ meal, showTravelTime = true }: { meal: RuleMealRecommendatio
             {line}
           </p>
         ))}
+        {changedNote ? (
+          <p className="tc-meal-hours-note">재계산하면서 추천 식당이 바뀌었어요</p>
+        ) : null}
+        {meal.place_id && meal.alternatives && meal.alternatives.length > 0 ? (
+          <SlotAlternativesPanel
+            activeAlternativePlaceId={activeAlternativePlaceId}
+            alternatives={meal.alternatives}
+            isNameUsedElsewhere={isNameUsedElsewhere}
+            onRevert={onRevert}
+            onSelect={onSelect}
+          />
+        ) : null}
       </div>
     </div>
   );
@@ -1826,6 +1880,9 @@ export function TripCreateForm() {
   // useEffect가 새 result마다(새로 생성하거나 handleEditAgain으로 폼에
   // 돌아가도) 초기화한다.
   const [slotSwaps, setSlotSwaps] = useState<SlotSwapMap>({});
+  // 식사별 "다른 추천" 교체 상태 - slotSwaps와 독립적인 별도 상태(서로
+  // 읽지 않는다), 같은 시점(아래 useEffect)에 같이 초기화된다.
+  const [mealSwaps, setMealSwaps] = useState<MealSwapMap>({});
   // 숙소 교체 상태 - activity 슬롯과 독립적인 별도 상태(slotSwaps와 서로
   // 읽지 않는다), 같은 시점(아래 useEffect)에 같이 초기화된다. null = 원래
   // 추천 숙소 그대로.
@@ -1836,6 +1893,17 @@ export function TripCreateForm() {
   // 지우지 않는다(과제 constraint).
   const [isRecalculating, setIsRecalculating] = useState(false);
   const [recalculateError, setRecalculateError] = useState("");
+  // 사용자가 고정하지 않았는데 재계산으로 추천이 바뀐 식사의 키
+  // (meal-swaps.ts의 buildMealKey) 집합 - handleRecalculate가 재계산
+  // 직전/직후 식사를 비교해 채운다. 다음 재계산·새 /generate·[다시 입력]
+  // 에서 지워지고(아래 useEffect), 사용자가 그 식사를 직접 교체하면
+  // handleSelectMealAlternative가 그 키만 지운다.
+  const [changedMealKeys, setChangedMealKeys] = useState<Set<string>>(new Set());
+  // 재계산 성공 직후에만 세팅 - 아래 useEffect가 이 값을 보고 새 result에
+  // changedMealKeys를 적용한다(dayTravelMode의 preserveDayTravelModeOnNextResultRef
+  // 와 같은 패턴). 새 /generate 결과에서는 세팅되지 않으므로 빈 Set으로
+  // 초기화된다.
+  const pendingChangedMealKeysRef = useRef<Set<string> | null>(null);
   // 재계산 성공 직후에만 true로 세팅 - 아래 dayTravelMode useEffect가 이
   // 플래그를 보고 "기본값으로 초기화"를 한 번 건너뛴다(사용자가 고른
   // 일차별 이동수단 토글을 재계산 후에도 유지하기 위함 - 과제 constraint).
@@ -1846,8 +1914,15 @@ export function TripCreateForm() {
 
   useEffect(() => {
     setSlotSwaps({});
+    setMealSwaps({});
     setAccommodationSwap(null);
     setRecalculateError("");
+    if (pendingChangedMealKeysRef.current) {
+      setChangedMealKeys(pendingChangedMealKeysRef.current);
+      pendingChangedMealKeysRef.current = null;
+    } else {
+      setChangedMealKeys(new Set());
+    }
   }, [result]);
 
   useEffect(() => {
@@ -2195,10 +2270,28 @@ export function TripCreateForm() {
       items: result.items,
       slotSwaps,
       accommodationId,
+      meals: result.meal_recommendations,
+      mealSwaps,
     });
     if (!assembly.ok) {
       setRecalculateError(assembly.reason);
       return;
+    }
+
+    // 재계산 직전 화면에 보이던(교체 반영된) 식사 스냅샷 - 사용자가 고정하지
+    // 않은 식사가 재계산 후 달라졌는지 비교할 기준이다. 사용자가 직접 고른
+    // (mealSwaps에 있는) 식사는 fixed_meals로 그대로 고정되므로 비교 대상이
+    // 아니다. place_id가 없는 구버전 식사는 비교에서 뺀다(과제 constraint).
+    const previousMealSnapshot = new Map<string, string>();
+    for (const meal of result.meal_recommendations) {
+      const key = buildMealKey(meal.day_number, meal.meal_type);
+      if (mealSwaps[key]) {
+        continue;
+      }
+      const effectivePlaceId = getEffectiveMeal(meal, mealSwaps).place_id;
+      if (effectivePlaceId) {
+        previousMealSnapshot.set(key, effectivePlaceId);
+      }
     }
 
     setIsRecalculating(true);
@@ -2206,6 +2299,18 @@ export function TripCreateForm() {
     try {
       const response = await apiClient.post<unknown>("/rule-itinerary/recalculate", assembly.payload);
       const nextResult = normalizeGenerateResponse(response.data);
+
+      const nextChangedMealKeys = new Set<string>();
+      for (const [key, previousPlaceId] of previousMealSnapshot) {
+        const nextMeal = nextResult.meal_recommendations.find(
+          (meal) => buildMealKey(meal.day_number, meal.meal_type) === key,
+        );
+        if (nextMeal?.place_id && nextMeal.place_id !== previousPlaceId) {
+          nextChangedMealKeys.add(key);
+        }
+      }
+      pendingChangedMealKeysRef.current = nextChangedMealKeys;
+
       preserveDayTravelModeOnNextResultRef.current = true;
       setResult(nextResult);
       setMessage("바뀐 일정으로 다시 계산했어요.");
@@ -2260,6 +2365,30 @@ export function TripCreateForm() {
 
   const handleRevertAlternative = (item: RuleItineraryItem) => {
     setSlotSwaps((previous) => revertSlotSwap(previous, item));
+  };
+
+  // meal은 항상 원본(RuleMealRecommendation) - activity와 같은 이유로
+  // alternatives는 교체와 무관하게 원본 그대로 쓴다. 사용자가 이 식사를
+  // 직접 교체하면 "재계산으로 바뀌었어요" 안내(changedMealKeys)는 더 이상
+  // 맞지 않으므로 그 키만 지운다(과제 constraint) - 되돌리기는 건드리지
+  // 않는다(되돌리기가 가능한 식사는 애초에 changedMealKeys에 없다: 그
+  // 안내는 사용자가 고정하지 않은 식사에만 붙고, 고정하지 않은 식사는
+  // mealSwaps에 없어 "되돌리기" 버튼 자체가 안 보인다).
+  const handleSelectMealAlternative = (meal: RuleMealRecommendation, alternative: RuleSlotAlternative) => {
+    setMealSwaps((previous) => applyMealSwap(previous, meal, alternative));
+    setChangedMealKeys((previous) => {
+      const key = buildMealKey(meal.day_number, meal.meal_type);
+      if (!previous.has(key)) {
+        return previous;
+      }
+      const next = new Set(previous);
+      next.delete(key);
+      return next;
+    });
+  };
+
+  const handleRevertMealAlternative = (meal: RuleMealRecommendation) => {
+    setMealSwaps((previous) => revertMealSwap(previous, meal));
   };
 
   // 날씨 경보 배너용 - affected item은 RuleItineraryItem 전체가 아니라
@@ -2934,9 +3063,9 @@ export function TripCreateForm() {
                   날씨 정보를 불러오지 못했어요.
                 </div>
               ) : null}
-              {hasAnySlotSwap(slotSwaps) || accommodationIsSwapped ? (
+              {hasAnySlotSwap(slotSwaps) || accommodationIsSwapped || hasAnyMealSwap(mealSwaps) ? (
                 <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
-                  <p>장소나 숙소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.</p>
+                  <p>장소나 식사, 숙소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.</p>
                   {canRecalculate ? (
                     <button
                       aria-busy={isRecalculating}
@@ -2992,17 +3121,28 @@ export function TripCreateForm() {
                 const dayTravel = dayTravelByDay.get(dayNumber);
                 const mode = dayTravelMode[dayNumber] ?? defaultDayTravelMode(result.city);
                 const dayMeals = mealsByDay.get(dayNumber);
+                // 교체 반영(effective) 식사 - 활동의 effectiveDayItems와 같은
+                // 패턴. buildDayTimelineEntries/travelLegKey가 이 교체된
+                // place_name/area 등을 그대로 쓰게 된다.
+                const effectiveDayMeals: DayMealsByType | undefined = dayMeals
+                  ? {
+                      breakfast: dayMeals.breakfast ? getEffectiveMeal(dayMeals.breakfast, mealSwaps) : undefined,
+                      lunch: dayMeals.lunch ? getEffectiveMeal(dayMeals.lunch, mealSwaps) : undefined,
+                      dinner: dayMeals.dinner ? getEffectiveMeal(dayMeals.dinner, mealSwaps) : undefined,
+                    }
+                  : undefined;
                 const accommodationName = result.accommodation_recommendation?.name;
-                const timelineEntries = buildDayTimelineEntries(effectiveDayItems, dayMeals);
+                const timelineEntries = buildDayTimelineEntries(effectiveDayItems, effectiveDayMeals);
                 // 판정은 "활동 슬롯 배열의 이전 항목"이 아니라 "타임라인
                 // 순서상 바로 앞 행"(식사 포함) 기준이어야 한다 - 교체된
-                // 활동 바로 뒤가 식사 행일 수 있기 때문(PR #105의 버그).
+                // 활동/식사 바로 뒤가 다른 종류의 행일 수 있기 때문(PR #105의
+                // 버그, PR #119에서 식사 교체에도 같은 규칙 적용).
                 const timelineRows: TimelineRow[] = timelineEntries.map((entry) =>
                   entry.type === "item"
                     ? { kind: "item", dayNumber: entry.item.day_number, timeSlot: entry.item.time_slot }
-                    : { kind: "meal" },
+                    : { kind: "meal", dayNumber: entry.meal.day_number, mealType: entry.meal.meal_type },
                 );
-                const travelHints = computeTimelineTravelHints(timelineRows, slotSwaps);
+                const travelHints = computeTimelineTravelHints(timelineRows, slotSwaps, mealSwaps);
                 const legByKey = new Map<string, RuleTravelLeg>();
                 for (const leg of dayTravel?.legs ?? []) {
                   legByKey.set(travelLegKey(leg.from_kind, leg.from_name, leg.to_kind, leg.to_name), leg);
@@ -3013,20 +3153,32 @@ export function TripCreateForm() {
                 // (아침 식사가 먼저 그려지면 firstEntry는 식사 행이다). 숙소
                 // 교체 시 "숙소에서 N분" reason 칩을 숨길 대상 판정에 쓴다.
                 const firstActivityEntry = timelineEntries.find((entry) => entry.type === "item");
-                // 교체된 활동 자신으로 들어오는 이동 정보는 앞 행이 무엇이든
-                // (숙소 포함) 숨긴다는 원칙을 하루 경계(숙소 출발/복귀
+                // 교체된 활동/식사 자신으로 들어오는 이동 정보는 앞 행이
+                // 무엇이든(숙소 포함) 숨긴다는 원칙을 하루 경계(숙소 출발/복귀
                 // 커넥터)에도 그대로 적용한다. 숙소가 바뀌었을 때도 같은
                 // 경계가 낡은 값이 된다(accommodation-swap.ts 참고) -
-                // 활동/숙소 둘 다 독립적으로 판정해 OR로 합친다.
-                const firstRowActivitySwapped = firstEntry?.type === "item" && isSlotSwapped(slotSwaps, firstEntry.item);
-                const lastRowActivitySwapped = lastEntry?.type === "item" && isSlotSwapped(slotSwaps, lastEntry.item);
+                // 활동/식사/숙소 모두 독립적으로 판정해 OR로 합친다. 하루의
+                // 첫/마지막 행이 식사일 수도 있어(아침 식사가 먼저 그려지거나,
+                // 저녁 식사가 마지막 행일 때) item/meal 둘 다 본다.
+                const firstRowSwapped =
+                  firstEntry?.type === "item"
+                    ? isSlotSwapped(slotSwaps, firstEntry.item)
+                    : firstEntry?.type === "meal"
+                      ? isMealSwapped(mealSwaps, firstEntry.meal)
+                      : false;
+                const lastRowSwapped =
+                  lastEntry?.type === "item"
+                    ? isSlotSwapped(slotSwaps, lastEntry.item)
+                    : lastEntry?.type === "meal"
+                      ? isMealSwapped(mealSwaps, lastEntry.meal)
+                      : false;
                 const hideStartLegConnector = shouldHideAccommodationBoundaryConnector(
                   accommodationIsSwapped,
-                  firstRowActivitySwapped,
+                  firstRowSwapped,
                 );
                 const hideEndLegConnector = shouldHideAccommodationBoundaryConnector(
                   accommodationIsSwapped,
-                  lastRowActivitySwapped,
+                  lastRowSwapped,
                 );
                 const startLeg =
                   accommodationName && firstEntry && !hideStartLegConnector
@@ -3148,7 +3300,7 @@ export function TripCreateForm() {
                         참고. startLeg 자체는 둘 중 하나라도 바뀌면
                         undefined이므로(위 계산부) 연결 실패로 자연히 아무것도
                         안 그려지는 일은 없다(이 블록이 그 자리를 대신 채운다). */}
-                    {shouldShowAccommodationStartLegStale(accommodationIsSwapped, firstRowActivitySwapped) ? (
+                    {shouldShowAccommodationStartLegStale(accommodationIsSwapped, firstRowSwapped) ? (
                       <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
                     ) : startLeg ? (
                       <TravelConnectorRow
@@ -3244,25 +3396,54 @@ export function TripCreateForm() {
                         );
                       }
 
-                      const meal = entry.meal;
+                      const meal = entry.meal; // effective (swap-applied) meal
                       const hideTravel = hint.hideIncomingTravel;
                       const showFallbackTravelTime =
                         !hideTravel && !connectorLeg && meal.travel_minutes_from_previous !== null;
+                      const activeMealAlternativeId = getActiveMealAlternativeId(mealSwaps, meal);
+                      // "직전 장소에서 N분" reason 칩은 바로 앞 행이 교체된
+                      // 활동/식사일 때만 낡은 값이 된다 - 이 식사 자신이
+                      // 교체됐다면 reasons는 이미 [](getEffectiveMeal)라 이
+                      // 필터는 그 경우 아무 영향이 없다. 식사는 숙소 바로
+                      // 다음에 오지 않으므로(previous_place는 항상 활동이거나
+                      // 없음 - 백엔드 _nearest_activity_before/after 참고)
+                      // "숙소에서 N분" 변형은 해당되지 않는다.
+                      const visibleMealReasons = hint.hidePrecedingNearPreviousReason
+                        ? meal.reasons.filter((reason) => reason.code !== "near_previous")
+                        : meal.reasons;
+                      const mealChanged = changedMealKeys.has(buildMealKey(meal.day_number, meal.meal_type));
 
                       return (
-                        <Fragment key={`${dayNumber}-meal-${meal.meal_type}-${meal.place_name}`}>
+                        <Fragment key={`${dayNumber}-meal-${meal.meal_type}`}>
                           {hideTravel ? (
                             <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
                           ) : connectorLeg ? (
                             <TravelConnectorRow leg={connectorLeg} mode={mode} />
                           ) : null}
-                          <MealCard meal={meal} showTravelTime={showFallbackTravelTime} />
+                          <MealCard
+                            activeAlternativePlaceId={activeMealAlternativeId}
+                            changedNote={mealChanged}
+                            isNameUsedElsewhere={(placeName) =>
+                              isMealNameUsedElsewhere(
+                                result.meal_recommendations,
+                                mealSwaps,
+                                meal,
+                                placeName,
+                                result.items.map((item) => getEffectiveItem(item, slotSwaps).place_name),
+                              )
+                            }
+                            meal={meal}
+                            onRevert={() => handleRevertMealAlternative(meal)}
+                            onSelect={(alternative) => handleSelectMealAlternative(meal, alternative)}
+                            showTravelTime={showFallbackTravelTime}
+                            visibleReasons={visibleMealReasons}
+                          />
                         </Fragment>
                       );
                     })}
                     {accommodationName &&
                     lastEntry &&
-                    shouldShowAccommodationEndLegStale(accommodationIsSwapped, lastRowActivitySwapped) ? (
+                    shouldShowAccommodationEndLegStale(accommodationIsSwapped, lastRowSwapped) ? (
                       <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
                     ) : endLeg ? (
                       <TravelConnectorRow label={`숙소로 복귀 · ${accommodationName}`} leg={endLeg} mode={mode} />

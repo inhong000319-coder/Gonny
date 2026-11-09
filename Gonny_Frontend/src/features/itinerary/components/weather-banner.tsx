@@ -86,6 +86,16 @@ export function WeatherBanner({
 }: WeatherBannerProps) {
   const [showAlternatives, setShowAlternatives] = useState(false);
   const affectedItems = alert.affected_items ?? [];
+  // 구버전 응답이거나(affected_items 없음) 후보가 전부 비어 있으면 고를 수
+  // 있는 칩이 하나도 없다 - 그 경우 "골라두면 [재계산]으로…" 안내는
+  // 현재 상태와 맞지 않아 PR #116 이전 문구로 되돌린다.
+  const hasSelectableCandidates = affectedItems.some((item) => item.swap_candidates.length > 0);
+  // 같은 장소명이 여러 슬롯(종일 장소)에 걸쳐 있을 수 있어, 그 중 하나라도
+  // 교체 상태면 그 이름의 태그에 "교체됨"을 붙인다. affected_items가 없으면
+  // 판정할 방법이 없어 지금처럼(표시 없이) 둔다.
+  const swappedPlaceNames = new Set(
+    affectedItems.filter((item) => getActiveSwapPlaceId(item) !== null).map((item) => item.place_name),
+  );
 
   return (
     <div className="weather-banner">
@@ -97,14 +107,16 @@ export function WeatherBanner({
           {alert.day_number}일차, {conditionLabel(alert.condition)} 예보가 있어요
         </h3>
         <p className="section-subtitle" style={{ marginBottom: 8 }}>
-          예상 강수량 {alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 골라두면 [재계산]으로
-          이동 시간까지 맞춰드려요.
+          {hasSelectableCandidates
+            ? `예상 강수량 ${alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 골라두면 [재계산]으로 이동 시간까지 맞춰드려요.`
+            : `예상 강수량 ${alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 참고해서 직접 정해보세요.`}
         </p>
         {alert.affected_place_names.length > 0 ? (
           <div className="planner-result-tags">
             {alert.affected_place_names.map((placeName) => (
               <span className="badge" key={placeName}>
                 {placeName}
+                {swappedPlaceNames.has(placeName) ? <span className="tc-alt-chip-area"> · 교체됨</span> : null}
               </span>
             ))}
           </div>

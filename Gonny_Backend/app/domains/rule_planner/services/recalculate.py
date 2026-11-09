@@ -17,9 +17,10 @@ from datetime import timedelta
 from fastapi import HTTPException, status
 
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
-from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleFixedSlotAssignment
+from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleFixedMealSlot, RuleFixedSlotAssignment
 
 from .arrival_departure import day_slot_rules
+from .breakfast import is_breakfast_candidate
 from .closed_days import is_confirmed_closed_on
 
 
@@ -155,5 +156,109 @@ def build_fixed_slots_lookup(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"휴무로 확인된 요일의 장소입니다: {day_number}일차 {place.id}",
             )
+
+    return resolved
+
+
+def build_fixed_meals_lookup(
+    *,
+    fixed_meals: list[RuleFixedMealSlot],
+    request: NormalizedRuleRequest,
+    city_catalog: CityPlaceCatalog,
+    fixed_slots_lookup: dict[tuple[int, str], PlaceData],
+) -> dict[tuple[int, str], PlaceData]:
+    """Turns recalculate()'s optional, partial fixed_meals into a
+    dict[(day_number, meal_type), PlaceData], raising HTTPException(422) on
+    the first rule violated - same validation style and same "structural,
+    never re-scores a good choice" spirit as build_fixed_slots_lookup
+    above. Unlike fixed_slots, nothing here requires every (day,
+    meal_type) to be pinned - RuleItineraryService._recommend_meals picks
+    the rest the normal way (see its fixed_meals parameter).
+
+    fixed_slots_lookup is build_fixed_slots_lookup's own already-validated
+    return value for this same request - needed here only to reject a
+    restaurant that's also pinned to an activity slot (see the "같은 장소가
+    다른 식사나 활동 슬롯에 쓰임" check below)."""
+    places_by_id = {place.id: place for place in city_catalog.places}
+    activity_place_ids = {place.id for place in fixed_slots_lookup.values()}
+
+    seen_day_meal_types: set[tuple[int, str]] = set()
+    seen_place_ids: set[str] = set()
+    resolved: dict[tuple[int, str], PlaceData] = {}
+
+    for entry in fixed_meals:
+        place = places_by_id.get(entry.place_id)
+        if place is None:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"알 수 없는 장소 id입니다: {entry.place_id}",
+            )
+        if not place.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"비활성 장소는 지정할 수 없습니다: {entry.place_id}",
+            )
+        if "food" not in place.concept_tags or not place.meal_eligible:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"식사로 지정할 수 없는 장소입니다: {entry.place_id}",
+            )
+        if entry.meal_type == "breakfast" and not is_breakfast_candidate(place):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"아침 식사로 적합하지 않은 장소입니다: {entry.place_id}",
+            )
+
+        if entry.day_number < 1 or entry.day_number > request.days:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"일정에 없는 일차입니다: {entry.day_number}일차",
+            )
+
+        # day_slot_rules().breakfast_allowed only means "this day has a
+        # usable morning slot" - a breakfast pin additionally needs
+        # request.include_breakfast, mirroring _recommend_meals's own
+        # `if request.include_breakfast and slot_rules.breakfast_allowed`
+        # gate exactly.
+        slot_rules = day_slot_rules(
+            arrival_period=request.arrival_period,
+            departure_period=request.departure_period,
+            days=request.days,
+            day_number=entry.day_number,
+        )
+        meal_allowed_on_day = {
+            "breakfast": request.include_breakfast and slot_rules.breakfast_allowed,
+            "lunch": slot_rules.lunch_allowed,
+            "dinner": slot_rules.dinner_allowed,
+        }[entry.meal_type]
+        if not meal_allowed_on_day:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"그 날 제공되지 않는 식사입니다: {entry.day_number}일차 {entry.meal_type}",
+            )
+
+        key = (entry.day_number, entry.meal_type)
+        if key in seen_day_meal_types:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"같은 식사가 중복 지정되었습니다: {entry.day_number}일차 {entry.meal_type}",
+            )
+        seen_day_meal_types.add(key)
+
+        if entry.place_id in activity_place_ids or entry.place_id in seen_place_ids:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"같은 장소를 다른 식사나 활동 슬롯에 지정할 수 없습니다: {entry.place_id}",
+            )
+        seen_place_ids.add(entry.place_id)
+
+        day_weekday = _day_weekday(request, entry.day_number)
+        if day_weekday is not None and is_confirmed_closed_on(place.closed_days, day_weekday):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"휴무로 확인된 요일의 장소입니다: {entry.day_number}일차 {entry.place_id}",
+            )
+
+        resolved[key] = place
 
     return resolved

@@ -9,10 +9,17 @@
 // already has one item per slot for (unchanged slots keep their original
 // place_id, swapped slots use the swap's alternative place_id).
 import { getActiveAlternativePlaceId, type SlotSwapMap } from "./slot-swaps";
+import { getActiveMealAlternativeId, type MealSwapMap, type SwappableMeal } from "./meal-swaps";
 
 export type RecalculateFixedSlot = {
   day_number: number;
   time_slot: string;
+  place_id: string;
+};
+
+export type RecalculateFixedMeal = {
+  day_number: number;
+  meal_type: string;
   place_id: string;
 };
 
@@ -55,15 +62,38 @@ export function canBuildFixedSlotsForRecalculate(items: ItemForRecalculate[]): b
   return items.every((item) => typeof item.place_id === "string" && item.place_id.length > 0);
 }
 
+// mealSwaps에 있는 식사만(사용자가 직접 고른 것만) fixed_meals로 보낸다 -
+// 고르지 않은 식사는 서버가 다시 뽑게 둔다(과제 constraint). 활동
+// fixed_slots와 달리 "전부 지정해야 함" 규칙이 없으므로 place_id가 없어
+// 조립이 막히는 경우도 없다(대안을 고른 식사만 들어오고, 대안은 항상
+// place_id를 갖는다).
+export function buildFixedMealsForRecalculate(
+  meals: SwappableMeal[],
+  mealSwaps: MealSwapMap,
+): RecalculateFixedMeal[] {
+  const fixedMeals: RecalculateFixedMeal[] = [];
+  for (const meal of meals) {
+    const swappedPlaceId = getActiveMealAlternativeId(mealSwaps, meal);
+    if (swappedPlaceId) {
+      fixedMeals.push({ day_number: meal.day_number, meal_type: meal.meal_type, place_id: swappedPlaceId });
+    }
+  }
+  return fixedMeals;
+}
+
 // /recalculate에 보낼 전체 요청 본문 - basePayload(마지막 /generate 호출 때
 // 실제로 보낸 payload 그대로)를 베이스로 fixed_slots와(있을 때만)
-// accommodation_id만 더한다. 폼의 "지금" 값으로 다시 조립하지 않는다 -
-// 결과 화면에 온 뒤 폼 입력이 바뀌었을 수 있어서다(과제 constraint).
+// accommodation_id/fixed_meals만 더한다. 폼의 "지금" 값으로 다시 조립하지
+// 않는다 - 결과 화면에 온 뒤 폼 입력이 바뀌었을 수 있어서다(과제
+// constraint). meals/mealSwaps는 선택 파라미터 - 기존 호출부(활동/숙소
+// 교체만 다루던 호출)는 그대로 동작한다.
 export function buildRecalculateRequestPayload(params: {
   basePayload: Record<string, unknown>;
   items: ItemForRecalculate[];
   slotSwaps: SlotSwapMap;
   accommodationId?: string | null;
+  meals?: SwappableMeal[];
+  mealSwaps?: MealSwapMap;
 }): { ok: true; payload: Record<string, unknown> } | { ok: false; reason: string } {
   const assembly = buildFixedSlotsForRecalculate(params.items, params.slotSwaps);
   if (!assembly.ok) {
@@ -76,6 +106,12 @@ export function buildRecalculateRequestPayload(params: {
   };
   if (params.accommodationId) {
     payload.accommodation_id = params.accommodationId;
+  }
+  if (params.meals && params.mealSwaps) {
+    const fixedMeals = buildFixedMealsForRecalculate(params.meals, params.mealSwaps);
+    if (fixedMeals.length > 0) {
+      payload.fixed_meals = fixedMeals;
+    }
   }
   return { ok: true, payload };
 }

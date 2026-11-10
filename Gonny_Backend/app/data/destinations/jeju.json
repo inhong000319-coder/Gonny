@@ -1491,11 +1491,6 @@
       "summary": "Scenic cafe stop that adds a clearer ocean-view rest card to the East Jeju route.",
       "official_url": "https://www.delmoondo.com/service/company",
       "booking_hint": "김녕 해안 동선과 묶기 좋고, 해 질 무렵에도 분위기가 좋아서 자연 스팟 뒤에 여유 있게 붙이면 만족도가 높아요.",
-      "slot_bias": {
-        "afternoon": 6,
-        "evening": 5,
-        "morning": -2
-      },
       "mood_keywords": [
         "여유로운",
         "바다 보며 쉬기 좋은",

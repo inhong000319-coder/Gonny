@@ -280,7 +280,12 @@ def test_phase_ten_jeju_draft_places_fill_east_jeju_second_wave() -> None:
     assert east_places["snoopy-garden-jeju"].official_url == "https://www.snoopygarden.com/jeju"
     assert east_places["snoopy-garden-jeju"].slot_bias["afternoon"] > 0
     assert east_places["delmoondo-gimnyeong"].official_url == "https://www.delmoondo.com/service/company"
-    assert east_places["delmoondo-gimnyeong"].slot_bias["afternoon"] > 0
+    # slot_bias는 제거됐다(non_restaurant_food_places_activity_candidates
+    # 작업 이후 이 장소만 제주 일정에 과도하게 많이 뽑히던 걸 줄이려고 -
+    # 같은 east-jeju의 slot_bias 없는 장소(월정리·애월 카페거리·오설록)와
+    # 같은 조건으로 맞춘 것 - delmoondo_gimnyeong_slot_bias_removal.md
+    # 참고).
+    assert east_places["delmoondo-gimnyeong"].slot_bias == {}
 
 
 def test_public_catalog_options_only_include_korean_focus_cities() -> None:

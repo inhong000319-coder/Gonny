@@ -8,11 +8,13 @@ function, using the same previous/next place and day_area that the
 winning pick was scored against, and reports the top few runners-up.
 
 Candidate rule (deliberately narrower than _pick_place_for_slot's own
-pool): active, non-restaurant, time_fit includes this slot - no fallback
-to time_fit-less candidates if that leaves too few (see
-_pick_place_for_slot's "slot_fitting_places or available_places" for the
-contrast - that fallback exists for the real pick because a slot must
-always be filled; an alternative list is allowed to simply be short).
+pool): active, an activity candidate (PlaceData.is_activity_candidate -
+excludes actual restaurants, but allows a non-meal-eligible "food"-tagged
+place like a scenic cafe), time_fit includes this slot - no fallback to
+time_fit-less candidates if that leaves too few (see _pick_place_for_slot's
+"slot_fitting_places or available_places" for the contrast - that fallback
+exists for the real pick because a slot must always be filled; an
+alternative list is allowed to simply be short).
 """
 from __future__ import annotations
 
@@ -172,7 +174,7 @@ def compute_item_alternatives(
     scored_places_by_id = {
         place.id: place
         for place in city_catalog.places
-        if place.is_active and "food" not in place.concept_tags
+        if place.is_active and place.is_activity_candidate
     }
 
     new_items: list[RuleItineraryItem] = []

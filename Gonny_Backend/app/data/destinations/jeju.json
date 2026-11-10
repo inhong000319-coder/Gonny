@@ -1509,6 +1509,8 @@
       "note_templates": [
         "{place_name}은(는) 동제주 일정 끝에 너무 바쁘지 않게 쉬어가면서 바다 풍경을 즐기고 싶을 때 잘 어울려요."
       ],
+      "latitude": 33.5634107,
+      "longitude": 126.7684035,
       "setting": "indoor",
       "rain_sensitive_light": false,
       "meal_eligible": false

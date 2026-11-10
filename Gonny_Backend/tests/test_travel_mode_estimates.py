@@ -331,14 +331,14 @@ def test_day_travel_leg_order_matches_the_point_in_day_sequence_for_each_city() 
 
 
 def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
-    # Snapshot re-captured after lowering rolling-hall/kbs-hall's evening
-    # slot_bias from 8 to 3 (see local_only/reports/
-    # seoul_venue_slot_bias_apply.md) - an intended data change that makes
-    # this fixed seoul request pick a different evening place on days 2-3,
-    # shifting the resulting travel minutes. This test still guards
-    # against this feature's *own* wiring breaking
-    # travel_minutes_from_previous by comparing against a fixed snapshot
-    # of the current data.
+    # Snapshot re-captured after the non-restaurant-food-places-activity-
+    # candidates fix let meal_eligible=False "food" places (e.g. insadong)
+    # compete for an activity slot (see PlaceData.is_activity_candidate) -
+    # an intended pool change that makes this fixed seoul request pick
+    # insadong for day 2 evening instead of its previous pick, shifting the
+    # resulting travel minutes. This test still guards against this
+    # feature's *own* wiring breaking travel_minutes_from_previous by
+    # comparing against a fixed snapshot of the current data.
     service = RuleItineraryService()
     response = service.generate(_build_request("seoul"))
 
@@ -352,17 +352,17 @@ def test_travel_minutes_from_previous_unchanged_for_a_fixed_request() -> None:
         (1, "afternoon", 9),
         (1, "evening", 30),
         (2, "morning", None),
-        (2, "afternoon", 26),
-        (2, "evening", 6),
+        (2, "afternoon", 5),
+        (2, "evening", 16),
         (3, "morning", None),
-        (3, "afternoon", 6),
-        (3, "evening", 7),
+        (3, "afternoon", 8),
+        (3, "evening", 5),
     ]
     assert meal_minutes == [
         (1, "lunch", 5),
         (1, "dinner", 8),
         (2, "lunch", 9),
-        (2, "dinner", 26),
-        (3, "lunch", 8),
-        (3, "dinner", 7),
+        (2, "dinner", 5),
+        (3, "lunch", 6),
+        (3, "dinner", 9),
     ]

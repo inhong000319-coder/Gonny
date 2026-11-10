@@ -249,13 +249,14 @@ def test_meal_eligible_false_does_not_change_activity_slot_selection():
     assert items_eligible == items_ineligible
 
 
-def test_meal_ineligible_mixed_tag_place_is_excluded_from_meals_but_still_eligible_for_activities():
+def test_meal_ineligible_mixed_tag_place_is_excluded_from_meals_but_eligible_for_activities():
     # The real-world shape this field targets: a place with "food" plus
     # another activity_type tag (e.g. 오설록 티뮤지엄's ["미식", "문화·역사"]).
-    # It stays excluded from activity competition regardless (still has
-    # "food" in concept_tags), but meal_eligible=False must keep it out of
-    # meal_recommendations too - so with too few other food places, a meal
-    # slot should go unfilled rather than fall back to it.
+    # As of the non-restaurant-food-places-activity-candidates fix, a
+    # meal_eligible=False "food" place CAN win an activity slot
+    # (PlaceData.is_activity_candidate) - only the meal side stays
+    # excluded, so with too few other food places, a meal slot should go
+    # unfilled rather than fall back to it.
     fillers = [_place(f"culture-{i}", priority=1, activity_type=["문화·역사"]) for i in range(20)]
     mixed_ineligible = _place(
         "cafe-museum", priority=10, activity_type=["미식", "문화·역사"], meal_eligible=False
@@ -263,7 +264,9 @@ def test_meal_ineligible_mixed_tag_place_is_excluded_from_meals_but_still_eligib
 
     response = _generate([mixed_ineligible, *fillers], days=1)
 
-    assert all(item.place_name != "cafe-museum" for item in response.items)
+    # Highest priority of the whole pool, so it wins its activity slot.
+    cafe_museum_item = next(item for item in response.items if item.place_name == "cafe-museum")
+    assert cafe_museum_item.category != "food"
     assert all(meal.place_name != "cafe-museum" for meal in response.meal_recommendations)
     assert response.meal_recommendations == []
 

@@ -60,7 +60,7 @@ def build_fixed_slots_lookup(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"비활성 장소는 지정할 수 없습니다: {entry.place_id}",
             )
-        if "food" in place.concept_tags:
+        if not place.is_activity_candidate:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"식당은 활동 슬롯에 지정할 수 없습니다: {entry.place_id}",

@@ -288,15 +288,16 @@ def _build_alerts_from_forecast(
         return []
 
     # swap_context가 있을 때만 쓰는 전역(이 날씨 보고서 전체 공통) 컨텍스트 -
-    # compute_item_alternatives와 완전히 같은 "활성·비식당" 전체 풀, 같은
-    # "트립 전체에서 이미 쓰인 장소" 집합. 매 (날짜, 장소) 쌍마다 다시
-    # 계산하지 않고 한 번만 만든다.
+    # compute_item_alternatives와 완전히 같은 "활성·활동 후보" 전체 풀(식당은
+    # 빼고, meal_eligible=False인 비식당 food 장소는 포함 - PlaceData.
+    # is_activity_candidate 참고), 같은 "트립 전체에서 이미 쓰인 장소" 집합.
+    # 매 (날짜, 장소) 쌍마다 다시 계산하지 않고 한 번만 만든다.
     all_used_ids: set[str] | None = None
     scored_places_by_id: dict[str, PlaceData] | None = None
     if swap_context is not None:
         all_used_ids = {place.id for places in day_place_map.values() for place in places}
         scored_places_by_id = {
-            place.id: place for place in city_catalog.places if place.is_active and "food" not in place.concept_tags
+            place.id: place for place in city_catalog.places if place.is_active and place.is_activity_candidate
         }
 
     alerts: list[RuleWeatherAlert] = []

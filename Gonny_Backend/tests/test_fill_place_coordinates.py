@@ -21,12 +21,16 @@ DESTINATIONS_DIR = PROJECT_ROOT / "app" / "data" / "destinations"
 # from Google Maps Plus Codes (see local_only/reports/
 # seoul_missing_coordinates_apply.md) - this script's own COORDINATES
 # table still deliberately excludes them (no source it trusts), but the
-# real catalog no longer lacks them. jeju's delmoondo-gimnyeong remains
-# unresolved by either script.
+# real catalog no longer lacks them. jeju's delmoondo-gimnyeong was filled
+# directly in the non-restaurant-food-places-activity-candidates work
+# (web research - 제주특별자치도 제주시 구좌읍 해맞이해안로 140, cross-
+# checked across several listings - see local_only/reports/
+# non_restaurant_food_places_activity_candidates.md), also outside either
+# script's own COORDINATES table.
 EXPECTED_STILL_MISSING = {
     "seoul": set(),
     "busan": set(),
-    "jeju": {"delmoondo-gimnyeong"},
+    "jeju": set(),
 }
 
 CITY_BOUNDS = {

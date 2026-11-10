@@ -92,9 +92,10 @@ class PlaceData(BaseModel):
     # non-restaurant "food"-tagged places confirmed unsuitable as a meal
     # (cafe/dessert/tea-only, no real lunch/dinner facility - see
     # local_only/reports/non_restaurant_meal_investigation.md) - checked by
-    # RuleItineraryService._pick_meal_place's food_candidates filter only;
-    # the activity-slot competition (service.py's "food" not in
-    # concept_tags filter) is untouched by this field.
+    # RuleItineraryService._pick_meal_place's food_candidates filter, and
+    # (as of the non-restaurant-food-places-activity-candidates fix) by
+    # is_activity_candidate below, which lets these 9 places compete for an
+    # activity slot instead of never appearing in an itinerary at all.
     meal_eligible: bool = True
     mvp_tier: str = "standard"
     full_day_recommended: bool = False
@@ -118,6 +119,28 @@ class PlaceData(BaseModel):
             if tag and tag not in deduped:
                 deduped.append(tag)
         return deduped
+
+    @property
+    def is_activity_candidate(self) -> bool:
+        """Whether this place may compete for a morning/afternoon/evening
+        activity slot - the single source of truth for the "food places are
+        excluded from activities" rule, used by every activity candidate
+        pool (RuleItineraryService._build_items, weather_alerts.py's swap
+        candidates, slot_alternatives.py's "다른 추천") and by
+        recalculate.py's fixed_slots validation.
+
+        True for every non-"food" place, and also true for a "food"-tagged
+        place that isn't meal_eligible (e.g. a cafe/market confirmed
+        unsuitable as a meal, see meal_eligible's own docstring) - that
+        place just can't win a meal slot, nothing stops it from being a
+        sightseeing/relax stop instead. False only for an actual restaurant
+        (food-tagged and meal_eligible).
+
+        Does not check is_active - every call site already applies its own
+        is_active filter alongside this, same as before this property
+        existed.
+        """
+        return "food" not in self.concept_tags or not self.meal_eligible
 
 
 class CityPlaceCatalog(BaseModel):

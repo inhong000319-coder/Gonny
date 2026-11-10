@@ -422,16 +422,19 @@ class RuleItineraryService:
         dict[str, PlaceFeedbackSignal],
         dict[int, str | None],
     ]:
-        # "food" places are excluded from the 3-slot activity competition
-        # entirely, not merely de-preferred - they're recommended
-        # independently per day instead (see _recommend_meals), same
-        # separation as accommodation_recommendation never appearing in
-        # items. Removing food only from SLOT_CATEGORY_PREFERENCE's
-        # preference-match bonus isn't enough on its own: a food place can
-        # still win a slot on base_score/coordinate-continuity alone, so
-        # it has to be dropped from the candidate pool here too.
+        # Restaurants (food-tagged, meal_eligible) are excluded from the
+        # 3-slot activity competition entirely, not merely de-preferred -
+        # they're recommended independently per day instead (see
+        # _recommend_meals), same separation as accommodation_recommendation
+        # never appearing in items. Removing food only from
+        # SLOT_CATEGORY_PREFERENCE's preference-match bonus isn't enough on
+        # its own: a food place can still win a slot on base_score/
+        # coordinate-continuity alone, so it has to be dropped from the
+        # candidate pool here too. A food-tagged place that ISN'T
+        # meal_eligible (e.g. a cafe/market unsuitable as a meal) is NOT
+        # excluded here - see PlaceData.is_activity_candidate.
         scored_places = sorted(
-            [place for place in city_catalog.places if place.is_active and "food" not in place.concept_tags],
+            [place for place in city_catalog.places if place.is_active and place.is_activity_candidate],
             key=lambda place: self._base_score(place, request),
             reverse=True,
         )
@@ -1739,6 +1742,15 @@ class RuleItineraryService:
         categories = set(place.activity_type_codes)
         if "activity" in request.concepts and categories & ACTIVITY_CATEGORIES:
             return "activity"
+        # A "food"-tagged, non-meal_eligible place (e.g. a scenic cafe) can
+        # now win an activity slot (see PlaceData.is_activity_candidate) -
+        # its displayed category must never be "food" (that reads as a
+        # meal on screen), so pick its next activity_type code instead, or
+        # "relax" if "food" was its only one. Every other place's category
+        # is unaffected (activity_type_codes[0] unchanged).
+        if "food" in place.concept_tags and not place.meal_eligible:
+            non_food_codes = [code for code in place.activity_type_codes if code != "food"]
+            return non_food_codes[0] if non_food_codes else "relax"
         return place.activity_type_codes[0] if place.activity_type_codes else "sightseeing"
 
     def _pick_place_for_slot(

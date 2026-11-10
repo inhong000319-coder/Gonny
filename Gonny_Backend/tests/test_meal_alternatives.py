@@ -75,6 +75,8 @@ def _generate(
     start_date: date | None = None,
     include_breakfast: bool = False,
     include_alternatives: bool = True,
+    arrival_period: str | None = None,
+    departure_period: str | None = None,
 ):
     service = RuleItineraryService(catalog_provider=_FakeCatalogProvider(places))
     request = RuleItineraryRequest(
@@ -89,6 +91,8 @@ def _generate(
         companion_type="friend",
         start_date=start_date,
         include_breakfast=include_breakfast,
+        arrival_period=arrival_period,
+        departure_period=departure_period,
     )
     return service.generate(request, include_weather=False, include_alternatives=include_alternatives)
 
@@ -136,7 +140,11 @@ def test_meal_alternatives_exclude_ineligible_closed_and_already_used():
     valid_alt = _place("valid-alt-food", priority=7)
 
     places = [breakfast_pick, ineligible, closed, lunch_pick, valid_alt, *_fillers()]
-    response = _generate(places, days=1, start_date=A_TUESDAY, include_breakfast=True)
+    # dinner도 기본으로 켜져 있으면 valid_alt가 dinner 자신의 선택으로
+    # 소비돼버려(대안 풀 전체가 최종 used_ids 기준이므로 - 이 파일의 버그
+    # 수정 대상) lunch의 대안으로 안 남는다. 이 테스트는 lunch 하나의 제외
+    # 규칙만 보려는 것이므로 dinner를 꺼서 격리한다.
+    response = _generate(places, days=1, start_date=A_TUESDAY, include_breakfast=True, departure_period="afternoon")
 
     breakfast = next(meal for meal in response.meal_recommendations if meal.meal_type == "breakfast")
     assert breakfast.place_id == "morning-cafe"
@@ -161,7 +169,11 @@ def test_breakfast_alternatives_only_include_breakfast_classified_places():
     non_breakfast_strong = _place("fancy-dinner-spot", priority=10)
 
     places = [cafe_a, cafe_b, non_breakfast_strong, *_fillers()]
-    response = _generate(places, days=1, include_breakfast=True)
+    # lunch/dinner를 꺼서 격리한다 - 안 그러면 아침 필터가 없는 lunch/dinner
+    # 가 cafe-b를 자기 몫으로 먼저 가져가 버려(최종 used_ids 기준이므로)
+    # breakfast의 대안으로 안 남는다. 이 테스트는 breakfast 하나의 아침
+    # 필터만 보려는 것이다.
+    response = _generate(places, days=1, include_breakfast=True, departure_period="before_lunch")
 
     breakfast = next(meal for meal in response.meal_recommendations if meal.meal_type == "breakfast")
     assert breakfast.place_id == "cafe-a"
@@ -180,7 +192,12 @@ def test_meal_alternatives_pool_never_forced_wider_than_same_area():
     far_area_places = [_place(f"far-{i}", priority=10, area="far-away-area") for i in range(5)]
 
     places = [selected, same_area_other, *far_area_places, *_fillers(area="home-area")]
-    response = _generate(places, days=1)
+    # dinner를 꺼서 격리한다 - 안 그러면 dinner가 같은 지역 풀을 먼저 비운
+    # same_area_other를 자기 몫으로 가져가 버려(같은 _meal_candidate_pool
+    # 규칙을 dinner 선택 때도 쓰므로) lunch의 대안 풀이 그 다음 단계(인접
+    # 지역 → 도시 전체)로 자연스럽게 넘어가 버린다. 이 테스트는 "같은 지역
+    # 풀이 있으면 억지로 넓히지 않는다"는 lunch 하나의 규칙만 보려는 것이다.
+    response = _generate(places, days=1, departure_period="afternoon")
 
     lunch = next(meal for meal in response.meal_recommendations if meal.meal_type == "lunch")
     assert lunch.place_id == "same-area-pick"

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import {
+  activityTypeOptions,
   applySlotBiasPreset,
   budgetOptions,
-  categoryOptions,
   companionOptions,
   durationPresetOptions,
   labelBudgetBand,
@@ -175,6 +175,28 @@ export function AdminPlaceForm({
 
               <small>원하는 값이 없으면 입력칸에 직접 숫자를 적을 수 있습니다.</small>
 
+              <div className="admin-form-grid">
+                <label>
+                  <span>위도</span>
+                  <input
+                    placeholder="선택 입력: 예) 37.544"
+                    value={editor.latitude}
+                    onChange={(event) => onChange("latitude", event.target.value)}
+                  />
+                </label>
+                <label>
+                  <span>경도</span>
+                  <input
+                    placeholder="선택 입력: 예) 127.037"
+                    value={editor.longitude}
+                    onChange={(event) => onChange("longitude", event.target.value)}
+                  />
+                </label>
+              </div>
+              {!editor.latitude.trim() || !editor.longitude.trim() ? (
+                <small>좌표가 없으면 이동시간 계산이 어긋날 수 있어요.</small>
+              ) : null}
+
               <label>
                   <RequiredLabel>짧은 소개</RequiredLabel>
                 <textarea
@@ -217,11 +239,11 @@ export function AdminPlaceForm({
               <label>
                 <RequiredLabel>카테고리</RequiredLabel>
                 <div className="admin-chip-row selection">
-                  {categoryOptions.map((option) => (
+                  {activityTypeOptions.map((option) => (
                     <button
                       key={option.value}
-                      className={editor.category.includes(option.value) ? "admin-chip active" : "admin-chip"}
-                      onClick={() => onChange("category", toggleSelection(editor.category, option.value))}
+                      className={editor.activity_type.includes(option.value) ? "admin-chip active" : "admin-chip"}
+                      onClick={() => onChange("activity_type", toggleSelection(editor.activity_type, option.value))}
                       type="button"
                     >
                       {option.label}
@@ -530,9 +552,9 @@ export function AdminPlaceForm({
               <p className="admin-preview-title">{editor.name || "장소 이름을 입력하면 카드 미리보기에 표시됩니다."}</p>
               <p className="admin-preview-summary">{editor.summary || "짧은 소개를 입력하면 사용자에게 보일 설명을 미리 확인할 수 있습니다."}</p>
               <div className="admin-chip-row">
-                {editor.category.map((value) => (
+                {editor.activity_type.map((value) => (
                   <span key={value} className="admin-preview-chip">
-                    {categoryOptions.find((option) => option.value === value)?.label ?? value}
+                    {activityTypeOptions.find((option) => option.value === value)?.label ?? value}
                   </span>
                 ))}
               </div>

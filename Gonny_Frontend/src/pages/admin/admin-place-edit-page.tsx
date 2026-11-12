@@ -14,6 +14,7 @@ import {
   PlaceData,
   PLACE_PRIORITY_MAX,
   PLACE_PRIORITY_MIN,
+  resolveEditPayload,
   suggestPlaceId,
   toEditorState,
   toPayload,
@@ -111,7 +112,7 @@ export function AdminPlaceEditPage() {
       return;
     }
 
-    const editedFields = toPayload(editor);
+    const editedFields = isCreating || !originalPlace ? toPayload(editor) : resolveEditPayload(editor, originalPlace);
     const payload = (isCreating ? editedFields : { ...originalPlace, ...editedFields }) as PlaceData;
     const placeIdValue = editor.id.trim();
     const placeName = editor.name.trim();

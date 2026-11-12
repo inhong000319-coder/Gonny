@@ -444,6 +444,7 @@ export function TripDetailPage() {
               budget={report.budget ?? 0}
               budgetDiffPct={report.budget_diff_pct}
               distanceKm={report.distance_km}
+              lodgingSpent={report.lodging_spent}
               totalSpent={report.total_spent ?? 0}
               visitedCount={report.visited_count ?? 0}
             />

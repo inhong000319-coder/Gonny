@@ -8,7 +8,10 @@ export type TripCategoryBreakdown = {
 export type TripReport = {
   ready: boolean;
   message: string | null;
+  // 숙박 지출은 제외한 금액 - budget_diff_pct도 이 값 기준이다.
   total_spent: number | null;
+  // 숙박 지출 합계(참고용) - total_spent/budget_diff_pct에는 포함되지 않는다.
+  lodging_spent: number | null;
   budget: number | null;
   budget_diff_pct: number | null;
   category_breakdown: TripCategoryBreakdown[];
@@ -47,6 +50,7 @@ function normalizeTripReport(payload: unknown): TripReport {
     ready: data.ready,
     message: typeof data.message === "string" ? data.message : null,
     total_spent: typeof data.total_spent === "number" ? data.total_spent : null,
+    lodging_spent: typeof data.lodging_spent === "number" ? data.lodging_spent : null,
     budget: typeof data.budget === "number" ? data.budget : null,
     budget_diff_pct: typeof data.budget_diff_pct === "number" ? data.budget_diff_pct : null,
     category_breakdown: Array.isArray(data.category_breakdown)

@@ -9,6 +9,7 @@ function mapBudgetSummary(dto: ExpenseSummaryDto): BudgetOverview {
     totalSpent: dto.total_spent,
     remainingBudget: dto.remaining,
     usagePercent: dto.usage_pct,
+    lodgingSpent: dto.lodging_spent,
   };
 }
 

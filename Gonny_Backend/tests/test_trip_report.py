@@ -235,6 +235,7 @@ def test_create_expense_returns_remaining_budget_and_usage_pct(db_session: Sessi
 
     assert result.remaining_budget == 75000
     assert result.budget_usage_pct == 25.0
+    assert result.lodging_spent == 0
 
 
 def test_get_expense_summary_reflects_all_expenses(db_session: Session) -> None:
@@ -247,6 +248,55 @@ def test_get_expense_summary_reflects_all_expenses(db_session: Session) -> None:
     assert summary.total_spent == 120000
     assert summary.remaining == -20000
     assert summary.is_over_budget is True
+    assert summary.lodging_spent == 0
+
+
+# --- 숙박 지출 제외 (이번 과제) --------------------------------------------
+
+
+def test_create_expense_excludes_lodging_from_budget_comparison(db_session: Session) -> None:
+    trip = create_trip(db_session, budget=100000)
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="식비", amount=25000))
+
+    result = trip_service.create_expense(
+        db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="숙박", amount=200000)
+    )
+
+    # 숙박 20만원을 더해도 예산 대비 수치는 식비 25000원만 반영한다.
+    assert result.remaining_budget == 75000
+    assert result.budget_usage_pct == 25.0
+    assert result.lodging_spent == 200000
+
+
+def test_get_expense_summary_excludes_lodging_from_budget_comparison(db_session: Session) -> None:
+    trip = create_trip(db_session, budget=100000)
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="식비", amount=40000))
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="숙박", amount=500000))
+
+    summary = trip_service.get_expense_summary(db=db_session, trip_id=trip.id)
+
+    assert summary.total_spent == 40000
+    assert summary.remaining == 60000
+    assert summary.is_over_budget is False
+    assert summary.lodging_spent == 500000
+
+
+def test_get_trip_report_excludes_lodging_but_still_lists_it_in_breakdown(db_session: Session) -> None:
+    trip = create_trip(db_session, budget=100000, end_date=date.today() - timedelta(days=1))
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="식비", amount=30000))
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="숙박", amount=300000))
+
+    report = trip_service.get_trip_report(db=db_session, trip_id=trip.id)
+
+    assert report.total_spent == 30000
+    assert report.lodging_spent == 300000
+    # 예산 대비는 숙박을 뺀 30000원 기준 (30000 - 100000) / 100000 * 100 = -70%
+    assert report.budget_diff_pct == -70.0
+    # breakdown 표에는 숙박도 그대로 포함된다(예산 비교 대상이 아닐 뿐).
+    assert {item.category: item.amount_krw for item in report.category_breakdown} == {
+        "식비": 30000,
+        "숙박": 300000,
+    }
 
 
 def test_update_trip_retrospective_persists_rating_and_note(db_session: Session) -> None:

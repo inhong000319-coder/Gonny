@@ -35,7 +35,6 @@ import {
 } from "../utils/meal-swaps";
 import { computeTimelineTravelHints, type TimelineRow } from "../utils/timeline-hints";
 import {
-  formatAccommodationAlternativePriceLabel,
   getEffectiveAccommodation,
   isAccommodationSwapped,
   shouldHideAccommodationBoundaryConnector,
@@ -227,7 +226,8 @@ type AccommodationRecommendation = {
   accommodation_type: string;
   checkin_time?: string | null;
   checkout_time?: string | null;
-  // Standard room, one night, in KRW (null = no confirmed figure).
+  // 백엔드가 항상 null로 내려준다(시기별 가격 편차가 커 화면에 보여주지
+  // 않기로 함) - 응답 호환을 위해 필드만 유지, 렌더링하지 않는다.
   average_price_krw?: number | null;
 };
 
@@ -1568,7 +1568,7 @@ function AccommodationAlternativesPanel({
               {alternative.name}
               <span className="tc-alt-chip-area">
                 {" "}
-                · {alternative.accommodation_type} · {formatAccommodationAlternativePriceLabel(alternative.average_price_krw)}
+                · {alternative.accommodation_type}
               </span>
             </button>
           );
@@ -2629,7 +2629,7 @@ export function TripCreateForm() {
                     </div>
 
                     <div className="tc-field">
-                      <span className="tc-field-label">예산</span>
+                      <span className="tc-field-label">활동 예산 (숙소 제외)</span>
                       <div className="tc-choice-grid tc-choice-grid-3">
                         {budgetOptions.map((option) => (
                           <button
@@ -2646,6 +2646,9 @@ export function TripCreateForm() {
                           </button>
                         ))}
                       </div>
+                      <p className="tc-note">
+                        입장료·식사 등 활동 비용 기준이에요. 숙소 가격은 시기별로 달라 직접 확인해 주세요.
+                      </p>
                     </div>
 
                     {availableAccommodationTypes.length > 0 ? (
@@ -2840,7 +2843,7 @@ export function TripCreateForm() {
                       </div>
 
                       <div className="tc-summary-item">
-                        <span className="tc-summary-label">예산</span>
+                        <span className="tc-summary-label">활동 예산 (숙소 제외)</span>
                         <span className="tc-summary-value">{labelBudget(form.budget_band)}</span>
                         <span className="tc-summary-note">{budgetIntensityLabel(form.budget_band)}</span>
                       </div>
@@ -2987,14 +2990,9 @@ export function TripCreateForm() {
                     <span className="tc-tag">체크아웃 {effectiveAccommodation.checkout_time}</span>
                   ) : null}
                 </div>
-                {effectiveAccommodation.average_price_krw != null ? (
-                  <>
-                    <p className="tc-section-note" style={{ marginTop: 10 }}>
-                      1박 기준 약 {formatApproxManwon(effectiveAccommodation.average_price_krw)}
-                    </p>
-                    <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
-                  </>
-                ) : null}
+                <p className="tc-section-note" style={{ marginTop: 10 }}>
+                  숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
+                </p>
                 <AccommodationAlternativesPanel
                   activeAlternativeId={accommodationSwap?.id ?? null}
                   alternatives={result.accommodation_alternatives}
@@ -3019,15 +3017,7 @@ export function TripCreateForm() {
                     가격 미확인 {result.estimated_cost.unpriced_place_count}곳은 상한으로 가정
                   </p>
                 ) : null}
-                {accommodationIsSwapped ? (
-                  // 기존 "숙소 가격 미확인으로 숙소 비용 제외" 문구는 원래
-                  // 추천 숙소의 accommodation_included 기준이라, 숙소를
-                  // 바꾸면 바뀐 숙소 기준과 어긋날 수 있어 숨기고 이 안내로
-                  // 갈음한다(과제 constraint).
-                  <p className="tc-section-note">숙소를 바꿔서 숙박비는 반영되지 않았어요</p>
-                ) : !result.estimated_cost.accommodation_included ? (
-                  <p className="tc-section-note">숙소 가격 미확인으로 숙소 비용 제외</p>
-                ) : null}
+                <p className="tc-section-note">숙박비는 포함되지 않아요. 숙소 가격은 직접 확인해 주세요.</p>
               </div>
             ) : null}
 

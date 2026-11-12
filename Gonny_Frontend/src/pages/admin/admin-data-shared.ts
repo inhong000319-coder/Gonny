@@ -485,6 +485,51 @@ export function toPayload(state: PlaceEditorState): Partial<PlaceData> {
   return payload;
 }
 
+/**
+ * 수정 화면 전용: slot_bias/full_day_notes를 0·빈 값으로 되돌리는 저장이 실제로
+ * 반영되게 한다. toPayload는 "편집 상태가 기본값이면 키를 뺀다"는 단순 규칙이라,
+ * 원본이 값을 갖고 있었는데 사용자가 0/빈 값으로 지운 경우까지 키를 빼버려서
+ * {...originalPlace, ...toPayload(editor)} 병합 시 원본 값이 되살아나는 문제가 있었다.
+ * 사용자가 그 칸을 건드렸거나(로드 시점 값과 다름) 원본에 이미 값이 있던 경우에는
+ * 편집 값을 0·빈 값이어도 그대로 보낸다. 둘 다 아니면(원본도 없고 손대지도 않음)
+ * toPayload의 기본 생략 동작을 그대로 둬 {}가 유지되게 한다.
+ * 새 장소 추가(originalPlace가 없음)에는 영향 없음 - toPayload를 그대로 쓴다.
+ */
+export function resolveEditPayload(editor: PlaceEditorState, originalPlace: PlaceData): Partial<PlaceData> {
+  const payload = toPayload(editor);
+  const loaded = toEditorState(originalPlace);
+
+  const slotBiasTouched =
+    editor.slot_bias_morning !== loaded.slot_bias_morning ||
+    editor.slot_bias_afternoon !== loaded.slot_bias_afternoon ||
+    editor.slot_bias_evening !== loaded.slot_bias_evening;
+  const originalHasSlotBias = !!originalPlace.slot_bias && Object.keys(originalPlace.slot_bias).length > 0;
+  if (slotBiasTouched || originalHasSlotBias) {
+    payload.slot_bias = {
+      morning: Number(editor.slot_bias_morning || 0),
+      afternoon: Number(editor.slot_bias_afternoon || 0),
+      evening: Number(editor.slot_bias_evening || 0),
+    };
+  }
+
+  const notesTouched =
+    editor.full_day_notes_morning !== loaded.full_day_notes_morning ||
+    editor.full_day_notes_afternoon !== loaded.full_day_notes_afternoon ||
+    editor.full_day_notes_evening !== loaded.full_day_notes_evening;
+  const originalHasNotes = Object.values(originalPlace.full_day_notes ?? {}).some(
+    (list) => Array.isArray(list) && list.length > 0,
+  );
+  if (notesTouched || originalHasNotes) {
+    payload.full_day_notes = {
+      morning: parseLineList(editor.full_day_notes_morning),
+      afternoon: parseLineList(editor.full_day_notes_afternoon),
+      evening: parseLineList(editor.full_day_notes_evening),
+    };
+  }
+
+  return payload;
+}
+
 export function suggestPlaceId(city: string, name: string, existingIds: string[]) {
   const normalizedName = name
     .toLowerCase()

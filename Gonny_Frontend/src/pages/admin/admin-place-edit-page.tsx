@@ -27,6 +27,7 @@ export function AdminPlaceEditPage() {
   const [searchParams] = useSearchParams();
   const [catalog, setCatalog] = useState<CityCatalog | null>(null);
   const [editor, setEditor] = useState<PlaceEditorState | null>(null);
+  const [originalPlace, setOriginalPlace] = useState<PlaceData | null>(null);
   const [savedSnapshot, setSavedSnapshot] = useState("");
   const [statusText, setStatusText] = useState("항목을 입력하고 저장하면 여행지 장소 목록에 반영됩니다.");
   const [isSaving, setIsSaving] = useState(false);
@@ -44,6 +45,7 @@ export function AdminPlaceEditPage() {
 
         if (isCreating) {
           const nextEditor = emptyEditorState(response.data.places[0]?.area ?? "");
+          setOriginalPlace(null);
           setEditor(nextEditor);
           setSavedSnapshot(JSON.stringify(nextEditor));
           return;
@@ -56,6 +58,7 @@ export function AdminPlaceEditPage() {
         }
 
         const nextEditor = toEditorState(targetPlace);
+        setOriginalPlace(targetPlace);
         setEditor(nextEditor);
         setSavedSnapshot(JSON.stringify(nextEditor));
       } catch (error) {
@@ -108,7 +111,10 @@ export function AdminPlaceEditPage() {
       return;
     }
 
-    const payload: PlaceData = toPayload(editor);
+    const editedFields = toPayload(editor);
+    const payload = (isCreating ? editedFields : { ...originalPlace, ...editedFields }) as PlaceData;
+    const placeIdValue = editor.id.trim();
+    const placeName = editor.name.trim();
     const priority = toPositiveInteger(editor.priority, 0);
     const durationHours = toPositiveInteger(editor.duration_hours, 0);
 
@@ -130,23 +136,25 @@ export function AdminPlaceEditPage() {
     try {
       if (isCreating) {
         const response = await apiClient.post<CityCatalog>(`/admin/destinations/${city}/places`, payload);
-        const savedPlace = response.data.places.find((place) => place.id === payload.id) ?? payload;
+        const savedPlace = response.data.places.find((place) => place.id === placeIdValue) ?? payload;
         const nextEditor = toEditorState(savedPlace);
+        setOriginalPlace(savedPlace);
         setEditor(nextEditor);
         setSavedSnapshot(JSON.stringify(nextEditor));
-        setStatusText(`${payload.name} 장소를 추가했습니다.`);
-        navigate(`/admin/data/${city}/${payload.id}/edit${searchParams.toString() ? `?${searchParams.toString()}` : ""}`, {
+        setStatusText(`${placeName} 장소를 추가했습니다.`);
+        navigate(`/admin/data/${city}/${placeIdValue}/edit${searchParams.toString() ? `?${searchParams.toString()}` : ""}`, {
           replace: true,
         });
         return;
       }
 
       const response = await apiClient.put<CityCatalog>(`/admin/destinations/${city}/places/${placeId}`, payload);
-      const savedPlace = response.data.places.find((place) => place.id === payload.id) ?? payload;
+      const savedPlace = response.data.places.find((place) => place.id === placeIdValue) ?? payload;
       const nextEditor = toEditorState(savedPlace);
+      setOriginalPlace(savedPlace);
       setEditor(nextEditor);
       setSavedSnapshot(JSON.stringify(nextEditor));
-      setStatusText(`${payload.name} 장소를 수정했습니다.`);
+      setStatusText(`${placeName} 장소를 수정했습니다.`);
     } catch (error) {
       setStatusText(getApiErrorMessage(error, "장소를 저장하지 못했습니다."));
     } finally {

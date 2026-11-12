@@ -9,7 +9,7 @@ import {
   displayContinent,
   displayCountry,
   getApiErrorMessage,
-  labelCategory,
+  labelActivityType,
   labelVisibilityLevel,
 } from "./admin-data-shared";
 
@@ -129,7 +129,7 @@ export function AdminDataPage() {
         })),
       )
       .filter((place) => {
-        const searchTarget = [place.name, place.id, place.area, place.summary, place.cityLabel, ...place.category]
+        const searchTarget = [place.name, place.id, place.area, place.summary, place.cityLabel, ...place.activity_type]
           .join(" ")
           .toLowerCase();
         if (keyword && !searchTarget.includes(keyword)) {
@@ -139,7 +139,7 @@ export function AdminDataPage() {
         if (selectedView === "active") return (place.is_active ?? true) === true;
         if (selectedView === "inactive") return (place.is_active ?? true) === false;
         if (selectedView === "activity") {
-          return place.category.some((category) => ["activity", "theme_park", "local_experience"].includes(category));
+          return place.activity_type.includes("액티비티");
         }
         if (selectedView === "core") return (place.mvp_tier ?? "standard") === "core";
         return true;
@@ -301,9 +301,7 @@ export function AdminDataPage() {
           <div className="admin-summary-card">
             <strong>액티비티 중심 장소</strong>
             <span>
-              {placeList.filter((place) =>
-                place.category.some((category) => ["activity", "theme_park", "local_experience"].includes(category)),
-              ).length}
+              {placeList.filter((place) => place.activity_type.includes("액티비티")).length}
             </span>
           </div>
         </div>
@@ -357,7 +355,7 @@ export function AdminDataPage() {
                   <div className="admin-place-main">
                     <strong>{place.name}</strong>
                     <span className="admin-place-city">{place.cityLabel}</span>
-                    <span>{place.category.map(labelCategory).join(", ")}</span>
+                    <span>{place.activity_type.map(labelActivityType).join(", ")}</span>
                     <span>
                       우선순위 {place.priority} - {labelVisibilityLevel(place.mvp_tier ?? "standard")} -{" "}
                       {(place.is_active ?? true) ? "활성" : "비활성"}

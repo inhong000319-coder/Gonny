@@ -13,7 +13,7 @@ export type DestinationSummary = {
 export type PlaceData = {
   id: string;
   name: string;
-  category: string[];
+  activity_type: string[];
   budget_level: string[];
   suitable_for: string[];
   time_fit: string[];
@@ -23,9 +23,23 @@ export type PlaceData = {
   pace: string[];
   mobility: string[];
   summary: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  mood?: string[];
+  mood_evening_override?: string[];
+  visual_feature?: string[];
+  google_rating?: number | null;
+  google_rating_count?: number | null;
+  average_cost_krw?: number | null;
+  content_id?: string | null;
+  open_hours?: string | null;
+  closed_days?: string | null;
   official_url?: string | null;
   booking_hint?: string | null;
+  setting?: "indoor" | "outdoor" | "mixed" | null;
+  rain_sensitive_light?: boolean;
   is_active?: boolean;
+  meal_eligible?: boolean;
   mvp_tier?: string;
   full_day_recommended?: boolean;
   full_day_notes?: Record<string, string[]>;
@@ -61,7 +75,7 @@ export type DestinationEditorState = {
 export type PlaceEditorState = {
   id: string;
   name: string;
-  category: string[];
+  activity_type: string[];
   budget_level: string[];
   suitable_for: string[];
   time_fit: string[];
@@ -71,6 +85,8 @@ export type PlaceEditorState = {
   pace: string[];
   mobility: string[];
   summary: string;
+  latitude: string;
+  longitude: string;
   official_url: string;
   booking_hint: string;
   is_active: boolean;
@@ -180,20 +196,15 @@ export const cityLabels: Record<string, string> = {
   vladivostok: "블라디보스토크",
 };
 
-export const categoryOptions = [
-  { value: "sightseeing", label: "관광" },
-  { value: "culture", label: "문화" },
-  { value: "food", label: "맛집" },
-  { value: "shopping", label: "쇼핑" },
-  { value: "relax", label: "휴식" },
-  { value: "nature", label: "자연" },
-  { value: "photo", label: "사진 명소" },
-  { value: "activity", label: "액티비티" },
-  { value: "local_experience", label: "로컬 체험" },
-  { value: "theme_park", label: "테마파크" },
-  { value: "family", label: "가족 여행" },
-  { value: "nightlife", label: "야간 명소" },
-  { value: "cafe", label: "카페" },
+export const activityTypeOptions = [
+  { value: "미식", label: "미식" },
+  { value: "문화·역사", label: "문화·역사" },
+  { value: "쇼핑", label: "쇼핑" },
+  { value: "휴양·힐링", label: "휴양·힐링" },
+  { value: "나이트라이프", label: "나이트라이프" },
+  { value: "액티비티", label: "액티비티" },
+  { value: "자연·트레킹", label: "자연·트레킹" },
+  { value: "온천", label: "온천" },
 ];
 
 export const timeOptions = [
@@ -252,8 +263,8 @@ export function displayCity(destination: Pick<DestinationSummary, "city" | "city
   return destination.city_label?.trim() || labelCity(destination.city);
 }
 
-export function labelCategory(value: string) {
-  return categoryOptions.find((option) => option.value === value)?.label ?? value;
+export function labelActivityType(value: string) {
+  return activityTypeOptions.find((option) => option.value === value)?.label ?? value;
 }
 
 export function labelVisibilityLevel(value: string) {
@@ -333,7 +344,7 @@ export function toEditorState(place: PlaceData): PlaceEditorState {
   return {
     id: place.id,
     name: place.name,
-    category: place.category,
+    activity_type: place.activity_type,
     budget_level: place.budget_level,
     suitable_for: place.suitable_for,
     time_fit: place.time_fit,
@@ -343,6 +354,8 @@ export function toEditorState(place: PlaceData): PlaceEditorState {
     pace: place.pace,
     mobility: place.mobility,
     summary: place.summary,
+    latitude: place.latitude != null ? String(place.latitude) : "",
+    longitude: place.longitude != null ? String(place.longitude) : "",
     official_url: place.official_url ?? "",
     booking_hint: place.booking_hint ?? "",
     is_active: place.is_active ?? true,
@@ -366,7 +379,7 @@ export function emptyEditorState(defaultArea = ""): PlaceEditorState {
   return {
     id: "",
     name: "",
-    category: ["sightseeing"],
+    activity_type: ["문화·역사"],
     budget_level: ["medium"],
     suitable_for: ["solo", "couple", "friend", "family"],
     time_fit: ["afternoon"],
@@ -376,6 +389,8 @@ export function emptyEditorState(defaultArea = ""): PlaceEditorState {
     pace: ["easy"],
     mobility: ["walkable"],
     summary: "",
+    latitude: "",
+    longitude: "",
     official_url: "",
     booking_hint: "",
     is_active: true,
@@ -406,11 +421,16 @@ export function emptyDestinationEditorState(): DestinationEditorState {
   };
 }
 
-export function toPayload(state: PlaceEditorState): PlaceData {
-  return {
+/**
+ * 화면이 다루는 필드만 담는다. latitude/longitude는 입력값이 있을 때만
+ * 키를 포함시켜, 수정 저장 시 {...원본, ...toPayload(editor)} 로 합칠 때
+ * 빈 입력이 원본 좌표를 지우지 않고 그대로 유지되게 한다.
+ */
+export function toPayload(state: PlaceEditorState): Partial<PlaceData> {
+  const payload: Partial<PlaceData> = {
     id: state.id.trim(),
     name: state.name.trim(),
-    category: state.category,
+    activity_type: state.activity_type,
     budget_level: state.budget_level,
     suitable_for: state.suitable_for,
     time_fit: state.time_fit,
@@ -425,20 +445,44 @@ export function toPayload(state: PlaceEditorState): PlaceData {
     is_active: state.is_active,
     mvp_tier: state.mvp_tier,
     full_day_recommended: state.full_day_recommended,
-    full_day_notes: {
-      morning: parseLineList(state.full_day_notes_morning),
-      afternoon: parseLineList(state.full_day_notes_afternoon),
-      evening: parseLineList(state.full_day_notes_evening),
-    },
-    slot_bias: {
-      morning: Number(state.slot_bias_morning || 0),
-      afternoon: Number(state.slot_bias_afternoon || 0),
-      evening: Number(state.slot_bias_evening || 0),
-    },
     mood_keywords: parseCommaList(state.mood_keywords),
     highlight_tags: parseCommaList(state.highlight_tags),
     note_templates: parseCommaList(state.note_templates),
   };
+
+  // 셋 다 비어있으면(원래 값이 없던 경우 toEditorState가 만들어내는 기본 상태) 키 자체를
+  // 보내지 않는다. 항상 보내면 원본이 필드 자체가 없던 장소(기본값 {})를 수정할 때
+  // slot_bias/full_day_notes만 괜히 채워진 형태로 바뀌어버린다.
+  const fullDayNotes = {
+    morning: parseLineList(state.full_day_notes_morning),
+    afternoon: parseLineList(state.full_day_notes_afternoon),
+    evening: parseLineList(state.full_day_notes_evening),
+  };
+  if (fullDayNotes.morning.length || fullDayNotes.afternoon.length || fullDayNotes.evening.length) {
+    payload.full_day_notes = fullDayNotes;
+  }
+
+  const slotBias = {
+    morning: Number(state.slot_bias_morning || 0),
+    afternoon: Number(state.slot_bias_afternoon || 0),
+    evening: Number(state.slot_bias_evening || 0),
+  };
+  if (slotBias.morning || slotBias.afternoon || slotBias.evening) {
+    payload.slot_bias = slotBias;
+  }
+
+  const latitude = state.latitude.trim();
+  if (latitude) {
+    const parsed = Number(latitude);
+    if (!Number.isNaN(parsed)) payload.latitude = parsed;
+  }
+  const longitude = state.longitude.trim();
+  if (longitude) {
+    const parsed = Number(longitude);
+    if (!Number.isNaN(parsed)) payload.longitude = parsed;
+  }
+
+  return payload;
 }
 
 export function suggestPlaceId(city: string, name: string, existingIds: string[]) {
@@ -492,7 +536,7 @@ export function validatePlaceEditor(
   if (!editor.summary.trim()) {
     errors.push("짧은 소개를 입력해주세요.");
   }
-  if (!editor.category.length) {
+  if (!editor.activity_type.length) {
     errors.push("카테고리를 하나 이상 선택해주세요.");
   }
   if (!editor.time_fit.length) {

@@ -399,6 +399,15 @@ const conceptOptions: TripConcept[] = [
   "onsen",
 ];
 const budgetOptions: BudgetBand[] = ["low", "medium", "high"];
+// 숙소 등급(가격이 아니라 선호) - 과거엔 토글을 켜야 선택지가 나왔지만, 이제는
+// 처음부터 보이는 4개 선택지다. budgetOptions/labelBudget/budgetIntensityLabel은
+// 활동 예산 쪽 문구라서 여기선 재사용하지 않는다.
+const accommodationGradeOptions: { value: BudgetBand | null; label: string; description: string }[] = [
+  { value: null, label: "상관없음", description: "등급은 따로 고려하지 않아요" },
+  { value: "low", label: "실속", description: "가성비 위주 숙소" },
+  { value: "medium", label: "보통", description: "무난한 중간 등급 숙소" },
+  { value: "high", label: "고급", description: "호텔급·고급 숙소" },
+];
 type AccommodationTypeLabel = "호텔" | "모텔" | "호스텔" | "펜션·민박" | "콘도미니엄";
 const accommodationTypeOptions: AccommodationTypeLabel[] = ["호텔", "모텔", "호스텔", "펜션·민박", "콘도미니엄"];
 const styleOptions: TripStyle[] = ["tight", "easy", "near-stay", "mobility-first"];
@@ -1855,7 +1864,6 @@ function splitNoteLines(note: string) {
 export function TripCreateForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<PlannerFormState>(initialForm);
-  const [isAccommodationBudgetOn, setIsAccommodationBudgetOn] = useState(false);
   const [catalog, setCatalog] = useState<CatalogCityOption[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
@@ -2120,13 +2128,6 @@ export function TripCreateForm() {
     }));
   };
 
-  const handleAccommodationBudgetToggle = (enabled: boolean) => {
-    setIsAccommodationBudgetOn(enabled);
-    if (!enabled) {
-      updateField("accommodation_budget_band", null);
-    }
-  };
-
   const toggleTransportMode = (mode: DayTransportMode) => {
     setForm((prev) => {
       const days = parseNights(prev.duration_label) + 1;
@@ -2209,7 +2210,7 @@ export function TripCreateForm() {
       ...planForm,
       travelers: Number(form.travelers) || 2,
       ...(accommodation_types.length > 0 ? { accommodation_types } : {}),
-      ...(isAccommodationBudgetOn && accommodation_budget_band ? { accommodation_budget_band } : {}),
+      ...(accommodation_budget_band ? { accommodation_budget_band } : {}),
       ...(arrival_period ? { arrival_period } : {}),
       ...(departure_period ? { departure_period } : {}),
       ...(include_breakfast ? { include_breakfast } : {}),
@@ -2671,35 +2672,27 @@ export function TripCreateForm() {
                     ) : null}
 
                     <div className="tc-field">
-                      <label className="tc-toggle-row">
-                        <input
-                          checked={isAccommodationBudgetOn}
-                          onChange={(event) => handleAccommodationBudgetToggle(event.target.checked)}
-                          type="checkbox"
-                        />
-                        <span>숙소 예산을 따로 설정</span>
-                      </label>
-                      {isAccommodationBudgetOn ? (
-                        <div className="tc-choice-grid tc-choice-grid-3">
-                          {budgetOptions.map((option) => (
-                            <button
-                              aria-checked={form.accommodation_budget_band === option}
-                              className={`tc-choice-card ${form.accommodation_budget_band === option ? "is-selected" : ""}`}
-                              key={option}
-                              onClick={() => updateField("accommodation_budget_band", option)}
-                              role="radio"
-                              type="button"
-                            >
-                              <strong>{labelBudget(option)}</strong>
-                              <small>{budgetIntensityLabel(option)}</small>
-                            </button>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="tc-note">
-                          숙소는 위에서 고른 활동 예산({labelBudget(form.budget_band)})을 따릅니다.
-                        </p>
-                      )}
+                      <span className="tc-field-label">숙소 등급 (선택)</span>
+                      <p className="tc-note">
+                        숙소 가격은 시기와 객실에 따라 차이가 커서 정확하게 안내드리기 어려워요. 가격은 예약
+                        사이트에서 직접 확인해 주세요. 아래 선택은 가격이 아니라 원하는 숙소 등급(실속·보통·고급)을
+                        고르는 거예요.
+                      </p>
+                      <div className="tc-choice-grid tc-choice-grid-4">
+                        {accommodationGradeOptions.map((option) => (
+                          <button
+                            aria-checked={form.accommodation_budget_band === option.value}
+                            className={`tc-choice-card ${form.accommodation_budget_band === option.value ? "is-selected" : ""}`}
+                            key={option.label}
+                            onClick={() => updateField("accommodation_budget_band", option.value)}
+                            role="radio"
+                            type="button"
+                          >
+                            <strong>{option.label}</strong>
+                            <small>{option.description}</small>
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="tc-field">
@@ -2856,11 +2849,13 @@ export function TripCreateForm() {
                         </div>
                       ) : null}
 
-                      {isAccommodationBudgetOn && form.accommodation_budget_band ? (
+                      {form.accommodation_budget_band ? (
                         <div className="tc-summary-item">
-                          <span className="tc-summary-label">숙소 예산</span>
-                          <span className="tc-summary-value">{labelBudget(form.accommodation_budget_band)}</span>
-                          <span className="tc-summary-note">{budgetIntensityLabel(form.accommodation_budget_band)}</span>
+                          <span className="tc-summary-label">숙소 등급</span>
+                          <span className="tc-summary-value">
+                            {accommodationGradeOptions.find((option) => option.value === form.accommodation_budget_band)
+                              ?.label ?? ""}
+                          </span>
                         </div>
                       ) : null}
 

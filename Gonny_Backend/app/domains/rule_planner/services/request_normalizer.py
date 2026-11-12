@@ -37,7 +37,8 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
     style = request.style or DEFAULT_STYLE
     companion_type = request.companion_type or DEFAULT_COMPANION
     budget_band = normalize_budget(request.budget_value, request.budget_band)
-    accommodation_budget_band = request.accommodation_budget_band or budget_band
+    # None (no grade preference, "상관없음") stays None - no fallback to budget_band.
+    accommodation_budget_band = request.accommodation_budget_band
     accommodation_types = list(dict.fromkeys(request.accommodation_types or []))
 
     continent = (request.continent or "asia").strip().lower()

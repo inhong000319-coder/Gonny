@@ -142,7 +142,10 @@ def count_accommodation_types(city: str) -> dict[str, int]:
     return dict(Counter(accommodation.accommodation_type for accommodation in load_city_accommodations(city)))
 
 
-def _budget_fit_score(accommodation: AccommodationData, requested_band: BudgetBand) -> int:
+def _budget_fit_score(accommodation: AccommodationData, requested_band: BudgetBand | None) -> int:
+    if requested_band is None:
+        return 0
+
     if accommodation.average_price_krw is not None:
         band_distance = abs(
             _PRICE_BAND_ORDER[classify_price_band(accommodation.average_price_krw)]
@@ -180,9 +183,11 @@ def accommodation_score(
 ) -> float:
     """Rule-based accommodation fitness score.
 
-    Budget fit uses request.accommodation_budget_band (lodging-only budget,
-    falling back to the activity budget_band when unset) and two different
-    bases, intentionally:
+    Budget fit uses request.accommodation_budget_band (lodging-only grade
+    preference, independent of the activity budget_band). None means "no
+    grade preference" - the user picked "상관없음" - and contributes 0,
+    not a fallback to budget_band. When set, it uses two different bases,
+    intentionally:
       - If average_price_krw is known, the stay's real nightly rate is
         classified into low/medium/high (see classify_price_band) and compared
         against that band by distance: exact +10, one band off -2,

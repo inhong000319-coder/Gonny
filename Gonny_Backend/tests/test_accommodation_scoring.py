@@ -88,7 +88,7 @@ def build_place(**overrides) -> PlaceData:
 
 
 def test_budget_match_scores_higher_than_mismatch() -> None:
-    request = build_request(budget_band="high")
+    request = build_request(budget_band="high", accommodation_budget_band="high")
     matching = build_accommodation(budget_level=["high"])
     mismatched = build_accommodation(id="other", budget_level=["low"])
 
@@ -150,14 +150,14 @@ def test_priced_stay_in_exact_band_gets_exact_match_bonus() -> None:
     # bonus(), so this tests the shared PRICE_EXACT_MATCH_BONUS value
     # itself (seoul/jeju override it to 6 - see their own per-city tests
     # below).
-    request = build_request(city="busan", budget_band="medium")
+    request = build_request(city="busan", budget_band="medium", accommodation_budget_band="medium")
     priced_medium = build_accommodation(city="busan", average_price_krw=109000)
 
     assert _budget_contribution(priced_medium, request) == PRICE_EXACT_MATCH_BONUS
 
 
 def test_priced_stay_one_band_away_gets_adjacent_penalty() -> None:
-    request = build_request(budget_band="medium")
+    request = build_request(budget_band="medium", accommodation_budget_band="medium")
     priced_low = build_accommodation(average_price_krw=40000)
     priced_high = build_accommodation(id="high", average_price_krw=500000)
 
@@ -166,8 +166,8 @@ def test_priced_stay_one_band_away_gets_adjacent_penalty() -> None:
 
 
 def test_priced_stay_two_bands_away_gets_far_penalty() -> None:
-    low_request = build_request(budget_band="low")
-    high_request = build_request(budget_band="high")
+    low_request = build_request(budget_band="low", accommodation_budget_band="low")
+    high_request = build_request(budget_band="high", accommodation_budget_band="high")
 
     assert _budget_contribution(build_accommodation(average_price_krw=500000), low_request) == PRICE_FAR_PENALTY
     assert _budget_contribution(build_accommodation(id="cheap", average_price_krw=40000), high_request) == PRICE_FAR_PENALTY
@@ -178,24 +178,52 @@ def test_real_price_overrides_a_contradicting_budget_level_tag() -> None:
     # price wins, so a "low" request gets the exact-match bonus, not the tag's
     # mismatch penalty.
     # city="busan" for the same reason as the exact-match-bonus test above.
-    request = build_request(city="busan", budget_band="low")
+    request = build_request(city="busan", budget_band="low", accommodation_budget_band="low")
     tagged_high_but_cheap = build_accommodation(city="busan", budget_level=["high"], average_price_krw=40000)
 
     assert _budget_contribution(tagged_high_but_cheap, request) == PRICE_EXACT_MATCH_BONUS
 
 
 def test_unpriced_stay_falls_back_to_budget_level_tag_match() -> None:
-    request = build_request(budget_band="medium")
+    request = build_request(budget_band="medium", accommodation_budget_band="medium")
     unpriced_matching = build_accommodation(budget_level=["medium"], average_price_krw=None)
 
     assert _budget_contribution(unpriced_matching, request) == BUDGET_MATCH_BONUS
 
 
 def test_unpriced_stay_falls_back_to_budget_level_tag_mismatch() -> None:
-    request = build_request(budget_band="medium")
+    request = build_request(budget_band="medium", accommodation_budget_band="medium")
     unpriced_mismatched = build_accommodation(budget_level=["low"], average_price_krw=None)
 
     assert _budget_contribution(unpriced_mismatched, request) == BUDGET_MISMATCH_PENALTY
+
+
+def test_unset_accommodation_budget_band_contributes_zero_regardless_of_price_or_tag() -> None:
+    # "상관없음" (accommodation_budget_band=None, the field's default) must not
+    # fall back to budget_band - the budget-fit term is 0 no matter what
+    # budget_band is, and no matter whether the stay has a real price or
+    # only a budget_level tag.
+    priced = build_accommodation(average_price_krw=109000)
+    unpriced = build_accommodation(budget_level=["low"], average_price_krw=None)
+    for budget_band in ("low", "medium", "high"):
+        request = build_request(budget_band=budget_band)
+        assert request.accommodation_budget_band is None
+        assert _budget_contribution(priced, request) == 0
+        assert _budget_contribution(unpriced, request) == 0
+
+
+def test_unset_accommodation_budget_band_gives_the_same_ranking_whatever_budget_band_is() -> None:
+    cheap = build_accommodation(id="cheap", average_price_krw=40000)
+    mid = build_accommodation(id="mid", average_price_krw=109000)
+    expensive = build_accommodation(id="expensive", average_price_krw=500000)
+    unpriced_low_tag = build_accommodation(id="unpriced-low", budget_level=["low"], average_price_krw=None)
+    candidates = [cheap, mid, expensive, unpriced_low_tag]
+
+    selected_ids = [
+        select_accommodation_recommendation(candidates, build_request(budget_band=band), None).id
+        for band in ("low", "medium", "high")
+    ]
+    assert len(set(selected_ids)) == 1
 
 
 @pytest.mark.parametrize(
@@ -230,9 +258,9 @@ def test_price_exact_match_bonus_defaults_to_10_when_city_is_unset_or_unknown() 
 
 
 def test_budget_fit_score_routes_the_exact_match_case_through_the_per_city_hook() -> None:
-    request_seoul = build_request(city="seoul", budget_band="medium")
-    request_jeju = build_request(city="jeju", budget_band="medium")
-    request_busan = build_request(city="busan", budget_band="medium")
+    request_seoul = build_request(city="seoul", budget_band="medium", accommodation_budget_band="medium")
+    request_jeju = build_request(city="jeju", budget_band="medium", accommodation_budget_band="medium")
+    request_busan = build_request(city="busan", budget_band="medium", accommodation_budget_band="medium")
     priced_match_seoul = build_accommodation(city="seoul", average_price_krw=109000)
     priced_match_jeju = build_accommodation(city="jeju", average_price_krw=109000)
     priced_match_busan = build_accommodation(city="busan", average_price_krw=109000)
@@ -248,9 +276,9 @@ def test_adjacent_and_far_price_penalties_are_unchanged_in_every_city() -> None:
     # must stay identical across all three cities, exactly as before this
     # change.
     for city in ("seoul", "busan", "jeju"):
-        medium_request = build_request(city=city, budget_band="medium")
-        low_request = build_request(city=city, budget_band="low")
-        high_request = build_request(city=city, budget_band="high")
+        medium_request = build_request(city=city, budget_band="medium", accommodation_budget_band="medium")
+        low_request = build_request(city=city, budget_band="low", accommodation_budget_band="low")
+        high_request = build_request(city=city, budget_band="high", accommodation_budget_band="high")
 
         priced_low = build_accommodation(city=city, average_price_krw=40000)
         priced_high = build_accommodation(city=city, id="high", average_price_krw=500000)
@@ -263,7 +291,7 @@ def test_adjacent_and_far_price_penalties_are_unchanged_in_every_city() -> None:
 
 def test_unpriced_stay_scores_are_unchanged_in_every_city() -> None:
     for city in ("seoul", "busan", "jeju"):
-        request = build_request(city=city, budget_band="medium")
+        request = build_request(city=city, budget_band="medium", accommodation_budget_band="medium")
         unpriced_matching = build_accommodation(city=city, budget_level=["medium"], average_price_krw=None)
         unpriced_mismatched = build_accommodation(city=city, budget_level=["low"], average_price_krw=None)
 

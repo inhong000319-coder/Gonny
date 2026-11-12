@@ -117,8 +117,11 @@ class ExpenseCreateResponse(BaseModel):
     expense_id: int
     category: str
     amount_krw: int
+    # 숙박(LODGING_EXPENSE_CATEGORY) 지출을 뺀 금액 기준 - ExpenseSummaryData와 동일한 규칙.
     remaining_budget: int
     budget_usage_pct: float
+    # 숙박 지출 합계(참고용) - remaining_budget/budget_usage_pct에는 포함되지 않는다.
+    lodging_spent: int = 0
 
 
 class ExpenseItem(BaseModel):
@@ -134,10 +137,14 @@ class ExpenseListData(BaseModel):
 
 class ExpenseSummaryData(BaseModel):
     total_budget: int
+    # 숙박(LODGING_EXPENSE_CATEGORY) 지출을 뺀 금액 - remaining/usage_pct/
+    # is_over_budget도 전부 이 값 기준이다. 숙박 지출 자체는 lodging_spent로
+    # 따로 내려준다(예산 비교에는 포함되지 않음).
     total_spent: int
     remaining: int
     usage_pct: float
     is_over_budget: bool
+    lodging_spent: int = 0
 
 
 # --- Retrospective report (F14) -----------------------------------------
@@ -155,7 +162,10 @@ class TripReportResponse(BaseModel):
     # empty/None rather than being required.
     message: str | None = None
 
+    # 숙박(LODGING_EXPENSE_CATEGORY) 지출을 뺀 금액 - budget_diff_pct도 이 값
+    # 기준이다. 숙박 지출 합계는 lodging_spent로 따로 내려준다.
     total_spent: int | None = None
+    lodging_spent: int | None = None
     budget: int | None = None
     budget_diff_pct: float | None = None
     category_breakdown: list[TripCategoryBreakdownItem] = Field(default_factory=list)

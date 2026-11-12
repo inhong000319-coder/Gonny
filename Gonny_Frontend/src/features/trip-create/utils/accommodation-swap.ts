@@ -4,7 +4,6 @@
 // are independent concerns that happen to both feed the same "이동 시간
 // 재계산 안 됨" presentation and the same "장소를 바꾼 일정은..." banner,
 // but neither reads the other's state.
-import { formatAccommodationPriceLabel } from "../../../shared/pricing";
 
 export type AccommodationAlternative = {
   id: string;
@@ -12,6 +11,7 @@ export type AccommodationAlternative = {
   accommodation_type: string;
   checkin_time?: string | null;
   checkout_time?: string | null;
+  // 백엔드가 항상 null로 내려준다 - 응답 호환을 위해 필드만 유지, 렌더링하지 않는다.
   average_price_krw?: number | null;
 };
 
@@ -106,8 +106,3 @@ export function shouldHideAccommodationNearPreviousReason(
 export function shouldHideDayTravelTotal(accommodationSwapped: boolean): boolean {
   return accommodationSwapped;
 }
-
-// shared/pricing.ts로 옮긴 공용 구현을 그대로 재export - 기존 import
-// 경로(이 파일에서 import)는 바꾸지 않는다(trip-create-form.tsx 등
-// 기존 호출부 수정 없이 그대로 동작).
-export { formatAccommodationPriceLabel as formatAccommodationAlternativePriceLabel } from "../../../shared/pricing";

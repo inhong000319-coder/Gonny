@@ -105,6 +105,20 @@ def test_list_accommodation_options_not_empty_and_deterministically_sorted(db_se
     assert [o.id for o in options] == [o.id for o in options_again], city
 
 
+@pytest.mark.parametrize("city", ["seoul", "busan", "jeju"])
+def test_list_accommodation_options_never_exposes_a_price(db_session: Session, city: str) -> None:
+    # 가격이 실제로 확인된 숙소(27곳)가 있어도 이 목록에서는 보여주지 않는다
+    # - 시기별 편차가 커 리스크가 크다는 판단. 데이터 자체(average_price_krw)는
+    # 그대로 두고 응답에서만 None으로 내린다.
+    trip = create_trip(db_session, destination=city)
+    assert any(a.average_price_krw is not None for a in load_city_accommodations(city)), city
+
+    options = trip_service.list_accommodation_options(db=db_session, trip_id=trip.id)
+
+    assert options, city
+    assert all(option.average_price_krw is None for option in options), city
+
+
 def test_list_accommodation_options_endpoint_response_has_only_the_five_fields(client_with_db: TestClient) -> None:
     created = client_with_db.post(
         "/trips",
@@ -352,7 +366,7 @@ def test_update_trip_accommodation_does_not_affect_other_fields(db_session: Sess
     )
 
     before_items = [i.id for i in db_session.query(ItineraryItem).filter(ItineraryItem.trip_id == trip.id).all()]
-    before_expenses_total = trip_service._total_spent(db=db_session, trip_id=trip.id)
+    before_expenses_total = trip_service._expense_totals(db=db_session, trip_id=trip.id)[0]
     before_is_favorite = trip_service.get_trip_or_404(db=db_session, trip_id=trip.id).is_favorite
     before_share_token = trip_service.get_trip_or_404(db=db_session, trip_id=trip.id).share_token
 
@@ -362,7 +376,7 @@ def test_update_trip_accommodation_does_not_affect_other_fields(db_session: Sess
     )
 
     after_items = [i.id for i in db_session.query(ItineraryItem).filter(ItineraryItem.trip_id == trip.id).all()]
-    after_expenses_total = trip_service._total_spent(db=db_session, trip_id=trip.id)
+    after_expenses_total = trip_service._expense_totals(db=db_session, trip_id=trip.id)[0]
     after_trip = trip_service.get_trip_or_404(db=db_session, trip_id=trip.id)
 
     assert after_items == before_items

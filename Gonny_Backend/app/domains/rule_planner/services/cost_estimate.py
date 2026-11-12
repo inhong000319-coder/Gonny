@@ -31,13 +31,13 @@ def estimate_trip_cost_range(
         min_krw += place.average_cost_krw * travelers
         max_krw += place.average_cost_krw * travelers
 
-    accommodation_included = accommodation is not None and accommodation.average_price_krw is not None
-    if accommodation_included:
-        stay_krw = accommodation.average_price_krw * nights
-        min_krw += stay_krw
-        max_krw += stay_krw
+    # Accommodation cost is deliberately never added here (lodging prices
+    # vary too much by season to show a trustworthy number) - see
+    # RuleCostEstimate's docstring. The accommodation parameter stays so
+    # callers don't need to change; accommodation_included always reports
+    # False below.
 
-    if not unique_places and not accommodation_included:
+    if not unique_places:
         return None
 
     return RuleCostEstimate(
@@ -45,7 +45,7 @@ def estimate_trip_cost_range(
         max_krw=max_krw,
         priced_place_count=priced_count,
         unpriced_place_count=unpriced_count,
-        accommodation_included=accommodation_included,
+        accommodation_included=False,
         nights=nights,
         travelers=travelers,
     )

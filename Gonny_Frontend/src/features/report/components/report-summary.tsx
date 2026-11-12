@@ -1,5 +1,6 @@
 type ReportSummaryProps = {
   totalSpent: number;
+  lodgingSpent: number | null;
   budget: number;
   budgetDiffPct: number | null;
   visitedCount: number;
@@ -25,18 +26,25 @@ function formatDistance(km: number | null) {
   return `${km}km`;
 }
 
-export function ReportSummary({ totalSpent, budget, budgetDiffPct, visitedCount, distanceKm }: ReportSummaryProps) {
+export function ReportSummary({
+  totalSpent,
+  lodgingSpent,
+  budget,
+  budgetDiffPct,
+  visitedCount,
+  distanceKm,
+}: ReportSummaryProps) {
   return (
     <div className="card">
       <h2 className="section-title">여행 회고</h2>
       <div className="page-grid" style={{ gridTemplateColumns: "repeat(4, minmax(0, 1fr))" }}>
         <div className="metric">
-          <strong>총 지출</strong>
+          <strong>총 지출 (숙박 제외)</strong>
           <p>{formatWon(totalSpent)}</p>
           <span>예산 {formatWon(budget)} 기준</span>
         </div>
         <div className="metric">
-          <strong>예산 대비</strong>
+          <strong>예산 대비 (숙박 제외)</strong>
           <p>{formatBudgetDiff(budgetDiffPct)}</p>
         </div>
         <div className="metric">
@@ -48,6 +56,11 @@ export function ReportSummary({ totalSpent, budget, budgetDiffPct, visitedCount,
           <p>{formatDistance(distanceKm)}</p>
         </div>
       </div>
+      {lodgingSpent ? (
+        <p className="section-subtitle" style={{ marginTop: 12, marginBottom: 0 }}>
+          숙박 지출 {formatWon(lodgingSpent)}은 위 비교에 포함되지 않았어요.
+        </p>
+      ) : null}
     </div>
   );
 }

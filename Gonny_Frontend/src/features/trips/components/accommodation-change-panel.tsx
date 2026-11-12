@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "../../../shared/components/ui/button";
-import { formatAccommodationPriceLabel } from "../../../shared/pricing";
 import { queryKeys } from "../../../shared/api/query-keys";
 import { useTripAccommodationOptionsQuery } from "../hooks/use-trip-accommodation-options-query";
 import { useUpdateTripAccommodationMutation } from "../hooks/use-update-trip-accommodation-mutation";
@@ -179,8 +178,7 @@ export function AccommodationChangePanel({
                           {isCurrent ? <span className="badge">현재 숙소</span> : null}
                         </div>
                         <p className="section-subtitle" style={{ margin: "4px 0 0" }}>
-                          {option.accommodation_type} · {option.area} ·{" "}
-                          {formatAccommodationPriceLabel(option.average_price_krw)}
+                          {option.accommodation_type} · {option.area}
                         </p>
                       </button>
                     );

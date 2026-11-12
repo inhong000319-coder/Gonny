@@ -94,6 +94,18 @@ REFINEMENT_SCORE_MARGIN = 10
 # alternatives must exclude every restaurant this trip ends up using,
 # including ones picked later than this meal, not just the ones picked so
 # far at selection time).
+def _hide_accommodation_price(accommodation: AccommodationData | None) -> AccommodationData | None:
+    """Lodging prices vary too much by season to show a trustworthy
+    number (see cost_estimate.py) - strip average_price_krw from the
+    *response* copy only. Internal uses of the recommendation/alternatives
+    (day_travel distance, day_duration_warnings, reasons, cost estimate)
+    keep reading the original, full object; only what goes out over the
+    API gets this applied, right before the response is built."""
+    if accommodation is None:
+        return None
+    return accommodation.model_copy(update={"average_price_krw": None})
+
+
 class _PendingMeal(NamedTuple):
     place: PlaceData
     meal_type: Literal["breakfast", "lunch", "dinner"]
@@ -349,8 +361,10 @@ class RuleItineraryService:
             closed_day_exclusions=closed_day_exclusions,
             weather_alerts=weather_alerts,
             weather_status=weather_status,
-            accommodation_recommendation=accommodation_recommendation,
-            accommodation_alternatives=accommodation_alternatives,
+            accommodation_recommendation=_hide_accommodation_price(accommodation_recommendation),
+            accommodation_alternatives=[
+                _hide_accommodation_price(accommodation) for accommodation in accommodation_alternatives
+            ],
             meal_recommendations=meal_recommendations,
             estimated_cost=estimate_trip_cost_range(
                 (place for places in day_place_map.values() for place in places),

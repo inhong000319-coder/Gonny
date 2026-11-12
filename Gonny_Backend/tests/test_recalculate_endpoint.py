@@ -242,7 +242,9 @@ def test_swap_accommodation(city):
 
     assert recalc.accommodation_recommendation.id == new_acc.id, city
     assert new_acc.id not in {a.id for a in recalc.accommodation_alternatives}, city
-    assert recalc.estimated_cost.accommodation_included == (new_acc.average_price_krw is not None), city
+    # 숙박비는 예상 비용에 더하지 않는다 - 가격 확인 여부와 무관하게 항상 False.
+    assert recalc.estimated_cost.accommodation_included is False, city
+    assert new_acc.average_price_krw is None, city
 
     day1_travel = next(dt for dt in recalc.day_travel if dt.day_number == 1)
     leg_names = [name for leg in day1_travel.legs for name in (leg.from_name, leg.to_name)]

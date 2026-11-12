@@ -57,9 +57,12 @@ export type DayPlan = {
 
 export type BudgetOverview = {
   totalBudget: number;
+  // 숙박 지출은 제외한 금액 - remainingBudget/usagePercent도 이 값 기준이다.
   totalSpent: number;
   remainingBudget: number;
   usagePercent: number;
+  // 숙박 지출 합계(참고용) - totalSpent/remainingBudget/usagePercent에는 포함되지 않는다.
+  lodgingSpent?: number;
 };
 
 export type Expense = {

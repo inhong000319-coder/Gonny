@@ -110,3 +110,18 @@ def test_generate_trip_pdf_handles_empty_itinerary_and_expenses(db_session: Sess
     pdf_bytes = trip_service.generate_trip_pdf(db=db_session, trip_id=trip.id)
 
     assert pdf_bytes.startswith(b"%PDF")
+
+
+def test_generate_trip_pdf_succeeds_with_a_lodging_expense(db_session: Session) -> None:
+    # 숙박 지출이 있어도(예산 대비에서는 빠지고 별도 줄로만 보여줘야 한다 -
+    # 실제 수치 계산은 get_expense_summary/get_trip_report와 같은
+    # _expense_totals()를 쓰므로 거기서 검증한다) PDF 생성 자체가 깨지지
+    # 않는지 확인한다.
+    trip = create_trip(db_session, budget=100000)
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="식비", amount=30000))
+    trip_service.create_expense(db=db_session, trip_id=trip.id, payload=ExpenseCreate(category="숙박", amount=500000))
+
+    pdf_bytes = trip_service.generate_trip_pdf(db=db_session, trip_id=trip.id)
+
+    assert pdf_bytes.startswith(b"%PDF")
+    assert b"%%EOF" in pdf_bytes

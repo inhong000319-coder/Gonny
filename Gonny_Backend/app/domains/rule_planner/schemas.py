@@ -379,19 +379,22 @@ class NormalizedRuleRequest(BaseModel):
 
 
 class RuleCostEstimate(BaseModel):
-    """Estimated trip cost range covering tourist admission fees and the
-    recommended accommodation only. Restaurant meals and transportation are
-    deliberately excluded.
+    """Estimated trip cost range covering tourist admission fees only.
+    Restaurant meals, transportation, and accommodation are deliberately
+    excluded - lodging prices vary too much by season to show a number
+    that could be badly wrong (see estimate_trip_cost_range).
 
     min_krw sums confirmed prices. max_krw adds a conservative per-place cap
-    for admissions whose fee is unknown. The accommodation is included only
-    when its nightly rate is confirmed.
+    for admissions whose fee is unknown.
     """
 
     min_krw: int
     max_krw: int
     priced_place_count: int
     unpriced_place_count: int
+    # Always False - kept only so existing clients that type-check this
+    # field (e.g. the frontend) keep working. Accommodation cost is never
+    # added to min_krw/max_krw regardless of this value.
     accommodation_included: bool
     nights: int
     travelers: int

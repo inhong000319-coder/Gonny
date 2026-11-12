@@ -50,6 +50,16 @@ TIME_SLOT_LABELS = {"morning": "오전", "afternoon": "오후", "evening": "저�
 # total distance meaningful - see _compute_trip_distance().
 MIN_DISTANCE_SEGMENTS = 2
 
+# Expense.category string used by the frontend's expenseCategoryOptions for
+# lodging spend. Accommodation prices vary too much by season to show a
+# trustworthy estimate up front (see rule_planner/services/cost_estimate.py),
+# so actual lodging *expenses* the traveler logs themselves are kept out of
+# every budget comparison (ExpenseSummaryData/ExpenseCreateResponse's
+# remaining/usage figures, TripReportResponse.budget_diff_pct, the PDF's
+# "총 지출"/"예산 대비") and reported separately via lodging_spent instead.
+# The category breakdown table still lists it like any other category.
+LODGING_EXPENSE_CATEGORY = "숙박"
+
 # ReportLab's built-in fonts (Helvetica etc.) have no Korean glyphs and
 # silently render Korean text as blank/garbled boxes.
 #
@@ -221,6 +231,7 @@ def _build_trip_pdf_bytes(
     trip: Trip,
     itinerary_items: list[ItineraryItem],
     total_spent: int,
+    lodging_spent: int,
     category_breakdown: list[TripCategoryBreakdownItem],
 ) -> bytes:
     """Renders the trip's saved itinerary + budget summary to an A4 PDF.
@@ -229,6 +240,9 @@ def _build_trip_pdf_bytes(
     address, operating hours, or contact info, since none of that is
     stored anywhere yet. Accommodation (name/type) is shown as a single
     line right above the itinerary when the trip has one saved.
+
+    total_spent/budget 대비(예산 대비)는 숙박(LODGING_EXPENSE_CATEGORY) 지출을
+    뺀 금액이다 - lodging_spent로 따로 한 줄 보여준다.
     """
     title_style = ParagraphStyle("Title", fontName=PDF_FONT_NAME, fontSize=20, leading=26)
     meta_style = ParagraphStyle("Meta", fontName=PDF_FONT_NAME, fontSize=10, textColor=colors.grey, leading=14)
@@ -279,10 +293,14 @@ def _build_trip_pdf_bytes(
             elements.append(table)
 
     elements.append(Paragraph("예산 요약", heading_style))
-    budget_rows = [["총 예산", f"{trip.budget:,}원"], ["총 지출", f"{total_spent:,}원"]]
+    budget_rows = [
+        ["총 예산", f"{trip.budget:,}원"],
+        ["총 지출 (숙박 제외)", f"{total_spent:,}원"],
+        ["숙박 지출", f"{lodging_spent:,}원"],
+    ]
     if trip.budget:
         diff_pct = round(((total_spent - trip.budget) / trip.budget) * 100, 1)
-        budget_rows.append(["예산 대비", f"{diff_pct:+.1f}%"])
+        budget_rows.append(["예산 대비 (숙박 제외)", f"{diff_pct:+.1f}%"])
     budget_table = Table(budget_rows, colWidths=[40 * mm, 60 * mm])
     budget_table.setStyle(
         TableStyle(
@@ -312,6 +330,9 @@ def _build_trip_pdf_bytes(
             )
         )
         elements.append(category_table)
+        if any(item.category == LODGING_EXPENSE_CATEGORY for item in category_breakdown):
+            elements.append(Spacer(1, 2 * mm))
+            elements.append(Paragraph("* 숙박 지출은 위 예산 비교 대상에 포함되지 않아요.", meta_style))
     else:
         elements.append(Paragraph("기록된 지출이 없습니다.", body_style))
 
@@ -415,7 +436,11 @@ class TripService:
                 name=accommodation.name,
                 accommodation_type=accommodation.accommodation_type,
                 area=accommodation.area,
-                average_price_krw=accommodation.average_price_krw,
+                # Lodging prices vary too much by season to show a
+                # trustworthy number (see rule_planner/services/
+                # cost_estimate.py) - never surfaced here, even for the 27
+                # accommodations with a confirmed average_price_krw.
+                average_price_krw=None,
             )
             for accommodation in accommodations
         ]
@@ -497,8 +522,23 @@ class TripService:
         db.refresh(trip)
         return trip
 
-    def _total_spent(self, *, db: Session, trip_id: int) -> int:
-        return db.query(func.coalesce(func.sum(Expense.amount_krw), 0)).filter(Expense.trip_id == trip_id).scalar() or 0
+    def _expense_totals(self, *, db: Session, trip_id: int) -> tuple[int, int]:
+        """(non-lodging total, lodging total) - see LODGING_EXPENSE_CATEGORY.
+        Every budget comparison uses only the first number; the second is
+        reported separately, never added back into it."""
+        non_lodging_total = (
+            db.query(func.coalesce(func.sum(Expense.amount_krw), 0))
+            .filter(Expense.trip_id == trip_id, Expense.category != LODGING_EXPENSE_CATEGORY)
+            .scalar()
+            or 0
+        )
+        lodging_total = (
+            db.query(func.coalesce(func.sum(Expense.amount_krw), 0))
+            .filter(Expense.trip_id == trip_id, Expense.category == LODGING_EXPENSE_CATEGORY)
+            .scalar()
+            or 0
+        )
+        return non_lodging_total, lodging_total
 
     def create_expense(self, *, db: Session, trip_id: int, payload: ExpenseCreate) -> ExpenseCreateResponse:
         trip = self.get_trip_or_404(db=db, trip_id=trip_id)
@@ -515,7 +555,7 @@ class TripService:
         db.commit()
         db.refresh(db_expense)
 
-        total_spent = self._total_spent(db=db, trip_id=trip_id)
+        total_spent, lodging_spent = self._expense_totals(db=db, trip_id=trip_id)
         remaining_budget = trip.budget - total_spent
         budget_usage_pct = round((total_spent / trip.budget) * 100, 1) if trip.budget else 0.0
 
@@ -525,6 +565,7 @@ class TripService:
             amount_krw=db_expense.amount_krw,
             remaining_budget=remaining_budget,
             budget_usage_pct=budget_usage_pct,
+            lodging_spent=lodging_spent,
         )
 
     def list_expenses(self, *, db: Session, trip_id: int) -> ExpenseListData:
@@ -539,7 +580,7 @@ class TripService:
 
     def get_expense_summary(self, *, db: Session, trip_id: int) -> ExpenseSummaryData:
         trip = self.get_trip_or_404(db=db, trip_id=trip_id)
-        total_spent = self._total_spent(db=db, trip_id=trip_id)
+        total_spent, lodging_spent = self._expense_totals(db=db, trip_id=trip_id)
         remaining = trip.budget - total_spent
         usage_pct = round((total_spent / trip.budget) * 100, 1) if trip.budget else 0.0
 
@@ -549,6 +590,7 @@ class TripService:
             remaining=remaining,
             usage_pct=usage_pct,
             is_over_budget=total_spent > trip.budget,
+            lodging_spent=lodging_spent,
         )
 
     def get_trip_report(self, *, db: Session, trip_id: int) -> TripReportResponse:
@@ -560,7 +602,8 @@ class TripService:
             return TripReportResponse(ready=False, message="여행이 아직 종료되지 않았습니다.")
 
         expenses = db.query(Expense).filter(Expense.trip_id == trip_id).all()
-        total_spent = sum(e.amount_krw for e in expenses)
+        total_spent = sum(e.amount_krw for e in expenses if e.category != LODGING_EXPENSE_CATEGORY)
+        lodging_spent = sum(e.amount_krw for e in expenses if e.category == LODGING_EXPENSE_CATEGORY)
         category_breakdown = _compute_category_breakdown(expenses)
 
         budget_diff_pct = round(((total_spent - trip.budget) / trip.budget) * 100, 1) if trip.budget else None
@@ -585,6 +628,7 @@ class TripService:
         return TripReportResponse(
             ready=True,
             total_spent=total_spent,
+            lodging_spent=lodging_spent,
             budget=trip.budget,
             budget_diff_pct=budget_diff_pct,
             category_breakdown=category_breakdown,
@@ -604,7 +648,8 @@ class TripService:
         trip = self.get_trip_or_404(db=db, trip_id=trip_id)
 
         expenses = db.query(Expense).filter(Expense.trip_id == trip_id).all()
-        total_spent = sum(e.amount_krw for e in expenses)
+        total_spent = sum(e.amount_krw for e in expenses if e.category != LODGING_EXPENSE_CATEGORY)
+        lodging_spent = sum(e.amount_krw for e in expenses if e.category == LODGING_EXPENSE_CATEGORY)
         category_breakdown = _compute_category_breakdown(expenses)
 
         itinerary_items = (
@@ -618,6 +663,7 @@ class TripService:
             trip=trip,
             itinerary_items=itinerary_items,
             total_spent=total_spent,
+            lodging_spent=lodging_spent,
             category_breakdown=category_breakdown,
         )
 

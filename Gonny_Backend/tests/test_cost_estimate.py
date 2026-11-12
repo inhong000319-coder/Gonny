@@ -80,16 +80,18 @@ def test_same_place_repeated_across_slots_is_counted_once() -> None:
     assert estimate.priced_place_count == 1
 
 
-def test_priced_accommodation_is_multiplied_by_nights_and_included() -> None:
+def test_priced_accommodation_is_never_added_to_the_cost_range() -> None:
+    # 숙박비는 시기별 편차가 커 예상 비용에 더하지 않는다(가격이 확인된
+    # 경우도 마찬가지) - accommodation_scoring/숙소 추천 로직은 건드리지
+    # 않으므로 AccommodationData.average_price_krw 자체는 그대로 둔다.
     estimate = estimate_trip_cost_range([build_place("a", 10000)], build_accommodation(90000), travelers=2, nights=3)
 
     assert estimate is not None
-    assert estimate.accommodation_included is True
-    assert estimate.min_krw == 10000 * 2 + 90000 * 3
-    assert estimate.max_krw == estimate.min_krw
+    assert estimate.accommodation_included is False
+    assert estimate.min_krw == estimate.max_krw == 10000 * 2
 
 
-def test_unpriced_accommodation_is_excluded_and_flagged() -> None:
+def test_unpriced_accommodation_is_still_excluded() -> None:
     estimate = estimate_trip_cost_range([build_place("a", 10000)], build_accommodation(None), travelers=2, nights=3)
 
     assert estimate is not None
@@ -97,20 +99,30 @@ def test_unpriced_accommodation_is_excluded_and_flagged() -> None:
     assert estimate.min_krw == estimate.max_krw == 10000 * 2
 
 
-def test_missing_accommodation_is_excluded_and_flagged() -> None:
+def test_missing_accommodation_is_still_excluded() -> None:
     estimate = estimate_trip_cost_range([build_place("a", 10000)], None, travelers=2, nights=3)
 
     assert estimate is not None
     assert estimate.accommodation_included is False
 
 
-def test_travelers_multiply_places_but_not_accommodation() -> None:
+def test_accommodation_included_is_always_false_regardless_of_price() -> None:
+    for accommodation in (build_accommodation(90000), build_accommodation(None), None):
+        estimate = estimate_trip_cost_range([build_place("a", 10000)], accommodation, travelers=2, nights=3)
+        assert estimate is not None
+        assert estimate.accommodation_included is False
+
+
+def test_travelers_multiply_places_but_accommodation_never_counts() -> None:
     estimate = estimate_trip_cost_range([build_place("a", 10000)], build_accommodation(50000), travelers=4, nights=2)
 
     assert estimate is not None
-    assert estimate.min_krw == 10000 * 4 + 50000 * 2
+    assert estimate.min_krw == 10000 * 4
 
 
-def test_returns_none_when_no_places_and_no_accommodation_cost() -> None:
+def test_returns_none_when_no_places_even_with_a_priced_accommodation() -> None:
+    # 조기 반환은 장소 유무만으로 판단한다 - 숙소만 있고 장소가 없는 경우도
+    # (가격이 있든 없든) None이어야 한다.
     assert estimate_trip_cost_range([], None, travelers=2, nights=2) is None
     assert estimate_trip_cost_range([], build_accommodation(None), travelers=2, nights=2) is None
+    assert estimate_trip_cost_range([], build_accommodation(90000), travelers=2, nights=2) is None

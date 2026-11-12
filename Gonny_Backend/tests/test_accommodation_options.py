@@ -147,7 +147,12 @@ def test_accommodation_budget_band_drives_price_comparison_not_activity_band() -
 
     # Companion term is +5 (couple matches). Budget term should be exact-band.
     assert score == PRICE_EXACT_MATCH_BONUS + 5
-    assert accommodation_score(cheap_stay, build_request(city="busan", budget_band="high"), None) == PRICE_FAR_PENALTY + 5
+    assert (
+        accommodation_score(
+            cheap_stay, build_request(city="busan", budget_band="high", accommodation_budget_band="high"), None
+        )
+        == PRICE_FAR_PENALTY + 5
+    )
 
 
 def test_normalizing_keeps_activity_budget_band_when_lodging_budget_differs() -> None:
@@ -159,12 +164,16 @@ def test_normalizing_keeps_activity_budget_band_when_lodging_budget_differs() ->
     assert normalized.accommodation_budget_band == "low"
 
 
-def test_missing_lodging_budget_falls_back_to_activity_budget() -> None:
+def test_missing_lodging_budget_stays_unset_no_fallback_to_activity_budget() -> None:
+    # 과거엔 accommodation_budget_band를 안 주면 budget_band로 채워졌다(기본값
+    # 토글이 "따로 설정"을 끈 상태로 보내는 모양이었다). "숙소 등급" 기능으로
+    # 바뀌면서 "상관없음"은 더 이상 활동 예산을 따라가지 않는다 - 등급 점수
+    # 자체가 0이 되어야 한다(accommodation_scoring 쪽 단위 테스트에서 확인).
     request = RuleItineraryRequest(city="seoul", budget_band="high")
 
     normalized = normalize_rule_request(request)
 
-    assert normalized.accommodation_budget_band == "high"
+    assert normalized.accommodation_budget_band is None
     assert normalized.budget_band == "high"
 
 

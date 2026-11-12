@@ -2,7 +2,7 @@ from datetime import date
 from datetime import date as _CalendarDate
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import CatalogCityOption, FeaturedVideoData
@@ -76,7 +76,9 @@ class RuleItineraryRequest(BaseModel):
     concepts: list[TripConcept] | None = None
     style: TripStyle | None = None
     companion_type: CompanionType | None = None
-    # Lodging-only budget. Left unset, accommodation scoring uses budget_band.
+    # Lodging-only grade preference, independent of budget_band. None means
+    # "no preference" - accommodation scoring contributes 0 for budget fit
+    # instead of falling back to budget_band.
     accommodation_budget_band: BudgetBand | None = None
     accommodation_types: list[AccommodationTypeLabel] | None = None
     # One entry per day (index 0 = day 1), or None to skip mode-aware
@@ -355,8 +357,10 @@ class NormalizedRuleRequest(BaseModel):
     style: TripStyle
     companion_type: CompanionType
     # Used only by accommodation scoring. Activities, meals and weather keep
-    # reading budget_band.
-    accommodation_budget_band: BudgetBand
+    # reading budget_band. None means "no grade preference" - the user
+    # picked "상관없음" - and accommodation_score's budget-fit term is 0,
+    # not a fallback to budget_band (see accommodation_scoring._budget_fit_score).
+    accommodation_budget_band: BudgetBand | None = None
     # Preference only: matching adds a score bonus, never filters candidates.
     accommodation_types: list[AccommodationTypeLabel] = Field(default_factory=list)
     # Validated (length == days) in request_normalizer.normalize_rule_request.
@@ -369,13 +373,6 @@ class NormalizedRuleRequest(BaseModel):
     include_breakfast: bool = False
 
     model_config = ConfigDict(str_strip_whitespace=True)
-
-    @model_validator(mode="before")
-    @classmethod
-    def _default_accommodation_budget_band(cls, data):
-        if isinstance(data, dict) and data.get("accommodation_budget_band") is None:
-            return {**data, "accommodation_budget_band": data.get("budget_band")}
-        return data
 
 
 class RuleCostEstimate(BaseModel):

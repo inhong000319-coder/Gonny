@@ -165,6 +165,29 @@ def test_concept_match_absent_without_intersection() -> None:
     assert all(r.code != "concept_match" for r in candidates)
 
 
+def test_concept_match_skips_food_for_a_meal_ineligible_place() -> None:
+    # PR #121로 활동 후보가 된 food 태그 + meal_eligible=False 장소(카페거리·
+    # 해변 등)는 식사 장소가 아니므로 "'식사' 취향과 맞아요"가 붙으면 안 된다.
+    place = build_place(activity_type=["food"], meal_eligible=False)
+    request = build_request(concepts=["sightseeing", "food"])
+    candidates = build_activity_reason_candidates(place, **minimal_activity_kwargs(request=request))
+    assert all(r.code != "concept_match" for r in candidates)
+
+
+def test_concept_match_falls_back_to_another_matching_concept_when_food_is_skipped() -> None:
+    place = build_place(activity_type=["food", "relax"], meal_eligible=False)
+    request = build_request(concepts=["relax", "food"])
+    candidates = build_activity_reason_candidates(place, **minimal_activity_kwargs(request=request))
+    assert ("concept_match", "선택하신 '휴양' 취향과 맞아요") in [(r.code, r.label) for r in candidates]
+
+
+def test_concept_match_still_uses_food_when_the_place_is_meal_eligible() -> None:
+    place = build_place(activity_type=["food"], meal_eligible=True)
+    request = build_request(concepts=["sightseeing", "food"])
+    candidates = build_activity_reason_candidates(place, **minimal_activity_kwargs(request=request))
+    assert ("concept_match", "선택하신 '식사' 취향과 맞아요") in [(r.code, r.label) for r in candidates]
+
+
 def test_companion_fit_requires_membership() -> None:
     place = build_place(suitable_for=["couple"])
     request = build_request(companion_type="couple")

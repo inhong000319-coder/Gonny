@@ -314,7 +314,8 @@
         "취사가능"
       ],
       "budget_level": [
-        "medium"
+        "medium",
+        "high"
       ],
       "budget_level_estimated": true,
       "suitable_for": [
@@ -1689,7 +1690,8 @@
         "주차가능"
       ],
       "budget_level": [
-        "medium"
+        "medium",
+        "high"
       ],
       "budget_level_estimated": true,
       "suitable_for": [

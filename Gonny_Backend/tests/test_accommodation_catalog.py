@@ -142,6 +142,24 @@ def test_accommodations_have_coordinates_and_content_id() -> None:
             assert accommodation.content_id is not None, accommodation.id
 
 
+def test_price_unknown_high_end_hotels_carry_the_high_budget_tag() -> None:
+    # These 3 have average_price_krw == None, so budget_level tags alone drive
+    # their budget score. They're high-end by type/scale (budget_level_estimated),
+    # same tier as other confirmed-price luxury hotels (노보텔 앰배서더 강남 등)
+    # that already carry ["medium", "high"] - see local_only/reports/high_end_hotel_budget_tags.md.
+    targets = {
+        "seoul": {"143123", "1327006"},
+        "jeju": {"3344565"},
+    }
+    for city, ids in targets.items():
+        catalog = _load_city_catalog(city)
+        by_id = {accommodation.id: accommodation for accommodation in catalog.accommodations}
+        for accommodation_id in ids:
+            accommodation = by_id[accommodation_id]
+            assert accommodation.budget_level == ["medium", "high"], accommodation_id
+            assert accommodation.average_price_krw is None, accommodation_id
+
+
 def test_most_accommodations_have_checkin_checkout_populated() -> None:
     # Not asserting 100%: a handful of detailIntro2 responses can come back
     # with the field genuinely empty (same "TourAPI data itself is blank"

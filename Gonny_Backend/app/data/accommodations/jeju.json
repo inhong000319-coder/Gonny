@@ -1228,7 +1228,8 @@
         "대중목욕탕"
       ],
       "budget_level": [
-        "medium"
+        "medium",
+        "high"
       ],
       "budget_level_estimated": true,
       "suitable_for": [

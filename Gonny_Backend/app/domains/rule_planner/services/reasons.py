@@ -101,8 +101,16 @@ def build_activity_reason_candidates(
     if day_mode == "transit" and SUBWAY_FRIENDLY_MOBILITY_VALUE in place.mobility:
         candidates.append(RuleReason(code="transit_friendly", label="지하철로 가기 편해요"))
 
+    # food 태그가 있어도 meal_eligible=False인 장소(PR #121로 활동 후보가 된
+    # 카페거리·해변 등)는 식사 장소가 아니므로 "'식사' 취향과 맞아요" 사유를
+    # 붙이지 않는다 - 점수(slot_scoring)와 장소 선택에는 영향 없음, 사유
+    # 문구 선택만 바꾼다.
     matched_concept = next(
-        (concept for concept in request.concepts if concept in place.concept_tags),
+        (
+            concept
+            for concept in request.concepts
+            if concept in place.concept_tags and not (concept == "food" and not place.meal_eligible)
+        ),
         None,
     )
     if matched_concept is not None:

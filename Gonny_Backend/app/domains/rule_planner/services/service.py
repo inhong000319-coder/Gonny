@@ -57,7 +57,7 @@ from .constants import (
     TIME_SLOTS,
 )
 from .note_generator import RuleNoteContext, build_rule_note_generator
-from .policies.city import preferred_area_order
+from .policies.city import pick_day_area, preferred_area_order
 from .reasons import build_activity_reason_candidates, build_meal_reason_candidates, select_day_reasons
 from .recalculate import build_fixed_meals_lookup, build_fixed_slots_lookup
 from .request_normalizer import normalize_budget, normalize_duration, normalize_rule_request
@@ -550,7 +550,10 @@ class RuleItineraryService:
                 full_day_used = True
                 continue
 
-            day_area = self._pick_day_area(preferred_areas, scored_places, used_ids, used_day_areas)
+            previous_day_area = day_areas.get(day_number - 1)
+            day_area = self._pick_day_area(
+                request, preferred_areas, scored_places, used_ids, used_day_areas, previous_day_area
+            )
             if day_area:
                 used_day_areas.add(day_area)
             day_areas[day_number] = day_area
@@ -1739,11 +1742,22 @@ class RuleItineraryService:
 
     def _pick_day_area(
         self,
+        request: NormalizedRuleRequest,
         preferred_areas: list[str],
         places: list[PlaceData],
         used_ids: set[str],
         used_day_areas: set[str],
+        previous_day_area: str | None,
     ) -> str | None:
+        # A city can opt into "stay near the previous day's area" over the
+        # fallback "always pick a fresh area" below - see policies/city/
+        # jeju.py's pick_day_area. None (every city but jeju, and jeju on
+        # day 1 or when neither the previous area nor its neighbors have a
+        # place left) means "no continuity rule applies, fall through".
+        continuity_area = pick_day_area(request, preferred_areas, places, used_ids, used_day_areas, previous_day_area)
+        if continuity_area is not None:
+            return continuity_area
+
         if preferred_areas:
             fresh_areas = [area for area in preferred_areas if area not in used_day_areas]
             area_pool = fresh_areas or preferred_areas

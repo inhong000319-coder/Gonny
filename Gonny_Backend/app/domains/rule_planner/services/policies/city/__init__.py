@@ -109,6 +109,29 @@ def extreme_distance_penalty(
     return policy.extreme_distance_penalty(distance_km)
 
 
+def pick_day_area(
+    request: NormalizedRuleRequest,
+    preferred_areas: list[str],
+    places: list[PlaceData],
+    used_ids: set[str],
+    used_day_areas: set[str],
+    previous_day_area: str | None,
+) -> str | None:
+    """A city opts into continuity-aware day-area selection (prefer the
+    previous day's area or a neighbor of it over always picking a fresh
+    one) simply by defining pick_day_area(...) on its policy module - only
+    jeju.py does (see its own docstring for why). None - meaning "no
+    continuity rule, use RuleItineraryService._pick_day_area's existing
+    fresh-area-first logic unchanged" - for any city whose policy module
+    doesn't define this, and whenever the policy's own rule can't find a
+    qualifying area (so Seoul/Busan, and any city with no policy module at
+    all, are completely unaffected by construction, not just convention)."""
+    policy = _policy_for(request)
+    if policy is None or not hasattr(policy, "pick_day_area"):
+        return None
+    return policy.pick_day_area(preferred_areas, places, used_ids, used_day_areas, previous_day_area)
+
+
 def price_exact_match_bonus(city: str | None) -> int:
     """Budget-exact-match bonus for a priced accommodation (see
     accommodation_scoring._budget_fit_score) - a city opts in to a

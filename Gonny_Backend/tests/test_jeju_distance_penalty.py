@@ -82,8 +82,16 @@ def test_extreme_distance_penalty_scales_linearly_with_overage() -> None:
 
 
 def test_extreme_distance_penalty_never_positive() -> None:
-    for distance in [0, 10, 29.9, 30, 30.1, 50, 100, 500]:
+    for distance in [0, 10, 14.9, 15, 15.1, 50, 100, 500]:
         assert jeju_penalty(distance) <= 0
+
+
+def test_extreme_distance_penalty_at_the_lowered_15km_threshold() -> None:
+    # 고정된 실제 km 값으로 못박아 둔다(상수를 다시 올려도 이 테스트가
+    # 조용히 따라가지 않고 깨지도록) - 2026-11 시연 피드백으로 30km에서
+    # 15km로 낮췄다(이 파일 상단 jeju.py의 주석 참고).
+    assert jeju_penalty(15) == 0
+    assert jeju_penalty(16) < 0
 
 
 # --- dispatcher (policies/city/__init__.py) ---------------------------------

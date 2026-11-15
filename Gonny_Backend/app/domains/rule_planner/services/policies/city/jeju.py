@@ -83,7 +83,18 @@ def evening_food_bonus(time_slot: str, categories: set[str]) -> int:
 # 취급하면 후자를 충분히 억제하지 못해(진단 중 발견한 실사례: 동쪽 활동 바로
 # 다음 슬롯에 서쪽 해수욕장이 고정 페널티로도 안 밀려난 경우), 넘는 만큼
 # 더 깎는 선형 가산을 둔다.
-EXTREME_DISTANCE_KM_THRESHOLD = 30.0
+#
+# 2026-11 시연 피드백으로 30.0 -> 15.0으로 낮췄다. 30km는 진단 당시 p95
+# (49~65km) 바로 밑을 억제하도록 잡은 값이라, 그보다 짧은 15~30km대 구간은
+# 감점 없이 그대로 선택되고 있었다 - 이동이 "너무 멀다"는 시연 피드백이
+# 가리킨 건 이 구간이었다. 임시 복사본에서 제주 요청 90건으로 재측정한
+# 결과(local_only/reports/jeju_extreme_distance_threshold.md), 30->15km로
+# 낮추면 숙소 제외 이동 중 자동차 40분 초과 비율이 20%->6%, 60분 초과가
+# 7%->0%로 줄었고, 서로 다른 장소 수(45->44)와 상위 5개 장소 점유율
+# (28.9%->29.5%)은 거의 그대로였다. 20km(13%/1%)·10km(7%/1%)도 같이
+# 재봤는데 15km가 "40분 초과를 크게 줄이면서 다양성은 거의 안 건드리는"
+# 균형이 가장 좋았다. 기본 감점(-30)과 km당 감점(-2)은 그대로 둔다.
+EXTREME_DISTANCE_KM_THRESHOLD = 15.0
 EXTREME_DISTANCE_BASE_PENALTY = -30
 EXTREME_DISTANCE_PENALTY_PER_EXTRA_KM = -2
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 
+from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest
 
 from ...constants import JEJU_AREA_NEIGHBORS, JEJU_AREA_ROUTE_ORDER
@@ -39,6 +40,39 @@ def preferred_area_order(request: NormalizedRuleRequest, area_scores: dict[str, 
         ),
         reverse=True,
     )
+
+
+# 시연 피드백: 날마다 "아직 안 쓴 권역"을 고르는 기존 RuleItineraryService.
+# _pick_day_area 규칙이 매일 섬을 가로지르게 해서, 숙소 하나에서 매일 다른
+# 권역의 장소까지 거리가 멀어졌다(진단 결과 숙소 선택 자체는 거의 최선이었다
+# - 원인은 일정 구성). 전날 권역이 있으면 "전날 권역 또는 인접 권역
+# (JEJU_AREA_NEIGHBORS) 중 선호 순서가 가장 앞이고 장소가 남은 곳"을
+# 기존의 "아직 안 쓴 권역 우선"보다 먼저 시도한다 - 해당하는 권역이 없으면
+# None을 돌려줘 기존 로직(RuleItineraryService._pick_day_area)으로
+# 폴백한다. 첫날(previous_day_area가 None)은 폴백을 그대로 타므로 여기서
+# 따로 처리하지 않는다.
+#
+# 사전 측정(임시 복사본, 제주 요청 90건): 숙소→장소 거리 중앙값 23.3->17.9km,
+# 숙소 구간 중 자동차 40분 초과 65%->60%, 서로 다른 장소 수 44->45, 상위
+# 5개 장소 점유율 29.5%->23.6%(오히려 분산됨). #129로 줄인 숙소 제외 이동
+# (40분/60분 초과 6%/0%)은 그대로였다 - 자세한 수치는
+# local_only/reports/jeju_day_area_continuity.md 참고.
+def pick_day_area(
+    preferred_areas: list[str],
+    places: list[PlaceData],
+    used_ids: set[str],
+    used_day_areas: set[str],
+    previous_day_area: str | None,
+) -> str | None:
+    if not previous_day_area:
+        return None
+
+    candidate_areas = {previous_day_area} | JEJU_AREA_NEIGHBORS.get(previous_day_area, set())
+    ordered_candidates = [area for area in preferred_areas if area in candidate_areas]
+    for candidate_area in ordered_candidates:
+        if any(place.area == candidate_area and place.id not in used_ids for place in places):
+            return candidate_area
+    return None
 
 
 # Same measured rationale as seoul.py's price_exact_match_bonus() - see

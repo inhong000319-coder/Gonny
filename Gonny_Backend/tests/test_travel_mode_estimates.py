@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from app.domains.rule_planner.services.travel_estimate import (
     estimate_mode_minutes,
     estimate_transport_options,
     estimate_walk_option_minutes,
+    haversine_distance_km,
 )
 
 
@@ -111,6 +113,50 @@ def test_mode_minutes_do_not_invert_across_the_old_1_2_1_3km_boundary() -> None:
             below = estimate_mode_minutes(mode, 1.2, city)
             above = estimate_mode_minutes(mode, 1.3, city)
             assert above >= below, (mode, city, below, above)
+
+
+# --- jeju CAR_SPEED_KMH_BY_CITY (2026-11-17 네이버지도 실측 보정) ----------
+
+
+def _load_catalog_json(relative_path: str) -> dict:
+    return json.loads((PROJECT_ROOT / "app" / "data" / relative_path).read_text(encoding="utf-8"))
+
+
+def test_jeju_car_minutes_match_naver_map_measurements_within_5_minutes() -> None:
+    # 출발지: 타미우스골프&빌리지(= 사용자가 네이버지도에서 잰 "타미우스CC").
+    # 직선거리는 실측 수치가 아니라 카탈로그 좌표로 직접 계산한다(과제 지시).
+    accommodations = _load_catalog_json("accommodations/jeju.json")["accommodations"]
+    destinations = _load_catalog_json("destinations/jeju.json")["places"]
+
+    origin = next(a for a in accommodations if a["name"] == "타미우스골프&빌리지")
+
+    # (장소 이름, 네이버지도 실측 car 분) - 2026-11-17, 평일 낮 기준.
+    measured_minutes = {
+        "월정리 해변": 61,
+        "오설록 티뮤지엄": 16,
+        "여미지식물원": 20,
+        "사우스바운더": 20,
+    }
+    for name, measured in measured_minutes.items():
+        place = next(p for p in destinations if p["name"] == name)
+        distance_km = haversine_distance_km(
+            origin["latitude"], origin["longitude"], place["latitude"], place["longitude"]
+        )
+        estimated = estimate_mode_minutes("car", distance_km, "jeju")
+        assert abs(estimated - measured) <= 5, (name, distance_km, estimated, measured)
+
+
+def test_seoul_and_busan_car_minutes_are_unchanged() -> None:
+    # jeju만 바꿨다 - 서울·부산 car 속도는 그대로다(골든값, 2026-11-17 변경 전과 동일).
+    assert estimate_mode_minutes("car", 10.0, "seoul") == 47
+    assert estimate_mode_minutes("car", 10.0, "busan") == 39
+
+
+def test_transit_minutes_are_unchanged_for_every_city_including_jeju() -> None:
+    # TRANSIT_SPEED_KMH_BY_CITY는 건드리지 않았다 - 제주 포함 전부 그대로다.
+    assert estimate_mode_minutes("transit", 10.0, "seoul") == 41
+    assert estimate_mode_minutes("transit", 10.0, "busan") == 45
+    assert estimate_mode_minutes("transit", 10.0, "jeju") == 62
 
 
 # --- Day-travel assembly (service.py, white-box on the new helpers) -------

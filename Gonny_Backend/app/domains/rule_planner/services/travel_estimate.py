@@ -310,7 +310,15 @@ TRANSIT_FIXED_MINUTES = 10
 CAR_FIXED_MINUTES = 8
 DEFAULT_CITY_TRANSPORT_PROFILE = "seoul"
 TRANSIT_SPEED_KMH_BY_CITY: dict[str, float] = {"seoul": 25.0, "busan": 22.0, "jeju": 15.0}
-CAR_SPEED_KMH_BY_CITY: dict[str, float] = {"seoul": 20.0, "busan": 25.0, "jeju": 35.0}
+# jeju: 네이버지도 자동차 실측 4구간(2026-11-17, 평일 낮, 출발지 타미우스골프&빌리지
+# 기준) - 월정리 해변 61분/오설록 티뮤지엄 16분/여미지식물원 20분/사우스바운더
+# 20분 - 으로 역산한 유효 속도. estimate_mode_minutes가 이미 적용하는 굴곡률
+# (ROUTE_DETOUR_FACTOR 1.3)과 CAR_FIXED_MINUTES(8분, 주차·정차 보정)를 그대로 둔
+# 채 이 속도 하나로 맞췄다 - 35.0(추정)일 때 109/29/33/31분으로 실측의
+# 1.5~1.8배였으나, 65.0으로는 62/20/21/20분(오차 +1/+4/+1/0분)이 된다. 표본이
+# 4구간뿐이라 다른 권역 조합에서는 오차가 더 클 수 있다. 서울·부산은 바꾸지
+# 않았다.
+CAR_SPEED_KMH_BY_CITY: dict[str, float] = {"seoul": 20.0, "busan": 25.0, "jeju": 65.0}
 
 TRANSPORT_PROFILES: dict[str, dict[str, object]] = {
     "transit": {"fixed_minutes": TRANSIT_FIXED_MINUTES, "speed_kmh_by_city": TRANSIT_SPEED_KMH_BY_CITY},

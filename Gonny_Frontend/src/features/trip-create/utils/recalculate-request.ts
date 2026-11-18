@@ -81,17 +81,36 @@ export function buildFixedMealsForRecalculate(
   return fixedMeals;
 }
 
+// 분할된(stay가 2곳 이상인) 일정을 재계산할 때 쓸, stay별 "밤 수 +
+// 보낼 숙소 id" - stay_index 순서 그대로. accommodationId는 그 stay를
+// 교체했으면 교체된 숙소 id, 아니면(기본 선택 유지) 원래 그 stay의 숙소
+// id - 백엔드는 null을 "그 자리는 기본 선택"으로 해석하지만, 여기서는
+// 항상 "현재 화면에 보이는 숙소"를 그대로 고정해 보낸다(재계산 전후로
+// 화면에 보이는 숙소가 바뀌지 않게).
+export type AccommodationStayForRecalculate = {
+  nights: number;
+  accommodationId: string | null;
+};
+
 // /recalculate에 보낼 전체 요청 본문 - basePayload(마지막 /generate 호출 때
 // 실제로 보낸 payload 그대로)를 베이스로 fixed_slots와(있을 때만)
-// accommodation_id/fixed_meals만 더한다. 폼의 "지금" 값으로 다시 조립하지
-// 않는다 - 결과 화면에 온 뒤 폼 입력이 바뀌었을 수 있어서다(과제
-// constraint). meals/mealSwaps는 선택 파라미터 - 기존 호출부(활동/숙소
-// 교체만 다루던 호출)는 그대로 동작한다.
+// accommodation_id 또는 stay_nights/stay_accommodation_ids, fixed_meals만
+// 더한다. 폼의 "지금" 값으로 다시 조립하지 않는다 - 결과 화면에 온 뒤 폼
+// 입력이 바뀌었을 수 있어서다(과제 constraint). meals/mealSwaps/
+// accommodationStays는 선택 파라미터 - 기존 호출부(활동/숙소 교체만
+// 다루던 호출)는 그대로 동작한다.
+//
+// accommodationStays가 있고 길이가 2 이상이면(#133 분할 일정) 그 분할
+// 그대로 stay_nights/stay_accommodation_ids를 보내고, accommodationId는
+// 무시한다(백엔드가 둘을 동시에 받으면 거부하므로 - 분할 일정에서는
+// accommodation_id를 보내지 않는다). stay가 1곳 이하면(기본 경로)
+// accommodationId만 쓰는 기존 동작과 완전히 같다.
 export function buildRecalculateRequestPayload(params: {
   basePayload: Record<string, unknown>;
   items: ItemForRecalculate[];
   slotSwaps: SlotSwapMap;
   accommodationId?: string | null;
+  accommodationStays?: AccommodationStayForRecalculate[];
   meals?: SwappableMeal[];
   mealSwaps?: MealSwapMap;
 }): { ok: true; payload: Record<string, unknown> } | { ok: false; reason: string } {
@@ -104,7 +123,10 @@ export function buildRecalculateRequestPayload(params: {
     ...params.basePayload,
     fixed_slots: assembly.fixed_slots,
   };
-  if (params.accommodationId) {
+  if (params.accommodationStays && params.accommodationStays.length >= 2) {
+    payload.stay_nights = params.accommodationStays.map((stay) => stay.nights);
+    payload.stay_accommodation_ids = params.accommodationStays.map((stay) => stay.accommodationId);
+  } else if (params.accommodationId) {
     payload.accommodation_id = params.accommodationId;
   }
   if (params.meals && params.mealSwaps) {

@@ -19,6 +19,7 @@ import { ShareLinkModal } from "../../features/share/components/share-link-modal
 import { AccommodationChangePanel } from "../../features/trips/components/accommodation-change-panel";
 import { TripHeader } from "../../features/trips/components/trip-header";
 import { TripSummary } from "../../features/trips/components/trip-summary";
+import { findStayForDay } from "../../features/trips/utils/day-accommodation";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 
@@ -217,12 +218,18 @@ export function TripDetailPage() {
           {Object.keys(itineraryByDay)
             .map(Number)
             .sort((left, right) => left - right)
-            .map((dayNumber) => (
+            .map((dayNumber) => {
+              // 숙소가 2곳 이상(분할 저장된 여행)일 때만 - 한 곳이면
+              // 화면이 지금과 완전히 같아야 한다(과제 constraint).
+              const dayStay =
+                tripDetail.overview.stays.length >= 2 ? findStayForDay(tripDetail.overview.stays, dayNumber) : null;
+              return (
               <article key={dayNumber} className="planner-day-card">
                 <div className="planner-day-header">
                   <div>
                     <span className="planner-day-label">DAY {dayNumber}</span>
                     <strong className="trip-card-title">{dayNumber}일차 일정</strong>
+                    {dayStay ? <p>숙소: {dayStay.accommodationName}</p> : null}
                   </div>
                 </div>
 
@@ -335,7 +342,8 @@ export function TripDetailPage() {
                   ))}
                 </div>
               </article>
-            ))}
+              );
+            })}
 
           {!editableItems.length ? (
             <div className="admin-empty-card">

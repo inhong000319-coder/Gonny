@@ -6,6 +6,7 @@ import re
 import secrets
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from typing import NamedTuple
 
 from fastapi import HTTPException, status
 from reportlab.lib import colors
@@ -20,6 +21,7 @@ from sqlalchemy.orm import Session
 
 from app.core.settings import settings
 from app.domains.rule_planner.services.accommodation_scoring import load_city_accommodations
+from app.domains.rule_planner.services.accommodation_split import allowed_partitions
 from app.domains.rule_planner.services.travel_estimate import haversine_distance_km
 from app.domains.trips.schemas import (
     ExpenseCreate,
@@ -36,10 +38,12 @@ from app.domains.trips.schemas import (
     TripFavoriteUpdate,
     TripReportResponse,
     TripRetrospectiveUpdate,
+    TripStayInput,
 )
 from app.models.expense import Expense
 from app.models.itinerary import ItineraryItem
 from app.models.trip import Trip
+from app.models.trip_stay import TripStay
 
 SHARE_TOKEN_BYTES = 32
 
@@ -226,6 +230,42 @@ def _build_report_insights(
     return insights
 
 
+def _format_stay_night_range(start_night: int, nights: int) -> str:
+    end_night = start_night + nights - 1
+    return f"{start_night}박째" if nights == 1 else f"{start_night}~{end_night}박째"
+
+
+def _resolve_pdf_accommodation_lines(trip: Trip) -> list[str]:
+    """One line per effective stay for _build_trip_pdf_bytes - mirrors
+    TripResponse._synthesize_legacy_stay's fallback (real TripStay rows if
+    any, else a single synthesized stay from the legacy accommodation_*
+    columns, else no accommodation at all) so the PDF and the JSON
+    response never disagree on how many stays a trip has. A single stay
+    (real or synthesized) keeps the exact pre-#135 "숙소: 이름 (유형)"
+    line - only 2+ stays switch to the numbered "숙소 N (...박째): ..." form."""
+    if trip.stays:
+        stays = [
+            (stay.start_night, stay.nights, stay.accommodation_name, stay.accommodation_type)
+            for stay in trip.stays
+        ]
+    elif trip.accommodation_name:
+        total_nights = max((trip.end_date - trip.start_date).days, 1)
+        stays = [(1, total_nights, trip.accommodation_name, trip.accommodation_type)]
+    else:
+        return []
+
+    if len(stays) == 1:
+        start_night, nights, name, accommodation_type = stays[0]
+        line = f"{name} ({accommodation_type})" if accommodation_type else name
+        return [f"숙소: {line}"]
+
+    lines = []
+    for index, (start_night, nights, name, accommodation_type) in enumerate(stays):
+        line = f"{name} ({accommodation_type})" if accommodation_type else name
+        lines.append(f"숙소 {index + 1} ({_format_stay_night_range(start_night, nights)}): {line}")
+    return lines
+
+
 def _build_trip_pdf_bytes(
     *,
     trip: Trip,
@@ -256,11 +296,8 @@ def _build_trip_pdf_bytes(
         Paragraph(trip.title, title_style),
         Paragraph(f"{trip.destination} · {trip.start_date.isoformat()} ~ {trip.end_date.isoformat()}", meta_style),
     ]
-    if trip.accommodation_name:
-        accommodation_line = trip.accommodation_name
-        if trip.accommodation_type:
-            accommodation_line = f"{accommodation_line} ({trip.accommodation_type})"
-        elements.append(Paragraph(f"숙소: {accommodation_line}", meta_style))
+    for accommodation_line in _resolve_pdf_accommodation_lines(trip):
+        elements.append(Paragraph(accommodation_line, meta_style))
     elements.append(Spacer(1, 10 * mm))
     elements.append(Paragraph("일정", heading_style))
 
@@ -372,11 +409,125 @@ def _resolve_accommodation_snapshot(
     return accommodation.name, accommodation.accommodation_type
 
 
+class ResolvedStay(NamedTuple):
+    stay_index: int
+    start_night: int
+    nights: int
+    accommodation_id: str
+    accommodation_name: str
+    accommodation_type: str
+
+
+def _validate_and_resolve_stays(
+    *,
+    destination: str,
+    start_date: date,
+    end_date: date,
+    accommodation_id: str | None,
+    stays: list[TripStayInput] | None,
+) -> list[ResolvedStay] | None:
+    """Structural validation for TripCreate.stays (#135), same "never
+    re-scores, just checks the shape" spirit as the #133 rule_planner
+    recalculate validators - raises HTTPException(422) on the first rule
+    violated. Returns None (meaning "use the legacy accommodation_id path
+    instead") when stays itself is None; the caller never needs to check
+    which branch it's in beyond that.
+
+    Reuses accommodation_split.allowed_partitions - the exact same
+    middle-stay-min-2-nights/max-stay-count rule #133 already enforces for
+    a generated itinerary, so a trip can never be saved with a split its
+    own rule_planner wouldn't have produced in the first place.
+    """
+    if stays is None:
+        return None
+    if accommodation_id is not None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="accommodation_id와 stays를 동시에 보낼 수 없습니다.",
+        )
+    if not stays:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="stays는 최소 1개 이상이어야 합니다.")
+
+    total_nights = (end_date - start_date).days
+    if total_nights < 1:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="숙박일수가 0 이하인 여행은 숙소를 나눠 저장할 수 없습니다.",
+        )
+
+    requested_nights = tuple(stay.nights for stay in stays)
+    if sum(requested_nights) != total_nights:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"stays의 박수 합({sum(requested_nights)})이 여행 기간({total_nights}박)과 다릅니다.",
+        )
+    if requested_nights not in allowed_partitions(total_nights):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"허용되지 않는 숙소 분할입니다: {list(requested_nights)}",
+        )
+
+    resolved: list[ResolvedStay] = []
+    start_night = 1
+    previous_accommodation_id: str | None = None
+    for index, stay in enumerate(stays):
+        if stay.accommodation_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"{index}번째 stay에 accommodation_id가 없습니다.",
+            )
+        if stay.accommodation_id == previous_accommodation_id:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"인접한 stay가 같은 숙소일 수 없습니다: {stay.accommodation_id}",
+            )
+        name, accommodation_type = _resolve_accommodation_snapshot(destination, stay.accommodation_id)
+        resolved.append(
+            ResolvedStay(
+                stay_index=index,
+                start_night=start_night,
+                nights=stay.nights,
+                accommodation_id=stay.accommodation_id,
+                accommodation_name=name or "",
+                accommodation_type=accommodation_type or "",
+            )
+        )
+        previous_accommodation_id = stay.accommodation_id
+        start_night += stay.nights
+    return resolved
+
+
 class TripService:
     def create_trip(self, *, db: Session, request: TripCreate) -> Trip:
-        accommodation_name, accommodation_type = _resolve_accommodation_snapshot(
-            request.destination, request.accommodation_id
+        # #135 - resolved_stays is None for every request that doesn't use
+        # the new `stays` field (every trip saved before this feature, and
+        # every single-accommodation save since) - that path creates no
+        # TripStay rows at all, exactly as before. Only an explicit
+        # `stays` list ever creates rows; a plain accommodation_id never
+        # does, even when it would structurally be "just one stay" - this
+        # keeps the overwhelmingly common single-accommodation save a
+        # pure no-op for this feature, and lets TripResponse's read-time
+        # synthesis (see schemas.py) be the ONE place that turns legacy
+        # columns into a stays view, rather than maintaining two writers
+        # for the same "one stay" shape.
+        resolved_stays = _validate_and_resolve_stays(
+            destination=request.destination,
+            start_date=request.start_date,
+            end_date=request.end_date,
+            accommodation_id=request.accommodation_id,
+            stays=request.stays,
         )
+
+        if resolved_stays is not None:
+            first = resolved_stays[0]
+            accommodation_id = first.accommodation_id
+            accommodation_name = first.accommodation_name
+            accommodation_type = first.accommodation_type
+        else:
+            accommodation_id = request.accommodation_id
+            accommodation_name, accommodation_type = _resolve_accommodation_snapshot(
+                request.destination, request.accommodation_id
+            )
 
         db_trip = Trip(
             title=request.title or f"{request.destination} 여행",
@@ -386,10 +537,22 @@ class TripService:
             budget=request.budget,
             travel_style=request.travel_style,
             companion_type=request.companion_type,
-            accommodation_id=request.accommodation_id,
+            accommodation_id=accommodation_id,
             accommodation_name=accommodation_name,
             accommodation_type=accommodation_type,
         )
+        if resolved_stays is not None:
+            db_trip.stays = [
+                TripStay(
+                    stay_index=stay.stay_index,
+                    start_night=stay.start_night,
+                    nights=stay.nights,
+                    accommodation_id=stay.accommodation_id,
+                    accommodation_name=stay.accommodation_name,
+                    accommodation_type=stay.accommodation_type,
+                )
+                for stay in resolved_stays
+            ]
         db.add(db_trip)
         db.commit()
         db.refresh(db_trip)
@@ -460,14 +623,75 @@ class TripService:
         trip_id: int,
         payload: TripAccommodationUpdate,
     ) -> Trip:
+        """#135: payload.stay_index (default 0) picks which stay changes.
+        accommodation_id=None still means "clear everything" regardless of
+        stay_index - a partial clear (one stay's accommodation unset,
+        others kept) isn't supported, same as the pre-#135 contract this
+        extends (a trip's accommodation was always all-or-nothing)."""
         trip = self.get_trip_or_404(db=db, trip_id=trip_id)
+
+        if payload.accommodation_id is None:
+            for stay in list(trip.stays):
+                db.delete(stay)
+            trip.accommodation_id = None
+            trip.accommodation_name = None
+            trip.accommodation_type = None
+            db.commit()
+            db.refresh(trip)
+            return trip
 
         accommodation_name, accommodation_type = _resolve_accommodation_snapshot(
             trip.destination, payload.accommodation_id
         )
-        trip.accommodation_id = payload.accommodation_id
-        trip.accommodation_name = accommodation_name
-        trip.accommodation_type = accommodation_type
+        stay_index = payload.stay_index
+        existing_stays = {stay.stay_index: stay for stay in trip.stays}
+
+        if existing_stays:
+            if stay_index not in existing_stays:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"존재하지 않는 stay_index입니다: {stay_index}",
+                )
+            neighbor_accommodation_ids = {
+                stay.accommodation_id
+                for index, stay in existing_stays.items()
+                if index in (stay_index - 1, stay_index + 1)
+            }
+            if payload.accommodation_id in neighbor_accommodation_ids:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail="인접한 stay와 같은 숙소로 바꿀 수 없습니다.",
+                )
+            target = existing_stays[stay_index]
+            target.accommodation_id = payload.accommodation_id
+            target.accommodation_name = accommodation_name or ""
+            target.accommodation_type = accommodation_type or ""
+        else:
+            # 레거시(또는 단일 accommodation_id로 저장된) 여행 - 합성되는
+            # stay는 언제나 하나(stay_index=0)뿐이다.
+            if stay_index != 0:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"존재하지 않는 stay_index입니다: {stay_index}",
+                )
+            total_nights = max((trip.end_date - trip.start_date).days, 1)
+            db.add(
+                TripStay(
+                    trip_id=trip.id,
+                    stay_index=0,
+                    start_night=1,
+                    nights=total_nights,
+                    accommodation_id=payload.accommodation_id,
+                    accommodation_name=accommodation_name or "",
+                    accommodation_type=accommodation_type or "",
+                )
+            )
+
+        if stay_index == 0:
+            trip.accommodation_id = payload.accommodation_id
+            trip.accommodation_name = accommodation_name
+            trip.accommodation_type = accommodation_type
+
         db.commit()
         db.refresh(trip)
         return trip

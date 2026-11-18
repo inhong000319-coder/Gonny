@@ -39,6 +39,19 @@ class Trip(Base):
     accommodation_name = Column(String, nullable=True)
     accommodation_type = Column(String, nullable=True)
 
+    # #135 - real rows only when the trip was saved/edited through the
+    # multi-stay path (see TripService._validate_and_resolve_stays /
+    # update_trip_accommodation). Empty here does NOT mean "no
+    # accommodation" - TripResponse synthesizes a length-1 view from the
+    # legacy accommodation_* columns above when this is empty but those
+    # are set, so every pre-#135 trip keeps working without a migration.
+    stays = relationship(
+        "TripStay",
+        back_populates="trip",
+        cascade="all, delete-orphan",
+        order_by="TripStay.stay_index.asc()",
+    )
+
     itinerary_items = relationship(
         "ItineraryItem",
         back_populates="trip",

@@ -1124,6 +1124,13 @@ function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
 }
 
+// 예상 비용 금액이 1인 기준이 아니라 전체 인원 합계라는 걸 보조 문구에
+// 밝힌다 - travelers===1이면 "합계"라는 표현이 어색해 "1인 기준"으로
+// 쓴다.
+function formatTravelersCostLabel(travelers: number) {
+  return travelers === 1 ? "1인 기준" : `${travelers}인 합계`;
+}
+
 function normalizeCatalogResponse(payload: unknown) {
   if (!payload || typeof payload !== "object") {
     return [];
@@ -3199,7 +3206,8 @@ export function TripCreateForm() {
                 </p>
                 <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
                 <p className="tc-section-note">
-                  입장료 확인 {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
+                  {formatTravelersCostLabel(result.estimated_cost.travelers)} · 입장료 확인{" "}
+                  {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
                 </p>
                 {result.estimated_cost.unpriced_place_count > 0 ? (
                   <p className="tc-section-note">

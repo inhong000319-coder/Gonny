@@ -296,6 +296,16 @@ function formatStayHeading(stay: TripStayOverview): string {
   return `숙소 ${stay.stayIndex + 1} · ${formatStayNightRange(stay.startNight, stay.nights)}`;
 }
 
+// 한자어 수사(하나·둘이 아니라 일·이·삼...으로 읽는 숫자) 기준 받침
+// 유무로 "을/를"을 고른다 - 마지막 숫자가 1·3·6·7·8·0(일·삼·육·칠·팔·영,
+// 받침 있음)이면 "을", 2·4·5·9(이·사·오·구, 받침 없음)이면 "를".
+const OBJECT_PARTICLE_NO_BATCHIM_LAST_DIGITS = new Set(["2", "4", "5", "9"]);
+
+function getNumberObjectParticle(value: number): "을" | "를" {
+  const lastDigit = Math.abs(value).toString().slice(-1);
+  return OBJECT_PARTICLE_NO_BATCHIM_LAST_DIGITS.has(lastDigit) ? "를" : "을";
+}
+
 // 숙소가 분할 저장된(2곳 이상) 여행 - stay마다 독립적으로 바꿀 수 있는 행.
 function MultiStayAccommodationChangePanel({
   tripId,
@@ -324,7 +334,8 @@ function MultiStayAccommodationChangePanel({
     try {
       await mutation.mutateAsync({ accommodationId, stayIndex });
       await invalidateAfterChange();
-      setActionMessage(`숙소 ${stayIndex + 1}을 바꿨어요.`);
+      const displayIndex = stayIndex + 1;
+      setActionMessage(`숙소 ${displayIndex}${getNumberObjectParticle(displayIndex)} 바꿨어요.`);
       setOpenStayIndex(null);
     } catch (error) {
       setActionError(error instanceof Error ? error.message : "숙소 변경에 실패했어요.");

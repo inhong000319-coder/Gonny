@@ -48,7 +48,11 @@ import {
   type AccommodationAlternative,
   type AccommodationSwapMap,
 } from "../utils/accommodation-swap";
-import { getDayAccommodationStays, formatStayNightRange } from "../utils/accommodation-stays";
+import {
+  buildTripCreateAccommodationFields,
+  formatStayCardTitle,
+  getDayAccommodationStays,
+} from "../utils/accommodation-stays";
 import {
   buildRecalculateRequestPayload,
   canBuildFixedSlotsForRecalculate,
@@ -2136,11 +2140,6 @@ export function TripCreateForm() {
   );
   const anyAccommodationSwapped = hasAnyAccommodationSwap(accommodationSwaps);
   const canRecalculate = result !== null && canBuildFixedSlotsForRecalculate(result.items);
-  // stay가 여러 곳(2곳 이상)인 결과는 저장(createTrip)이 아직 첫 번째
-  // 숙소만 저장해버리는 4단계 전 상태라, 저장 버튼 자체를 막는다(과제
-  // Requirement 5) - handleSaveTrip 쪼개진 if문이 아니라 버튼
-  // disabled/안내로 먼저 보이게 한다.
-  const isMultiStayResult = (result?.accommodation_stays.length ?? 0) >= 2;
   const selectedCatalogCity = cities.find((option) => option.city === form.city);
   const availableAccommodationTypes = accommodationTypeOptions.filter(
     (type) => (selectedCatalogCity?.accommodation_type_counts?.[type] ?? 0) > 0,
@@ -2540,11 +2539,7 @@ export function TripCreateForm() {
   };
 
   const handleSaveTrip = async () => {
-    // isMultiStayResult일 때 저장 버튼 자체를 disabled로 막아두지만(아래
-    // 렌더링), 방어적으로 한 번 더 막는다 - 과제 Requirement 5("stays
-    // ≥2인 결과에서 저장을 누르면 첫 번째 숙소만 조용히 저장되는 일이
-    // 없게").
-    if (!result || isMultiStayResult) {
+    if (!result) {
       return;
     }
 
@@ -2552,7 +2547,9 @@ export function TripCreateForm() {
     setError("");
 
     try {
-      const accommodationId = resolveDisplayedAccommodationId(effectiveAccommodationStays);
+      // #135 - stay가 2곳 이상이면 stays를, 아니면(기존과 완전히 같게)
+      // accommodation_id만(숙소가 없으면 아무 키도 없음) 보낸다 - 둘을
+      // 같이 보내면 서버가 422로 거부한다.
       const createdTrip = await createTrip({
         title: `${toCityLabel(result.city)} ${form.duration_label} 일정`,
         destination: result.city,
@@ -2561,9 +2558,7 @@ export function TripCreateForm() {
         budget: UNSET_TRIP_BUDGET,
         travel_style: result.style,
         companion_type: result.companion_type,
-        // 추천 숙소가 없으면 생략한다 - 서버 기본 동작(숙소 없이 저장)과
-        // 같다(과제 constraint).
-        ...(accommodationId ? { accommodation_id: accommodationId } : {}),
+        ...buildTripCreateAccommodationFields(effectiveAccommodationStays),
       });
 
       // 화면에 표시된(교체 반영된) 값으로 저장한다 - payload 형태(5개 필드)는
@@ -3167,9 +3162,7 @@ export function TripCreateForm() {
               effectiveAccommodationStays.map((stay, index) =>
                 stay.accommodation ? (
                   <div className="tc-card" key={stay.stayIndex}>
-                    <p className="tc-section-label">
-                      숙소 {index + 1} · {stay.nights}박 ({formatStayNightRange(result.accommodation_stays[index])})
-                    </p>
+                    <p className="tc-section-label">{formatStayCardTitle(index + 1, result.accommodation_stays[index])}</p>
                     <p className="tc-section-value">{stay.accommodation.name}</p>
                     <div className="tc-tag-row">
                       <span className="tc-tag">{stay.accommodation.accommodation_type}</span>
@@ -3680,15 +3673,10 @@ export function TripCreateForm() {
               status={transportCompareStatus}
             />
 
-            {isMultiStayResult ? (
-              <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
-                숙소를 나눈 일정의 저장은 준비 중이에요.
-              </div>
-            ) : null}
             <div className="tc-result-actions">
               <button
                 className="tc-btn tc-btn-primary"
-                disabled={isSavingTrip || isMultiStayResult}
+                disabled={isSavingTrip}
                 onClick={handleSaveTrip}
                 type="button"
               >

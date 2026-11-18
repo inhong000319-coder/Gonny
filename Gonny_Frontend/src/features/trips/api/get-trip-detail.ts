@@ -1,9 +1,22 @@
 import { apiClient } from "../../../shared/api/client";
-import { DayPlan, TripOverview } from "../../../shared/types/domain";
-import { TripDetailResponseDto } from "../types/trips";
-import { formatAccommodationLabel } from "../utils/format-accommodation-label";
+import { DayPlan, TripOverview, TripStayOverview } from "../../../shared/types/domain";
+import { TripDetailResponseDto, TripStayDto } from "../types/trips";
+import { formatTripHeaderAccommodationLabel } from "../utils/format-accommodation-label";
+
+function mapTripStay(dto: TripStayDto): TripStayOverview {
+  return {
+    stayIndex: dto.stay_index,
+    startNight: dto.start_night,
+    nights: dto.nights,
+    accommodationId: dto.accommodation_id,
+    accommodationName: dto.accommodation_name,
+    accommodationType: dto.accommodation_type,
+  };
+}
 
 function mapTripOverview(dto: TripDetailResponseDto): TripOverview {
+  // 없으면(구버전 응답) [] 취급 - #135 과제 constraint.
+  const stays = (dto.stays ?? []).map(mapTripStay);
   return {
     id: String(dto.id),
     title: dto.title || `${dto.destination} 여행`,
@@ -12,12 +25,8 @@ function mapTripOverview(dto: TripDetailResponseDto): TripOverview {
     weatherSummary: "날씨 정보 준비 중",
     budgetLabel: `${dto.budget.toLocaleString()}원`,
     companionLabel: dto.companion_type,
-    accommodationLabel: formatAccommodationLabel(dto),
-    // 숙소 변경 패널이 "현재 선택된 후보"를 이름 문자열이 아니라 id로
-    // 비교하기 위한 원본 값 - accommodationLabel은 표시용 포맷 문자열일
-    // 뿐이라 이걸로는 후보 목록의 어떤 항목이 지금 저장된 숙소인지
-    // 안정적으로 구분할 수 없다.
-    accommodationId: dto.accommodation_id ?? undefined,
+    accommodationLabel: formatTripHeaderAccommodationLabel(stays),
+    stays,
   };
 }
 

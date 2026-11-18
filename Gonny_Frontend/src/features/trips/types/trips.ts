@@ -1,3 +1,14 @@
+// #135 - 분할 저장된 여행의 숙소 구역 하나. 백엔드가 항상 포함시키며(숙소
+// 없으면 빈 배열), 구버전 응답(필드 자체가 없음)은 호출부가 []로 취급한다.
+export type TripStayDto = {
+  stay_index: number;
+  start_night: number;
+  nights: number;
+  accommodation_id: string;
+  accommodation_name: string;
+  accommodation_type: string;
+};
+
 export type TripsListItemDto = {
   id: number;
   title: string;
@@ -14,6 +25,8 @@ export type TripsListItemDto = {
   accommodation_id?: string | null;
   accommodation_name?: string | null;
   accommodation_type?: string | null;
+  // 없으면(구버전 응답) [] 취급 - get-trips.ts의 매퍼가 그렇게 정규화한다.
+  stays?: TripStayDto[];
 };
 
 // GET /trips/{id}/accommodation-options 항목 (PR #113) - 좌표·편의시설
@@ -53,4 +66,6 @@ export type TripDetailResponseDto = {
   accommodation_id?: string | null;
   accommodation_name?: string | null;
   accommodation_type?: string | null;
+  // 없으면(구버전 응답) [] 취급.
+  stays?: TripStayDto[];
 };

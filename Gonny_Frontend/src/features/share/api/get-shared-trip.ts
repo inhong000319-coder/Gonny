@@ -9,6 +9,15 @@ export type SharedItineraryItem = {
   notes: string | null;
 };
 
+// #135 - 분할 저장된 여행의 숙소 구역 하나.
+export type SharedTripStay = {
+  stay_index: number;
+  start_night: number;
+  nights: number;
+  accommodation_name: string;
+  accommodation_type: string;
+};
+
 export type SharedTripDetail = {
   title: string;
   destination: string;
@@ -16,10 +25,28 @@ export type SharedTripDetail = {
   end_date: string;
   companion_type: string;
   itinerary_items: SharedItineraryItem[];
-  // 숙소 없이 저장된 여행(구버전 응답 포함)에서는 없거나 null.
+  // 숙소 없이 저장된 여행(구버전 응답 포함)에서는 없거나 null. #135 이후로
+  // 항상 stays[0]과 같은 값 - 단일 숙소 화면은 여전히 이 두 필드만 본다.
   accommodation_name: string | null;
   accommodation_type: string | null;
+  // 없으면(구버전 응답) [] 취급.
+  stays: SharedTripStay[];
 };
+
+function isSharedTripStay(value: unknown): value is SharedTripStay {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const stay = value as Record<string, unknown>;
+  return (
+    typeof stay.stay_index === "number" &&
+    typeof stay.start_night === "number" &&
+    typeof stay.nights === "number" &&
+    typeof stay.accommodation_name === "string" &&
+    typeof stay.accommodation_type === "string"
+  );
+}
 
 function isSharedItineraryItem(value: unknown): value is SharedItineraryItem {
   if (!value || typeof value !== "object") {
@@ -55,6 +82,7 @@ function normalizeSharedTripDetail(payload: unknown): SharedTripDetail {
     itinerary_items: Array.isArray(data.itinerary_items) ? data.itinerary_items.filter(isSharedItineraryItem) : [],
     accommodation_name: typeof data.accommodation_name === "string" ? data.accommodation_name : null,
     accommodation_type: typeof data.accommodation_type === "string" ? data.accommodation_type : null,
+    stays: Array.isArray(data.stays) ? data.stays.filter(isSharedTripStay) : [],
   };
 }
 

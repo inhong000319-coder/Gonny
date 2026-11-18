@@ -35,17 +35,25 @@ import {
 } from "../utils/meal-swaps";
 import { computeTimelineTravelHints, type TimelineRow } from "../utils/timeline-hints";
 import {
-  getEffectiveAccommodation,
-  isAccommodationSwapped,
+  applyAccommodationSwap,
+  getEffectiveStayAccommodation,
+  hasAnyAccommodationSwap,
+  isStaySwapped,
+  revertAccommodationSwap,
   shouldHideAccommodationBoundaryConnector,
   shouldHideAccommodationNearPreviousReason,
   shouldHideDayTravelTotal,
   shouldShowAccommodationEndLegStale,
   shouldShowAccommodationStartLegStale,
   type AccommodationAlternative,
-  type AccommodationSwapState,
+  type AccommodationSwapMap,
 } from "../utils/accommodation-swap";
-import { buildRecalculateRequestPayload, canBuildFixedSlotsForRecalculate } from "../utils/recalculate-request";
+import { getDayAccommodationStays, formatStayNightRange } from "../utils/accommodation-stays";
+import {
+  buildRecalculateRequestPayload,
+  canBuildFixedSlotsForRecalculate,
+  type AccommodationStayForRecalculate,
+} from "../utils/recalculate-request";
 
 type CatalogCityOption = {
   continent: string;
@@ -231,6 +239,20 @@ type AccommodationRecommendation = {
   average_price_krw?: number | null;
 };
 
+// 숙소 분할(#133) - 트립의 숙소 구역 하나. night n은 [start_night,
+// start_night+nights) 구간에 속한다. day_numbers는 그 stay가 출발/도착
+// 숙소가 되는 날짜들(체크아웃 날은 두 stay 모두에 들어간다) - 참고용으로만
+// 쓰고, 실제 날짜별 출발/도착 판정은 getDayAccommodationStays(순수 함수,
+// start_night/nights만 읽음)로 한다.
+type AccommodationStay = {
+  stay_index: number;
+  start_night: number;
+  nights: number;
+  day_numbers: number[];
+  accommodation: AccommodationRecommendation | null;
+  alternatives: AccommodationAlternative[];
+};
+
 type RuleCostEstimate = {
   min_krw: number;
   max_krw: number;
@@ -353,6 +375,15 @@ type RuleItineraryResponse = {
   // - absent on a response from before this field existed,
   // normalizeGenerateResponse defaults it to [].
   accommodation_alternatives: AccommodationAlternative[];
+  // #133 - 길이 1이면 accommodation_recommendation/_alternatives와 완전히
+  // 같은 내용(stay 0 하나)을 가리킨다. 응답에 없거나(구버전 캐시) 비정상
+  // 항목만 있으면 normalizeGenerateResponse가 accommodation_recommendation
+  // 하나로 길이 1 stays를 만들어 폴백한다 - 절대 비어있지 않은 추천을
+  // 빈 stays로 보여주지 않는다.
+  accommodation_stays: AccommodationStay[];
+  // "two"/"auto"를 골랐지만 분할 없이 한 곳으로 처리된 이유 - 분할이
+  // 실제로 됐거나 "single"을 선택했으면 null.
+  accommodation_split_note: string | null;
   meal_recommendations: RuleMealRecommendation[];
   estimated_cost: RuleCostEstimate | null;
   day_travel: RuleDayTravel[];
@@ -374,6 +405,10 @@ type PlannerFormState = {
   companion_type: CompanionType;
   accommodation_types: AccommodationTypeLabel[];
   accommodation_budget_band: BudgetBand | null;
+  // #133 - "single"(기본, 한 곳)이면 요청에 안 보낸다(handleGenerate 참고),
+  // 기존 요청 payload와 완전히 같아야 하므로. nights < 3이면(나뉠 수
+  // 없음) 항상 "single"로 되돌린다 - updateField의 duration_label 분기.
+  accommodation_split: AccommodationSplitMode;
   // Modes the user has toggled on (at least one, always). transport_by_day
   // is the day-by-day assignment actually sent to the backend - its length
   // always equals the trip's day count (nights + 1).
@@ -410,6 +445,16 @@ const accommodationGradeOptions: { value: BudgetBand | null; label: string; desc
 ];
 type AccommodationTypeLabel = "호텔" | "모텔" | "호스텔" | "펜션·민박" | "콘도미니엄";
 const accommodationTypeOptions: AccommodationTypeLabel[] = ["호텔", "모텔", "호스텔", "펜션·민박", "콘도미니엄"];
+// #133 - 백엔드 RuleItineraryRequest.accommodation_split과 같은 3가지 값.
+// MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT 미만(1~2박)이면 서버가 어차피 한 곳으로
+// 처리하므로, 폼에서도 이 선택지 자체를 숨긴다(아래 selectedNights 비교).
+type AccommodationSplitMode = "single" | "two" | "auto";
+const MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT = 3;
+const accommodationSplitOptions: { value: AccommodationSplitMode; label: string; description: string }[] = [
+  { value: "single", label: "한 곳에서 계속 머물기", description: "지금처럼 숙소를 한 곳만 추천해요" },
+  { value: "two", label: "두 곳으로 나누기", description: "이동이 줄 수 있는 두 곳으로 나눠서 추천해요" },
+  { value: "auto", label: "알아서 정해 주세요", description: "이동이 확실히 줄 때만 숙소를 나눠요" },
+];
 const styleOptions: TripStyle[] = ["tight", "easy", "near-stay", "mobility-first"];
 const companionOptions: CompanionType[] = ["solo", "couple", "friend", "family"];
 const travelerOptions = [
@@ -436,6 +481,7 @@ const initialForm: PlannerFormState = {
   companion_type: "friend",
   accommodation_types: [],
   accommodation_budget_band: null,
+  accommodation_split: "single",
   transport_modes: ["transit"],
   transport_by_day: ["transit", "transit", "transit"],
   arrival_period: null,
@@ -894,6 +940,24 @@ function isAccommodationRecommendation(value: unknown): value is AccommodationRe
   );
 }
 
+function isAccommodationStay(value: unknown): value is AccommodationStay {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const stay = value as Record<string, unknown>;
+  return (
+    typeof stay.stay_index === "number" &&
+    typeof stay.start_night === "number" &&
+    typeof stay.nights === "number" &&
+    Array.isArray(stay.day_numbers) &&
+    stay.day_numbers.every((day) => typeof day === "number") &&
+    (stay.accommodation === null || isAccommodationRecommendation(stay.accommodation)) &&
+    Array.isArray(stay.alternatives) &&
+    stay.alternatives.every(isAccommodationRecommendation)
+  );
+}
+
 function isRuleCostEstimate(value: unknown): value is RuleCostEstimate {
   if (!value || typeof value !== "object") {
     return false;
@@ -1094,13 +1158,42 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
     throw new Error("생성된 일정 항목을 해석하지 못했습니다.");
   }
 
+  const nights = typeof data.nights === "number" ? data.nights : 0;
+  const days = typeof data.days === "number" ? data.days : 0;
+  const accommodation_recommendation = isAccommodationRecommendation(data.accommodation_recommendation)
+    ? data.accommodation_recommendation
+    : null;
+  const accommodation_alternatives = Array.isArray(data.accommodation_alternatives)
+    ? data.accommodation_alternatives.filter(isAccommodationRecommendation)
+    : [];
+  // #133 - 응답에 accommodation_stays가 없거나(구버전 캐시) 전부 비정상이면
+  // accommodation_recommendation 하나로 길이 1 stays를 만들어 폴백한다 -
+  // 화면은 항상 stays를 보고 그리므로, 이 폴백이 없으면 추천 숙소가 있어도
+  // 숙소 카드가 아예 안 보이게 된다.
+  const parsedStays = Array.isArray(data.accommodation_stays) ? data.accommodation_stays.filter(isAccommodationStay) : [];
+  const accommodation_stays: AccommodationStay[] =
+    parsedStays.length > 0
+      ? parsedStays
+      : accommodation_recommendation
+        ? [
+            {
+              stay_index: 0,
+              start_night: 1,
+              nights,
+              day_numbers: Array.from({ length: days }, (_, index) => index + 1),
+              accommodation: accommodation_recommendation,
+              alternatives: accommodation_alternatives,
+            },
+          ]
+        : [];
+
   return {
     continent: typeof data.continent === "string" ? data.continent : "",
     country: typeof data.country === "string" ? data.country : "",
     city: typeof data.city === "string" ? data.city : "",
     travelers: typeof data.travelers === "number" ? data.travelers : 0,
-    nights: typeof data.nights === "number" ? data.nights : 0,
-    days: typeof data.days === "number" ? data.days : 0,
+    nights,
+    days,
     budget_band: (data.budget_band as BudgetBand) ?? "medium",
     concepts: Array.isArray(data.concepts) ? (data.concepts as TripConcept[]) : [],
     style: (data.style as TripStyle) ?? "easy",
@@ -1130,15 +1223,11 @@ function normalizeGenerateResponse(payload: unknown): RuleItineraryResponse {
         }))
       : [],
     weather_status: Array.isArray(data.weather_status) ? data.weather_status.filter(isRuleDayWeatherStatus) : [],
-    accommodation_recommendation: isAccommodationRecommendation(data.accommodation_recommendation)
-      ? data.accommodation_recommendation
-      : null,
-    // Missing/null on an older cached response (pre accommodation-
-    // alternatives backend change) - never throws, same permissive default
-    // as every other list field here.
-    accommodation_alternatives: Array.isArray(data.accommodation_alternatives)
-      ? data.accommodation_alternatives.filter(isAccommodationRecommendation)
-      : [],
+    accommodation_recommendation,
+    accommodation_alternatives,
+    accommodation_stays,
+    accommodation_split_note:
+      typeof data.accommodation_split_note === "string" ? data.accommodation_split_note : null,
     meal_recommendations: Array.isArray(data.meal_recommendations)
       ? data.meal_recommendations.filter(isRuleMealRecommendation).map((meal) => ({
           ...meal,
@@ -1838,15 +1927,31 @@ function summarizeRoute(items: RuleItineraryItem[]) {
   return highlights.join(" · ");
 }
 
-// 지금 화면에 표시 중인 숙소의 id - 교체됐으면 그 숙소, 아니면 원래
-// 추천 숙소, 추천 숙소 자체가 없으면 null. handleRecalculate와
-// handleSaveTrip 둘 다 "저장/재계산 요청에 보낼 숙소"를 이 식 하나로
-// 통일한다(과제 constraint - 중복 정의 금지).
+// stay별로 "지금 화면에 표시 중인" 숙소 - 교체됐으면 그 대안, 아니면 원래
+// 그 stay의 추천 숙소. handleRecalculate와 handleSaveTrip 둘 다 "저장/재계산
+// 요청에 보낼 숙소"를 이 식 하나로 통일한다(과제 constraint - 중복 정의
+// 금지). stay가 한 곳(또는 없음)일 때도 길이 0~1짜리 배열로 같은 모양을
+// 쓴다 - 호출부가 길이로 분기한다(resolveDisplayedAccommodationId 참고).
+function resolveEffectiveAccommodationStays(
+  stays: AccommodationStay[],
+  swaps: AccommodationSwapMap,
+): { stayIndex: number; nights: number; accommodation: AccommodationAlternative | null }[] {
+  return stays.map((stay) => ({
+    stayIndex: stay.stay_index,
+    nights: stay.nights,
+    accommodation: stay.accommodation
+      ? getEffectiveStayAccommodation(stay.accommodation, swaps, stay.stay_index)
+      : null,
+  }));
+}
+
+// 기존 단일 숙소 경로(accommodation_id)에 쓸 id - stay가 하나 이하일 때만
+// 의미가 있다(stay가 여러 곳이면 호출부가 stay_nights/stay_accommodation_ids
+// 경로를 대신 쓴다 - buildRecalculateRequestPayload 참고).
 function resolveDisplayedAccommodationId(
-  result: RuleItineraryResponse | null,
-  accommodationSwap: AccommodationSwapState,
+  effectiveStays: { accommodation: AccommodationAlternative | null }[],
 ): string | null {
-  return accommodationSwap?.id ?? result?.accommodation_recommendation?.id ?? null;
+  return effectiveStays[0]?.accommodation?.id ?? null;
 }
 
 function splitNoteLines(note: string) {
@@ -1891,10 +1996,10 @@ export function TripCreateForm() {
   // 식사별 "다른 추천" 교체 상태 - slotSwaps와 독립적인 별도 상태(서로
   // 읽지 않는다), 같은 시점(아래 useEffect)에 같이 초기화된다.
   const [mealSwaps, setMealSwaps] = useState<MealSwapMap>({});
-  // 숙소 교체 상태 - activity 슬롯과 독립적인 별도 상태(slotSwaps와 서로
-  // 읽지 않는다), 같은 시점(아래 useEffect)에 같이 초기화된다. null = 원래
-  // 추천 숙소 그대로.
-  const [accommodationSwap, setAccommodationSwap] = useState<AccommodationSwapState>(null);
+  // 숙소 교체 상태(#133 - stay_index별) - activity 슬롯과 독립적인 별도
+  // 상태(slotSwaps와 서로 읽지 않는다), 같은 시점(아래 useEffect)에 같이
+  // 초기화된다. 키가 없는 stay는 원래 추천 숙소 그대로.
+  const [accommodationSwaps, setAccommodationSwaps] = useState<AccommodationSwapMap>({});
   // "바뀐 일정으로 다시 계산"(POST /rule-itinerary/recalculate, PR #109) 상태.
   // isRecalculating은 중복 호출 방지용, recalculateError는 결과 화면 안
   // 버튼 근처에 보여줄 실패 메시지 - handleGenerate 실패와 달리 result는
@@ -1923,7 +2028,7 @@ export function TripCreateForm() {
   useEffect(() => {
     setSlotSwaps({});
     setMealSwaps({});
-    setAccommodationSwap(null);
+    setAccommodationSwaps({});
     setRecalculateError("");
     if (pendingChangedMealKeysRef.current) {
       setChangedMealKeys(pendingChangedMealKeysRef.current);
@@ -2021,15 +2126,21 @@ export function TripCreateForm() {
     allTravelLegs.length > 0 && allTravelLegs.every((leg) => leg.source === "estimate");
   const selectedNights = parseNights(form.duration_label);
   const totalAreaCount = result ? countDistinctAreas(result.items) : 0;
-  const accommodationIsSwapped = isAccommodationSwapped(accommodationSwap);
+  // #133 - stay별로 교체 상태를 적용한 "지금 화면에 보여야 하는" 숙소
+  // 목록. 트립 전체 기준 "뭐라도 바뀌었는지"는 hasAnyAccommodationSwap로,
+  // 날짜별/카드별 판정은 개별 stay_index로 isStaySwapped를 쓴다 - 아래
+  // 일차 루프와 숙소 카드 목록이 각각 필요한 stay만 본다.
+  const effectiveAccommodationStays = useMemo(
+    () => resolveEffectiveAccommodationStays(result?.accommodation_stays ?? [], accommodationSwaps),
+    [result, accommodationSwaps],
+  );
+  const anyAccommodationSwapped = hasAnyAccommodationSwap(accommodationSwaps);
   const canRecalculate = result !== null && canBuildFixedSlotsForRecalculate(result.items);
-  const effectiveAccommodation = result?.accommodation_recommendation
-    ? getEffectiveAccommodation(result.accommodation_recommendation, accommodationSwap)
-    : null;
-  // 숙소 출발/복귀 커넥터·일차 이동 합계 라벨에 쓸 "현재 화면에 보여야
-  // 하는" 숙소 이름 - 교체 중이면 대안 이름이 아니라 "재계산 안 됨"
-  // 표시로 대체되므로 애초에 쓰지 않는다(아래 일차 루프에서 바로 이
-  // accommodationIsSwapped를 직접 참조한다).
+  // stay가 여러 곳(2곳 이상)인 결과는 저장(createTrip)이 아직 첫 번째
+  // 숙소만 저장해버리는 4단계 전 상태라, 저장 버튼 자체를 막는다(과제
+  // Requirement 5) - handleSaveTrip 쪼개진 if문이 아니라 버튼
+  // disabled/안내로 먼저 보이게 한다.
+  const isMultiStayResult = (result?.accommodation_stays.length ?? 0) >= 2;
   const selectedCatalogCity = cities.find((option) => option.city === form.city);
   const availableAccommodationTypes = accommodationTypeOptions.filter(
     (type) => (selectedCatalogCity?.accommodation_type_counts?.[type] ?? 0) > 0,
@@ -2111,8 +2222,15 @@ export function TripCreateForm() {
       }
 
       if (key === "duration_label") {
-        const days = parseNights(value as string) + 1;
+        const nights = parseNights(value as string);
+        const days = nights + 1;
         next.transport_by_day = resizeTransportByDay(prev.transport_by_day, days, prev.transport_modes);
+        // #133 - 1~2박으로 줄이면 숙소 구성 선택지 자체가 숨겨지므로, 값도
+        // "한 곳"으로 되돌린다(숨겨진 선택을 그대로 들고 있다가 나중에
+        // 다시 보일 때 어색하게 남는 걸 막는다).
+        if (nights < MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT) {
+          next.accommodation_split = "single";
+        }
       }
 
       return next;
@@ -2200,6 +2318,7 @@ export function TripCreateForm() {
     const {
       accommodation_types,
       accommodation_budget_band,
+      accommodation_split,
       transport_modes,
       arrival_period,
       departure_period,
@@ -2211,6 +2330,9 @@ export function TripCreateForm() {
       travelers: Number(form.travelers) || 2,
       ...(accommodation_types.length > 0 ? { accommodation_types } : {}),
       ...(accommodation_budget_band ? { accommodation_budget_band } : {}),
+      // "single"(기본)이면 안 보낸다 - 기존 요청 payload와 완전히 같아야
+      // 한다(#133 과제 constraint).
+      ...(accommodation_split !== "single" ? { accommodation_split } : {}),
       ...(arrival_period ? { arrival_period } : {}),
       ...(departure_period ? { departure_period } : {}),
       ...(include_breakfast ? { include_breakfast } : {}),
@@ -2265,12 +2387,21 @@ export function TripCreateForm() {
 
     setRecalculateError("");
 
-    const accommodationId = resolveDisplayedAccommodationId(result, accommodationSwap);
+    // stay가 여러 곳이면(#133) accommodation_id 대신 stay_nights/
+    // stay_accommodation_ids를 보낸다 - 백엔드가 둘을 같이 받으면 거부하므로
+    // accommodationId는 stay가 하나 이하일 때만 쓴다
+    // (buildRecalculateRequestPayload가 accommodationStays 길이로 스스로
+    // 분기하지만, 여기서도 명시적으로 하나만 골라 보낸다).
+    const accommodationStaysForRecalculate: AccommodationStayForRecalculate[] = effectiveAccommodationStays.map(
+      (stay) => ({ nights: stay.nights, accommodationId: stay.accommodation?.id ?? null }),
+    );
+    const accommodationId = resolveDisplayedAccommodationId(effectiveAccommodationStays);
     const assembly = buildRecalculateRequestPayload({
       basePayload: lastGeneratePayload,
       items: result.items,
       slotSwaps,
       accommodationId,
+      accommodationStays: accommodationStaysForRecalculate,
       meals: result.meal_recommendations,
       mealSwaps,
     });
@@ -2408,16 +2539,12 @@ export function TripCreateForm() {
     setSlotSwaps((previous) => revertSlotSwap(previous, affectedItem));
   };
 
-  const handleSelectAccommodationAlternative = (alternative: AccommodationAlternative) => {
-    setAccommodationSwap(alternative);
-  };
-
-  const handleRevertAccommodation = () => {
-    setAccommodationSwap(null);
-  };
-
   const handleSaveTrip = async () => {
-    if (!result) {
+    // isMultiStayResult일 때 저장 버튼 자체를 disabled로 막아두지만(아래
+    // 렌더링), 방어적으로 한 번 더 막는다 - 과제 Requirement 5("stays
+    // ≥2인 결과에서 저장을 누르면 첫 번째 숙소만 조용히 저장되는 일이
+    // 없게").
+    if (!result || isMultiStayResult) {
       return;
     }
 
@@ -2425,7 +2552,7 @@ export function TripCreateForm() {
     setError("");
 
     try {
-      const accommodationId = resolveDisplayedAccommodationId(result, accommodationSwap);
+      const accommodationId = resolveDisplayedAccommodationId(effectiveAccommodationStays);
       const createdTrip = await createTrip({
         title: `${toCityLabel(result.city)} ${form.duration_label} 일정`,
         destination: result.city,
@@ -2695,6 +2822,32 @@ export function TripCreateForm() {
                       </div>
                     </div>
 
+                    {selectedNights >= MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT ? (
+                      <div className="tc-field">
+                        <span className="tc-field-label">숙소 구성 (선택)</span>
+                        <p className="tc-note">
+                          숙소를 옮기면 이동 거리가 줄 수 있어요. 가운데 숙소는 2박 이상 머물고, 3~4박은 최대
+                          2곳, 5박 이상은 최대 3곳까지 나뉘어요. "알아서"는 이동이 확실히 줄 때만 숙소를 나눠요.
+                          숙소 가격은 시기별로 차이가 커 여기서도 보여드리지 않아요.
+                        </p>
+                        <div className="tc-choice-grid tc-choice-grid-3">
+                          {accommodationSplitOptions.map((option) => (
+                            <button
+                              aria-checked={form.accommodation_split === option.value}
+                              className={`tc-choice-card ${form.accommodation_split === option.value ? "is-selected" : ""}`}
+                              key={option.value}
+                              onClick={() => updateField("accommodation_split", option.value)}
+                              role="radio"
+                              type="button"
+                            >
+                              <strong>{option.label}</strong>
+                              <small>{option.description}</small>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+
                     <div className="tc-field">
                       <span className="tc-field-label">이동수단 (최소 1개)</span>
                       <div className="tc-chip-row">
@@ -2859,6 +3012,16 @@ export function TripCreateForm() {
                         </div>
                       ) : null}
 
+                      {form.accommodation_split !== "single" ? (
+                        <div className="tc-summary-item">
+                          <span className="tc-summary-label">숙소 구성</span>
+                          <span className="tc-summary-value">
+                            {accommodationSplitOptions.find((option) => option.value === form.accommodation_split)
+                              ?.label ?? ""}
+                          </span>
+                        </div>
+                      ) : null}
+
                       <div className="tc-summary-item">
                         <span className="tc-summary-label">스타일</span>
                         <span className="tc-summary-value">{labelStyle(form.style)}</span>
@@ -2972,29 +3135,67 @@ export function TripCreateForm() {
               </div>
             </div>
 
-            {effectiveAccommodation ? (
+            {result.accommodation_split_note ? (
+              <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>{result.accommodation_split_note}</div>
+            ) : null}
+            {effectiveAccommodationStays.length === 1 && effectiveAccommodationStays[0].accommodation ? (
               <div className="tc-card">
                 <p className="tc-section-label">추천 숙소</p>
-                <p className="tc-section-value">{effectiveAccommodation.name}</p>
+                <p className="tc-section-value">{effectiveAccommodationStays[0].accommodation.name}</p>
                 <div className="tc-tag-row">
-                  <span className="tc-tag">{effectiveAccommodation.accommodation_type}</span>
-                  {effectiveAccommodation.checkin_time ? (
-                    <span className="tc-tag">체크인 {effectiveAccommodation.checkin_time}</span>
+                  <span className="tc-tag">{effectiveAccommodationStays[0].accommodation.accommodation_type}</span>
+                  {effectiveAccommodationStays[0].accommodation.checkin_time ? (
+                    <span className="tc-tag">체크인 {effectiveAccommodationStays[0].accommodation.checkin_time}</span>
                   ) : null}
-                  {effectiveAccommodation.checkout_time ? (
-                    <span className="tc-tag">체크아웃 {effectiveAccommodation.checkout_time}</span>
+                  {effectiveAccommodationStays[0].accommodation.checkout_time ? (
+                    <span className="tc-tag">체크아웃 {effectiveAccommodationStays[0].accommodation.checkout_time}</span>
                   ) : null}
                 </div>
                 <p className="tc-section-note" style={{ marginTop: 10 }}>
                   숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
                 </p>
                 <AccommodationAlternativesPanel
-                  activeAlternativeId={accommodationSwap?.id ?? null}
-                  alternatives={result.accommodation_alternatives}
-                  onRevert={handleRevertAccommodation}
-                  onSelect={handleSelectAccommodationAlternative}
+                  activeAlternativeId={accommodationSwaps[0]?.id ?? null}
+                  alternatives={result.accommodation_stays[0]?.alternatives ?? result.accommodation_alternatives}
+                  onRevert={() => setAccommodationSwaps((previous) => revertAccommodationSwap(previous, 0))}
+                  onSelect={(alternative) =>
+                    setAccommodationSwaps((previous) => applyAccommodationSwap(previous, 0, alternative))
+                  }
                 />
               </div>
+            ) : effectiveAccommodationStays.length >= 2 ? (
+              effectiveAccommodationStays.map((stay, index) =>
+                stay.accommodation ? (
+                  <div className="tc-card" key={stay.stayIndex}>
+                    <p className="tc-section-label">
+                      숙소 {index + 1} · {stay.nights}박 ({formatStayNightRange(result.accommodation_stays[index])})
+                    </p>
+                    <p className="tc-section-value">{stay.accommodation.name}</p>
+                    <div className="tc-tag-row">
+                      <span className="tc-tag">{stay.accommodation.accommodation_type}</span>
+                      {stay.accommodation.checkin_time ? (
+                        <span className="tc-tag">체크인 {stay.accommodation.checkin_time}</span>
+                      ) : null}
+                      {stay.accommodation.checkout_time ? (
+                        <span className="tc-tag">체크아웃 {stay.accommodation.checkout_time}</span>
+                      ) : null}
+                    </div>
+                    {index === effectiveAccommodationStays.length - 1 ? (
+                      <p className="tc-section-note" style={{ marginTop: 10 }}>
+                        숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
+                      </p>
+                    ) : null}
+                    <AccommodationAlternativesPanel
+                      activeAlternativeId={accommodationSwaps[stay.stayIndex]?.id ?? null}
+                      alternatives={result.accommodation_stays[index]?.alternatives ?? []}
+                      onRevert={() => setAccommodationSwaps((previous) => revertAccommodationSwap(previous, stay.stayIndex))}
+                      onSelect={(alternative) =>
+                        setAccommodationSwaps((previous) => applyAccommodationSwap(previous, stay.stayIndex, alternative))
+                      }
+                    />
+                  </div>
+                ) : null,
+              )
             ) : null}
 
             {result.estimated_cost ? (
@@ -3048,7 +3249,7 @@ export function TripCreateForm() {
                   날씨 정보를 불러오지 못했어요.
                 </div>
               ) : null}
-              {hasAnySlotSwap(slotSwaps) || accommodationIsSwapped || hasAnyMealSwap(mealSwaps) ? (
+              {hasAnySlotSwap(slotSwaps) || anyAccommodationSwapped || hasAnyMealSwap(mealSwaps) ? (
                 <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
                   <p>장소나 식사, 숙소를 바꾼 일정은 이동 시간·식사·숙소·비용·날씨가 다시 계산되지 않았어요.</p>
                   {canRecalculate ? (
@@ -3116,7 +3317,32 @@ export function TripCreateForm() {
                       dinner: dayMeals.dinner ? getEffectiveMeal(dayMeals.dinner, mealSwaps) : undefined,
                     }
                   : undefined;
-                const accommodationName = result.accommodation_recommendation?.name;
+                // #133 - 이 날짜의 첫 구간(숙소→첫 장소)/마지막 구간(마지막
+                // 장소→숙소)을 담당하는 stay. day_travel 레그의 from_name/
+                // to_name은 이미 이 stay들의 "원래"(교체 전) 숙소 이름을
+                // 쓰고 있으므로(백엔드가 그렇게 내려준다), 레그 조회는 항상
+                // 원래 이름으로 하고 - 교체됐으면 hideStartLegConnector/
+                // hideEndLegConnector가 true가 되어 애초에 안 쓰인다.
+                const { start: startStay, end: endStay } = getDayAccommodationStays(
+                  result.accommodation_stays,
+                  result.nights,
+                  dayNumber,
+                );
+                const startAccommodationName = startStay?.accommodation?.name ?? undefined;
+                const endAccommodationName = endStay?.accommodation?.name ?? undefined;
+                const startStaySwapped = startStay ? isStaySwapped(accommodationSwaps, startStay.stay_index) : false;
+                const endStaySwapped = endStay ? isStaySwapped(accommodationSwaps, endStay.stay_index) : false;
+                const dayAccommodationIsSwapped = startStaySwapped || endStaySwapped;
+                // 체크아웃 날(출발 stay ≠ 도착 stay) 안내에 쓸, "화면에 보이는"
+                // (교체 반영된) 이전/새 숙소 이름.
+                const isAccommodationChangeDay =
+                  startStay !== null && endStay !== null && startStay.stay_index !== endStay.stay_index;
+                const effectiveStartAccommodationName = startStay?.accommodation
+                  ? getEffectiveStayAccommodation(startStay.accommodation, accommodationSwaps, startStay.stay_index).name
+                  : null;
+                const effectiveEndAccommodationName = endStay?.accommodation
+                  ? getEffectiveStayAccommodation(endStay.accommodation, accommodationSwaps, endStay.stay_index).name
+                  : null;
                 const timelineEntries = buildDayTimelineEntries(effectiveDayItems, effectiveDayMeals);
                 // 판정은 "활동 슬롯 배열의 이전 항목"이 아니라 "타임라인
                 // 순서상 바로 앞 행"(식사 포함) 기준이어야 한다 - 교체된
@@ -3158,32 +3384,32 @@ export function TripCreateForm() {
                       ? isMealSwapped(mealSwaps, lastEntry.meal)
                       : false;
                 const hideStartLegConnector = shouldHideAccommodationBoundaryConnector(
-                  accommodationIsSwapped,
+                  startStaySwapped,
                   firstRowSwapped,
                 );
                 const hideEndLegConnector = shouldHideAccommodationBoundaryConnector(
-                  accommodationIsSwapped,
+                  endStaySwapped,
                   lastRowSwapped,
                 );
                 const startLeg =
-                  accommodationName && firstEntry && !hideStartLegConnector
+                  startAccommodationName && firstEntry && !hideStartLegConnector
                     ? legByKey.get(
                         travelLegKey(
                           "accommodation",
-                          accommodationName,
+                          startAccommodationName,
                           dayTimelineEntryKind(firstEntry),
                           dayTimelineEntryName(firstEntry),
                         ),
                       )
                     : undefined;
                 const endLeg =
-                  accommodationName && lastEntry && !hideEndLegConnector
+                  endAccommodationName && lastEntry && !hideEndLegConnector
                     ? legByKey.get(
                         travelLegKey(
                           dayTimelineEntryKind(lastEntry),
                           dayTimelineEntryName(lastEntry),
                           "accommodation",
-                          accommodationName,
+                          endAccommodationName,
                         ),
                       )
                     : undefined;
@@ -3195,8 +3421,8 @@ export function TripCreateForm() {
                       <h3 className="tc-day-title">{dayNumber}일차</h3>
                       {daySummary && daySummary.place_count > 0 ? (
                         <p className="tc-day-summary-line">
-                          {formatDaySummaryLine(daySummary, shouldHideDayTravelTotal(accommodationIsSwapped))}
-                          {accommodationIsSwapped ? (
+                          {formatDaySummaryLine(daySummary, shouldHideDayTravelTotal(dayAccommodationIsSwapped))}
+                          {dayAccommodationIsSwapped ? (
                             <span className="tc-day-summary-note"> · 이동 시간 재계산 안 됨</span>
                           ) : daySummary.travel_is_partial ? (
                             <span className="tc-day-summary-note"> (일부 구간 제외)</span>
@@ -3207,6 +3433,11 @@ export function TripCreateForm() {
                       {weatherLine ? <p className="tc-day-weather">{weatherLine}</p> : null}
                     </div>
                   </div>
+                  {isAccommodationChangeDay ? (
+                    <div className="tc-alert tc-alert-info" style={{ marginBottom: 12 }}>
+                      이 날 숙소를 옮겨요: {effectiveStartAccommodationName} → {effectiveEndAccommodationName}
+                    </div>
+                  ) : null}
                   {arrivalSlotLabel ? (
                     <div className="tc-alert tc-alert-info" style={{ marginBottom: 12 }}>
                       도착 시간에 맞춰 {arrivalSlotLabel} 일정은 넣지 않았어요.
@@ -3220,7 +3451,7 @@ export function TripCreateForm() {
                   {dayTravel ? (
                     <DayTravelPanel
                       dayTravel={dayTravel}
-                      hideTotal={shouldHideDayTravelTotal(accommodationIsSwapped)}
+                      hideTotal={shouldHideDayTravelTotal(dayAccommodationIsSwapped)}
                       mode={mode}
                       onModeChange={(nextMode) =>
                         setDayTravelMode((previous) => ({ ...previous, [dayNumber]: nextMode }))
@@ -3285,11 +3516,11 @@ export function TripCreateForm() {
                         참고. startLeg 자체는 둘 중 하나라도 바뀌면
                         undefined이므로(위 계산부) 연결 실패로 자연히 아무것도
                         안 그려지는 일은 없다(이 블록이 그 자리를 대신 채운다). */}
-                    {shouldShowAccommodationStartLegStale(accommodationIsSwapped, firstRowSwapped) ? (
+                    {shouldShowAccommodationStartLegStale(startStaySwapped, firstRowSwapped) ? (
                       <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
                     ) : startLeg ? (
                       <TravelConnectorRow
-                        label={`숙소에서 출발 · ${accommodationName}`}
+                        label={`숙소에서 출발 · ${startAccommodationName}`}
                         leg={startLeg}
                         mode={mode}
                       />
@@ -3329,7 +3560,7 @@ export function TripCreateForm() {
                         // 지운다(accommodation-swap.ts 참고).
                         const hideNearPreviousReason =
                           hint.hidePrecedingNearPreviousReason ||
-                          shouldHideAccommodationNearPreviousReason(entry === firstActivityEntry, accommodationIsSwapped);
+                          shouldHideAccommodationNearPreviousReason(entry === firstActivityEntry, startStaySwapped);
                         const visibleReasons = hideNearPreviousReason
                           ? item.reasons.filter((reason) => reason.code !== "near_previous")
                           : item.reasons;
@@ -3426,12 +3657,12 @@ export function TripCreateForm() {
                         </Fragment>
                       );
                     })}
-                    {accommodationName &&
+                    {endAccommodationName &&
                     lastEntry &&
-                    shouldShowAccommodationEndLegStale(accommodationIsSwapped, lastRowSwapped) ? (
+                    shouldShowAccommodationEndLegStale(endStaySwapped, lastRowSwapped) ? (
                       <p className="tc-stop-travel-stale">이동 시간 재계산 안 됨</p>
                     ) : endLeg ? (
-                      <TravelConnectorRow label={`숙소로 복귀 · ${accommodationName}`} leg={endLeg} mode={mode} />
+                      <TravelConnectorRow label={`숙소로 복귀 · ${endAccommodationName}`} leg={endLeg} mode={mode} />
                     ) : null}
                   </div>
                 </div>
@@ -3449,8 +3680,18 @@ export function TripCreateForm() {
               status={transportCompareStatus}
             />
 
+            {isMultiStayResult ? (
+              <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>
+                숙소를 나눈 일정의 저장은 준비 중이에요.
+              </div>
+            ) : null}
             <div className="tc-result-actions">
-              <button className="tc-btn tc-btn-primary" disabled={isSavingTrip} onClick={handleSaveTrip} type="button">
+              <button
+                className="tc-btn tc-btn-primary"
+                disabled={isSavingTrip || isMultiStayResult}
+                onClick={handleSaveTrip}
+                type="button"
+              >
                 {isSavingTrip ? "여행 저장 중..." : "이 일정으로 여행 저장"}
               </button>
               {docDownload ? (

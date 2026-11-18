@@ -4,6 +4,11 @@
 // are independent concerns that happen to both feed the same "이동 시간
 // 재계산 안 됨" presentation and the same "장소를 바꾼 일정은..." banner,
 // but neither reads the other's state.
+//
+// #133 (백엔드 숙소 분할) 이후로 트립에 숙소가 여러 곳(stay)일 수 있어 -
+// 교체 상태는 stay_index별로 독립적이다(slot-swaps.ts의 day_number:time_slot
+// 키와 같은 스타일의 sparse map). 숙소가 한 곳(stay_index=0 하나)인 기존
+// 흐름은 이 맵에 키가 최대 하나뿐이라 전과 동일하게 동작한다.
 
 export type AccommodationAlternative = {
   id: string;
@@ -15,23 +20,45 @@ export type AccommodationAlternative = {
   average_price_krw?: number | null;
 };
 
-// There is exactly one accommodation for the whole trip (this MVP's scope -
-// see the backend's _recommend_accommodation docstring), so unlike
-// SlotSwapMap (one entry per day/time_slot), this is a single optional
-// value: null means "showing the original recommendation", any other value
-// is the alternative currently swapped in.
-export type AccommodationSwapState = AccommodationAlternative | null;
+// Keyed by stay_index - absent key = "그 stay는 원래 추천 그대로", present
+// key = 교체된 대안.
+export type AccommodationSwapMap = Record<number, AccommodationAlternative>;
 
-export function isAccommodationSwapped(state: AccommodationSwapState): boolean {
-  return state !== null;
+export function isStaySwapped(swaps: AccommodationSwapMap, stayIndex: number): boolean {
+  return stayIndex in swaps;
+}
+
+export function hasAnyAccommodationSwap(swaps: AccommodationSwapMap): boolean {
+  return Object.keys(swaps).length > 0;
+}
+
+// 교체: 이 stay에 이 대안을 적용한다 (불변 - 새 맵을 반환한다).
+export function applyAccommodationSwap(
+  swaps: AccommodationSwapMap,
+  stayIndex: number,
+  alternative: AccommodationAlternative,
+): AccommodationSwapMap {
+  return { ...swaps, [stayIndex]: alternative };
+}
+
+// 되돌리기: 이 stay의 교체를 지운다 (없으면 같은 맵을 그대로 반환해 불필요한
+// 리렌더를 피한다).
+export function revertAccommodationSwap(swaps: AccommodationSwapMap, stayIndex: number): AccommodationSwapMap {
+  if (!(stayIndex in swaps)) {
+    return swaps;
+  }
+  const next = { ...swaps };
+  delete next[stayIndex];
+  return next;
 }
 
 // 화면에 보여줄 "현재 숙소" 값 - 교체 중이면 대안, 아니면 원래 추천 그대로.
-export function getEffectiveAccommodation<T extends AccommodationAlternative>(
+export function getEffectiveStayAccommodation<T extends AccommodationAlternative>(
   original: T,
-  state: AccommodationSwapState,
+  swaps: AccommodationSwapMap,
+  stayIndex: number,
 ): AccommodationAlternative {
-  return state ?? original;
+  return swaps[stayIndex] ?? original;
 }
 
 // 숙소 출발/복귀 커넥터(TravelConnectorRow) 자리에 그 대신 "이동 시간

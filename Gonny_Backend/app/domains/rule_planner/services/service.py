@@ -13,6 +13,7 @@ from app.domains.destination_catalog.services.provider import (
     PlaceCatalogProvider,
 )
 from app.domains.rule_planner.schemas import (
+    AccommodationStay,
     CatalogCityOption,
     NormalizedRuleRequest,
     RuleClosedDayExclusion,
@@ -41,6 +42,13 @@ from .accommodation_scoring import (
     rank_accommodations,
     select_accommodation_recommendation,
 )
+from .accommodation_split import (
+    StayAccommodationPlan,
+    build_stay_windows,
+    day_start_end_accommodations,
+    resolve_stay_accommodations,
+    select_stay_plan,
+)
 from .arrival_departure import day_slot_rules
 from .breakfast import is_breakfast_candidate
 from .closed_days import WEEKDAY_LABEL_KO, is_confirmed_closed_on
@@ -59,7 +67,7 @@ from .constants import (
 from .note_generator import RuleNoteContext, build_rule_note_generator
 from .policies.city import pick_day_area, preferred_area_order
 from .reasons import build_activity_reason_candidates, build_meal_reason_candidates, select_day_reasons
-from .recalculate import build_fixed_meals_lookup, build_fixed_slots_lookup
+from .recalculate import build_fixed_meals_lookup, build_fixed_slots_lookup, validate_stay_plan_request
 from .request_normalizer import normalize_budget, normalize_duration, normalize_rule_request
 from .slot_alternatives import MAX_ALTERNATIVES, compute_item_alternatives
 from .slot_scoring import (
@@ -209,6 +217,7 @@ class RuleItineraryService:
                     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     detail=f"알 수 없는 숙소 id입니다: {request.accommodation_id}",
                 )
+        validate_stay_plan_request(request=request, normalized=normalized, city_catalog=city_catalog)
         fixed_meals = build_fixed_meals_lookup(
             fixed_meals=request.fixed_meals,
             request=normalized,
@@ -231,6 +240,8 @@ class RuleItineraryService:
             include_alternatives=True,
             fixed_accommodation_id=request.accommodation_id,
             fixed_meals=fixed_meals,
+            stay_nights=request.stay_nights,
+            stay_accommodation_ids=request.stay_accommodation_ids,
         )
 
     def _assemble_response(
@@ -248,6 +259,8 @@ class RuleItineraryService:
         include_alternatives: bool,
         fixed_accommodation_id: str | None = None,
         fixed_meals: dict[tuple[int, str], PlaceData] | None = None,
+        stay_nights: list[int] | None = None,
+        stay_accommodation_ids: list[str | None] | None = None,
     ) -> RuleItineraryResponse:
         """Everything generate() and recalculate() both do once item
         selection (greedy or fixed-slot replay) is finished - moved out of
@@ -274,16 +287,29 @@ class RuleItineraryService:
                 resolve_item_category=self._resolve_item_category,
                 build_note=self._build_note,
             )
-        accommodation_recommendation = self._recommend_accommodation(
-            normalized, city_catalog, day_place_map, fixed_accommodation_id=fixed_accommodation_id
+        stay_plan, accommodation_split_note = self._plan_accommodation_stays(
+            normalized,
+            city_catalog,
+            day_place_map,
+            fixed_accommodation_id=fixed_accommodation_id,
+            stay_nights=stay_nights,
+            stay_accommodation_ids=stay_accommodation_ids,
         )
-        accommodation_alternatives = (
-            self._recommend_accommodation_alternatives(
-                normalized, city_catalog, day_place_map, exclude_id=fixed_accommodation_id
-            )
-            if include_alternatives
-            else []
-        )
+        if not include_alternatives:
+            stay_plan = [
+                StayAccommodationPlan(
+                    stay_index=plan.stay_index,
+                    start_night=plan.start_night,
+                    nights=plan.nights,
+                    day_numbers=plan.day_numbers,
+                    accommodation=plan.accommodation,
+                    alternatives=[],
+                )
+                for plan in stay_plan
+            ]
+        first_stay = stay_plan[0] if stay_plan else None
+        accommodation_recommendation = first_stay.accommodation if first_stay is not None else None
+        accommodation_alternatives = first_stay.alternatives if first_stay is not None else []
         meal_recommendations, day_place_map_with_meals, day_sequence_with_kind, day_meal_places = (
             self._recommend_meals(
                 normalized,
@@ -326,7 +352,7 @@ class RuleItineraryService:
         else:
             weather_alerts, weather_status = [], []
         day_travel = self._build_day_travel(
-            day_sequence_with_kind, accommodation_recommendation, city=normalized.city
+            day_sequence_with_kind, stay_plan, city=normalized.city, days=normalized.days
         )
         items, meal_recommendations = self._attach_reasons(
             request=normalized,
@@ -343,6 +369,12 @@ class RuleItineraryService:
             day_place_map=day_place_map,
             day_travel=day_travel,
         )
+        # "숙소가 없으면(좌표/후보 없음) 빈 리스트" - a single stay that
+        # resolved to no accommodation at all (empty/coordinate-less pool)
+        # surfaces as accommodation_stays=[], not a length-1 list of an
+        # all-None entry, even though stay_plan itself (used above for
+        # day_travel/day_duration_warnings) always has at least one entry.
+        displayed_stays = stay_plan if any(plan.accommodation is not None for plan in stay_plan) else []
 
         return RuleItineraryResponse(
             continent=city_catalog.continent,
@@ -365,6 +397,18 @@ class RuleItineraryService:
             accommodation_alternatives=[
                 _hide_accommodation_price(accommodation) for accommodation in accommodation_alternatives
             ],
+            accommodation_stays=[
+                AccommodationStay(
+                    stay_index=plan.stay_index,
+                    start_night=plan.start_night,
+                    nights=plan.nights,
+                    day_numbers=plan.day_numbers,
+                    accommodation=_hide_accommodation_price(plan.accommodation),
+                    alternatives=[_hide_accommodation_price(a) for a in plan.alternatives],
+                )
+                for plan in displayed_stays
+            ],
+            accommodation_split_note=accommodation_split_note,
             meal_recommendations=meal_recommendations,
             estimated_cost=estimate_trip_cost_range(
                 (place for places in day_place_map.values() for place in places),
@@ -378,6 +422,59 @@ class RuleItineraryService:
             departure_period=normalized.departure_period,
             include_breakfast=normalized.include_breakfast,
             day_summaries=day_summaries,
+        )
+
+    def _plan_accommodation_stays(
+        self,
+        request: NormalizedRuleRequest,
+        city_catalog: CityPlaceCatalog,
+        day_place_map: dict[int, list[PlaceData]],
+        *,
+        fixed_accommodation_id: str | None = None,
+        stay_nights: list[int] | None = None,
+        stay_accommodation_ids: list[str | None] | None = None,
+    ) -> tuple[list[StayAccommodationPlan], str | None]:
+        """Resolves _assemble_response's accommodation plan - one stay
+        (the pre-split behavior) unless recalculate() supplied an explicit
+        stay_nights (already validated against allowed_partitions by
+        services.recalculate.validate_stay_plan_request) or
+        request.accommodation_split asked for "two"/"auto" (see
+        services/accommodation_split.select_stay_plan for that search).
+        fixed_accommodation_id is recalculate()'s legacy accommodation_id,
+        always pinning the first stay - see RuleItineraryRecalculateRequest.
+        """
+        accommodations = load_city_accommodations(city_catalog.city)
+
+        if stay_nights is not None:
+            partition = tuple(stay_nights)
+            windows = build_stay_windows(partition, request.days)
+            forced_ids: list[str | None] = (
+                list(stay_accommodation_ids) if stay_accommodation_ids is not None else [None] * len(partition)
+            )
+            if fixed_accommodation_id is not None:
+                forced_ids[0] = fixed_accommodation_id
+            stay_plan = resolve_stay_accommodations(
+                windows,
+                accommodations=accommodations,
+                request=request,
+                city_catalog=city_catalog,
+                day_place_map=day_place_map,
+                forced_ids=forced_ids,
+                require_distinct=False,
+            )
+            return stay_plan, None
+
+        return select_stay_plan(
+            split_mode=request.accommodation_split,
+            nights=request.nights,
+            days=request.days,
+            accommodations=accommodations,
+            request=request,
+            city_catalog=city_catalog,
+            day_place_map=day_place_map,
+            transport_by_day=request.transport_by_day,
+            city=request.city,
+            forced_first_id=fixed_accommodation_id,
         )
 
     def compare_transport(self, request: RuleItineraryRequest) -> RuleTransportComparisonResponse:
@@ -809,6 +906,14 @@ class RuleItineraryService:
         *,
         request: NormalizedRuleRequest | None = None,
     ) -> list[RuleDayDurationWarning]:
+        """Uses the first stay's accommodation for every day (see
+        _assemble_response's caller) rather than each day's own start/end
+        stay - unlike _build_day_travel, this isn't one of this feature's
+        required generalizations (scope: _build_day_travel only), so a day
+        governed by a later stay can warn using the wrong accommodation's
+        distance. Listed as a known limitation in this feature's report,
+        left for a follow-up rather than risking this threshold's existing
+        behavior/tests for every pre-split caller."""
         threshold_minutes = DAY_DURATION_WARNING_THRESHOLD_HOURS * 60
         warnings: list[RuleDayDurationWarning] = []
         for day_number, places in sorted(day_place_map.items()):
@@ -1556,41 +1661,61 @@ class RuleItineraryService:
     def _build_day_travel(
         self,
         day_sequence_with_kind: dict[int, list[tuple[PlaceData, Literal["place", "meal"]]]],
-        accommodation: AccommodationData | None,
+        stay_plan: list[StayAccommodationPlan],
         *,
         city: str,
+        days: int,
     ) -> list[RuleDayTravel]:
         """Builds one RuleDayTravel per day with a structurally non-empty
-        itinerary (expected_leg_count > 0 - see RuleDayTravel). Every day is
-        assumed to start and end at the single recommended accommodation
-        (see RuleItineraryService._recommend_accommodation's one-stay-for-
-        the-whole-trip scope); legs missing a coordinate on either end are
-        silently dropped from `legs`, never an error - expected_leg_count
-        still counts them (coordinates or not), so missing_leg_count tells
-        a day with partial coverage apart from one that's fully estimated.
-        A day is only left out entirely when it has no sequence at all
-        (expected_leg_count == 0 - nothing to estimate, not missing data)."""
-        accommodation_has_coordinates = (
-            accommodation is not None and accommodation.latitude is not None and accommodation.longitude is not None
-        )
-        accommodation_node: tuple[str, Literal["accommodation"], float, float] | None = None
-        if accommodation_has_coordinates:
-            accommodation_node = (accommodation.name, "accommodation", accommodation.latitude, accommodation.longitude)
+        itinerary (expected_leg_count > 0 - see RuleDayTravel). Each day
+        starts at whichever stay's accommodation covers its first leg and
+        ends at whichever covers its last leg (see
+        accommodation_split.day_start_end_accommodations) - with a single
+        stay (accommodation_split="single", the default) both are always
+        that one stay's accommodation, reproducing the pre-split behavior
+        exactly. Legs missing a coordinate on either end are silently
+        dropped from `legs`, never an error - expected_leg_count still
+        counts them (whether or not that side has coordinates, matching
+        "an accommodation exists for this leg" rather than "has usable
+        coordinates"), so missing_leg_count tells a day with partial
+        coverage apart from one that's fully estimated. A day is only left
+        out entirely when it has no sequence at all (expected_leg_count
+        == 0 - nothing to estimate, not missing data)."""
+        day_accommodations = day_start_end_accommodations(stay_plan, days)
 
         day_travel: list[RuleDayTravel] = []
         for day_number in sorted(day_sequence_with_kind):
             sequence = day_sequence_with_kind[day_number]
-            expected_leg_count = (len(sequence) - 1) + (2 if accommodation is not None else 0)
+            start_accommodation, end_accommodation = day_accommodations.get(day_number, (None, None))
+            start_has_coordinates = (
+                start_accommodation is not None
+                and start_accommodation.latitude is not None
+                and start_accommodation.longitude is not None
+            )
+            end_has_coordinates = (
+                end_accommodation is not None
+                and end_accommodation.latitude is not None
+                and end_accommodation.longitude is not None
+            )
+            expected_leg_count = (
+                (len(sequence) - 1)
+                + (1 if start_accommodation is not None else 0)
+                + (1 if end_accommodation is not None else 0)
+            )
             if expected_leg_count <= 0:
                 continue
 
             nodes: list[tuple[str, Literal["accommodation", "place", "meal"], float | None, float | None]] = []
-            if accommodation_node is not None:
-                nodes.append(accommodation_node)
+            if start_has_coordinates:
+                nodes.append(
+                    (start_accommodation.name, "accommodation", start_accommodation.latitude, start_accommodation.longitude)
+                )
             for place, kind in sequence:
                 nodes.append((self._localize_place_name(place), kind, place.latitude, place.longitude))
-            if accommodation_node is not None:
-                nodes.append(accommodation_node)
+            if end_has_coordinates:
+                nodes.append(
+                    (end_accommodation.name, "accommodation", end_accommodation.latitude, end_accommodation.longitude)
+                )
 
             legs: list[RuleTravelLeg] = []
             for (from_name, from_kind, from_lat, from_lng), (to_name, to_kind, to_lat, to_lng) in zip(

@@ -97,6 +97,13 @@ class RuleItineraryRequest(BaseModel):
     arrival_period: ArrivalPeriod | None = None
     departure_period: DeparturePeriod | None = None
     include_breakfast: bool = False
+    # "single" (default) reproduces the pre-split, one-accommodation
+    # behavior exactly. "two"/"auto" are rule-based only (no ML) - see
+    # services/accommodation_split.py for the partition rules and
+    # selection logic. nights<=2 or an unsplittable trip silently falls
+    # back to "single" (never an error) with the reason surfaced in the
+    # response's accommodation_split_note.
+    accommodation_split: Literal["single", "two", "auto"] = "single"
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -125,6 +132,20 @@ class RuleItineraryRecalculateRequest(RuleItineraryRequest):
     # picks exactly, same as fixed_slots reproducing generate()'s own item
     # picks when it echoes generate()'s own place_ids back unchanged.
     fixed_meals: list[RuleFixedMealSlot] = Field(default_factory=list)
+    # Recalculate-only multi-stay pinning (see services/accommodation_split.py).
+    # None = let accommodation_split choose automatically, same as generate().
+    # When set, must sum to `nights` and be one of allowed_partitions(nights)
+    # - see services/recalculate.py's validation - and accommodation_split's
+    # own search is skipped entirely in favor of this exact split.
+    stay_nights: list[int] | None = None
+    # Per-stay accommodation pin, same length as stay_nights when both are
+    # given. None entries pick the usual way; a non-None entry must be one
+    # of the city's own accommodations. Only meaningful together with
+    # stay_nights (stay_accommodation_ids without stay_nights is rejected),
+    # and rejected together with accommodation_id (the first entry here is
+    # the same pin accommodation_id spells for a single stay - having both
+    # would be ambiguous about which wins).
+    stay_accommodation_ids: list[str | None] | None = None
 
 
 class RuleReason(BaseModel):
@@ -371,6 +392,7 @@ class NormalizedRuleRequest(BaseModel):
     arrival_period: ArrivalPeriod | None = None
     departure_period: DeparturePeriod | None = None
     include_breakfast: bool = False
+    accommodation_split: Literal["single", "two", "auto"] = "single"
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -425,6 +447,25 @@ class RuleDaySummary(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class AccommodationStay(BaseModel):
+    """One accommodation region in a (possibly) multi-stay plan - see
+    services/accommodation_split.py. With accommodation_split="single"
+    (the default), accommodation_stays always has exactly one entry whose
+    accommodation/alternatives are identical to the top-level
+    accommodation_recommendation/accommodation_alternatives fields."""
+
+    stay_index: int
+    start_night: int
+    nights: int
+    # The trip days on which this stay is the day's first and/or last
+    # accommodation leg - a checkout day appears in two stays' lists.
+    day_numbers: list[int]
+    accommodation: AccommodationData | None = None
+    alternatives: list[AccommodationData] = Field(default_factory=list)
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class RuleItineraryResponse(BaseModel):
     continent: str
     country: str
@@ -449,6 +490,19 @@ class RuleItineraryResponse(BaseModel):
     # computed ranking. Empty whenever include_alternatives=False (e.g.
     # compare_transport's scenario runs) or there's no recommendation at all.
     accommodation_alternatives: list[AccommodationData] = Field(default_factory=list)
+    # Full multi-stay plan (see services/accommodation_split.py). Length 1
+    # when accommodation_split="single" or it fell back to one stay - its
+    # single entry mirrors accommodation_recommendation/_alternatives
+    # exactly. Empty only when there's no accommodation data at all for
+    # this city/coordinates (same case where accommodation_recommendation
+    # is None).
+    accommodation_stays: list[AccommodationStay] = Field(default_factory=list)
+    # Set when accommodation_split asked for "two"/"auto" but the result
+    # is still a single stay, explaining why (nights<=2, no feasible
+    # multi-stay candidate, or - "auto" only - the best candidate's gain
+    # was under AUTO_SPLIT_MIN_GAIN_RATIO). None whenever a split was
+    # actually produced, or accommodation_split="single" was requested.
+    accommodation_split_note: str | None = None
     meal_recommendations: list[RuleMealRecommendation] = Field(default_factory=list)
     estimated_cost: RuleCostEstimate | None = None
     day_travel: list[RuleDayTravel] = Field(default_factory=list)

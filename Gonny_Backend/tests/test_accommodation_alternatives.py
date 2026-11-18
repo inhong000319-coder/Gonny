@@ -273,29 +273,39 @@ def test_generate_endpoint_response_has_existing_fields_plus_accommodation_alter
     assert all("alternatives" in item for item in body["items"])
 
 
-def test_compare_transport_never_computes_accommodation_alternatives(monkeypatch):
+def test_compare_transport_and_generate_each_plan_accommodation_stays_once_per_run(monkeypatch):
+    """Accommodation ranking now happens once per generate()-equivalent
+    call regardless of include_alternatives (see
+    RuleItineraryService._plan_accommodation_stays /
+    services.accommodation_split.resolve_stay_accommodations, which build
+    the pick and its alternatives from a single rank_accommodations call
+    instead of the old pick-then-separately-rank-again-for-alternatives
+    pair this test used to guard). What still matters - no redundant extra
+    stay-planning work per scenario, and a direct generate() call does
+    exactly one more than compare_transport alone - is checked here."""
     import app.domains.rule_planner.services.service as service_module
 
-    call_count = {"alt": 0}
-    real_method = service_module.RuleItineraryService._recommend_accommodation_alternatives
+    call_count = {"plan": 0}
+    real_method = service_module.RuleItineraryService._plan_accommodation_stays
 
     def counting_method(self, *args, **kwargs):
-        call_count["alt"] += 1
+        call_count["plan"] += 1
         return real_method(self, *args, **kwargs)
 
-    monkeypatch.setattr(
-        service_module.RuleItineraryService, "_recommend_accommodation_alternatives", counting_method
-    )
+    monkeypatch.setattr(service_module.RuleItineraryService, "_plan_accommodation_stays", counting_method)
 
     service = RuleItineraryService()
     request = build_real_request("seoul")
 
     comparison = service.compare_transport(request)
-    assert call_count["alt"] == 0, "compare_transport must never trigger accommodation alternatives computation"
+    comparison_call_count = call_count["plan"]
+    assert comparison_call_count > 0, "compare_transport must still plan accommodation stays for each scenario"
     assert comparison.base is not None
 
     service.generate(request, include_weather=False)
-    assert call_count["alt"] == 1, "a direct generate() call must still compute accommodation alternatives"
+    assert call_count["plan"] == comparison_call_count + 1, (
+        "a direct generate() call must plan accommodation stays exactly once, on top of compare_transport's own"
+    )
 
 
 def test_compare_transport_endpoint_response_shape_is_unchanged():

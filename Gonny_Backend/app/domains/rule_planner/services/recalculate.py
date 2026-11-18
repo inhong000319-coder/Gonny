@@ -17,8 +17,15 @@ from datetime import timedelta
 from fastapi import HTTPException, status
 
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
-from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleFixedMealSlot, RuleFixedSlotAssignment
+from app.domains.rule_planner.schemas import (
+    NormalizedRuleRequest,
+    RuleFixedMealSlot,
+    RuleFixedSlotAssignment,
+    RuleItineraryRecalculateRequest,
+)
 
+from .accommodation_scoring import load_city_accommodations
+from .accommodation_split import allowed_partitions
 from .arrival_departure import day_slot_rules
 from .breakfast import is_breakfast_candidate
 from .closed_days import is_confirmed_closed_on
@@ -158,6 +165,59 @@ def build_fixed_slots_lookup(
             )
 
     return resolved
+
+
+def validate_stay_plan_request(
+    *,
+    request: RuleItineraryRecalculateRequest,
+    normalized: NormalizedRuleRequest,
+    city_catalog: CityPlaceCatalog,
+) -> None:
+    """Structural-only validation of recalculate()'s optional multi-stay
+    pinning (stay_nights/stay_accommodation_ids) - same spirit as
+    build_fixed_slots_lookup above: raises HTTPException(422) on the first
+    rule violated, never re-scores whether the split itself is a *good*
+    one (that's services/accommodation_split.py's job when stay_nights is
+    absent). See RuleItineraryRecalculateRequest for field semantics."""
+    if request.stay_accommodation_ids is not None and request.stay_nights is None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="stay_accommodation_ids를 쓰려면 stay_nights가 있어야 합니다.",
+        )
+    if request.stay_accommodation_ids is not None and request.accommodation_id is not None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="accommodation_id와 stay_accommodation_ids를 동시에 지정할 수 없습니다.",
+        )
+    if request.stay_nights is None:
+        return
+
+    stay_nights_sum = sum(request.stay_nights)
+    if stay_nights_sum != normalized.nights:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"stay_nights의 합({stay_nights_sum})이 nights({normalized.nights})와 다릅니다.",
+        )
+    if tuple(request.stay_nights) not in allowed_partitions(normalized.nights):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"허용되지 않는 숙소 분할입니다: {request.stay_nights}",
+        )
+
+    if request.stay_accommodation_ids is None:
+        return
+    if len(request.stay_accommodation_ids) != len(request.stay_nights):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="stay_accommodation_ids의 길이가 stay_nights와 달라야 합니다.",
+        )
+    known_accommodation_ids = {accommodation.id for accommodation in load_city_accommodations(city_catalog.city)}
+    for accommodation_id in request.stay_accommodation_ids:
+        if accommodation_id is not None and accommodation_id not in known_accommodation_ids:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"알 수 없는 숙소 id입니다: {accommodation_id}",
+            )
 
 
 def build_fixed_meals_lookup(

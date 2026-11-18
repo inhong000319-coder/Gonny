@@ -20,6 +20,7 @@ from app.db.base import Base
 # (same imports app/main.py does before Base.metadata.create_all).
 import app.models.place_review  # noqa: F401
 import app.models.travel_journal  # noqa: F401
+import app.models.trip_stay  # noqa: F401
 from app.domains.trips.schemas import ExpenseCreate, TripCreate
 from app.domains.trips.services.service import trip_service
 from app.models.itinerary import ItineraryItem

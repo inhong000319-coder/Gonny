@@ -24,6 +24,7 @@ from app.db.session import get_db
 import app.models.itinerary  # noqa: F401
 import app.models.place_review  # noqa: F401
 import app.models.travel_journal  # noqa: F401
+import app.models.trip_stay  # noqa: F401
 from app.domains.rule_planner.services.accommodation_scoring import load_city_accommodations
 from app.domains.trips.schemas import (
     ExpenseCreate,

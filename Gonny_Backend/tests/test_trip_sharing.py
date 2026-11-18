@@ -21,6 +21,7 @@ from app.db.base import Base
 import app.models.itinerary  # noqa: F401
 import app.models.place_review  # noqa: F401
 import app.models.travel_journal  # noqa: F401
+import app.models.trip_stay  # noqa: F401
 from app.domains.trips.schemas import ShareLinkCreateRequest, TripCreate
 from app.domains.trips.services.service import (
     _compute_share_expires_at,

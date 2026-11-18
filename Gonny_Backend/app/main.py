@@ -25,6 +25,7 @@ import app.models.expense
 import app.models.itinerary
 import app.models.place_review
 import app.models.trip
+import app.models.trip_stay
 import app.models.travel_journal
 
 

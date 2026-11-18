@@ -1,9 +1,22 @@
 from datetime import date, datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.schemas.itinerary import ItineraryItemResponse
+
+
+class TripStayInput(BaseModel):
+    """One stay in TripCreate.stays (#135) - see TripService.
+    _validate_and_resolve_stays for the save-time validation (sum of
+    nights, allowed_partitions membership, known accommodation id,
+    distinct adjacent accommodations). accommodation_id is typed optional
+    to mirror the backend #133 contract's shape, but a None entry is
+    always rejected (422) - a stays-based save is only ever for a result
+    whose accommodations are already chosen."""
+
+    nights: int
+    accommodation_id: str | None = None
 
 
 class TripCreate(BaseModel):
@@ -19,6 +32,22 @@ class TripCreate(BaseModel):
     # or type directly, both are server-filled snapshots. None (default)
     # saves no accommodation, same as every trip before this field existed.
     accommodation_id: str | None = None
+    # #135 - multi-stay save. None (default) is the pre-#135 single-
+    # accommodation path above, untouched. Mutually exclusive with
+    # accommodation_id (422 if both are sent) - see TripService.
+    # _validate_and_resolve_stays.
+    stays: list[TripStayInput] | None = None
+
+
+class TripStayResponse(BaseModel):
+    stay_index: int
+    start_night: int
+    nights: int
+    accommodation_id: str
+    accommodation_name: str
+    accommodation_type: str
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class TripResponse(BaseModel):
@@ -36,12 +65,40 @@ class TripResponse(BaseModel):
     retrospective_note: str | None = None
     # Snapshot taken at save time (see Trip.accommodation_id's docstring) -
     # null on any trip saved without an accommodation_id, including every
-    # trip created before this field existed.
+    # trip created before this field existed. Always mirrors stays[0] when
+    # stays is non-empty (kept in lockstep at write time - see
+    # TripService.create_trip/update_trip_accommodation).
     accommodation_id: str | None = None
     accommodation_name: str | None = None
     accommodation_type: str | None = None
+    # #135 - always populated (never absent), [] only when there's truly
+    # no accommodation at all. Mapped straight from Trip.stays when that
+    # relationship has rows; when it's empty but the legacy
+    # accommodation_name above is set (every trip saved before #135, or
+    # saved since via the single accommodation_id path - see
+    # TripService.create_trip's design note), _synthesize_legacy_stay
+    # below fills in a single synthesized entry instead. The DB itself is
+    # never changed by this synthesis.
+    stays: list[TripStayResponse] = Field(default_factory=list)
 
     model_config = ConfigDict(from_attributes=True)
+
+    @model_validator(mode="after")
+    def _synthesize_legacy_stay(self) -> "TripResponse":
+        if self.stays or not self.accommodation_name:
+            return self
+        total_nights = max((self.end_date - self.start_date).days, 1)
+        self.stays = [
+            TripStayResponse(
+                stay_index=0,
+                start_night=1,
+                nights=total_nights,
+                accommodation_id=self.accommodation_id or "",
+                accommodation_name=self.accommodation_name,
+                accommodation_type=self.accommodation_type or "",
+            )
+        ]
+        return self
 
 
 class TripDetailResponse(TripResponse):
@@ -81,6 +138,11 @@ class TripAccommodationUpdate(BaseModel):
     # (no such fields on this schema - same reasoning as TripCreate's
     # accommodation_id).
     accommodation_id: str | None
+    # #135 - which stay this change targets. Defaults to 0 so every
+    # existing single-accommodation PATCH call is unaffected. Ignored
+    # entirely when accommodation_id is null (that always clears every
+    # stay - see TripService.update_trip_accommodation).
+    stay_index: int = 0
 
 
 class ShareLinkCreateRequest(BaseModel):

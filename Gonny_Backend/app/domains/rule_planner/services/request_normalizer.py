@@ -73,6 +73,7 @@ def normalize_rule_request(request: RuleItineraryRequest) -> NormalizedRuleReque
         arrival_period=request.arrival_period,
         departure_period=request.departure_period,
         include_breakfast=request.include_breakfast,
+        accommodation_split=request.accommodation_split,
     )
 
 

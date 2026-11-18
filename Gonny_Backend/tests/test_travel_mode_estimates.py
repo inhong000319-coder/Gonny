@@ -11,6 +11,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from app.domains.accommodation_catalog.schemas import AccommodationData
 from app.domains.destination_catalog.schemas import PlaceData
 from app.domains.rule_planner.schemas import RuleItineraryRequest
+from app.domains.rule_planner.services.accommodation_split import StayAccommodationPlan
 from app.domains.rule_planner.services.service import RuleItineraryService
 from app.domains.rule_planner.services.travel_estimate import (
     WALK_OPTION_MAX_MINUTES,
@@ -56,6 +57,20 @@ def build_accommodation(latitude: float | None, longitude: float | None, **overr
     }
     data.update(overrides)
     return AccommodationData.model_validate(data)
+
+
+def single_stay_plan(accommodation: AccommodationData | None) -> list[StayAccommodationPlan]:
+    """One-stay plan covering night 1/day 1, for _build_day_travel's
+    generalized (per-day start/end accommodation) signature - an empty
+    list and a single accommodation=None stay both resolve to "no
+    accommodation" for every day, so None just uses []."""
+    if accommodation is None:
+        return []
+    return [
+        StayAccommodationPlan(
+            stay_index=0, start_night=1, nights=1, day_numbers=[1], accommodation=accommodation, alternatives=[]
+        )
+    ]
 
 
 # --- Mode-aware minute calculations (travel_estimate.py) ------------------
@@ -177,7 +192,7 @@ def test_leg_count_matches_sequence_length_plus_accommodation_legs() -> None:
     )
     assert len(sequence) == 5
 
-    day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
+    day_travel = service._build_day_travel({1: sequence}, single_stay_plan(accommodation), city="seoul", days=1)
 
     assert len(day_travel) == 1
     legs = day_travel[0].legs
@@ -203,7 +218,7 @@ def test_missing_coordinates_drop_only_the_adjacent_legs() -> None:
     sequence = service._build_day_sequence_with_kind(
         slot_map, breakfast_place=None, lunch_place=lunch, dinner_place=dinner
     )
-    day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
+    day_travel = service._build_day_travel({1: sequence}, single_stay_plan(accommodation), city="seoul", days=1)
 
     assert len(day_travel) == 1
     legs = day_travel[0].legs
@@ -230,7 +245,7 @@ def test_day_with_no_sequence_at_all_is_excluded_from_day_travel() -> None:
         {"morning": lone_place}, breakfast_place=None, lunch_place=None, dinner_place=None
     )
 
-    day_travel = service._build_day_travel({1: sequence}, None, city="seoul")
+    day_travel = service._build_day_travel({1: sequence}, single_stay_plan(None), city="seoul", days=1)
 
     assert day_travel == []
 
@@ -247,7 +262,7 @@ def test_day_with_expected_legs_but_all_missing_coordinates_still_appears() -> N
         {"morning": lone_place}, breakfast_place=None, lunch_place=None, dinner_place=None
     )
 
-    day_travel = service._build_day_travel({1: sequence}, accommodation, city="seoul")
+    day_travel = service._build_day_travel({1: sequence}, single_stay_plan(accommodation), city="seoul", days=1)
 
     assert len(day_travel) == 1
     assert day_travel[0].legs == []
@@ -265,7 +280,7 @@ def test_totals_use_the_smaller_of_mode_minutes_and_walk_minutes_per_leg() -> No
         {"morning": near, "afternoon": far}, breakfast_place=None, lunch_place=None, dinner_place=None
     )
 
-    day_travel = service._build_day_travel({1: sequence}, None, city="seoul")
+    day_travel = service._build_day_travel({1: sequence}, single_stay_plan(None), city="seoul", days=1)
 
     leg = day_travel[0].legs[0]
     walk_option = next((o for o in leg.options if o.mode == "walk"), None)

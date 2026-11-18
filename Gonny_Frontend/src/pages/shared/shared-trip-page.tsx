@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { PublicLayout } from "../../app/layouts/public-layout";
 import { SharedItineraryItem } from "../../features/share/api/get-shared-trip";
 import { useSharedTripQuery } from "../../features/share/hooks/use-shared-trip-query";
+import { formatSharedAccommodationLines } from "../../features/trips/utils/format-accommodation-label";
 
 function GlobeIcon() {
   return (
@@ -40,6 +41,18 @@ export function SharedTripPage() {
   const { token = "" } = useParams();
   const { data, isLoading, isError } = useSharedTripQuery(token);
   const groupedItems = useMemo(() => groupByDay(data?.itinerary_items ?? []), [data]);
+  const accommodationLines = useMemo(
+    () =>
+      formatSharedAccommodationLines(
+        (data?.stays ?? []).map((stay) => ({
+          startNight: stay.start_night,
+          nights: stay.nights,
+          accommodationName: stay.accommodation_name,
+          accommodationType: stay.accommodation_type,
+        })),
+      ),
+    [data],
+  );
 
   if (isLoading) {
     return (
@@ -76,12 +89,11 @@ export function SharedTripPage() {
             <p className="section-subtitle" style={{ marginBottom: 0 }}>
               {data.destination} · {data.start_date} ~ {data.end_date}
             </p>
-            {data.accommodation_name ? (
-              <p className="section-subtitle" style={{ marginBottom: 0 }}>
-                숙소: {data.accommodation_name}
-                {data.accommodation_type ? `(${data.accommodation_type})` : ""}
+            {accommodationLines.map((line) => (
+              <p className="section-subtitle" key={line} style={{ marginBottom: 0 }}>
+                {line}
               </p>
-            ) : null}
+            ))}
           </div>
           <div className="landing-feature-icon-wrap">
             <GlobeIcon />

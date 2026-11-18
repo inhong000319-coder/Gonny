@@ -194,11 +194,7 @@ export function TripDetailPage() {
           />
         </div>
         <div className="stack">
-          <AccommodationChangePanel
-            currentAccommodationId={tripDetail.overview.accommodationId}
-            currentAccommodationLabel={tripDetail.overview.accommodationLabel}
-            tripId={tripId}
-          />
+          <AccommodationChangePanel stays={tripDetail.overview.stays} tripId={tripId} />
           <BudgetSummaryCard budget={budget} />
           <ExpenseList expenses={expenses} />
           <AddExpenseForm tripId={tripId} />

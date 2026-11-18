@@ -1124,6 +1124,13 @@ function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
 }
 
+// 예상 비용 금액이 1인 기준이 아니라 전체 인원 합계라는 걸 보조 문구에
+// 밝힌다 - travelers===1이면 "합계"라는 표현이 어색해 "1인 기준"으로
+// 쓴다.
+function formatTravelersCostLabel(travelers: number) {
+  return travelers === 1 ? "1인 기준" : `${travelers}인 합계`;
+}
+
 function normalizeCatalogResponse(payload: unknown) {
   if (!payload || typeof payload !== "object") {
     return [];
@@ -3199,7 +3206,8 @@ export function TripCreateForm() {
                 </p>
                 <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
                 <p className="tc-section-note">
-                  입장료 확인 {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
+                  {formatTravelersCostLabel(result.estimated_cost.travelers)} · 입장료 확인{" "}
+                  {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
                 </p>
                 {result.estimated_cost.unpriced_place_count > 0 ? (
                   <p className="tc-section-note">
@@ -3336,6 +3344,19 @@ export function TripCreateForm() {
                 const effectiveEndAccommodationName = endStay?.accommodation
                   ? getEffectiveStayAccommodation(endStay.accommodation, accommodationSwaps, endStay.stay_index).name
                   : null;
+                // 그 날 밤 묵는 숙소 한 줄(숙소가 2곳 이상일 때만) - d일차
+                // 밤은 d박째 숙소다(endStay가 바로 그 night min(dayNumber,
+                // nights)의 stay라, 위에서 이미 계산해 둔 값을 그대로
+                // 재사용한다). 마지막 날(박수+1일차)은 묵지 않으므로 아예
+                // 보여주지 않는다. 이사 날은 아래 "이 날 숙소를 옮겨요"
+                // 안내가 이미 그날 밤 숙소를 알려주므로 중복해서 보여주지
+                // 않는다.
+                const dayAccommodationName =
+                  effectiveAccommodationStays.length >= 2 &&
+                  dayNumber <= result.nights &&
+                  !isAccommodationChangeDay
+                    ? effectiveEndAccommodationName
+                    : null;
                 const timelineEntries = buildDayTimelineEntries(effectiveDayItems, effectiveDayMeals);
                 // 판정은 "활동 슬롯 배열의 이전 항목"이 아니라 "타임라인
                 // 순서상 바로 앞 행"(식사 포함) 기준이어야 한다 - 교체된
@@ -3412,6 +3433,7 @@ export function TripCreateForm() {
                   <div className="tc-day-head">
                     <div>
                       <h3 className="tc-day-title">{dayNumber}일차</h3>
+                      {dayAccommodationName ? <p className="tc-day-weather">숙소: {dayAccommodationName}</p> : null}
                       {daySummary && daySummary.place_count > 0 ? (
                         <p className="tc-day-summary-line">
                           {formatDaySummaryLine(daySummary, shouldHideDayTravelTotal(dayAccommodationIsSwapped))}

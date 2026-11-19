@@ -18,6 +18,32 @@ DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "destinations"
 ACTIVITY_CATEGORIES = {"activity", "theme_park", "local_experience"}
 VISIBLE_CITY_CODES = {"seoul", "busan", "jeju"}
 
+# 하루 일정의 슬롯 수(아침/오후/저녁 고정) - #139. 일정 성향별로 슬롯 수가
+# 달라질 수 있어 compute_recommended_max_days의 인자로 뺐고, 지금은 이
+# 기본값 하나로만 호출한다.
+DEFAULT_DAY_SLOT_COUNT = 3
+
+
+def compute_recommended_max_days(activity_candidate_count: int, slot_count: int = DEFAULT_DAY_SLOT_COUNT) -> int:
+    """장소를 가득 채워 추천할 수 있는 최대 일수의 근사치(#139).
+
+    같은 장소를 한 일정에 한 번만 쓰는 규칙(RuleItineraryService.
+    _build_items) 때문에, 활동 후보 장소가 slot_count만큼씩 다 쓰이고
+    나면 그 뒤로는 활동 장소가 바닥나 빈 날이 생긴다. activity_candidate_
+    count // slot_count(정수 나눗셈)로 슬롯이 완전히 채워지는 날 수만
+    센다 - 마지막에 slot_count보다 적게 남는 장소는 그 날을 다 채우지
+    못하므로 포함하지 않는다(예: 25곳 // 3 = 8, 1곳이 남아도 9일째는
+    세지 않음).
+
+    종일 코스(PlaceData.full_day_recommended) 장소는 실제로는 슬롯 3개를
+    한 번에 다 쓰므로, 이 값은 정확한 날짜 수가 아니라 근사치다.
+
+    slot_count<=0이면 나눗셈이 의미가 없으므로 0을 돌려준다.
+    """
+    if slot_count <= 0:
+        return 0
+    return activity_candidate_count // slot_count
+
 
 class DestinationCatalogRepository:
     def __init__(self, data_dir: Path | None = None):
@@ -89,6 +115,9 @@ class DestinationCatalogRepository:
                 country=catalog.country,
                 city=catalog.city,
                 aliases=catalog.aliases,
+                recommended_max_days=compute_recommended_max_days(
+                    sum(1 for place in catalog.places if place.is_active and place.is_activity_candidate)
+                ),
             )
             for catalog in self.load_catalogs(visible_only=visible_only)
         ]

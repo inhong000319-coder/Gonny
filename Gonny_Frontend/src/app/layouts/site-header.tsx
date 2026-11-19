@@ -3,10 +3,10 @@ import { useAuth } from "../providers/auth-provider";
 import { Button } from "../../shared/components/ui/button";
 
 const navItems = [
-  { to: "/", label: "Home" },
-  { to: "/trips", label: "My Trips" },
-  { to: "/inspiration", label: "Explore" },
-  { to: "/community", label: "Community" },
+  { to: "/", label: "홈" },
+  { to: "/trips", label: "내 여행" },
+  { to: "/inspiration", label: "탐색" },
+  { to: "/community", label: "커뮤니티" },
 ];
 
 export function SiteHeader() {
@@ -18,7 +18,6 @@ export function SiteHeader() {
     <header className="topbar">
       <div className="topbar-brand-group">
         <Link className="brand" to="/">Gonny</Link>
-        <span className="topbar-tag">travel, together</span>
       </div>
       <nav className="nav">
         {navItems.map((item) => (
@@ -33,10 +32,10 @@ export function SiteHeader() {
         {isAuthenticated ? (
           <Link aria-label="프로필로 이동" className="topbar-profile" to="/profile">
             <span className="topbar-profile-avatar">{profileInitial}</span>
-            <span>{user?.nickname ?? "Profile"}</span>
+            <span>{user?.nickname ?? "프로필"}</span>
           </Link>
         ) : (
-          <Link to="/login"><Button className="topbar-cta">Login</Button></Link>
+          <Link to="/login"><Button className="topbar-cta">로그인</Button></Link>
         )}
       </nav>
     </header>

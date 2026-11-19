@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { PRICE_REFERENCE_PERIOD, formatApproxManwon, formatApproxManwonRange } from "../../../shared/pricing";
@@ -3137,99 +3137,9 @@ export function TripCreateForm() {
               </div>
             </div>
 
-            {result.accommodation_split_note ? (
-              <div className="tc-alert tc-alert-info" style={{ marginBottom: 16 }}>{result.accommodation_split_note}</div>
-            ) : null}
-            {effectiveAccommodationStays.length === 1 && effectiveAccommodationStays[0].accommodation ? (
-              <div className="tc-card">
-                <p className="tc-section-label">추천 숙소</p>
-                <p className="tc-section-value">{effectiveAccommodationStays[0].accommodation.name}</p>
-                <div className="tc-tag-row">
-                  <span className="tc-tag">{effectiveAccommodationStays[0].accommodation.accommodation_type}</span>
-                  {effectiveAccommodationStays[0].accommodation.checkin_time ? (
-                    <span className="tc-tag">체크인 {effectiveAccommodationStays[0].accommodation.checkin_time}</span>
-                  ) : null}
-                  {effectiveAccommodationStays[0].accommodation.checkout_time ? (
-                    <span className="tc-tag">체크아웃 {effectiveAccommodationStays[0].accommodation.checkout_time}</span>
-                  ) : null}
-                </div>
-                <p className="tc-section-note" style={{ marginTop: 10 }}>
-                  숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
-                </p>
-                <AccommodationAlternativesPanel
-                  activeAlternativeId={accommodationSwaps[0]?.id ?? null}
-                  alternatives={result.accommodation_stays[0]?.alternatives ?? result.accommodation_alternatives}
-                  onRevert={() => setAccommodationSwaps((previous) => revertAccommodationSwap(previous, 0))}
-                  onSelect={(alternative) =>
-                    setAccommodationSwaps((previous) => applyAccommodationSwap(previous, 0, alternative))
-                  }
-                />
-              </div>
-            ) : effectiveAccommodationStays.length >= 2 ? (
-              effectiveAccommodationStays.map((stay, index) =>
-                stay.accommodation ? (
-                  <div className="tc-card" key={stay.stayIndex}>
-                    <p className="tc-section-label">{formatStayCardTitle(index + 1, result.accommodation_stays[index])}</p>
-                    <p className="tc-section-value">{stay.accommodation.name}</p>
-                    <div className="tc-tag-row">
-                      <span className="tc-tag">{stay.accommodation.accommodation_type}</span>
-                      {stay.accommodation.checkin_time ? (
-                        <span className="tc-tag">체크인 {stay.accommodation.checkin_time}</span>
-                      ) : null}
-                      {stay.accommodation.checkout_time ? (
-                        <span className="tc-tag">체크아웃 {stay.accommodation.checkout_time}</span>
-                      ) : null}
-                    </div>
-                    {index === effectiveAccommodationStays.length - 1 ? (
-                      <p className="tc-section-note" style={{ marginTop: 10 }}>
-                        숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
-                      </p>
-                    ) : null}
-                    <AccommodationAlternativesPanel
-                      activeAlternativeId={accommodationSwaps[stay.stayIndex]?.id ?? null}
-                      alternatives={result.accommodation_stays[index]?.alternatives ?? []}
-                      onRevert={() => setAccommodationSwaps((previous) => revertAccommodationSwap(previous, stay.stayIndex))}
-                      onSelect={(alternative) =>
-                        setAccommodationSwaps((previous) => applyAccommodationSwap(previous, stay.stayIndex, alternative))
-                      }
-                    />
-                  </div>
-                ) : null,
-              )
-            ) : null}
-
-            {result.estimated_cost ? (
-              <div className="tc-card">
-                <p className="tc-section-label">예상 비용</p>
-                <p className="tc-section-value">
-                  {formatApproxManwonRange(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}
-                </p>
-                <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
-                <p className="tc-section-note">
-                  {formatTravelersCostLabel(result.estimated_cost.travelers)} · 입장료 확인{" "}
-                  {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
-                </p>
-                {result.estimated_cost.unpriced_place_count > 0 ? (
-                  <p className="tc-section-note">
-                    가격 미확인 {result.estimated_cost.unpriced_place_count}곳은 상한으로 가정
-                  </p>
-                ) : null}
-                <p className="tc-section-note">숙박비는 포함되지 않아요. 숙소 가격은 직접 확인해 주세요.</p>
-              </div>
-            ) : null}
-
-            {message ? (
-              <div className="tc-alert tc-alert-success" style={{ marginBottom: 16 }}>
-                {message}
-              </div>
-            ) : null}
-            {error ? (
-              <div className="tc-alert tc-alert-danger" style={{ marginBottom: 16 }}>
-                {error}
-              </div>
-            ) : null}
-
-            <GonnyIntro isOpen={isIntroOpen} onToggle={() => setIsIntroOpen((previous) => !previous)} />
+            <div className="tc-result-layout">
+              <div className="tc-result-main">
+                <GonnyIntro isOpen={isIntroOpen} onToggle={() => setIsIntroOpen((previous) => !previous)} />
 
             <div className="tc-card">
               <h2 className="tc-stage-title">일차별 추천 동선</h2>
@@ -3273,6 +3183,10 @@ export function TripCreateForm() {
                 </div>
               ) : null}
               {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
+                // 일차 색(--day-1~6) 순환 - 타임라인 세로선과 일차 라벨에
+                // 같은 색을 써서 "이 구간이 며칠째인지"가 한눈에 보이게 한다.
+                const dayColor = `var(--day-${((dayNumber - 1) % 6) + 1})`;
+                const dayColorStyle = { "--day-color": dayColor } as CSSProperties;
                 const dayItems = itemsByDay.get(dayNumber) ?? [];
                 const effectiveDayItems = dayItems.map((item) => getEffectiveItem(item, slotSwaps));
                 const weatherLine = formatDayWeatherLine(weatherStatusByDay.get(dayNumber));
@@ -3289,7 +3203,7 @@ export function TripCreateForm() {
 
                 if (dayItems.length === 0) {
                   return (
-                    <div className="tc-day-card" key={dayNumber}>
+                    <div className="tc-day-card" key={dayNumber} style={dayColorStyle}>
                       <div className="tc-day-head">
                         <div>
                           <h3 className="tc-day-title">{dayNumber}일차</h3>
@@ -3429,7 +3343,11 @@ export function TripCreateForm() {
                     : undefined;
 
                 return (
-                <div className="tc-day-card" key={dayNumber}>
+                <div
+                  className={`tc-day-card${isAccommodationChangeDay ? " is-stay-boundary" : ""}`}
+                  key={dayNumber}
+                  style={dayColorStyle}
+                >
                   <div className="tc-day-head">
                     <div>
                       <h3 className="tc-day-title">{dayNumber}일차</h3>
@@ -3694,36 +3612,147 @@ export function TripCreateForm() {
               onToggleScenarioDetail={handleToggleTransportCompareScenarioDetail}
               status={transportCompareStatus}
             />
+              </div>
 
-            <div className="tc-result-actions">
-              <button
-                className="tc-btn tc-btn-primary"
-                disabled={isSavingTrip}
-                onClick={handleSaveTrip}
-                type="button"
-              >
-                {isSavingTrip ? "여행 저장 중..." : "이 일정으로 여행 저장"}
-              </button>
-              {docDownload ? (
-                <a className="tc-btn tc-btn-ghost" download={docDownload.filename} href={docDownload.href}>
-                  문서 파일 다운로드
-                </a>
-              ) : null}
-              {printPreview ? (
-                <a className="tc-btn tc-btn-ghost" href={printPreview.href} rel="noreferrer" target="_blank">
-                  PDF로 저장
-                </a>
-              ) : null}
-              <button className="tc-btn tc-btn-secondary" onClick={handleEditAgain} type="button">
-                조건 다시 수정하기
-              </button>
-              <button
-                className="tc-btn tc-btn-ghost"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                type="button"
-              >
-                상단으로 이동
-              </button>
+              <aside className="tc-result-side">
+                {result.accommodation_split_note ? (
+                  <div className="tc-alert tc-alert-info">{result.accommodation_split_note}</div>
+                ) : null}
+                {effectiveAccommodationStays.length === 1 && effectiveAccommodationStays[0].accommodation ? (
+                  <div className="tc-card">
+                    <p className="tc-section-label">추천 숙소</p>
+                    <p className="tc-section-value">{effectiveAccommodationStays[0].accommodation.name}</p>
+                    <div className="tc-tag-row">
+                      <span className="tc-tag">{effectiveAccommodationStays[0].accommodation.accommodation_type}</span>
+                      {effectiveAccommodationStays[0].accommodation.checkin_time ? (
+                        <span className="tc-tag">체크인 {effectiveAccommodationStays[0].accommodation.checkin_time}</span>
+                      ) : null}
+                      {effectiveAccommodationStays[0].accommodation.checkout_time ? (
+                        <span className="tc-tag">체크아웃 {effectiveAccommodationStays[0].accommodation.checkout_time}</span>
+                      ) : null}
+                    </div>
+                    <p className="tc-section-note" style={{ marginTop: 10 }}>
+                      숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
+                    </p>
+                    <AccommodationAlternativesPanel
+                      activeAlternativeId={accommodationSwaps[0]?.id ?? null}
+                      alternatives={result.accommodation_stays[0]?.alternatives ?? result.accommodation_alternatives}
+                      onRevert={() => setAccommodationSwaps((previous) => revertAccommodationSwap(previous, 0))}
+                      onSelect={(alternative) =>
+                        setAccommodationSwaps((previous) => applyAccommodationSwap(previous, 0, alternative))
+                      }
+                    />
+                  </div>
+                ) : effectiveAccommodationStays.length >= 2 ? (
+                  effectiveAccommodationStays.map((stay, index) =>
+                    stay.accommodation ? (
+                      <div className="tc-card" key={stay.stayIndex}>
+                        <p className="tc-section-label">{formatStayCardTitle(index + 1, result.accommodation_stays[index])}</p>
+                        <p className="tc-section-value">{stay.accommodation.name}</p>
+                        <div className="tc-tag-row">
+                          <span className="tc-tag">{stay.accommodation.accommodation_type}</span>
+                          {stay.accommodation.checkin_time ? (
+                            <span className="tc-tag">체크인 {stay.accommodation.checkin_time}</span>
+                          ) : null}
+                          {stay.accommodation.checkout_time ? (
+                            <span className="tc-tag">체크아웃 {stay.accommodation.checkout_time}</span>
+                          ) : null}
+                        </div>
+                        {index === effectiveAccommodationStays.length - 1 ? (
+                          <p className="tc-section-note" style={{ marginTop: 10 }}>
+                            숙소 가격은 시기별로 차이가 커 보여드리지 않아요. 가격은 직접 확인해 주세요.
+                          </p>
+                        ) : null}
+                        <AccommodationAlternativesPanel
+                          activeAlternativeId={accommodationSwaps[stay.stayIndex]?.id ?? null}
+                          alternatives={result.accommodation_stays[index]?.alternatives ?? []}
+                          onRevert={() => setAccommodationSwaps((previous) => revertAccommodationSwap(previous, stay.stayIndex))}
+                          onSelect={(alternative) =>
+                            setAccommodationSwaps((previous) => applyAccommodationSwap(previous, stay.stayIndex, alternative))
+                          }
+                        />
+                      </div>
+                    ) : null,
+                  )
+                ) : null}
+
+                {result.estimated_cost ? (
+                  <div className="tc-card">
+                    <p className="tc-section-label">예상 비용</p>
+                    <p className="tc-section-value">
+                      {formatApproxManwonRange(result.estimated_cost.min_krw, result.estimated_cost.max_krw)}
+                    </p>
+                    <p className="tc-section-note">참고 가격 · {PRICE_REFERENCE_PERIOD} 확인 · 변동될 수 있어요</p>
+                    <p className="tc-section-note">
+                      {formatTravelersCostLabel(result.estimated_cost.travelers)} · 입장료 확인{" "}
+                      {result.estimated_cost.priced_place_count}곳 기준 · 식당·교통비 제외
+                    </p>
+                    {result.estimated_cost.unpriced_place_count > 0 ? (
+                      <p className="tc-section-note">
+                        가격 미확인 {result.estimated_cost.unpriced_place_count}곳은 상한으로 가정
+                      </p>
+                    ) : null}
+                    <p className="tc-section-note">숙박비는 포함되지 않아요. 숙소 가격은 직접 확인해 주세요.</p>
+                  </div>
+                ) : null}
+
+                {Array.from({ length: result.days }, (_, index) => index + 1).some(
+                  (dayNumber) => formatDayWeatherLine(weatherStatusByDay.get(dayNumber)) !== null,
+                ) ? (
+                  <div className="tc-card">
+                    <p className="tc-section-label">날씨 요약</p>
+                    <div className="tc-weather-summary">
+                      {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
+                        const line = formatDayWeatherLine(weatherStatusByDay.get(dayNumber));
+                        return (
+                          <p className="tc-weather-summary-row" key={`weather-summary-${dayNumber}`}>
+                            <span>{dayNumber}일차</span>
+                            <span>{line ? line.replace("날씨 예보: ", "") : "아직 확인 불가"}</span>
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+
+                {message ? (
+                  <div className="tc-alert tc-alert-success">{message}</div>
+                ) : null}
+                {error ? (
+                  <div className="tc-alert tc-alert-danger">{error}</div>
+                ) : null}
+
+                <div className="tc-result-actions">
+                  <button
+                    className="tc-btn tc-btn-primary"
+                    disabled={isSavingTrip}
+                    onClick={handleSaveTrip}
+                    type="button"
+                  >
+                    {isSavingTrip ? "여행 저장 중..." : "이 일정으로 여행 저장"}
+                  </button>
+                  {docDownload ? (
+                    <a className="tc-btn tc-btn-ghost" download={docDownload.filename} href={docDownload.href}>
+                      문서 파일 다운로드
+                    </a>
+                  ) : null}
+                  {printPreview ? (
+                    <a className="tc-btn tc-btn-ghost" href={printPreview.href} rel="noreferrer" target="_blank">
+                      PDF로 저장
+                    </a>
+                  ) : null}
+                  <button className="tc-btn tc-btn-secondary" onClick={handleEditAgain} type="button">
+                    조건 다시 수정하기
+                  </button>
+                  <button
+                    className="tc-btn tc-btn-ghost"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    type="button"
+                  >
+                    상단으로 이동
+                  </button>
+                </div>
+              </aside>
             </div>
 
             {import.meta.env.DEV ? (

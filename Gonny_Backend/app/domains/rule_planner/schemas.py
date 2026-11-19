@@ -68,7 +68,8 @@ class RuleItineraryRequest(BaseModel):
     country: str | None = None
     city: str | None = None
     travelers: int | None = Field(default=2, ge=1, le=20)
-    nights: int | None = Field(default=None, ge=1, le=30)
+    # 0 = 당일치기(#140, 숙소 없음). 1~30은 기존 그대로.
+    nights: int | None = Field(default=None, ge=0, le=30)
     days: int | None = Field(default=None, ge=1, le=31)
     duration_label: str | None = None
     budget_value: int | None = Field(default=None, ge=0)

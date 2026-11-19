@@ -208,6 +208,20 @@ class RuleItineraryService:
         fixed_slots = build_fixed_slots_lookup(
             fixed_slots=request.fixed_slots, request=normalized, city_catalog=city_catalog
         )
+        # #140 - a day trip (nights=0) has no accommodation at all, so
+        # none of these three fields can ever apply. Checked before the
+        # accommodation_id lookup/validate_stay_plan_request below so a
+        # day trip never reaches allowed_partitions(0) (which would raise
+        # ValueError, not a clean 422).
+        if normalized.nights == 0 and (
+            request.accommodation_id is not None
+            or request.stay_nights is not None
+            or request.stay_accommodation_ids is not None
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="당일치기 일정에는 숙소를 지정할 수 없습니다.",
+            )
         if request.accommodation_id is not None:
             known_accommodation_ids = {
                 accommodation.id for accommodation in load_city_accommodations(city_catalog.city)
@@ -442,7 +456,18 @@ class RuleItineraryService:
         services/accommodation_split.select_stay_plan for that search).
         fixed_accommodation_id is recalculate()'s legacy accommodation_id,
         always pinning the first stay - see RuleItineraryRecalculateRequest.
+
+        request.nights == 0 is a day trip (#140) - there's no night to
+        stay anywhere, so no accommodation is ever recommended regardless
+        of accommodation_split. recalculate() already rejects
+        fixed_accommodation_id/stay_nights/stay_accommodation_ids for a
+        day trip before this is ever called (see validate_stay_plan_request
+        and recalculate()'s own accommodation_id check), so this is the
+        only branch a day trip ever takes here.
         """
+        if request.nights == 0:
+            return [], "당일치기 일정이라 숙소를 추천하지 않아요."
+
         accommodations = load_city_accommodations(city_catalog.city)
 
         if stay_nights is not None:

@@ -201,3 +201,8 @@ class CatalogCityOption(BaseModel):
     city: str
     aliases: list[str]
     accommodation_type_counts: dict[str, int] = Field(default_factory=dict)
+    # 장소를 가득 채워 추천할 수 있는 최대 일수의 근사치(#139) - 같은
+    # 장소를 한 일정에 한 번만 쓰는 규칙 때문에, 이 날 수를 넘기면 활동
+    # 장소가 바닥나 빈 날이 생기기 시작한다는 뜻이다. 계산은
+    # DestinationCatalogRepository.compute_recommended_max_days 참고.
+    recommended_max_days: int = 0

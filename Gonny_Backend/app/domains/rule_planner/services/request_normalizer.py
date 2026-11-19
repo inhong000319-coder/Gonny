@@ -83,16 +83,45 @@ def normalize_duration(
     days: int | None,
     duration_label: str | None,
 ) -> tuple[int, int]:
+    """#140: nights=0 (day trip) only ever pairs with days=1 - any other
+    days value for nights=0 is a 422, not a silent reinterpretation (an
+    empty itinerary with no night at all can't span more than one day).
+    Every nights>=1 branch below is untouched byte-for-byte from before
+    this feature - only the "is 0 actually distinguishable from unset"
+    checks changed from truthiness (`if nights`, which treated 0 the same
+    as None) to explicit `is not None` checks, which is what makes
+    nights=0 reachable here at all instead of silently falling through to
+    the days-only/default branches."""
+    nights, days = _resolve_duration(nights=nights, days=days, duration_label=duration_label)
+    if nights == 0 and days != 1:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"nights가 0(당일치기)이면 days는 1이어야 합니다. 받은 값: nights=0, days={days}",
+        )
+    return nights, days
+
+
+def _resolve_duration(
+    *,
+    nights: int | None,
+    days: int | None,
+    duration_label: str | None,
+) -> tuple[int, int]:
     if duration_label:
         match = re.search(r"(\d+)\D+(\d+)", duration_label)
         if match:
             return int(match.group(1)), int(match.group(2))
 
-    if nights and days:
+    if nights is not None and days is not None:
         return nights, days
-    if nights and not days:
+    if nights is not None and days is None:
         return nights, nights + 1
-    if days and not nights:
+    if days is not None and nights is None:
+        # days=1만 오고 nights가 안 왔으면(#140 전에는 여기서 항상 1박으로
+        # 가정했다) 당일치기(0박)로 정규화한다 - days>=2면 적어도 1박은
+        # 필요하므로 기존처럼 max(days-1, 1)을 그대로 쓴다.
+        if days == 1:
+            return 0, 1
         return max(days - 1, 1), days
     return 2, 3
 

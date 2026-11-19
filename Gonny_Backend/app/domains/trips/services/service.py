@@ -437,7 +437,17 @@ def _validate_and_resolve_stays(
     middle-stay-min-2-nights/max-stay-count rule #133 already enforces for
     a generated itinerary, so a trip can never be saved with a split its
     own rule_planner wouldn't have produced in the first place.
+
+    #140: a day trip (start_date == end_date, 0 nights) has no
+    accommodation at all - checked before the `stays is None` early
+    return below so it applies to *both* the legacy accommodation_id path
+    and the stays path, not just the latter.
     """
+    if (end_date - start_date).days == 0 and (accommodation_id is not None or stays is not None):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="당일치기 여행에는 숙소를 지정할 수 없습니다.",
+        )
     if stays is None:
         return None
     if accommodation_id is not None:
@@ -592,6 +602,12 @@ class TripService:
     def list_accommodation_options(self, *, db: Session, trip_id: int) -> list[TripAccommodationOption]:
         trip = self.get_trip_or_404(db=db, trip_id=trip_id)
 
+        # #140 - a day trip never has anywhere to stay, so there's nothing
+        # to offer as a candidate either (and no destination accommodation
+        # lookup needed at all).
+        if trip.end_date == trip.start_date:
+            return []
+
         accommodations = load_city_accommodations(trip.destination)
         options = [
             TripAccommodationOption(
@@ -639,6 +655,15 @@ class TripService:
             db.commit()
             db.refresh(trip)
             return trip
+
+        # #140 - a day trip has no accommodation to set (clearing one
+        # above is still a harmless no-op for a day trip, so only this
+        # "set an id" branch needs the guard).
+        if trip.end_date == trip.start_date:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="당일치기 여행에는 숙소를 지정할 수 없어요.",
+            )
 
         accommodation_name, accommodation_type = _resolve_accommodation_snapshot(
             trip.destination, payload.accommodation_id

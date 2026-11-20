@@ -1,8 +1,10 @@
 import { AuthLayout } from "../../app/layouts/auth-layout";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../shared/components/ui/button";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 export function OnboardingPage() {
+  useDocumentTitle("온보딩");
   const navigate = useNavigate();
 
   return (

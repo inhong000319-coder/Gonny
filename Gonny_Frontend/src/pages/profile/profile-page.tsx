@@ -4,8 +4,10 @@ import { useAuth } from "../../app/providers/auth-provider";
 import { useMeQuery } from "../../features/auth/hooks/use-me-query";
 import { useTripsQuery } from "../../features/trips/hooks/use-trips-query";
 import { Button } from "../../shared/components/ui/button";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 export function ProfilePage() {
+  useDocumentTitle("프로필");
   const { user, signOut, isAuthenticated } = useAuth();
   const { data } = useMeQuery(isAuthenticated);
   const { data: trips = [] } = useTripsQuery();

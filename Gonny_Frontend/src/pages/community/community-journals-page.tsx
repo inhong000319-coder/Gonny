@@ -5,6 +5,7 @@ import { useCommunityJournalsQuery } from "../../features/community/hooks/use-co
 import { formatRegionLabel } from "../../features/community/region-label";
 import "../../features/community/styles/community.css";
 import { Button } from "../../shared/components/ui/button";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 function formatDate(value: string) {
   const parsed = new Date(value);
@@ -30,6 +31,7 @@ function buildPageNumbers(page: number, totalPages: number) {
 }
 
 export function CommunityJournalsPage() {
+  useDocumentTitle("여행기록 모아보기");
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<"views" | "recommendations">("views");
   const [searchInput, setSearchInput] = useState("");

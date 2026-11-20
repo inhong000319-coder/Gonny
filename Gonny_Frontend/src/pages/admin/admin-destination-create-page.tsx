@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
 import { apiClient } from "../../shared/api/client";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 import {
   defaultDayPresetOptions,
   DESTINATION_DEFAULT_DAYS_MAX,
@@ -16,6 +17,7 @@ import {
 } from "./admin-data-shared";
 
 export function AdminDestinationCreatePage() {
+  useDocumentTitle("여행지 추가");
   const navigate = useNavigate();
   const [editor, setEditor] = useState<DestinationEditorState>(emptyDestinationEditorState());
   const [existingCities, setExistingCities] = useState<string[]>([]);

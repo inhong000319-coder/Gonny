@@ -23,6 +23,7 @@ import "../../features/trips/styles/trip-detail.css";
 import { findStayForDay } from "../../features/trips/utils/day-accommodation";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 type EditableItineraryItem = {
   id: number;
@@ -45,6 +46,7 @@ export function TripDetailPage() {
   const { tripId = "101" } = useParams();
   const queryClient = useQueryClient();
   const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
+  useDocumentTitle(tripDetail?.overview.title);
   const { data: budget } = useBudgetSummaryQuery(tripId);
   const { data: expenses } = useExpensesQuery(tripId);
   const { data: report, isLoading: isReportLoading, isError: isReportError, refetch: refetchReport } =

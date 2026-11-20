@@ -461,6 +461,9 @@ const accommodationSplitOptions: { value: AccommodationSplitMode; label: string;
 ];
 const styleOptions: TripStyle[] = ["tight", "easy", "near-stay", "mobility-first"];
 const companionOptions: CompanionType[] = ["solo", "couple", "friend", "family"];
+// 일정 생성 중 단계 표시(마감 디테일) - 서버가 단계 정보를 주지 않아서
+// 시간 기반으로만 넘긴다. handleGenerate 근처 useEffect 참고.
+const GENERATE_STAGES = ["장소를 고르고 있어요", "동선을 계산하고 있어요", "날씨를 확인하고 있어요"];
 const travelerOptions = [
   { value: 1, label: "혼자 여행" },
   { value: 2, label: "둘이서 여행" },
@@ -2009,6 +2012,7 @@ export function TripCreateForm() {
   const [catalogLoading, setCatalogLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generateStageIndex, setGenerateStageIndex] = useState<number | null>(null);
   const [isSavingTrip, setIsSavingTrip] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -2369,6 +2373,22 @@ export function TripCreateForm() {
       ...(include_breakfast ? { include_breakfast } : {}),
     };
   };
+
+  // 1초 안에 응답이 오면 cleanup이 아직 안 울린 타이머를 전부 지워서
+  // 단계 표시 자체가 안 뜬다(깜빡임 방지). 응답이 오면 isGenerating이
+  // false로 바뀌어 다음 렌더에서 즉시 null로 되돌아간다.
+  useEffect(() => {
+    if (!isGenerating) {
+      setGenerateStageIndex(null);
+      return;
+    }
+    const timers = GENERATE_STAGES.map((_, index) =>
+      window.setTimeout(() => setGenerateStageIndex(index), 1000 + index * 1200),
+    );
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [isGenerating]);
 
   const handleGenerate = async () => {
     setIsGenerating(true);
@@ -3091,6 +3111,16 @@ export function TripCreateForm() {
                     >
                       {isGenerating ? "일정을 만들고 있어요…" : "일정 만들기"}
                     </button>
+                    {generateStageIndex !== null ? (
+                      <div aria-live="polite" className="tc-generate-progress">
+                        <span aria-hidden="true" className="tc-generate-progress-dots">
+                          <i className={generateStageIndex >= 0 ? "is-active" : ""} />
+                          <i className={generateStageIndex >= 1 ? "is-active" : ""} />
+                          <i className={generateStageIndex >= 2 ? "is-active" : ""} />
+                        </span>
+                        <span>{GENERATE_STAGES[generateStageIndex]}</span>
+                      </div>
+                    ) : null}
                   </div>
                 ) : null}
               </div>

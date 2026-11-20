@@ -8,10 +8,12 @@ import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-q
 import { Button } from "../../shared/components/ui/button";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 const dayLabels = ["첫째 날", "둘째 날", "셋째 날", "넷째 날", "다섯째 날", "여섯째 날", "일곱째 날"];
 
 export function TripMemoryPage() {
+  useDocumentTitle("여행 기록");
   const { tripId = "101" } = useParams();
   const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
   const { data: community, isLoading } = useTripCommunityQuery(tripId);

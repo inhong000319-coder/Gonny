@@ -2,6 +2,7 @@ import { AppShell } from "../../app/layouts/app-shell";
 import { useSeasonalFeedQuery } from "../../features/inspiration/hooks/use-seasonal-feed-query";
 import { Season } from "../../features/inspiration/api/get-seasonal-feed";
 import "./inspiration-page.css";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 const seasonLabelKo: Record<Season, string> = {
   spring: "봄",
@@ -21,6 +22,7 @@ function toCityLabel(city: string) {
 }
 
 export function InspirationPage() {
+  useDocumentTitle("탐색");
   const seasonalFeedQuery = useSeasonalFeedQuery();
   const seasonalFeed = seasonalFeedQuery.data;
 

@@ -4,6 +4,7 @@ import { PublicLayout } from "../../app/layouts/public-layout";
 import { SharedItineraryItem } from "../../features/share/api/get-shared-trip";
 import { useSharedTripQuery } from "../../features/share/hooks/use-shared-trip-query";
 import { formatSharedAccommodationLines } from "../../features/trips/utils/format-accommodation-label";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 function GlobeIcon() {
   return (
@@ -40,6 +41,7 @@ function groupByDay(items: SharedItineraryItem[]) {
 export function SharedTripPage() {
   const { token = "" } = useParams();
   const { data, isLoading, isError } = useSharedTripQuery(token);
+  useDocumentTitle(data?.title);
   const groupedItems = useMemo(() => groupByDay(data?.itinerary_items ?? []), [data]);
   const accommodationLines = useMemo(
     () =>

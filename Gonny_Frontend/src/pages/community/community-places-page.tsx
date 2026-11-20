@@ -10,6 +10,7 @@ import { CommunityPlaceReviewItem } from "../../features/community/types/communi
 import "../../features/community/styles/community.css";
 import { Button } from "../../shared/components/ui/button";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 const reactionOptions = [
   { value: "like", emoji: "👍" },
@@ -61,6 +62,7 @@ function writeReactionState(state: Record<string, boolean>) {
 }
 
 export function CommunityPlacesPage() {
+  useDocumentTitle("장소 평가 모아보기");
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");

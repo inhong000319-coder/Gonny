@@ -16,6 +16,7 @@
     "react-router-dom": "6.28.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "4.2.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",

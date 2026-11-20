@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { apiClient } from "../../../shared/api/client";
 import { PRICE_REFERENCE_PERIOD, formatApproxManwon, formatApproxManwonRange } from "../../../shared/pricing";
 import { createItineraryItem } from "../../itinerary/api/create-itinerary-item";
@@ -492,6 +492,30 @@ const initialForm: PlannerFormState = {
   departure_period: null,
   include_breakfast: false,
 };
+
+// 4단계(랜딩) 히어로의 한 줄 입력바가 navigate("/planner", { state: {
+// quickStart } })로 넘기는 값을 초기 폼에 반영한다 - city/duration_label/
+// companion_type 세 필드만, 나머지는 전부 initialForm 그대로다. state가
+// 없거나 값이 이상하면(직접 주소로 들어온 경우 등) 조용히 initialForm을
+// 그대로 쓴다.
+function resolveInitialForm(locationState: unknown): PlannerFormState {
+  if (!locationState || typeof locationState !== "object" || !("quickStart" in locationState)) {
+    return initialForm;
+  }
+  const quickStart = (locationState as { quickStart?: unknown }).quickStart;
+  if (!quickStart || typeof quickStart !== "object") {
+    return initialForm;
+  }
+  const { city, duration_label, companion_type } = quickStart as Record<string, unknown>;
+  return {
+    ...initialForm,
+    city: typeof city === "string" && city ? city : initialForm.city,
+    duration_label: typeof duration_label === "string" && duration_label ? duration_label : initialForm.duration_label,
+    companion_type: companionOptions.includes(companion_type as CompanionType)
+      ? (companion_type as CompanionType)
+      : initialForm.companion_type,
+  };
+}
 
 const cityKo: Record<string, string> = {
   bangkok: "방콕",
@@ -1979,7 +2003,8 @@ function splitNoteLines(note: string) {
 
 export function TripCreateForm() {
   const navigate = useNavigate();
-  const [form, setForm] = useState<PlannerFormState>(initialForm);
+  const location = useLocation();
+  const [form, setForm] = useState<PlannerFormState>(() => resolveInitialForm(location.state));
   const [catalog, setCatalog] = useState<CatalogCityOption[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);

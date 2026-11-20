@@ -1,0 +1,279 @@
+/* Landing (S-01) - 마케팅 랜딩. 결과 화면(2단계)/여행 상세(3단계)의 톤을
+   그대로 따른다: 그라디언트/backdrop-filter/아이콘 색원 금지, 포인트 색은
+   히어로 입력바의 "일정 만들기 시작" 버튼 하나뿐이다. .lp- 접두사로
+   스코프해서 다른 화면의 home-/landing- 접두사 클래스와 섞이지 않는다. */
+
+.lp-root {
+  display: grid;
+  gap: var(--space-8);
+  padding: var(--space-6) 0 var(--space-8);
+}
+
+/* --- Hero ---------------------------------------------------------------- */
+
+.lp-hero {
+  align-items: center;
+}
+
+.lp-hero-copy {
+  display: grid;
+  gap: var(--space-4);
+  grid-column: 1 / 7;
+}
+
+.lp-hero-title {
+  margin: 0;
+  font-size: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.lp-hero-desc {
+  margin: 0;
+  max-width: 480px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.lp-quickstart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.lp-quickstart-field {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 120px;
+  font-size: var(--font-small);
+  color: var(--muted);
+}
+
+.lp-quickstart-field select {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.lp-hero-secondary-link {
+  color: var(--muted);
+  text-decoration: underline;
+  width: fit-content;
+}
+
+.lp-hero-mock {
+  grid-column: 7 / 13;
+}
+
+.lp-mock-card {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+}
+
+.lp-mock-title {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-small);
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.lp-mock-timeline {
+  display: grid;
+  gap: var(--space-4);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--day-color, var(--line));
+}
+
+.lp-mock-stop {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: var(--space-3);
+}
+
+.lp-mock-time {
+  font-size: var(--font-small);
+  font-weight: 700;
+  color: var(--day-color, var(--muted));
+}
+
+.lp-mock-stop strong {
+  display: block;
+  font-size: var(--font-body);
+  color: var(--text);
+}
+
+.lp-mock-stop p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: var(--font-small);
+  line-height: 1.5;
+}
+
+/* --- Section divider (경로선 모티프 재사용) ------------------------------- */
+
+.lp-divider {
+  width: 100%;
+}
+
+/* --- Feature sections ----------------------------------------------------- */
+
+.lp-feature {
+  align-items: center;
+}
+
+.lp-feature-copy {
+  display: grid;
+  gap: var(--space-3);
+  grid-column: 1 / 6;
+}
+
+.lp-feature-copy h2 {
+  margin: 0;
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.lp-feature-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.lp-feature-visual {
+  grid-column: 6 / 13;
+}
+
+.lp-mini-day {
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--day-color, var(--line));
+  margin-bottom: var(--space-3);
+}
+
+.lp-mini-day:last-child {
+  margin-bottom: 0;
+}
+
+.lp-mini-day-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--font-small);
+  font-weight: 700;
+  color: var(--day-color, var(--text));
+}
+
+.lp-mini-day p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.lp-weather-mock {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--status-warning);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.lp-weather-mock-title {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.lp-weather-mock-desc {
+  margin: 0;
+  color: var(--muted);
+}
+
+.lp-weather-mock-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.lp-journal-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.lp-journal-card {
+  display: block;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.lp-journal-card strong {
+  display: block;
+}
+
+.lp-journal-card p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+.lp-journal-card-loading {
+  height: 64px;
+  background: var(--surface-strong);
+}
+
+.lp-companion-mock {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* --- Closing CTA ------------------------------------------------------------ */
+
+.lp-closing {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.lp-closing h2 {
+  margin: 0;
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.lp-closing p {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .lp-hero-copy,
+  .lp-hero-mock,
+  .lp-feature-copy,
+  .lp-feature-visual {
+    grid-column: 1 / -1;
+  }
+
+  .lp-hero-mock {
+    margin-top: var(--space-5);
+  }
+
+  .lp-feature-visual {
+    margin-top: var(--space-4);
+  }
+}

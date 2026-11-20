@@ -7,6 +7,7 @@ import { useCommunityPlaceDetailQuery } from "../../features/community/hooks/use
 import { useCommunityPlacesQuery } from "../../features/community/hooks/use-community-places-query";
 import { formatRegionLabel } from "../../features/community/region-label";
 import { CommunityPlaceReviewItem } from "../../features/community/types/community";
+import "../../features/community/styles/community.css";
 import { Button } from "../../shared/components/ui/button";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
 
@@ -144,16 +145,9 @@ export function CommunityPlacesPage() {
 
   return (
     <AppShell>
-      <section className="page-hero panel panel-gradient">
-        <div className="stack">
-          <span className="section-kicker">COMMUNITY PLACES</span>
-          <h1 className="section-title" style={{ fontSize: "2.1rem", margin: 0 }}>
-            장소 평가 전체 보기
-          </h1>
-          <p className="section-subtitle" style={{ marginBottom: 0 }}>
-            먼저 지역을 고르고, 그 안에서 인기 장소를 살펴볼 수 있어요.
-          </p>
-        </div>
+      <section className="cm-page-hero">
+        <h1>장소 평가 전체 보기</h1>
+        <p>먼저 지역을 고르고, 그 안에서 인기 장소를 살펴볼 수 있어요.</p>
       </section>
 
       <section className="card stack">
@@ -186,13 +180,12 @@ export function CommunityPlacesPage() {
       <section className="card stack">
         {isLoading ? <p className="section-subtitle">장소 목록을 불러오고 있어요.</p> : null}
 
-        <div className="memory-stats-grid">
+        <div className="cm-place-results-grid">
           {data?.items.map((place) => (
             <button
               key={place.id}
-              className="metric community-stat-card"
+              className="cm-place-result"
               onClick={() => setSelectedPlaceId(place.id)}
-              style={{ textAlign: "left", cursor: "pointer" }}
               type="button"
             >
               <strong>

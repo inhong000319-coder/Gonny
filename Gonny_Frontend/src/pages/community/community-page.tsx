@@ -11,6 +11,7 @@ import { useCommunityJournalsQuery } from "../../features/community/hooks/use-co
 import { useCommunityPlaceDetailQuery } from "../../features/community/hooks/use-community-place-detail-query";
 import { useCommunityTopPlacesQuery } from "../../features/community/hooks/use-community-top-places-query";
 import { formatRegionLabel } from "../../features/community/region-label";
+import "../../features/community/styles/community.css";
 import { CommunityPlaceReviewItem } from "../../features/community/types/community";
 import { useTripsQuery } from "../../features/trips/hooks/use-trips-query";
 import { Button } from "../../shared/components/ui/button";
@@ -101,23 +102,171 @@ export function CommunityPage() {
 
   return (
     <AppShell>
-      <div className="community-board">
-        <main className="community-board-main">
-          <section className="community-featured-section">
-            <div className="community-board-heading"><div><span className="section-kicker">COMMUNITY HIGHLIGHTS</span><h1>이번 주 인기 여행기록</h1><p>여행자들이 가장 많이 공감한 이야기에서 다음 여정을 찾아보세요.</p></div><Link to="/community/journals">전체 인기글 보기</Link></div>
-            {featuredLoading ? <div className="community-featured-skeleton" /> : null}
-            {featuredPost ? <article className="community-feature-card"><div className="community-feature-content"><span className="community-feature-rank">POPULAR #{featuredIndex + 1}</span><p className="community-feature-location">{formatRegionLabel(featuredPost.destination)} · {featuredPost.trip_title}</p><h2>{featuredPost.title}</h2><p className="community-feature-copy">{featuredPost.diary_text}</p><div className="community-feature-meta"><span>좋아요 {featuredPost.recommendation_count}</span><span>조회 {featuredPost.view_count}</span><button type="button" onClick={() => setSelectedJournalId(featuredPost.id)}>기록 읽기 →</button></div></div><div className="community-feature-art" aria-hidden="true"><span /><i /><b /></div>{featuredPosts.length > 1 ? <div className="community-slider-controls"><button type="button" onClick={() => moveFeatured(-1)}>←</button><div>{featuredPosts.map((post, index) => <button className={index === featuredIndex ? "active" : ""} key={post.id} type="button" onClick={() => setFeaturedIndex(index)} aria-label={`${index + 1}번째 인기글`} />)}</div><button type="button" onClick={() => moveFeatured(1)}>→</button></div> : null}</article> : !featuredLoading ? <div className="community-empty-state">아직 공개된 여행기록이 없어요.</div> : null}
+      <div className="cm-home">
+        <main className="cm-home-main">
+          <section>
+            <div className="cm-section-head">
+              <div>
+                <h1>이번 주 인기 여행기록</h1>
+                <p>여행자들이 가장 많이 공감한 이야기에서 다음 여정을 찾아보세요.</p>
+              </div>
+              <Link to="/community/journals">전체 인기글 보기</Link>
+            </div>
+            {featuredLoading ? <div className="cm-skeleton" /> : null}
+            {featuredPost ? (
+              <article className="cm-feature-card">
+                <span className="cm-feature-rank">인기 {featuredIndex + 1}위</span>
+                <p className="community-meta-line">
+                  {formatRegionLabel(featuredPost.destination)} · {featuredPost.trip_title}
+                </p>
+                <h3>{featuredPost.title}</h3>
+                <p className="cm-feature-copy">{featuredPost.diary_text}</p>
+                <div className="cm-feature-meta">
+                  <span>좋아요 {featuredPost.recommendation_count}</span>
+                  <span>조회 {featuredPost.view_count}</span>
+                  <Button onClick={() => setSelectedJournalId(featuredPost.id)} variant="secondary">
+                    기록 읽기
+                  </Button>
+                </div>
+                {featuredPosts.length > 1 ? (
+                  <div className="cm-slider-controls">
+                    <button type="button" onClick={() => moveFeatured(-1)} aria-label="이전 인기글">
+                      ‹
+                    </button>
+                    <div className="cm-slider-dots">
+                      {featuredPosts.map((post, index) => (
+                        <button
+                          className={index === featuredIndex ? "active" : ""}
+                          key={post.id}
+                          type="button"
+                          onClick={() => setFeaturedIndex(index)}
+                          aria-label={`${index + 1}번째 인기글`}
+                        />
+                      ))}
+                    </div>
+                    <button type="button" onClick={() => moveFeatured(1)} aria-label="다음 인기글">
+                      ›
+                    </button>
+                  </div>
+                ) : null}
+              </article>
+            ) : !featuredLoading ? (
+              <div className="cm-empty">아직 공개된 여행기록이 없어요.</div>
+            ) : null}
           </section>
 
-          <section className="community-places-section"><div className="community-board-heading compact"><div><span className="section-kicker">HOT PLACES</span><h2>지금 핫한 장소들</h2></div><Link to="/community/places">장소 랭킹 보기</Link></div><div className="community-place-grid">{placesLoading ? Array.from({ length: 4 }).map((_, index) => <div className="community-place-skeleton" key={index} />) : null}{places.map((place, index) => <button className={`community-place-card tone-${index % 4}`} key={place.id} type="button" onClick={() => setSelectedPlaceId(place.id)}><span>{formatRegionLabel(place.city)}</span><strong>{place.place_name}</strong><p>★ {place.average_rating.toFixed(1)} · 리뷰 {place.review_count}</p><div>{place.top_tags.map((tag) => <em key={tag}>#{tag}</em>)}</div></button>)}</div></section>
+          <section>
+            <div className="cm-section-head">
+              <h2>지금 핫한 장소들</h2>
+              <Link to="/community/places">장소 랭킹 보기</Link>
+            </div>
+            <div className="cm-place-grid">
+              {placesLoading
+                ? Array.from({ length: 4 }).map((_, index) => <div className="cm-skeleton" key={index} />)
+                : null}
+              {places.map((place, index) => (
+                <button
+                  className={`cm-place-tile${index === 0 ? " cm-place-tile--lead" : ""}`}
+                  key={place.id}
+                  type="button"
+                  onClick={() => setSelectedPlaceId(place.id)}
+                >
+                  <span>{formatRegionLabel(place.city)}</span>
+                  <strong>{place.place_name}</strong>
+                  <p>
+                    평점 {place.average_rating.toFixed(1)} · 리뷰 {place.review_count}
+                  </p>
+                  <div className="chip-list">
+                    {place.top_tags.map((tag) => (
+                      <span className="chip" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
 
-          <section className="community-latest-section"><div className="community-board-heading compact"><div><span className="section-kicker">JUST IN</span><h2>새로 올라온 여행기록</h2></div><Link to="/community/journals">전체글 보기</Link></div><div className="community-latest-list">{latestLoading ? <p>새 기록을 불러오는 중이에요.</p> : null}{latestPosts.map((journal, index) => <button key={journal.id} type="button" onClick={() => setSelectedJournalId(journal.id)}><span>0{index + 1}</span><strong>{journal.title}</strong><small>{formatRegionLabel(journal.destination)} · {formatDate(journal.created_at)}</small><i>보기 →</i></button>)}{!latestLoading && !latestPosts.length ? <div className="community-empty-state">첫 여행기록을 커뮤니티에 공유해 보세요.</div> : null}</div></section>
+          <section>
+            <div className="cm-section-head">
+              <h2>새로 올라온 여행기록</h2>
+              <Link to="/community/journals">전체글 보기</Link>
+            </div>
+            <div className="cm-latest-list">
+              {latestLoading ? <p>새 기록을 불러오는 중이에요.</p> : null}
+              {latestPosts.map((journal) => (
+                <button key={journal.id} type="button" onClick={() => setSelectedJournalId(journal.id)}>
+                  <div>
+                    <strong>{journal.title}</strong>
+                    <small>
+                      {formatRegionLabel(journal.destination)} · {formatDate(journal.created_at)}
+                    </small>
+                  </div>
+                </button>
+              ))}
+              {!latestLoading && !latestPosts.length ? (
+                <div className="cm-empty">첫 여행기록을 커뮤니티에 공유해 보세요.</div>
+              ) : null}
+            </div>
+          </section>
         </main>
 
-        <aside className="community-side-board">
-          <section className="community-profile-card"><span className="section-kicker">MY COMMUNITY</span><div className="community-profile-name"><span>{user?.nickname.slice(0, 1) ?? "G"}</span><div><h2>{user?.nickname ?? "여행자"}님</h2><p>여행 이야기를 남겨볼까요?</p></div></div><div className="community-profile-stats"><div><strong>{myStats?.posts ?? 0}</strong><span>게시글</span></div><div><strong>{myStats?.comments ?? 0}</strong><span>댓글</span></div><div><strong>{trips.length}</strong><span>여행</span></div></div><Link to="/profile">내 프로필 보기 →</Link></section>
-          <section className="community-side-card community-explore-card"><span className="section-kicker">EXPLORE</span><h2>무엇을 찾아볼까요?</h2><Link to="/community/journals"><span>✦</span><div><strong>여행기록 둘러보기</strong><p>여행자들의 생생한 후기</p></div><i>→</i></Link><Link to="/community/places"><span>⌖</span><div><strong>평점 좋은 장소</strong><p>리뷰로 검증한 플레이스</p></div><i>→</i></Link><Link to="/trips"><span>＋</span><div><strong>내 여행 기록하기</strong><p>새로운 여정을 시작해요</p></div><i>→</i></Link></section>
-          <section className="community-side-card community-pulse-card"><span className="section-kicker">COMMUNITY PULSE</span><h2>오늘의 커뮤니티</h2><div><strong>{featuredData?.total ?? 0}</strong><span>개의 공개 여행기록</span></div><p>좋아하는 여행기록에 공감하고, 나만의 장소 후기도 남겨보세요.</p><Link to="/trips/recommend"><Button>새 여행 만들기</Button></Link></section>
+        <aside className="cm-side">
+          <section className="cm-side-card">
+            <div className="cm-profile-name">
+              <span className="cm-profile-avatar">{user?.nickname.slice(0, 1) ?? "G"}</span>
+              <div>
+                <h2>{user?.nickname ?? "여행자"}님</h2>
+                <p className="community-meta-line">여행 이야기를 남겨볼까요?</p>
+              </div>
+            </div>
+            <div className="cm-profile-stats">
+              <div>
+                <strong>{myStats?.posts ?? 0}</strong>
+                <span>게시글</span>
+              </div>
+              <div>
+                <strong>{myStats?.comments ?? 0}</strong>
+                <span>댓글</span>
+              </div>
+              <div>
+                <strong>{trips.length}</strong>
+                <span>여행</span>
+              </div>
+            </div>
+            <Link to="/profile">내 프로필 보기</Link>
+          </section>
+
+          <section className="cm-side-card">
+            <h2>무엇을 찾아볼까요?</h2>
+            <div className="cm-explore-list">
+              <Link to="/community/journals">
+                <strong>여행기록 둘러보기</strong>
+                <p>여행자들의 생생한 후기</p>
+              </Link>
+              <Link to="/community/places">
+                <strong>평점 좋은 장소</strong>
+                <p>리뷰로 검증한 플레이스</p>
+              </Link>
+              <Link to="/trips">
+                <strong>내 여행 기록하기</strong>
+                <p>새로운 여정을 시작해요</p>
+              </Link>
+            </div>
+          </section>
+
+          <section className="cm-side-card">
+            <h2>오늘의 커뮤니티</h2>
+            <div className="cm-pulse-figure">
+              <strong>{featuredData?.total ?? 0}</strong>
+              <span>개의 공개 여행기록</span>
+            </div>
+            <p className="community-meta-line">좋아하는 여행기록에 공감하고, 나만의 장소 후기도 남겨보세요.</p>
+            <Link to="/trips/recommend">
+              <Button>새 여행 만들기</Button>
+            </Link>
+          </section>
         </aside>
       </div>
 

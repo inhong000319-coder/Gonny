@@ -42,7 +42,7 @@ export function JournalContentRenderer({ blocks, fallbackText }: Props) {
         if (block.type === "text") {
           return (
             <div className="journal-doc-text" key={block.id}>
-              <p className="community-entry-copy">{block.text}</p>
+              <p className="community-entry-copy cm-journal-paragraph">{block.text}</p>
             </div>
           );
         }

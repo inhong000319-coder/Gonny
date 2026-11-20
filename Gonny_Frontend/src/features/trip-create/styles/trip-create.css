@@ -9,24 +9,25 @@
   --tc-surface: #ffffff;
   --tc-text: #1f2a37;
   --tc-muted: #5b6573;
-  --tc-primary: #0e6e8c;
-  --tc-primary-strong: #0a566e;
-  --tc-primary-soft: #e3f1f5;
+  /* 전역 브랜드 토큰에 연결(2단계) - 이 화면만의 색을 더 만들지 않는다. */
+  --tc-primary: var(--brand);
+  --tc-primary-strong: #0a5a53;
+  --tc-primary-soft: var(--brand-soft);
   --tc-accent: #e8743b;
   /* Same hue family as --tc-accent, darkened for 4.5:1+ contrast on
      --tc-surface (white) - --tc-accent itself is ~3:1, fine for a small
      dot/icon but not for the day-title heading text that uses it. */
   --tc-accent-strong: #a8471a;
-  --tc-line: #e4ded3;
-  --tc-danger: #b3261e;
-  --tc-danger-soft: #fbeae9;
-  --tc-warning: #8a5a00;
-  --tc-warning-soft: #fbf1e0;
+  --tc-line: var(--line);
+  --tc-danger: var(--status-critical);
+  --tc-danger-soft: var(--status-critical-soft);
+  --tc-warning: var(--status-warning-text);
+  --tc-warning-soft: var(--status-warning-soft);
   --tc-success: #1b7a43;
   --tc-success-soft: #e7f5ec;
   --tc-disabled-bg: #e9e5dc;
-  --tc-radius-sm: 8px;
-  --tc-radius-md: 12px;
+  --tc-radius-sm: var(--radius-control);
+  --tc-radius-md: var(--radius-panel);
   --tc-font: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
 
   display: block;
@@ -64,7 +65,56 @@
 }
 
 .tc-shell-wide {
-  max-width: 880px;
+  max-width: 1200px;
+}
+
+/* --- Result layout: left timeline / right sticky panel ----------------- */
+
+.tc-result-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.tc-result-main {
+  min-width: 0;
+}
+
+.tc-result-side {
+  position: sticky;
+  top: var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+  align-self: start;
+}
+
+@media (max-width: 1023px) {
+  .tc-result-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tc-result-side {
+    position: static;
+    top: auto;
+  }
+}
+
+.tc-weather-summary {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tc-weather-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 14px;
+  color: var(--tc-text);
+}
+
+.tc-weather-summary-row span:first-child {
+  color: var(--tc-muted);
 }
 
 .tc-form-body {
@@ -433,8 +483,8 @@
 }
 
 .tc-alert-info {
-  border-left-color: var(--tc-primary);
-  background: var(--tc-primary-soft);
+  /* 중립 안내문 - 포인트 색은 화면의 핵심 행동(저장 버튼) 하나에만 쓴다.
+     base .tc-alert의 중립 보더/배경을 그대로 쓴다. */
 }
 
 .tc-alert-success {
@@ -483,7 +533,7 @@
 .tc-btn-ghost {
   background: transparent;
   border-color: var(--tc-line);
-  color: var(--tc-primary);
+  color: var(--tc-text);
 }
 
 .tc-btn:disabled {
@@ -658,6 +708,13 @@
   border-top: 0;
 }
 
+/* 숙소를 옮기는 날 - 경계가 또렷하게 보이도록 상단 구분선을 그 날의
+   색으로 두껍게 그린다(#140 스타일 전면 재설계, 2단계). */
+.tc-day-card.is-stay-boundary {
+  border-top-width: 3px;
+  border-top-color: var(--day-color, var(--tc-line));
+}
+
 .tc-day-head {
   display: flex;
   flex-wrap: wrap;
@@ -671,7 +728,9 @@
   margin: 0;
   font-size: 19px;
   font-weight: 800;
-  color: var(--tc-accent-strong);
+  /* 일차마다 채도 낮은 색(--day-1~6)을 순환 적용 - 타임라인 라벨과
+     세로선이 같은 색을 쓴다(아래 .tc-timeline). */
+  color: var(--day-color, var(--tc-accent-strong));
 }
 
 .tc-day-route {
@@ -740,6 +799,9 @@
 .tc-timeline {
   display: grid;
   gap: 4px;
+  padding-left: var(--space-3);
+  /* 일차 색으로 그리는 동선(경로) 세로선 - 결과 화면의 뼈대. */
+  border-left: 2px solid var(--day-color, var(--tc-line));
 }
 
 .tc-stop {
@@ -752,7 +814,8 @@
   padding-top: 2px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--tc-primary);
+  /* 포인트 색은 화면당 핵심 행동 1개(저장 버튼)에만 - 시간 라벨은 중립색. */
+  color: var(--tc-text);
 }
 
 .tc-stop.is-meal .tc-stop-time {

@@ -13,6 +13,7 @@ import { JournalContentRenderer } from "./journal-content-renderer";
 import { apiClient } from "../../../shared/api/client";
 import { Button } from "../../../shared/components/ui/button";
 import { ModalOverlay } from "../../../shared/components/ui/modal-overlay";
+import "../styles/community.css";
 
 const reactionOptions = [
   { value: "like", label: "좋아요", emoji: "👍" },
@@ -194,7 +195,7 @@ export function CommunityJournalModal({ journalId, onClose }: Props) {
     <ModalOverlay className="memory-modal memory-modal-wide" onClose={onClose}>
         <div className="section-header">
           <div>
-            <h2 className="section-title">{journal.title}</h2>
+            <h2 className="cm-journal-modal-title">{journal.title}</h2>
             <p className="community-meta-line">
               {data.trip_title} · {formatRegionLabel(data.destination)} · {formatDateTime(journal.created_at)}
             </p>
@@ -211,18 +212,6 @@ export function CommunityJournalModal({ journalId, onClose }: Props) {
 
         <div className="stack">
           <JournalContentRenderer blocks={journal.content_blocks} fallbackText={journal.diary_text} />
-          {journal && false ? (
-            <div className="journal-image-grid">
-              {journal?.image_urls?.map((imageUrl, index) => (
-                <img
-                  key={`${imageUrl}-${index}`}
-                  alt={`다이어리 이미지 ${index + 1}`}
-                  className="journal-image-thumb"
-                  src={imageUrl.startsWith("http") ? imageUrl : `http://localhost:8000${imageUrl}`}
-                />
-              ))}
-            </div>
-          ) : null}
           {journal.reflection_text ? (
             <div className="memory-summary-strip">
               <strong>다음 여행 메모</strong>

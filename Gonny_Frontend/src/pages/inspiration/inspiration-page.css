@@ -1,0 +1,71 @@
+/* 영감(탐색) 페이지 - 5단계. 시즌 추천을 크게, 축제 캘린더를 작게 섞은
+   비대칭 2블록 구성. 그라디언트/아이콘 색원 금지. */
+
+.ip-hero {
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+}
+
+.ip-hero h1 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-h1);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ip-hero p {
+  margin: 0;
+  max-width: 680px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ip-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+  align-items: start;
+}
+
+.ip-panel {
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+}
+
+.ip-panel h2 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.ip-panel p {
+  margin: 0 0 var(--space-3);
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ip-festival-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.ip-festival-row strong {
+  display: block;
+  color: var(--text);
+}
+
+.ip-festival-row span {
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+@media (max-width: 1023px) {
+  .ip-layout {
+    grid-template-columns: 1fr;
+  }
+}

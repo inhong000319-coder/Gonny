@@ -3,6 +3,7 @@ import { AppShell } from "../../app/layouts/app-shell";
 import { CommunityJournalModal } from "../../features/community/components/community-journal-modal";
 import { useCommunityJournalsQuery } from "../../features/community/hooks/use-community-journals-query";
 import { formatRegionLabel } from "../../features/community/region-label";
+import "../../features/community/styles/community.css";
 import { Button } from "../../shared/components/ui/button";
 
 function formatDate(value: string) {
@@ -59,16 +60,9 @@ export function CommunityJournalsPage() {
 
   return (
     <AppShell>
-      <section className="page-hero panel panel-gradient">
-        <div className="stack">
-          <span className="section-kicker">COMMUNITY JOURNALS</span>
-          <h1 className="section-title" style={{ fontSize: "2.1rem", margin: 0 }}>
-            여행 다이어리 전체 보기
-          </h1>
-          <p className="section-subtitle" style={{ marginBottom: 0 }}>
-            조회수, 추천수, 제목 키워드 기준으로 원하는 다이어리를 찾아볼 수 있어요.
-          </p>
-        </div>
+      <section className="cm-page-hero">
+        <h1>여행 다이어리 전체 보기</h1>
+        <p>조회수, 추천수, 제목 키워드 기준으로 원하는 다이어리를 찾아볼 수 있어요.</p>
       </section>
 
       <section className="card stack">
@@ -91,12 +85,12 @@ export function CommunityJournalsPage() {
       <section className="card stack">
         {isLoading ? <p className="section-subtitle">다이어리를 불러오고 있어요.</p> : null}
 
-        <div className="stack">
+        <div className="cm-entry-list">
           {data?.items.map((journal) => (
-            <article key={journal.id} className="timeline-item community-entry-card">
-              <div className="memory-list-head">
+            <article key={journal.id} className="cm-entry">
+              <div className="cm-entry-head">
                 <div>
-                  <strong>{journal.title}</strong>
+                  <h2 className="cm-entry-title">{journal.title}</h2>
                   <p className="community-meta-line">
                     {journal.trip_title} · {formatRegionLabel(journal.destination)} · {formatDate(journal.created_at)}
                   </p>
@@ -105,7 +99,7 @@ export function CommunityJournalsPage() {
                   글 보기
                 </button>
               </div>
-              <p className="community-entry-copy">{journal.diary_text}</p>
+              <p className="cm-entry-body">{journal.diary_text}</p>
               <div className="chip-list">
                 <span className="chip">조회수 {journal.view_count}</span>
                 <span className="chip">추천 {journal.recommendation_count}</span>

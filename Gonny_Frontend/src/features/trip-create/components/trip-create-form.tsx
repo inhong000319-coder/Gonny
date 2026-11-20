@@ -3210,8 +3210,12 @@ export function TripCreateForm() {
               {Array.from({ length: result.days }, (_, index) => index + 1).map((dayNumber) => {
                 // 일차 색(--day-1~6) 순환 - 타임라인 세로선과 일차 라벨에
                 // 같은 색을 써서 "이 구간이 며칠째인지"가 한눈에 보이게 한다.
-                const dayColor = `var(--day-${((dayNumber - 1) % 6) + 1})`;
-                const dayColorStyle = { "--day-color": dayColor } as CSSProperties;
+                // 선(border)과 글자색은 대비가 달라 각각 -text 짝을 따로 쓴다.
+                const dayIndex = ((dayNumber - 1) % 6) + 1;
+                const dayColorStyle = {
+                  "--day-color": `var(--day-${dayIndex})`,
+                  "--day-color-text": `var(--day-${dayIndex}-text)`,
+                } as CSSProperties;
                 const dayItems = itemsByDay.get(dayNumber) ?? [];
                 const effectiveDayItems = dayItems.map((item) => getEffectiveItem(item, slotSwaps));
                 const weatherLine = formatDayWeatherLine(weatherStatusByDay.get(dayNumber));

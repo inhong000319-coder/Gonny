@@ -20,6 +20,7 @@
   max-width: 680px;
   color: var(--muted);
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .ip-layout {
@@ -47,6 +48,7 @@
   margin: 0 0 var(--space-3);
   color: var(--muted);
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .ip-festival-list {

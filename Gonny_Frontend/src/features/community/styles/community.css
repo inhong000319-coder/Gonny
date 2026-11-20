@@ -98,6 +98,7 @@
   overflow: hidden;
   color: var(--muted);
   line-height: 1.7;
+  text-wrap: pretty;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -413,6 +414,7 @@
   margin: var(--space-3) 0;
   color: var(--text);
   line-height: 1.8;
+  text-wrap: pretty;
 }
 
 .cm-place-results-grid {

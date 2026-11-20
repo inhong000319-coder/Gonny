@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
@@ -19,6 +19,7 @@ import { ShareLinkModal } from "../../features/share/components/share-link-modal
 import { AccommodationChangePanel } from "../../features/trips/components/accommodation-change-panel";
 import { TripHeader } from "../../features/trips/components/trip-header";
 import { TripSummary } from "../../features/trips/components/trip-summary";
+import "../../features/trips/styles/trip-detail.css";
 import { findStayForDay } from "../../features/trips/utils/day-accommodation";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
@@ -167,262 +168,281 @@ export function TripDetailPage() {
   return (
     <AppShell>
       <TripHeader trip={tripDetail.overview} />
-      <div className="row" style={{ marginBottom: 16, justifyContent: "flex-end", gap: 8 }}>
-        <button
-          className="button secondary"
-          disabled={isPdfDownloading}
-          onClick={handleDownloadPdf}
-          type="button"
-        >
-          {isPdfDownloading ? "PDF 생성 중..." : "PDF 다운로드"}
-        </button>
-        <Link className="admin-primary-link" to={`/trips/${tripId}/memory`}>
-          여행 기록 관리로 이동
-        </Link>
-      </div>
-      {pdfError ? (
-        <p className="section-subtitle" style={{ color: "#dc2626", marginTop: -8, marginBottom: 16, textAlign: "right" }}>
-          {pdfError}
-        </p>
-      ) : null}
 
-      <div className="page-grid grid-two">
-        <div className="stack">
+      <div className="td-layout">
+        <div className="td-main">
+          <section>
+            <h2 className="section-title">여행 일정 수정</h2>
+            <p className="section-subtitle">
+              규칙기반으로 만든 일정이든 직접 만든 일정이든, 여기서 바로 수정하고 새 일정을 추가할 수 있어요.
+            </p>
+
+            <div className="td-day-list">
+              {Object.keys(itineraryByDay)
+                .map(Number)
+                .sort((left, right) => left - right)
+                .map((dayNumber) => {
+                  // 숙소가 2곳 이상(분할 저장된 여행)일 때만 - 한 곳이면
+                  // 화면이 지금과 완전히 같아야 한다(과제 constraint).
+                  const dayStay =
+                    tripDetail.overview.stays.length >= 2
+                      ? findStayForDay(tripDetail.overview.stays, dayNumber)
+                      : null;
+                  // 2단계(결과 화면)와 같은 공식으로 일차 색을 순환시켜
+                  // 앱 전체에서 "며칠째"가 같은 색 규칙으로 보이게 한다.
+                  const dayColorStyle = {
+                    "--day-color": `var(--day-${((dayNumber - 1) % 6) + 1})`,
+                  } as CSSProperties;
+
+                  return (
+                    <div className="td-day" key={dayNumber} style={dayColorStyle}>
+                      <div className="td-day-head">
+                        <strong className="td-day-title">{dayNumber}일차 일정</strong>
+                        {dayStay ? <p className="td-day-stay">숙소: {dayStay.accommodationName}</p> : null}
+                      </div>
+
+                      <div className="td-day-items">
+                        {itineraryByDay[dayNumber].map((item) => (
+                          <div key={item.id} className="td-item">
+                            <div className="td-item-head">
+                              <span className="td-item-time">
+                                {timeSlotOptions.find((option) => option.value === item.time_slot)?.label ??
+                                  item.time_slot}
+                              </span>
+                              <strong className="td-item-name">{item.place_name || "이름 없는 장소"}</strong>
+                            </div>
+
+                            <div className="td-field-grid">
+                              <label className="field">
+                                <span>일차</span>
+                                <input
+                                  min="1"
+                                  type="number"
+                                  value={item.day_number}
+                                  onChange={(event) =>
+                                    setEditableItems((prev) =>
+                                      prev.map((current) =>
+                                        current.id === item.id
+                                          ? { ...current, day_number: Number(event.target.value) || 1 }
+                                          : current,
+                                      ),
+                                    )
+                                  }
+                                />
+                              </label>
+                              <label className="field">
+                                <span>시간대</span>
+                                <select
+                                  value={item.time_slot}
+                                  onChange={(event) =>
+                                    setEditableItems((prev) =>
+                                      prev.map((current) =>
+                                        current.id === item.id
+                                          ? { ...current, time_slot: event.target.value }
+                                          : current,
+                                      ),
+                                    )
+                                  }
+                                >
+                                  {timeSlotOptions.map((option) => (
+                                    <option key={option.value} value={option.value}>
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
+                              </label>
+                            </div>
+
+                            <div className="td-field-grid">
+                              <label className="field">
+                                <span>장소 이름</span>
+                                <input
+                                  value={item.place_name}
+                                  onChange={(event) =>
+                                    setEditableItems((prev) =>
+                                      prev.map((current) =>
+                                        current.id === item.id
+                                          ? { ...current, place_name: event.target.value }
+                                          : current,
+                                      ),
+                                    )
+                                  }
+                                />
+                              </label>
+                              <label className="field">
+                                <span>카테고리</span>
+                                <input
+                                  list="itinerary-category-options"
+                                  value={item.category}
+                                  onChange={(event) =>
+                                    setEditableItems((prev) =>
+                                      prev.map((current) =>
+                                        current.id === item.id
+                                          ? { ...current, category: event.target.value }
+                                          : current,
+                                      ),
+                                    )
+                                  }
+                                />
+                              </label>
+                            </div>
+
+                            <label className="field">
+                              <span>메모</span>
+                              <textarea
+                                rows={3}
+                                value={item.notes}
+                                onChange={(event) =>
+                                  setEditableItems((prev) =>
+                                    prev.map((current) =>
+                                      current.id === item.id ? { ...current, notes: event.target.value } : current,
+                                    ),
+                                  )
+                                }
+                              />
+                            </label>
+
+                            <div className="row">
+                              <button
+                                className="button secondary"
+                                disabled={updateMutation.isPending}
+                                type="button"
+                                onClick={() => updateMutation.mutate(item)}
+                              >
+                                저장
+                              </button>
+                              <button
+                                className="button ghost"
+                                disabled={deleteMutation.isPending}
+                                type="button"
+                                onClick={() => deleteMutation.mutate(item.id)}
+                              >
+                                삭제
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+
+              {!editableItems.length ? (
+                <div className="td-empty">
+                  <strong>아직 저장된 일정이 없어요.</strong>
+                  <p>아래에서 새 일정을 직접 추가하면 사용자가 직접 만드는 여행 일정으로 시작할 수 있습니다.</p>
+                </div>
+              ) : null}
+            </div>
+
+            <datalist id="itinerary-category-options">
+              {categoryOptions.map((option) => (
+                <option key={option} value={option} />
+              ))}
+            </datalist>
+
+            <div className="card td-add-card">
+              <div>
+                <h3 className="section-title">새 일정 추가</h3>
+                <p className="section-subtitle">직접 새 장소를 넣어서 여행 일정을 손으로 완성할 수 있어요.</p>
+              </div>
+              <div className="td-field-grid">
+                <label className="field">
+                  <span>일차</span>
+                  <input
+                    min="1"
+                    type="number"
+                    value={newItem.day_number}
+                    onChange={(event) =>
+                      setNewItem((prev) => ({ ...prev, day_number: Number(event.target.value) || 1 }))
+                    }
+                  />
+                </label>
+                <label className="field">
+                  <span>시간대</span>
+                  <select
+                    value={newItem.time_slot}
+                    onChange={(event) => setNewItem((prev) => ({ ...prev, time_slot: event.target.value }))}
+                  >
+                    {timeSlotOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="td-field-grid">
+                <label className="field">
+                  <span>장소 이름</span>
+                  <input
+                    value={newItem.place_name}
+                    onChange={(event) => setNewItem((prev) => ({ ...prev, place_name: event.target.value }))}
+                  />
+                </label>
+                <label className="field">
+                  <span>카테고리</span>
+                  <input
+                    list="itinerary-category-options"
+                    value={newItem.category}
+                    onChange={(event) => setNewItem((prev) => ({ ...prev, category: event.target.value }))}
+                  />
+                </label>
+              </div>
+              <label className="field">
+                <span>메모</span>
+                <textarea
+                  rows={4}
+                  value={newItem.notes}
+                  onChange={(event) => setNewItem((prev) => ({ ...prev, notes: event.target.value }))}
+                />
+              </label>
+              <button
+                className="button primary"
+                disabled={createMutation.isPending || !newItem.place_name.trim()}
+                onClick={() => createMutation.mutate()}
+                type="button"
+              >
+                {createMutation.isPending ? "추가 중..." : "새 일정 추가"}
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <aside className="td-side">
           <TripSummary
             budgetLabel={tripDetail.overview.budgetLabel}
             companionLabel={tripDetail.overview.companionLabel}
             weatherSummary={tripDetail.overview.weatherSummary}
           />
-        </div>
-        <div className="stack">
           <AccommodationChangePanel stays={tripDetail.overview.stays} tripId={tripId} />
           <BudgetSummaryCard budget={budget} />
           <ExpenseList expenses={expenses} />
           <AddExpenseForm tripId={tripId} />
           <ShareLinkModal tripId={tripId} />
-        </div>
-      </div>
 
-      <section className="card card-tinted stack" style={{ marginTop: 20 }}>
-        <div className="section-header">
-          <div>
-            <span className="section-kicker">ITINERARY EDITOR</span>
-            <h2 className="section-title">여행 일정 수정</h2>
-            <p className="section-subtitle">
-              규칙기반으로 만든 일정이든 직접 만든 일정이든, 여기서 바로 수정하고 새 일정을 추가할 수 있어요.
-            </p>
-          </div>
-        </div>
-
-        <div className="stack">
-          {Object.keys(itineraryByDay)
-            .map(Number)
-            .sort((left, right) => left - right)
-            .map((dayNumber) => {
-              // 숙소가 2곳 이상(분할 저장된 여행)일 때만 - 한 곳이면
-              // 화면이 지금과 완전히 같아야 한다(과제 constraint).
-              const dayStay =
-                tripDetail.overview.stays.length >= 2 ? findStayForDay(tripDetail.overview.stays, dayNumber) : null;
-              return (
-              <article key={dayNumber} className="planner-day-card">
-                <div className="planner-day-header">
-                  <div>
-                    <span className="planner-day-label">DAY {dayNumber}</span>
-                    <strong className="trip-card-title">{dayNumber}일차 일정</strong>
-                    {dayStay ? <p>숙소: {dayStay.accommodationName}</p> : null}
-                  </div>
-                </div>
-
-                <div className="stack">
-                  {itineraryByDay[dayNumber].map((item) => (
-                    <div key={item.id} className="timeline-item community-entry-card stack">
-                      <div className="community-inline-grid">
-                        <label className="field">
-                          <span>일차</span>
-                          <input
-                            min="1"
-                            type="number"
-                            value={item.day_number}
-                            onChange={(event) =>
-                              setEditableItems((prev) =>
-                                prev.map((current) =>
-                                  current.id === item.id
-                                    ? { ...current, day_number: Number(event.target.value) || 1 }
-                                    : current,
-                                ),
-                              )
-                            }
-                          />
-                        </label>
-                        <label className="field">
-                          <span>시간대</span>
-                          <select
-                            value={item.time_slot}
-                            onChange={(event) =>
-                              setEditableItems((prev) =>
-                                prev.map((current) =>
-                                  current.id === item.id ? { ...current, time_slot: event.target.value } : current,
-                                ),
-                              )
-                            }
-                          >
-                            {timeSlotOptions.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                      </div>
-
-                      <div className="community-inline-grid">
-                        <label className="field">
-                          <span>장소 이름</span>
-                          <input
-                            value={item.place_name}
-                            onChange={(event) =>
-                              setEditableItems((prev) =>
-                                prev.map((current) =>
-                                  current.id === item.id ? { ...current, place_name: event.target.value } : current,
-                                ),
-                              )
-                            }
-                          />
-                        </label>
-                        <label className="field">
-                          <span>카테고리</span>
-                          <input
-                            list="itinerary-category-options"
-                            value={item.category}
-                            onChange={(event) =>
-                              setEditableItems((prev) =>
-                                prev.map((current) =>
-                                  current.id === item.id ? { ...current, category: event.target.value } : current,
-                                ),
-                              )
-                            }
-                          />
-                        </label>
-                      </div>
-
-                      <label className="field">
-                        <span>메모</span>
-                        <textarea
-                          rows={3}
-                          value={item.notes}
-                          onChange={(event) =>
-                            setEditableItems((prev) =>
-                              prev.map((current) =>
-                                current.id === item.id ? { ...current, notes: event.target.value } : current,
-                              ),
-                            )
-                          }
-                        />
-                      </label>
-
-                      <div className="row">
-                        <button
-                          className="button primary"
-                          disabled={updateMutation.isPending}
-                          type="button"
-                          onClick={() => updateMutation.mutate(item)}
-                        >
-                          저장
-                        </button>
-                        <button
-                          className="button secondary"
-                          disabled={deleteMutation.isPending}
-                          type="button"
-                          onClick={() => deleteMutation.mutate(item.id)}
-                        >
-                          삭제
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </article>
-              );
-            })}
-
-          {!editableItems.length ? (
-            <div className="admin-empty-card">
-              <strong>아직 저장된 일정이 없어요.</strong>
-              <p>아래에서 새 일정을 직접 추가하면 사용자가 직접 만드는 여행 일정으로 시작할 수 있습니다.</p>
-            </div>
-          ) : null}
-        </div>
-
-        <datalist id="itinerary-category-options">
-          {categoryOptions.map((option) => (
-            <option key={option} value={option} />
-          ))}
-        </datalist>
-
-        <section className="card stack">
-          <div>
-            <h3 className="section-title">새 일정 추가</h3>
-            <p className="section-subtitle">직접 새 장소를 넣어서 여행 일정을 손으로 완성할 수 있어요.</p>
-          </div>
-          <div className="community-inline-grid">
-            <label className="field">
-              <span>일차</span>
-              <input
-                min="1"
-                type="number"
-                value={newItem.day_number}
-                onChange={(event) => setNewItem((prev) => ({ ...prev, day_number: Number(event.target.value) || 1 }))}
-              />
-            </label>
-            <label className="field">
-              <span>시간대</span>
-              <select
-                value={newItem.time_slot}
-                onChange={(event) => setNewItem((prev) => ({ ...prev, time_slot: event.target.value }))}
+          <div className="card td-actions-card">
+            <div className="row">
+              <button
+                className="button secondary"
+                disabled={isPdfDownloading}
+                onClick={handleDownloadPdf}
+                type="button"
               >
-                {timeSlotOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+                {isPdfDownloading ? "PDF 생성 중..." : "PDF 다운로드"}
+              </button>
+              <Link className="admin-primary-link" to={`/trips/${tripId}/memory`}>
+                여행 기록 관리로 이동
+              </Link>
+            </div>
+            {pdfError ? (
+              <p className="section-subtitle" style={{ color: "var(--status-critical)", margin: 0 }}>
+                {pdfError}
+              </p>
+            ) : null}
           </div>
-          <div className="community-inline-grid">
-            <label className="field">
-              <span>장소 이름</span>
-              <input
-                value={newItem.place_name}
-                onChange={(event) => setNewItem((prev) => ({ ...prev, place_name: event.target.value }))}
-              />
-            </label>
-            <label className="field">
-              <span>카테고리</span>
-              <input
-                list="itinerary-category-options"
-                value={newItem.category}
-                onChange={(event) => setNewItem((prev) => ({ ...prev, category: event.target.value }))}
-              />
-            </label>
-          </div>
-          <label className="field">
-            <span>메모</span>
-            <textarea
-              rows={4}
-              value={newItem.notes}
-              onChange={(event) => setNewItem((prev) => ({ ...prev, notes: event.target.value }))}
-            />
-          </label>
-          <button
-            className="button primary"
-            disabled={createMutation.isPending || !newItem.place_name.trim()}
-            onClick={() => createMutation.mutate()}
-            type="button"
-          >
-            {createMutation.isPending ? "추가 중..." : "새 일정 추가"}
-          </button>
-        </section>
-      </section>
+        </aside>
+      </div>
 
       <div className="stack" style={{ marginTop: 20 }}>
         {isReportLoading ? (

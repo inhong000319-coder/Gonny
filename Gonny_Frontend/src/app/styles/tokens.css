@@ -31,6 +31,12 @@
   --status-warning-text: #92400e;
   --status-critical: #dc2626;
   --status-critical-soft: rgba(220, 38, 38, 0.1);
+  /* 결과 화면의 가격 표시 등 "성공/긍정" 톤 - 5.37:1 on 흰 배경,
+     4.77:1 on --status-success-soft, 전부 AA 통과(4.5:1+). */
+  --status-success: #1b7a43;
+  --status-success-soft: #e7f5ec;
+  /* 비활성 컨트롤 공용 배경 - 브랜드/상태색과 무관한 중립 톤 */
+  --disabled-bg: #e9e5dc;
 
   /* 일차(day) 색 - 채도를 낮춘 6개 세트, 7일 넘는 일정은 순환.
      선/테두리 전용 - 글자색에는 대비가 부족해 아래 -text 쌍을 따로 쓴다. */

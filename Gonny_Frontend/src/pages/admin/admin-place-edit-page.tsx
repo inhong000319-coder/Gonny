@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { AppShell } from "../../app/layouts/app-shell";
 import { apiClient } from "../../shared/api/client";
 import { useDocumentTitle } from "../../shared/hooks/use-document-title";
+import "./styles/admin.css";
 import { AdminPlaceForm } from "./admin-place-form";
 import {
   CityCatalog,

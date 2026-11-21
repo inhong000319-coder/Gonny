@@ -1,9 +1,12 @@
+import { ReactNode } from "react";
+
 type EmptyStateProps = {
   title: string;
   description: string;
+  action?: ReactNode;
 };
 
-export function EmptyState({ title, description }: EmptyStateProps) {
+export function EmptyState({ title, description, action }: EmptyStateProps) {
   return (
     <div className="card empty-state">
       <div className="empty-state-route" aria-hidden="true">
@@ -12,6 +15,7 @@ export function EmptyState({ title, description }: EmptyStateProps) {
       </div>
       <h3 className="section-title">{title}</h3>
       <p className="section-subtitle">{description}</p>
+      {action ? <div className="empty-state-action">{action}</div> : null}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { useDocumentTitle } from "../../shared/hooks/use-document-title";
+import "../../features/trips/styles/trip-list.css";
 
 export function TripsPage() {
   useDocumentTitle("내 여행");
@@ -23,22 +24,21 @@ export function TripsPage() {
 
   return (
     <AppShell>
-      <section className="trip-dashboard-hero">
+      <section className="tl-hero">
         <div>
-          <span className="travel-eyebrow">MY TRAVEL DESK</span>
           <h1>여행을 모아볼수록<br />다음 선택이 선명해져요.</h1>
           <p>계획 중인 일정부터 다시 꺼내 보고 싶은 여행 기록까지, 나만의 여행 아카이브를 한눈에 확인하세요.</p>
-          <div className="travel-hero-actions">
+          <div className="tl-hero-actions">
             <Link to="/trips/recommend"><Button>새 여행 만들기</Button></Link>
           </div>
         </div>
-        <div className="trip-dashboard-stats">
-          <div><strong>{tripList.length}</strong><span>전체 여행</span></div>
-          <div><strong>{favoriteCount}</strong><span>다시 갈 여행</span></div>
-          <div><strong>{completedCount}</strong><span>완료한 기록</span></div>
+        <div className="tl-hero-stats">
+          <div className="tl-hero-stat"><strong>{tripList.length}</strong><span>전체 여행</span></div>
+          <div className="tl-hero-stat"><strong>{favoriteCount}</strong><span>다시 갈 여행</span></div>
+          <div className="tl-hero-stat"><strong>{completedCount}</strong><span>완료한 기록</span></div>
         </div>
       </section>
-      {favoriteMutation.error ? <p className="form-error">즐겨찾기를 변경하지 못했습니다. 잠시 후 다시 시도해 주세요.</p> : null}
+      {favoriteMutation.error ? <p className="tl-error">즐겨찾기를 변경하지 못했습니다. 잠시 후 다시 시도해 주세요.</p> : null}
       {isError ? (
         <LoadErrorCard
           description="네트워크 상태를 확인하고 다시 시도해 주세요."

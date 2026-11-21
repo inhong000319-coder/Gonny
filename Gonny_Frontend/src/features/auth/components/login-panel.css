@@ -1,0 +1,42 @@
+/* 로그인(S-02) - .auth- 접두사는 이미 이 화면 전용으로 스코프돼 있어
+   이름은 그대로 두고 그라디언트·하드코딩 색만 토큰으로 바꾼다. */
+
+.auth-hero {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.auth-copy {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.auth-title {
+  margin: 0;
+  font-size: var(--font-h1);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.auth-description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* 소셜 로그인 버튼의 서비스 가이드 색(카카오 노랑 등)은 브랜드 색과
+   무관하게 유지한다 - button.secondary(중립)를 베이스로 카카오 공식
+   색만 덮어쓴다(.button.primary의 teal 채움을 쓰지 않는다). 클래스 3개
+   조합으로 .button.secondary보다 확실히 높은 특정도를 둬서 로드 순서에
+   기대지 않는다. */
+.button.secondary.social-login-button-kakao {
+  background: #fee500;
+  border-color: #fee500;
+  color: #191600;
+}
+
+.button.secondary.social-login-button-kakao:hover:not(:disabled) {
+  background: #fada0a;
+  border-color: #fada0a;
+}

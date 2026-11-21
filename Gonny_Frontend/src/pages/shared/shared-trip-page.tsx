@@ -1,19 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { useParams } from "react-router-dom";
 import { PublicLayout } from "../../app/layouts/public-layout";
 import { SharedItineraryItem } from "../../features/share/api/get-shared-trip";
 import { useSharedTripQuery } from "../../features/share/hooks/use-shared-trip-query";
 import { formatSharedAccommodationLines } from "../../features/trips/utils/format-accommodation-label";
 import { useDocumentTitle } from "../../shared/hooks/use-document-title";
-
-function GlobeIcon() {
-  return (
-    <svg aria-hidden="true" className="landing-feature-icon" fill="none" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M4 12h16M12 4a12 12 0 0 1 0 16M12 4a12 12 0 0 0 0 16" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
+import "./shared-trip-page.css";
 
 const timeSlotLabelKo: Record<string, string> = {
   morning: "오전",
@@ -81,42 +73,41 @@ export function SharedTripPage() {
 
   return (
     <PublicLayout>
-      <section className="page-hero panel panel-gradient">
-        <div className="row" style={{ justifyContent: "space-between" }}>
-          <div>
-            <span className="section-kicker">Shared itinerary</span>
-            <h1 className="section-title" style={{ fontSize: "2.2rem", margin: "8px 0" }}>
-              {data.title}
-            </h1>
-            <p className="section-subtitle" style={{ marginBottom: 0 }}>
-              {data.destination} · {data.start_date} ~ {data.end_date}
-            </p>
-            {accommodationLines.map((line) => (
-              <p className="section-subtitle" key={line} style={{ marginBottom: 0 }}>
-                {line}
-              </p>
-            ))}
-          </div>
-          <div className="landing-feature-icon-wrap">
-            <GlobeIcon />
-          </div>
-        </div>
+      <section className="page-hero panel">
+        <h1 className="sp-title">{data.title}</h1>
+        <p className="sp-meta">
+          {data.destination} · {data.start_date} ~ {data.end_date}
+        </p>
+        {accommodationLines.map((line) => (
+          <p className="sp-meta" key={line}>
+            {line}
+          </p>
+        ))}
       </section>
 
-      <div className="card card-tinted stack">
+      <div className="card sp-timeline-card">
         {groupedItems.length > 0 ? (
-          groupedItems.map((group) => (
-            <div className="stack" key={group.day}>
-              <strong className="trip-card-title">DAY {group.day}</strong>
-              <div className="timeline">
-                {group.items.map((item) => (
-                  <div className="timeline-item timeline-item-accent" key={item.id}>
-                    {labelTimeSlot(item.time_slot)} · {item.place_name}
-                  </div>
-                ))}
+          groupedItems.map((group) => {
+            const dayIndex = ((group.day - 1) % 6) + 1;
+            const dayColorStyle = {
+              "--day-color": `var(--day-${dayIndex})`,
+              "--day-color-text": `var(--day-${dayIndex}-text)`,
+            } as CSSProperties;
+
+            return (
+              <div className="sp-day" key={group.day} style={dayColorStyle}>
+                <strong className="sp-day-title">DAY {group.day}</strong>
+                <div className="sp-item-list">
+                  {group.items.map((item) => (
+                    <p className="sp-item" key={item.id}>
+                      <span className="sp-item-time">{labelTimeSlot(item.time_slot)}</span>
+                      {item.place_name}
+                    </p>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p className="section-subtitle" style={{ marginBottom: 0 }}>
             아직 등록된 일정이 없어요.

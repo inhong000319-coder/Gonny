@@ -1,0 +1,154 @@
+/* 프로필(S-17) - .pf- 접두사로 스코프해서 이 화면이 더는
+   profile-travel-hero/profile-overview-card(.warm/.mint) 같은 옛
+   그라디언트 카드를 쓰지 않게 한다. */
+
+.pf-hero {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+}
+
+.pf-avatar {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-surface);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  font-size: var(--font-h2);
+  font-weight: 800;
+}
+
+.pf-hero-copy h1 {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-h1);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.pf-hero-copy p {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  font-size: var(--font-body);
+}
+
+.pf-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pf-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.pf-overview-card {
+  display: grid;
+  gap: var(--space-2);
+  min-height: 140px;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.pf-overview-card span {
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.pf-overview-card strong {
+  font-size: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.pf-overview-card p {
+  margin: 0;
+  font-size: var(--font-small);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pf-section {
+  margin-top: var(--space-7);
+}
+
+.pf-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.pf-section-heading h2 {
+  margin: 0;
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.pf-memory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.pf-memory-card {
+  display: grid;
+  gap: var(--space-2);
+  min-height: 160px;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.pf-memory-card > span {
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.pf-memory-card h3 {
+  margin: 0;
+  font-size: var(--font-h3);
+  color: var(--text);
+}
+
+.pf-memory-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+.pf-memory-card small {
+  align-self: end;
+  color: var(--brand-strong);
+  font-weight: 700;
+}
+
+@media (max-width: 840px) {
+  .pf-hero {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .pf-overview-grid,
+  .pf-memory-grid {
+    grid-template-columns: 1fr;
+  }
+}

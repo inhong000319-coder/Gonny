@@ -15,6 +15,7 @@ import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-q
 import { apiClient } from "../../shared/api/client";
 import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
+import { EmptyState } from "../../shared/components/feedback/empty-state";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
 import { useDocumentTitle } from "../../shared/hooks/use-document-title";
@@ -513,10 +514,9 @@ export function TripMemoryReviewsPage() {
 
   return (
     <AppShell>
-      <section className="page-hero panel panel-gradient">
+      <section className="page-hero panel">
         <div className="row" style={{ justifyContent: "space-between" }}>
           <div>
-            <span className="section-kicker">PLACE REVIEWS</span>
             <h1 className="section-title" style={{ fontSize: "2.1rem", margin: "8px 0" }}>
               장소 평가
             </h1>
@@ -574,10 +574,15 @@ export function TripMemoryReviewsPage() {
           ))}
 
           {!isLoading && !reviews.length ? (
-            <div className="admin-empty-card">
-              <strong>아직 남겨진 장소 평가가 없어요.</strong>
-              <p>평가 추가하기 버튼으로 첫 장소 평가를 남겨보세요.</p>
-            </div>
+            <EmptyState
+              action={
+                <Button onClick={openCreateModal} variant="secondary">
+                  평가 추가하기
+                </Button>
+              }
+              description="평가 추가하기 버튼으로 첫 장소 평가를 남겨보세요."
+              title="아직 남겨진 장소 평가가 없어요."
+            />
           ) : null}
         </div>
       </section>
@@ -589,7 +594,7 @@ export function TripMemoryReviewsPage() {
         </div>
         <div className="memory-stats-grid">
           {placeStats.map((stat) => (
-            <article key={stat.id} className="metric community-stat-card">
+            <article key={stat.id} className="metric">
               <strong>{stat.place_name}</strong>
               <p className="community-meta-line">
                 리뷰 {stat.review_count}개 · 평균 {stat.average_rating.toFixed(1)}점 · 추천 {formatPercent(stat.recommendation_rate)}

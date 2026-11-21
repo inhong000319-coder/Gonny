@@ -5,28 +5,23 @@
    block. */
 
 .tc-root {
-  --tc-bg: #faf7f2;
-  --tc-surface: #ffffff;
-  --tc-text: #1f2a37;
-  --tc-muted: #5b6573;
+  --tc-bg: var(--bg);
+  --tc-surface: var(--surface);
+  --tc-text: var(--text);
+  --tc-muted: var(--muted);
   /* 전역 브랜드 토큰에 연결(2단계) - 이 화면만의 색을 더 만들지 않는다. */
   --tc-primary: var(--brand);
   --tc-primary-strong: var(--brand-strong);
   --tc-primary-soft: var(--brand-soft);
-  --tc-accent: #e8743b;
-  /* Same hue family as --tc-accent, darkened for 4.5:1+ contrast on
-     --tc-surface (white) - --tc-accent itself is ~3:1, fine for a small
-     dot/icon but not for the day-title heading text that uses it. */
-  --tc-accent-strong: #a8471a;
   --tc-line: var(--line);
   --tc-line-control: var(--line-control);
   --tc-danger: var(--status-critical);
   --tc-danger-soft: var(--status-critical-soft);
   --tc-warning: var(--status-warning-text);
   --tc-warning-soft: var(--status-warning-soft);
-  --tc-success: #1b7a43;
-  --tc-success-soft: #e7f5ec;
-  --tc-disabled-bg: #e9e5dc;
+  --tc-success: var(--status-success);
+  --tc-success-soft: var(--status-success-soft);
+  --tc-disabled-bg: var(--disabled-bg);
   --tc-radius-sm: var(--radius-control);
   --tc-radius-md: var(--radius-panel);
   --tc-font: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
@@ -35,7 +30,7 @@
   background: var(--tc-bg);
   color: var(--tc-text);
   font-family: var(--tc-font);
-  font-size: 16px;
+  font-size: var(--font-body);
   line-height: 1.6;
 }
 
@@ -60,9 +55,9 @@
 /* --- Shell / layout -------------------------------------------------- */
 
 .tc-shell {
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 20px 16px 32px;
+  padding: var(--space-5) var(--space-4) var(--space-6);
 }
 
 .tc-shell-wide {
@@ -110,7 +105,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--space-3);
-  font-size: 14px;
+  font-size: var(--font-small);
   color: var(--tc-text);
 }
 
@@ -120,56 +115,50 @@
 
 .tc-form-body {
   display: grid;
-  gap: 16px;
-  padding-bottom: 96px;
-}
-
-@media (min-width: 640px) {
-  .tc-form-body {
-    padding-bottom: 0;
-  }
+  gap: var(--space-4);
+  padding-bottom: 0;
 }
 
 .tc-card {
   background: var(--tc-surface);
   border: 1px solid var(--tc-line);
   border-radius: var(--tc-radius-md);
-  padding: 20px;
+  padding: var(--space-5);
 }
 
 .tc-card + .tc-card {
-  margin-top: 16px;
+  margin-top: var(--space-4);
 }
 
 .tc-stack {
   display: grid;
-  gap: 24px;
+  gap: var(--space-5);
 }
 
 /* --- Headings ---------------------------------------------------------- */
 
 .tc-title {
-  margin: 0 0 4px;
-  font-size: 24px;
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-h2);
   font-weight: 800;
   letter-spacing: -0.01em;
 }
 
 .tc-subtitle {
-  margin: 0 0 20px;
-  font-size: 14px;
+  margin: 0 0 var(--space-5);
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-stage-title {
-  margin: 0 0 4px;
-  font-size: 18px;
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-h3);
   font-weight: 700;
 }
 
 .tc-stage-subtitle {
-  margin: 0 0 16px;
-  font-size: 14px;
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
@@ -180,13 +169,13 @@
 .tc-progress {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
 .tc-progress-label {
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-muted);
   white-space: nowrap;
@@ -195,7 +184,7 @@
 .tc-progress-track {
   display: flex;
   flex: 1;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .tc-progress-seg {
@@ -214,28 +203,28 @@
 
 .tc-field {
   display: grid;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .tc-field-label {
-  font-size: 14px;
+  font-size: var(--font-small);
   font-weight: 700;
 }
 
 .tc-field-sublabel {
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-muted);
 }
 
 .tc-date-input {
   min-height: 44px;
-  padding: 10px 12px;
+  padding: var(--space-3) var(--space-3);
   border: 1px solid var(--tc-line-control);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-surface);
   color: var(--tc-text);
-  font-size: 16px;
+  font-size: var(--font-body);
 }
 
 .tc-date-input:focus-visible {
@@ -245,7 +234,7 @@
 
 .tc-note {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
@@ -254,20 +243,20 @@
 .tc-chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .tc-chip {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  gap: 4px;
-  padding: 10px 16px;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--tc-line);
   border-radius: 999px;
   background: var(--tc-surface);
   color: var(--tc-text);
-  font-size: 15px;
+  font-size: var(--font-body);
   font-weight: 600;
   cursor: pointer;
 }
@@ -277,9 +266,9 @@
 }
 
 .tc-chip.is-selected {
-  background: var(--tc-primary);
-  border-color: var(--tc-primary);
-  color: #ffffff;
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--tc-text);
   font-weight: 700;
 }
 
@@ -306,29 +295,34 @@
 
 .tc-choice-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
-@media (min-width: 640px) {
-  .tc-choice-grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.tc-choice-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
 
-  .tc-choice-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.tc-choice-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
 
+.tc-choice-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 639px) {
+  .tc-choice-grid-4,
+  .tc-choice-grid-3,
   .tc-choice-grid-2 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 .tc-choice-card {
   display: grid;
-  gap: 4px;
+  gap: var(--space-1);
   min-height: 44px;
-  padding: 14px 16px;
+  padding: var(--space-4) var(--space-4);
   border: 1px solid var(--tc-line);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-surface);
@@ -342,7 +336,7 @@
 }
 
 .tc-choice-card strong {
-  font-size: 15px;
+  font-size: var(--font-body);
 }
 
 .tc-choice-card.is-selected strong::before {
@@ -352,32 +346,27 @@
 .tc-choice-card small,
 .tc-choice-card span {
   display: block;
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-choice-card.is-selected {
-  background: var(--tc-primary);
-  border-color: var(--tc-primary);
-  color: #ffffff;
-}
-
-.tc-choice-card.is-selected small,
-.tc-choice-card.is-selected span {
-  color: #ffffff;
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--tc-text);
 }
 
 /* --- City grid (step 1) --------------------------------------------------- */
 
 .tc-city-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
 }
 
-@media (min-width: 640px) {
+@media (max-width: 639px) {
   .tc-city-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -386,12 +375,12 @@
   min-height: 56px;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  padding: var(--space-4);
   border: 1px solid var(--tc-line);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-surface);
   color: var(--tc-text);
-  font-size: 17px;
+  font-size: var(--font-body);
   font-weight: 700;
   cursor: pointer;
 }
@@ -401,9 +390,9 @@
 }
 
 .tc-city-card.is-selected {
-  background: var(--tc-primary);
-  border-color: var(--tc-primary);
-  color: #ffffff;
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--tc-text);
 }
 
 .tc-city-card.is-selected::before {
@@ -414,25 +403,25 @@
 
 .tc-segment {
   display: inline-flex;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .tc-segment-btn {
   min-height: 40px;
-  padding: 8px 14px;
+  padding: var(--space-2) var(--space-4);
   border: 1px solid var(--tc-line);
   border-radius: 999px;
   background: var(--tc-surface);
   color: var(--tc-text);
-  font-size: 14px;
+  font-size: var(--font-small);
   font-weight: 700;
   cursor: pointer;
 }
 
 .tc-segment-btn.is-selected {
-  background: var(--tc-primary);
-  border-color: var(--tc-primary);
-  color: #ffffff;
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--tc-text);
 }
 
 .tc-segment-btn.is-selected::before {
@@ -445,7 +434,7 @@
   display: flex;
   min-height: 44px;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
   cursor: pointer;
 }
 
@@ -457,7 +446,7 @@
 }
 
 .tc-toggle-row span {
-  font-size: 15px;
+  font-size: var(--font-body);
   font-weight: 600;
 }
 
@@ -466,11 +455,11 @@
 .tc-alert {
   display: grid;
   gap: 2px;
-  padding: 12px 14px;
+  padding: var(--space-3) var(--space-4);
   border-left: 4px solid var(--tc-muted);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-bg);
-  font-size: 14px;
+  font-size: var(--font-small);
 }
 
 .tc-alert-warning {
@@ -502,11 +491,11 @@
   min-height: 48px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
   border: 1px solid transparent;
   border-radius: var(--tc-radius-sm);
-  font-size: 16px;
+  font-size: var(--font-body);
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
@@ -514,7 +503,7 @@
 
 .tc-btn-primary {
   background: var(--tc-primary);
-  color: #ffffff;
+  color: var(--brand-contrast);
 }
 
 .tc-btn-primary:hover:not(:disabled) {
@@ -546,8 +535,8 @@
 
 .tc-step-nav {
   display: flex;
-  gap: 10px;
-  margin-top: 24px;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
 }
 
 .tc-step-nav .tc-btn {
@@ -555,6 +544,15 @@
 }
 
 @media (max-width: 639px) {
+  .tc-form-body {
+    /* 좁은 화면에서만 하단 고정 버튼 바(.tc-step-nav)가 폼 내용을
+       가리지 않게 여백을 둔다 - 간격 토큰이 아니라 그 바의 실제 높이
+       측정값이다(버튼 48px + 위아래 패딩 24px + 보더 1px = 73px, 홈
+       인디케이터가 있는 기기는 env(safe-area-inset-bottom)만큼 더 큼).
+       --space-8(64px)으로 맞추면 실제로 겹친다 - 토큰화하지 않는다. */
+    padding-bottom: 96px;
+  }
+
   .tc-step-nav {
     position: fixed;
     right: 0;
@@ -562,7 +560,7 @@
     left: 0;
     z-index: 30;
     margin-top: 0;
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    padding: var(--space-3) var(--space-4) calc(12px + env(safe-area-inset-bottom));
     background: var(--tc-bg);
     border-top: 1px solid var(--tc-line);
   }
@@ -572,36 +570,36 @@
 
 .tc-summary-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
 }
 
-@media (min-width: 640px) {
+@media (max-width: 639px) {
   .tc-summary-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 .tc-summary-item {
   display: grid;
   gap: 2px;
-  padding-bottom: 14px;
+  padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--tc-line);
 }
 
 .tc-summary-label {
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-muted);
 }
 
 .tc-summary-value {
-  font-size: 16px;
+  font-size: var(--font-body);
   font-weight: 700;
 }
 
 .tc-summary-note {
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
@@ -609,56 +607,58 @@
 
 .tc-result-header {
   display: grid;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .tc-result-title {
   margin: 0;
-  font-size: 24px;
+  font-size: var(--font-h1);
   font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .tc-result-desc {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--font-body);
   color: var(--tc-muted);
 }
 
 .tc-tag-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
 }
 
 .tc-tag {
   display: inline-flex;
   min-height: 26px;
   align-items: center;
-  padding: 3px 10px;
+  padding: 3px var(--space-3);
   border-radius: 999px;
   background: var(--tc-primary-soft);
   color: var(--tc-primary);
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
 }
 
 .tc-glance-row {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
-@media (min-width: 640px) {
+@media (max-width: 639px) {
   .tc-glance-row {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 .tc-glance-item {
-  padding: 10px;
+  padding: var(--space-3);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-bg);
   text-align: center;
@@ -666,41 +666,41 @@
 
 .tc-glance-item span {
   display: block;
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--tc-muted);
 }
 
 .tc-glance-item strong {
   display: block;
   margin-top: 2px;
-  font-size: 15px;
+  font-size: var(--font-body);
 }
 
 /* --- Section value blocks (accommodation / estimated cost cards) -------- */
 
 .tc-section-label {
-  margin: 0 0 6px;
-  font-size: 13px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-muted);
 }
 
 .tc-section-value {
-  margin: 0 0 6px;
-  font-size: 20px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-h3);
   font-weight: 800;
 }
 
 .tc-section-note {
   margin: 2px 0 0;
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 /* --- Day timeline ---------------------------------------------------- */
 
 .tc-day-card {
-  padding-top: 20px;
+  padding-top: var(--space-5);
   border-top: 1px solid var(--tc-line);
 }
 
@@ -721,40 +721,40 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .tc-day-title {
   margin: 0;
-  font-size: 19px;
+  font-size: var(--font-h3);
   font-weight: 800;
   /* 일차마다 채도 낮은 색(--day-1~6)을 순환 적용 - 타임라인 라벨과
      세로선이 같은 색을 쓴다(아래 .tc-timeline). 글자색은 대비용 -text 짝. */
-  color: var(--day-color-text, var(--tc-accent-strong));
+  color: var(--day-color-text, var(--tc-text));
 }
 
 .tc-day-route {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-day-weather {
   margin: 2px 0 0;
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-day-summary-line {
   margin: 2px 0 0;
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
   font-variant-numeric: tabular-nums;
 }
 
 .tc-day-summary-note {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--tc-muted);
 }
 
@@ -762,25 +762,25 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 16px;
-  margin-bottom: 14px;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .tc-day-mode-summary strong {
-  font-size: 15px;
+  font-size: var(--font-body);
   font-weight: 700;
 }
 
 .tc-day-mode-summary span {
-  margin-left: 6px;
-  font-size: 13px;
+  margin-left: var(--space-2);
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-day-assign-list {
   display: grid;
-  gap: 8px;
-  margin-top: 10px;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
 
 .tc-day-assign-row {
@@ -788,19 +788,19 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .tc-day-assign-row > span {
   min-width: 48px;
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-muted);
 }
 
 .tc-timeline {
   display: grid;
-  gap: 4px;
+  gap: var(--space-1);
   padding-left: var(--space-3);
   /* 일차 색으로 그리는 동선(경로) 세로선 - 결과 화면의 뼈대. */
   border-left: 2px solid var(--day-color, var(--tc-line));
@@ -809,12 +809,12 @@
 .tc-stop {
   display: grid;
   grid-template-columns: 52px 1fr;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .tc-stop-time {
   padding-top: 2px;
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
   /* 포인트 색은 화면당 핵심 행동 1개(저장 버튼)에만 - 시간 라벨은 중립색. */
   color: var(--tc-text);
@@ -832,14 +832,14 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--tc-accent);
+  background: var(--tc-muted);
   content: "";
 }
 
 .tc-stop-body {
   display: grid;
-  gap: 4px;
-  padding-bottom: 16px;
+  gap: var(--space-1);
+  padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--tc-line);
 }
 
@@ -852,11 +852,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .tc-stop-name {
-  font-size: 16px;
+  font-size: var(--font-body);
   font-weight: 700;
 }
 
@@ -864,10 +864,10 @@
   display: inline-flex;
   min-height: 22px;
   align-items: center;
-  padding: 1px 9px;
+  padding: 1px var(--space-2);
   border: 1px solid var(--tc-line);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: var(--font-caption);
   font-weight: 700;
   color: var(--tc-muted);
 }
@@ -878,30 +878,30 @@
 .tc-reason-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-2);
   margin-top: 2px;
 }
 
 .tc-reason-chip {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
+  padding: 3px var(--space-3);
   border-radius: 999px;
   background: var(--tc-primary-soft);
   color: var(--tc-primary-strong);
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
 }
 
 .tc-stop-area {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-stop-cost {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-success);
   font-variant-numeric: tabular-nums;
@@ -909,19 +909,19 @@
 
 .tc-stop-note-lead {
   margin: 2px 0 0;
-  font-size: 14px;
+  font-size: var(--font-small);
   font-weight: 700;
 }
 
 .tc-stop-note-line {
   margin: 2px 0 0;
-  font-size: 14px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-stop-fallback-travel {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: var(--tc-muted);
 }
 
@@ -929,14 +929,14 @@
    보여주는 한 줄이라, 같은 들여쓰기(68px, 좁은 화면은 16px)를 맞춘다. */
 .tc-stop-travel-stale {
   margin: 0;
-  padding: 6px 0 6px 68px;
-  font-size: 12px;
+  padding: var(--space-2) 0 var(--space-2) 68px;
+  font-size: var(--font-caption);
   color: var(--tc-muted);
 }
 
 @media (max-width: 639px) {
   .tc-stop-travel-stale {
-    padding-left: 16px;
+    padding-left: var(--space-4);
   }
 }
 
@@ -944,20 +944,20 @@
 
 .tc-alt-panel {
   display: grid;
-  gap: 6px;
-  margin-top: 6px;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
 }
 
 .tc-alt-label {
-  font-size: 12px;
+  font-size: var(--font-caption);
   font-weight: 700;
   color: var(--tc-muted);
 }
 
 .tc-alt-chip {
   min-height: 36px;
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-small);
 }
 
 .tc-alt-chip-area {
@@ -967,13 +967,13 @@
 
 .tc-alt-revert {
   min-height: 36px;
-  padding: 6px 14px;
-  font-size: 13px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-small);
 }
 
 .tc-meal-hours-note {
   margin: 2px 0 0;
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
   color: var(--tc-warning);
 }
@@ -984,9 +984,9 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 8px;
-  padding: 6px 0 6px 68px;
-  font-size: 12px;
+  gap: var(--space-1) var(--space-2);
+  padding: var(--space-2) 0 var(--space-2) 68px;
+  font-size: var(--font-caption);
   color: var(--tc-muted);
 }
 
@@ -1013,7 +1013,7 @@
 
 @media (max-width: 639px) {
   .tc-connector {
-    padding-left: 16px;
+    padding-left: var(--space-4);
   }
 
   .tc-connector::before {
@@ -1033,13 +1033,13 @@
   min-height: 44px;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
   border: none;
   border-radius: var(--tc-radius-md);
   background: transparent;
   color: var(--tc-text);
-  font-size: 15px;
+  font-size: var(--font-body);
   font-weight: 700;
   text-align: left;
   cursor: pointer;
@@ -1048,22 +1048,22 @@
 .tc-intro-toggle span:last-child {
   flex-shrink: 0;
   color: var(--tc-primary);
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 700;
 }
 
 .tc-intro-list {
   display: grid;
-  gap: 8px;
+  gap: var(--space-2);
   margin: 0;
-  padding: 0 20px 18px;
+  padding: 0 var(--space-5) var(--space-4);
   list-style: none;
 }
 
 .tc-intro-list li {
   position: relative;
-  padding-left: 14px;
-  font-size: 14px;
+  padding-left: var(--space-4);
+  font-size: var(--font-small);
   color: var(--tc-muted);
   line-height: 1.5;
 }
@@ -1086,42 +1086,42 @@
 
 .tc-compare-body {
   display: grid;
-  gap: 16px;
-  padding: 0 20px 20px;
+  gap: var(--space-4);
+  padding: 0 var(--space-5) var(--space-5);
 }
 
 .tc-compare-scenario-list {
   display: grid;
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .tc-compare-scenario {
-  padding: 16px;
+  padding: var(--space-4);
   border: 1px solid var(--tc-line);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-bg);
 }
 
 .tc-compare-scenario-title {
-  margin: 0 0 8px;
-  font-size: 16px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-body);
   font-weight: 700;
 }
 
 .tc-compare-scenario-line {
-  margin: 0 0 6px;
-  font-size: 14px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-small);
   line-height: 1.5;
 }
 
 .tc-compare-scenario-sub {
-  padding-left: 12px;
+  padding-left: var(--space-3);
   color: var(--tc-muted);
 }
 
 .tc-compare-scenario-disclaimer {
-  margin: 8px 0 12px;
-  font-size: 12px;
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: var(--font-caption);
   color: var(--tc-muted);
 }
 
@@ -1129,36 +1129,37 @@
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  padding: 0 4px;
+  padding: 0 var(--space-1);
   border: none;
   background: transparent;
   color: var(--tc-primary);
-  font-size: 14px;
+  font-size: var(--font-small);
   font-weight: 700;
   cursor: pointer;
 }
 
 .tc-compare-day-table {
   display: grid;
-  gap: 8px;
-  margin-top: 8px;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
 }
 
 .tc-compare-day-row {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-  padding: 10px 12px;
+  grid-template-columns: 56px 1fr 1fr;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-surface);
-  font-size: 13px;
+  font-size: var(--font-small);
 }
 
-@media (min-width: 480px) {
+@media (max-width: 479px) {
   .tc-compare-day-row {
-    grid-template-columns: 56px 1fr 1fr;
-    align-items: baseline;
-    gap: 8px;
+    grid-template-columns: 1fr;
+    align-items: normal;
+    gap: 2px;
   }
 }
 
@@ -1177,29 +1178,29 @@
 .tc-result-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 /* --- Dev-only raw response panel ---------------------------------------- */
 
 .tc-raw-panel {
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 
 .tc-raw-panel summary {
-  font-size: 13px;
+  font-size: var(--font-small);
   color: var(--tc-muted);
   cursor: pointer;
 }
 
 .tc-raw-panel pre {
   max-height: 320px;
-  margin-top: 8px;
-  padding: 12px;
+  margin-top: var(--space-2);
+  padding: var(--space-3);
   overflow: auto;
   border-radius: var(--tc-radius-sm);
   background: var(--tc-bg);
-  font-size: 12px;
+  font-size: var(--font-caption);
 }
 
 /* --- Generate progress (마감 디테일) - 점 3개, 스피너/바운스 없음 ------- */
@@ -1207,16 +1208,16 @@
 .tc-generate-progress {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  font-size: 13px;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--font-small);
   color: var(--tc-muted);
 }
 
 .tc-generate-progress-dots {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .tc-generate-progress-dots i {
@@ -1229,4 +1230,58 @@
 
 .tc-generate-progress-dots i.is-active {
   background: var(--tc-primary);
+}
+
+/* --- Weather banner (결과 화면 날씨 경보) - 랜딩의 .lp-weather-mock과
+   같은 형태: 흰 surface + 왼쪽 경고색 테두리, 그라디언트·그림자·아이콘
+   박스 없음. 예전 globals.css의 .weather-banner*를 대체한다. ---------- */
+
+.tc-weather-banner {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--tc-line);
+  border-left: 3px solid var(--status-warning);
+  border-radius: var(--tc-radius-md);
+  background: var(--tc-surface);
+}
+
+.tc-weather-banner-title {
+  margin: 0;
+  font-size: var(--font-body);
+  font-weight: 700;
+  color: var(--status-warning-text);
+}
+
+.tc-weather-banner-desc {
+  margin: 0;
+  font-size: var(--font-small);
+  color: var(--tc-muted);
+}
+
+.tc-weather-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tc-weather-banner-alternatives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tc-weather-banner-affected-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tc-weather-banner-affected-row {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tc-weather-banner-affected-label {
+  font-size: var(--font-small);
+  font-weight: 600;
 }

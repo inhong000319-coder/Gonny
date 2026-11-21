@@ -813,67 +813,6 @@ select {
   height: 28px;
 }
 
-.weather-banner {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 16px;
-  align-items: center;
-  padding: 22px 24px;
-  border-radius: 28px;
-  border: 1px solid rgba(155, 193, 255, 0.4);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(243, 247, 255, 0.94)),
-    linear-gradient(135deg, rgba(127, 170, 255, 0.16), rgba(73, 225, 255, 0.1));
-  box-shadow: 0 20px 40px rgba(79, 112, 173, 0.12);
-}
-
-.weather-banner-icon {
-  display: grid;
-  place-items: center;
-  width: 58px;
-  height: 58px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.75);
-  color: #3869da;
-}
-
-.weather-banner-copy {
-  min-width: 0;
-}
-
-.weather-banner-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.weather-banner-alternatives {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-top: 4px;
-}
-
-.weather-banner-affected-list {
-  grid-column: 1 / -1;
-  display: grid;
-  gap: 14px;
-  padding-top: 4px;
-}
-
-.weather-banner-affected-row {
-  display: grid;
-  gap: 6px;
-}
-
-.weather-banner-affected-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #2a3b63;
-}
-
 .auth-hero {
   display: grid;
   gap: 18px;
@@ -2540,14 +2479,6 @@ body.modal-open {
   .inspiration-grid,
   .grid-two{
     grid-template-columns: 1fr;
-  }
-
-  .weather-banner {
-    grid-template-columns: 1fr;
-  }
-
-  .weather-banner-actions {
-    justify-content: flex-start;
   }
 
   .landing-form-grid,

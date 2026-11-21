@@ -54,19 +54,6 @@ type WeatherBannerProps = {
   onRevertSwap: (item: WeatherAffectedItem) => void;
 };
 
-function CloudRainIcon() {
-  return (
-    <svg aria-hidden="true" className="status-icon" fill="none" viewBox="0 0 24 24">
-      <path
-        d="M8 18h8a4 4 0 0 0 .52-7.97A5.5 5.5 0 0 0 6 11a3.5 3.5 0 0 0 2 7Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <path d="M9 18.8 8 21M12 18.8 11 21M15 18.8 14 21" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
-
 function conditionLabel(condition: RuleWeatherAlert["condition"]) {
   return condition === "snow" ? "눈" : "비";
 }
@@ -98,31 +85,26 @@ export function WeatherBanner({
   );
 
   return (
-    <div className="weather-banner">
-      <div className="weather-banner-icon">
-        <CloudRainIcon />
-      </div>
-      <div className="weather-banner-copy">
-        <h3 className="section-title" style={{ marginBottom: 6 }}>
-          {alert.day_number}일차, {conditionLabel(alert.condition)} 예보가 있어요
-        </h3>
-        <p className="section-subtitle" style={{ marginBottom: 8 }}>
-          {hasSelectableCandidates
-            ? `예상 강수량 ${alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 골라두면 [재계산]으로 이동 시간까지 맞춰드려요.`
-            : `예상 강수량 ${alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 참고해서 직접 정해보세요.`}
-        </p>
-        {alert.affected_place_names.length > 0 ? (
-          <div className="planner-result-tags">
-            {alert.affected_place_names.map((placeName) => (
-              <span className="badge" key={placeName}>
-                {placeName}
-                {swappedPlaceNames.has(placeName) ? <span className="tc-alt-chip-area"> · 교체됨</span> : null}
-              </span>
-            ))}
-          </div>
-        ) : null}
-      </div>
-      <div className="weather-banner-actions">
+    <div className="tc-weather-banner">
+      <h3 className="tc-weather-banner-title">
+        {alert.day_number}일차, {conditionLabel(alert.condition)} 예보가 있어요
+      </h3>
+      <p className="tc-weather-banner-desc">
+        {hasSelectableCandidates
+          ? `예상 강수량 ${alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 골라두면 [재계산]으로 이동 시간까지 맞춰드려요.`
+          : `예상 강수량 ${alert.precipitation_mm}mm. 일정은 자동으로 바뀌지 않아요 - 실내 대안을 참고해서 직접 정해보세요.`}
+      </p>
+      {alert.affected_place_names.length > 0 ? (
+        <div className="planner-result-tags">
+          {alert.affected_place_names.map((placeName) => (
+            <span className="badge" key={placeName}>
+              {placeName}
+              {swappedPlaceNames.has(placeName) ? <span className="tc-alt-chip-area"> · 교체됨</span> : null}
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <div className="tc-weather-banner-actions">
         <Button onClick={() => setShowAlternatives(false)} type="button" variant="secondary">
           이 계획 유지
         </Button>
@@ -132,12 +114,12 @@ export function WeatherBanner({
       </div>
       {showAlternatives ? (
         affectedItems.length > 0 ? (
-          <div className="weather-banner-affected-list">
+          <div className="tc-weather-banner-affected-list">
             {affectedItems.map((item) => {
               const activePlaceId = getActiveSwapPlaceId(item);
               return (
-                <div className="weather-banner-affected-row" key={`${item.time_slot}-${item.place_id}`}>
-                  <span className="weather-banner-affected-label">
+                <div className="tc-weather-banner-affected-row" key={`${item.time_slot}-${item.place_id}`}>
+                  <span className="tc-weather-banner-affected-label">
                     {item.place_name} ({timeSlotLabel(item.time_slot)}) → 실내 대안
                   </span>
                   {item.swap_candidates.length > 0 ? (
@@ -173,16 +155,14 @@ export function WeatherBanner({
                       </div>
                     </div>
                   ) : (
-                    <p className="section-subtitle" style={{ marginBottom: 0 }}>
-                      바꿀 수 있는 실내 후보가 없어요.
-                    </p>
+                    <p className="tc-weather-banner-desc">바꿀 수 있는 실내 후보가 없어요.</p>
                   )}
                 </div>
               );
             })}
           </div>
         ) : (
-          <div className="weather-banner-alternatives">
+          <div className="tc-weather-banner-alternatives">
             {alert.suggested_alternatives.length > 0 ? (
               alert.suggested_alternatives.map((placeName) => (
                 <span className="badge" key={placeName}>
@@ -190,9 +170,7 @@ export function WeatherBanner({
                 </span>
               ))
             ) : (
-              <p className="section-subtitle" style={{ marginBottom: 0 }}>
-                추천할 만한 실내 대안을 찾지 못했어요.
-              </p>
+              <p className="tc-weather-banner-desc">추천할 만한 실내 대안을 찾지 못했어요.</p>
             )}
           </div>
         )

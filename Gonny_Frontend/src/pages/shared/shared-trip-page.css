@@ -1,0 +1,51 @@
+/* 공유 일정(S-07) - 읽기 전용 화면이라 여행 상세(S-09, trip-detail.css의
+   .td-day 세로선 패턴)를 그대로 가져와 .sp- 접두사로 스코프한다. 더는
+   panel-gradient/card-tinted/timeline-item-accent/landing-feature-icon-wrap
+   같은 랜딩·커뮤니티 전용 장식 클래스를 빌려 쓰지 않는다. */
+
+.sp-title {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.sp-meta {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+.sp-timeline-card {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.sp-day {
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--day-color, var(--line));
+}
+
+.sp-day-title {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-size: var(--font-h3);
+  font-weight: 800;
+  color: var(--day-color-text, var(--text));
+}
+
+.sp-item-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.sp-item {
+  color: var(--text);
+  font-size: var(--font-small);
+}
+
+.sp-item-time {
+  margin-right: var(--space-2);
+  color: var(--muted);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

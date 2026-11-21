@@ -5,9 +5,10 @@
    dead .community-home/.community-board rule families (no .tsx references
    them anymore - verified) were removed below. What's left is either
    structural (no visual opinion) or still the sole styling source for a
-   class other, out-of-scope screens still use (.trip-collection-toolbar
-   family, .topbar-profile, .journal-doc-editor's write-tool look via
-   globals.css) - left alone or cleaned to tokens, not deleted. */
+   class other, out-of-scope screens still use (.topbar-profile,
+   .journal-doc-editor's write-tool look via globals.css) - left alone or
+   cleaned to tokens, not deleted. .trip-collection-toolbar family moved to
+   trip-list.css (.tl-*) - 내 여행 목록(S-08) 토큰 정리. */
 .site-shell:not(.site-shell-public) .page-container,.site-shell:not(.site-shell-public) .topbar { width:min(1200px,calc(100% - 40px)); }
 .topbar-profile { display:inline-flex; align-items:center; gap:7px; min-height:40px; padding:5px 10px 5px 6px; border:1px solid var(--line); border-radius:999px; background:var(--surface); color:var(--text); font-size:.78rem; font-weight:800; }.topbar-profile:hover { background:var(--surface-strong); }.topbar-profile-avatar { display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--brand); color:var(--brand-contrast); font-size:.72rem; }
 .feature-panel,.timeline-item,.metric { border-color:rgba(192,218,234,.9); border-radius:21px; background:rgba(255,255,255,.83); box-shadow:0 14px 30px rgba(57,103,137,.08); }.card-tinted,.panel-gradient,.feature-panel { background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(240,250,255,.84)),linear-gradient(145deg,rgba(137,222,248,.1),rgba(255,203,127,.1)); }
@@ -16,9 +17,3 @@
 .site-shell .auth-layout { min-height:calc(100vh - 84px); }
 @media (max-width:840px) { .site-shell:not(.site-shell-public) .page-container,.site-shell:not(.site-shell-public) .topbar { width:min(100% - 24px,1200px); }.page-hero,.card,.feature-panel { padding:20px; } }
 @media (max-width:840px) { .topbar-profile { margin-left:auto; }.topbar-profile > span:last-child { display:none; } }
-
-.trip-collection-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:2px 0 20px; }.trip-search-field { display:flex; align-items:center; gap:9px; flex:1; max-width:420px; padding:0 14px; border:1px solid #cfe1ed; border-radius:14px; background:rgba(255,255,255,.85); color:#5791b8; }.trip-search-field input { width:100%; min-height:42px; border:0; outline:0; background:transparent; color:#284d6b; }
-/* .trip-search-field input의 outline:0에는 대체 포커스 표시가 없었다 - 입력창 자체(바깥 wrapper)에 포커스 링을 준다. */
-.trip-search-field:focus-within { border-color:var(--brand); box-shadow:0 0 0 3px var(--brand-soft); }
-.trip-filter,.trip-page-button { border:1px solid #d0e2ee; border-radius:999px; background:rgba(255,255,255,.82); color:#51718a; font-size:.82rem; font-weight:800; cursor:pointer; }.trip-filter { min-height:42px; padding:0 14px; }.trip-filter.active { border-color:#f3c56e; background:#fff3d6; color:#a56b14; }.trip-pagination { display:flex; justify-content:center; gap:7px; margin-top:22px; }.trip-page-button { display:grid; place-items:center; min-width:38px; height:38px; border-radius:12px; }.trip-page-button.active { border-color:#69b4de; background:#dff3fc; color:#2473a7; }.trip-page-button:disabled { opacity:.42; cursor:not-allowed; }
-@media (max-width:620px) { .trip-collection-toolbar { align-items:stretch; flex-direction:column; }.trip-search-field { max-width:none; }.trip-filter { width:100%; } }

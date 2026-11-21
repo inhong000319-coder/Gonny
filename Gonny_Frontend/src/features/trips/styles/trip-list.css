@@ -1,0 +1,281 @@
+/* 내 여행 목록 (S-08) - .tl- 접두사로 스코프해서 이 화면이 더는
+   trip-dashboard-hero/trip-card-polished/trip-collection-toolbar 같은
+   globals.css/travel-board-overrides.css의 옛 하늘색 계열 전용 클래스를
+   쓰지 않게 한다. 색·간격·폰트·라운드는 전역 토큰만 사용한다. */
+
+.tl-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+}
+
+.tl-hero h1 {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-h1);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.tl-hero p {
+  max-width: 520px;
+  margin: var(--space-3) 0 0;
+  color: var(--muted);
+  font-size: var(--font-body);
+  line-height: 1.6;
+}
+
+.tl-hero-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-5);
+}
+
+.tl-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(110px, 1fr));
+  gap: var(--space-2);
+}
+
+.tl-hero-stat {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-strong);
+  text-align: center;
+}
+
+.tl-hero-stat strong {
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.tl-hero-stat span {
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-weight: 600;
+}
+
+.tl-error {
+  margin-top: var(--space-4);
+  color: var(--status-critical);
+}
+
+.tl-section {
+  margin-top: var(--space-7);
+}
+
+.tl-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.tl-section-heading h2 {
+  margin: 0;
+  font-size: var(--font-h2);
+  color: var(--text);
+}
+
+.tl-section-heading p {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+.tl-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.tl-search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  max-width: 420px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-control);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.tl-search-field input {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--font-small);
+}
+
+.tl-search-field:focus-within {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+.tl-filter {
+  min-height: 42px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-control);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: var(--font-small);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tl-filter.is-active {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--text);
+}
+
+.tl-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tl-card {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.tl-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.tl-card-destination {
+  display: block;
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.tl-card-header h3 {
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-h3);
+  color: var(--text);
+}
+
+.tl-card-date {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+.tl-card-meta {
+  display: flex;
+  gap: var(--space-4);
+  color: var(--muted);
+  font-size: var(--font-small);
+}
+
+.tl-card-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.tl-save-button {
+  margin-left: auto;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line-control);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: var(--font-caption);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tl-save-button.is-saved {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--text);
+}
+
+.tl-pagination {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.tl-page-button {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: 38px;
+  border: 1px solid var(--line-control);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: var(--font-small);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tl-page-button.is-active {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--text);
+}
+
+.tl-page-button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  .tl-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .tl-hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .tl-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .tl-search-field {
+    max-width: none;
+  }
+
+  .tl-filter {
+    width: 100%;
+  }
+
+  .tl-card-header {
+    flex-direction: column;
+  }
+}

@@ -156,7 +156,7 @@ select {
   width: fit-content;
   margin-bottom: 4px;
   padding-left: 0;
-  color: #2d6d9d;
+  color: var(--muted);
 }
 
 .page-hero {
@@ -204,20 +204,6 @@ select {
   align-content: start;
   gap: 22px;
   padding: 26px 10px 10px 2px;
-}
-
-.landing-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  width: fit-content;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(151, 192, 255, 0.4);
-  color: #1672d8;
-  font-weight: 700;
-  backdrop-filter: blur(14px);
 }
 
 .landing-title {
@@ -803,53 +789,6 @@ select {
 .status-icon {
   width: 28px;
   height: 28px;
-}
-
-.auth-hero {
-  display: grid;
-  gap: 18px;
-}
-
-.auth-copy {
-  display: grid;
-  gap: 16px;
-}
-
-.auth-title {
-  margin: 0;
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  color: #123d7a;
-}
-
-.auth-description {
-  margin: 0;
-  color: #526681;
-  line-height: 1.75;
-}
-
-.auth-highlight-list {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.auth-highlight-item {
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(160, 194, 255, 0.36);
-  color: #47617e;
-}
-
-.auth-login-box {
-  padding: 24px;
-  border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(246, 250, 255, 0.92)),
-    linear-gradient(135deg, rgba(117, 221, 255, 0.16), rgba(87, 104, 255, 0.08));
-  border: 1px solid rgba(177, 203, 248, 0.42);
 }
 
 .profile-info-card {

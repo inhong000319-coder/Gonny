@@ -55,11 +55,14 @@ function GoogleIcon() {
 export function SocialLoginButton({ provider, onClick }: SocialLoginButtonProps) {
   const isKakao = provider === "kakao";
   const label = isKakao ? "카카오로 시작하기" : "구글로 시작하기";
-  const variant = isKakao ? "primary" : "secondary";
   const icon = isKakao ? <KakaoIcon /> : <GoogleIcon />;
 
   return (
-    <Button className="social-login-button" onClick={onClick} variant={variant}>
+    <Button
+      className={`social-login-button ${isKakao ? "social-login-button-kakao" : ""}`.trim()}
+      onClick={onClick}
+      variant="secondary"
+    >
       {icon}
       <span>{label}</span>
     </Button>

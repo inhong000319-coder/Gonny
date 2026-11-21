@@ -11,7 +11,7 @@
   --tc-muted: #5b6573;
   /* 전역 브랜드 토큰에 연결(2단계) - 이 화면만의 색을 더 만들지 않는다. */
   --tc-primary: var(--brand);
-  --tc-primary-strong: #0a5a53;
+  --tc-primary-strong: var(--brand-strong);
   --tc-primary-soft: var(--brand-soft);
   --tc-accent: #e8743b;
   /* Same hue family as --tc-accent, darkened for 4.5:1+ contrast on
@@ -19,6 +19,7 @@
      dot/icon but not for the day-title heading text that uses it. */
   --tc-accent-strong: #a8471a;
   --tc-line: var(--line);
+  --tc-line-control: var(--line-control);
   --tc-danger: var(--status-critical);
   --tc-danger-soft: var(--status-critical-soft);
   --tc-warning: var(--status-warning-text);
@@ -28,7 +29,7 @@
   --tc-disabled-bg: #e9e5dc;
   --tc-radius-sm: var(--radius-control);
   --tc-radius-md: var(--radius-panel);
-  --tc-font: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --tc-font: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
 
   display: block;
   background: var(--tc-bg);
@@ -230,7 +231,7 @@
 .tc-date-input {
   min-height: 44px;
   padding: 10px 12px;
-  border: 1px solid var(--tc-line);
+  border: 1px solid var(--tc-line-control);
   border-radius: var(--tc-radius-sm);
   background: var(--tc-surface);
   color: var(--tc-text);
@@ -729,8 +730,8 @@
   font-size: 19px;
   font-weight: 800;
   /* 일차마다 채도 낮은 색(--day-1~6)을 순환 적용 - 타임라인 라벨과
-     세로선이 같은 색을 쓴다(아래 .tc-timeline). */
-  color: var(--day-color, var(--tc-accent-strong));
+     세로선이 같은 색을 쓴다(아래 .tc-timeline). 글자색은 대비용 -text 짝. */
+  color: var(--day-color-text, var(--tc-accent-strong));
 }
 
 .tc-day-route {
@@ -749,6 +750,7 @@
   margin: 2px 0 0;
   font-size: 13px;
   color: var(--tc-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .tc-day-summary-note {
@@ -816,6 +818,7 @@
   font-weight: 700;
   /* 포인트 색은 화면당 핵심 행동 1개(저장 버튼)에만 - 시간 라벨은 중립색. */
   color: var(--tc-text);
+  font-variant-numeric: tabular-nums;
 }
 
 .tc-stop.is-meal .tc-stop-time {
@@ -901,6 +904,7 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--tc-success);
+  font-variant-numeric: tabular-nums;
 }
 
 .tc-stop-note-lead {
@@ -998,11 +1002,13 @@
 .tc-connector-label {
   font-weight: 700;
   color: var(--tc-text);
+  font-variant-numeric: tabular-nums;
 }
 
 .tc-connector-primary {
   font-weight: 700;
   color: var(--tc-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 639px) {
@@ -1163,6 +1169,7 @@
 .tc-compare-day-mode,
 .tc-compare-day-minutes {
   color: var(--tc-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 /* --- Result actions ---------------------------------------------------- */
@@ -1193,4 +1200,33 @@
   border-radius: var(--tc-radius-sm);
   background: var(--tc-bg);
   font-size: 12px;
+}
+
+/* --- Generate progress (마감 디테일) - 점 3개, 스피너/바운스 없음 ------- */
+
+.tc-generate-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--tc-muted);
+}
+
+.tc-generate-progress-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tc-generate-progress-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tc-line);
+  transition: background-color var(--duration-base) var(--ease-out);
+}
+
+.tc-generate-progress-dots i.is-active {
+  background: var(--tc-primary);
 }

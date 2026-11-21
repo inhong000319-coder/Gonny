@@ -14,9 +14,31 @@ body,
 
 body {
   margin: 0;
-  font-family: "Pretendard", "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", "Segoe UI", "Apple SD Gothic Neo", sans-serif;
   background: var(--bg);
   color: var(--text);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--brand-soft);
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 /* 공통 유틸리티 - 경로선(동선) 모티프, 12단 그리드, 넓은 데스크톱 컨테이너 */
@@ -362,7 +384,10 @@ select {
   border-radius: 20px;
   background: white;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
 }
 
 .landing-picker-card:hover {
@@ -495,6 +520,7 @@ select {
 .section-subtitle {
   margin: 0 0 20px;
   color: var(--muted);
+  text-wrap: pretty;
 }
 
 .section-kicker {
@@ -537,7 +563,7 @@ select {
   width: 100%;
   padding: 14px 16px;
   border-radius: var(--radius-control);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-control);
   background: var(--surface);
 }
 
@@ -552,6 +578,16 @@ select {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: white;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.chip:hover {
+  border-color: var(--line-control);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 .chip.active {
@@ -569,6 +605,18 @@ select {
   border: 0;
   border-radius: var(--radius-control);
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.button:disabled {
+  background: var(--surface-strong);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 .button.primary {
@@ -576,14 +624,40 @@ select {
   color: var(--brand-contrast);
 }
 
+.button.primary:hover:not(:disabled) {
+  background: var(--brand-strong);
+}
+
+.button.primary:active:not(:disabled) {
+  background: var(--brand-strong);
+  filter: brightness(0.92);
+}
+
 .button.secondary {
   background: var(--surface-strong);
   color: var(--text);
 }
 
+.button.secondary:hover:not(:disabled) {
+  background: var(--line-control);
+}
+
+.button.secondary:active:not(:disabled) {
+  background: var(--line-control);
+  filter: brightness(0.94);
+}
+
 .button.ghost {
   background: transparent;
   color: var(--muted);
+}
+
+.button.ghost:hover:not(:disabled) {
+  background: var(--surface-strong);
+}
+
+.button.ghost:active:not(:disabled) {
+  background: var(--line);
 }
 
 .social-login-button {
@@ -621,6 +695,10 @@ select {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: white;
+}
+
+.metric p {
+  font-variant-numeric: tabular-nums;
 }
 
 .trip-card {
@@ -2586,7 +2664,9 @@ body {
 .feature-panel {
   min-height: 210px;
   padding: 24px;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 .feature-panel:hover,
 .timeline-item:hover { transform: translateY(-2px); box-shadow: 0 20px 35px rgba(57, 103, 137, 0.13); }

@@ -31,7 +31,10 @@ const HERO_TIMELINE = [
 ];
 
 function dayColorStyle(day: number): CSSProperties {
-  return { "--day-color": `var(--day-${day})` } as CSSProperties;
+  return {
+    "--day-color": `var(--day-${day})`,
+    "--day-color-text": `var(--day-${day}-text)`,
+  } as CSSProperties;
 }
 
 export function LandingPage() {

@@ -2,6 +2,7 @@ import { MouseEvent, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
 import { apiClient } from "../../shared/api/client";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 import { AdminPlaceForm } from "./admin-place-form";
 import {
   CityCatalog,
@@ -23,6 +24,7 @@ import {
 } from "./admin-data-shared";
 
 export function AdminPlaceEditPage() {
+  useDocumentTitle("장소 관리");
   const navigate = useNavigate();
   const { city = "", placeId = "" } = useParams();
   const [searchParams] = useSearchParams();

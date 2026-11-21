@@ -23,6 +23,7 @@ import "../../features/trips/styles/trip-detail.css";
 import { findStayForDay } from "../../features/trips/utils/day-accommodation";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 type EditableItineraryItem = {
   id: number;
@@ -45,6 +46,7 @@ export function TripDetailPage() {
   const { tripId = "101" } = useParams();
   const queryClient = useQueryClient();
   const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);
+  useDocumentTitle(tripDetail?.overview.title);
   const { data: budget } = useBudgetSummaryQuery(tripId);
   const { data: expenses } = useExpensesQuery(tripId);
   const { data: report, isLoading: isReportLoading, isError: isReportError, refetch: refetchReport } =
@@ -190,8 +192,11 @@ export function TripDetailPage() {
                       : null;
                   // 2단계(결과 화면)와 같은 공식으로 일차 색을 순환시켜
                   // 앱 전체에서 "며칠째"가 같은 색 규칙으로 보이게 한다.
+                  // 선(border)과 글자색은 대비가 달라 각각 -text 짝을 따로 쓴다.
+                  const dayIndex = ((dayNumber - 1) % 6) + 1;
                   const dayColorStyle = {
-                    "--day-color": `var(--day-${((dayNumber - 1) % 6) + 1})`,
+                    "--day-color": `var(--day-${dayIndex})`,
+                    "--day-color-text": `var(--day-${dayIndex}-text)`,
                   } as CSSProperties;
 
                   return (

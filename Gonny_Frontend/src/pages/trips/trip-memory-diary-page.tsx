@@ -21,6 +21,7 @@ import { apiClient } from "../../shared/api/client";
 import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 const ratingOptions = [1, 2, 3, 4, 5];
 const reactionOptions = [
@@ -342,6 +343,7 @@ function buildJournalPayload(form: JournalFormState, contentBlocks: TravelJourna
 }
 
 export function TripMemoryDiaryPage() {
+  useDocumentTitle("여행 다이어리");
   const { tripId = "101" } = useParams();
   const queryClient = useQueryClient();
   const { data: tripDetail } = useTripDetailQuery(tripId);

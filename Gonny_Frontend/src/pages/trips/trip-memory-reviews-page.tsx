@@ -17,6 +17,7 @@ import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 const ratingOptions = [1, 2, 3, 4, 5];
 // rule_planner의 community_feedback.py가 인식하는 값(VALID_TIME_SLOTS)과
@@ -147,6 +148,7 @@ function applyTagValue(previousValue: string, suggestion: string) {
 }
 
 export function TripMemoryReviewsPage() {
+  useDocumentTitle("장소 리뷰");
   const { tripId = "" } = useParams();
   const queryClient = useQueryClient();
   const { data: tripDetail, isError: isTripDetailError, refetch: refetchTripDetail } = useTripDetailQuery(tripId);

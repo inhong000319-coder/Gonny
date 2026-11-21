@@ -16,6 +16,7 @@ import { CommunityPlaceReviewItem } from "../../features/community/types/communi
 import { useTripsQuery } from "../../features/trips/hooks/use-trips-query";
 import { Button } from "../../shared/components/ui/button";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 const reactionOptions = [
   { value: "like", emoji: "👍" },
@@ -39,6 +40,7 @@ function readReactionState() {
 }
 
 export function CommunityPage() {
+  useDocumentTitle("커뮤니티");
   const { user, isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [featuredIndex, setFeaturedIndex] = useState(0);

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
 import { apiClient } from "../../shared/api/client";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 import {
   CityCatalog,
   DestinationSummary,
@@ -19,6 +20,7 @@ type PlaceListItem = CityCatalog["places"][number] & {
 };
 
 export function AdminDataPage() {
+  useDocumentTitle("데이터 관리");
   const [searchParams, setSearchParams] = useSearchParams();
   const [destinations, setDestinations] = useState<DestinationSummary[]>([]);
   const [catalogs, setCatalogs] = useState<CityCatalog[]>([]);

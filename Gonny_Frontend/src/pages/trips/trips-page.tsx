@@ -7,8 +7,10 @@ import { useTripsQuery } from "../../features/trips/hooks/use-trips-query";
 import { queryKeys } from "../../shared/api/query-keys";
 import { Button } from "../../shared/components/ui/button";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
+import { useDocumentTitle } from "../../shared/hooks/use-document-title";
 
 export function TripsPage() {
+  useDocumentTitle("내 여행");
   const queryClient = useQueryClient();
   const { data: trips, isError, refetch } = useTripsQuery();
   const tripList = trips ?? [];

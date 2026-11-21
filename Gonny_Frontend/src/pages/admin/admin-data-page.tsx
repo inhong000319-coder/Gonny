@@ -3,6 +3,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { AppShell } from "../../app/layouts/app-shell";
 import { apiClient } from "../../shared/api/client";
 import { useDocumentTitle } from "../../shared/hooks/use-document-title";
+import { EmptyState } from "../../shared/components/feedback/empty-state";
+import "./styles/admin.css";
 import {
   CityCatalog,
   DestinationSummary,
@@ -378,10 +380,10 @@ export function AdminDataPage() {
                 </article>
               ))
             ) : (
-              <article className="admin-empty-card">
-                <strong>현재 조건에 맞는 장소가 없습니다.</strong>
-                <p>검색어나 필터를 바꾸거나, 선택한 도시에 새 장소를 추가해보세요.</p>
-              </article>
+              <EmptyState
+                title="현재 조건에 맞는 장소가 없습니다."
+                description="검색어나 필터를 바꾸거나, 선택한 도시에 새 장소를 추가해보세요."
+              />
             )}
           </div>
         </section>

@@ -1598,12 +1598,12 @@ body.modal-open {
 
 .community-summary-card span,
 .community-meta-line {
-  color: #64748b;
+  color: var(--muted);
 }
 
 .community-summary-card strong,
 .community-entry-card strong {
-  color: #173f78;
+  color: var(--text);
 }
 
 .community-form-card,
@@ -1616,8 +1616,8 @@ body.modal-open {
 }
 
 .community-entry-card {
-  background: linear-gradient(180deg, #ffffff, #f8fbff);
-  border-color: #d6e4f8;
+  background: var(--surface);
+  border-color: var(--line);
 }
 
 .community-entry-copy,
@@ -2354,28 +2354,23 @@ body.modal-open {
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
-  border: 1px solid rgba(186, 205, 237, 0.74);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 255, 0.94));
-  color: #29486f;
+  background: var(--surface);
+  color: var(--text);
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease,
-    background 0.18s ease;
-  box-shadow: 0 10px 20px rgba(72, 110, 170, 0.08);
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
 }
 
 .emotion-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(75, 129, 255, 0.62);
-  box-shadow: 0 16px 28px rgba(74, 111, 170, 0.16);
+  border-color: var(--line-control);
 }
 
 .emotion-button.active {
-  border-color: rgba(50, 124, 255, 0.82);
-  background: linear-gradient(135deg, rgba(50, 124, 255, 0.18), rgba(255, 138, 194, 0.16));
-  color: #1d4ed8;
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--text);
 }
 
 .emotion-button.compact {
@@ -2384,15 +2379,12 @@ body.modal-open {
   justify-content: center;
 }
 
+/* 이모지-원형 배경(icon-in-colored-circle)을 쓰지 않는다 - 이모지 자체가
+   이미 색이 있어 배경 원을 더하면 장식이 겹친다. */
 .emotion-button-emoji {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: radial-gradient(circle at top left, rgba(122, 225, 255, 0.42), rgba(105, 126, 255, 0.18));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
   font-size: 1.1rem;
   line-height: 1;
 }
@@ -2614,14 +2606,12 @@ body {
 .chip { border-color: var(--line); background: var(--surface); color: var(--text); }
 
 .trip-card,
-.community-entry-card,
 .memory-list-card,
 .admin-workspace-card {
   border-color: rgba(199, 220, 234, 0.92);
   box-shadow: 0 10px 22px rgba(55, 103, 137, 0.07);
 }
-.trip-card:hover,
-.community-entry-card:hover { border-color: #a9d5ea; }
+.trip-card:hover { border-color: #a9d5ea; }
 
 .auth-layout {
   background: var(--bg);

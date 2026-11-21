@@ -4,14 +4,11 @@
   --brand-contrast: #ffffff;
   --brand-soft: rgba(15, 118, 110, 0.12);
 
-  /* 하위 호환: 아직 리디자인 전인 화면이 참조하는 기존 변수명 */
+  /* 하위 호환: trip-detail(accommodation-change-panel.tsx)이 아직 참조하는
+     기존 변수명 - --accent/--accent-warm/--accent-mint/--hero-gradient/
+     --button-gradient/--radius-lg/--radius-sm은 참조가 0이 돼 제거함. */
   --primary: var(--brand);
   --primary-soft: var(--brand-soft);
-  --accent: #c9a63e;
-  --accent-warm: #ff8f6b;
-  --accent-mint: #82e0cf;
-  --hero-gradient: linear-gradient(135deg, #7ddcff 0%, #76b7ff 44%, #ffe6bf 100%);
-  --button-gradient: linear-gradient(90deg, #1f63ff 0%, #21c7d9 100%);
 
   /* 중립 배경/표면/텍스트/보더 */
   --bg: #f7f6f3;
@@ -79,10 +76,9 @@
   --radius-control: 8px;
   --radius-panel: 12px;
   --radius-surface: 16px;
-  /* 하위 호환: 아직 리디자인 전인 화면이 참조하는 기존 변수명 */
-  --radius-lg: 24px;
+  /* 하위 호환: globals.css의 .metric(budget/report 카드)이 아직 참조하는
+     기존 변수명 */
   --radius-md: 16px;
-  --radius-sm: 12px;
 
   --shadow: 0 1px 2px rgba(31, 42, 36, 0.06);
 

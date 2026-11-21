@@ -6,6 +6,7 @@ import { useTripCommunityQuery } from "../../features/community/hooks/use-trip-c
 import { useUpdateTripTodoMutation } from "../../features/community/hooks/use-update-trip-todo-mutation";
 import { useTripDetailQuery } from "../../features/trips/hooks/use-trip-detail-query";
 import { Button } from "../../shared/components/ui/button";
+import { EmptyState } from "../../shared/components/feedback/empty-state";
 import { LoadErrorCard } from "../../shared/components/ui/load-error-card";
 import { ModalOverlay } from "../../shared/components/ui/modal-overlay";
 import { useDocumentTitle } from "../../shared/hooks/use-document-title";
@@ -71,10 +72,9 @@ export function TripMemoryPage() {
 
   return (
     <AppShell>
-      <section className="page-hero panel panel-gradient">
+      <section className="page-hero panel">
         <div className="row" style={{ justifyContent: "space-between" }}>
           <div>
-            <span className="section-kicker">TRAVEL MEMORY</span>
             <h1 className="section-title" style={{ fontSize: "2.2rem", margin: "8px 0" }}>
               {tripDetail.overview.title} 기록 관리
             </h1>
@@ -104,7 +104,7 @@ export function TripMemoryPage() {
           </Link>
         </div>
 
-        <section className="card card-tinted stack">
+        <section className="card stack">
           <div className="section-header">
             <div>
               <h2 className="section-title">여행 준비 TODO</h2>
@@ -183,10 +183,15 @@ export function TripMemoryPage() {
             ))}
 
             {!isLoading && !todosForSelectedDay.length ? (
-              <div className="admin-empty-card">
-                <strong>이 날짜에는 아직 TODO가 없어요.</strong>
-                <p>리스트 추가하기 버튼으로 준비해야 할 일과 먹고 싶은 것들을 날짜별로 바로 추가해보세요.</p>
-              </div>
+              <EmptyState
+                action={
+                  <Button onClick={() => setIsCreateModalOpen(true)} variant="secondary">
+                    리스트 추가하기
+                  </Button>
+                }
+                description="리스트 추가하기 버튼으로 준비해야 할 일과 먹고 싶은 것들을 날짜별로 바로 추가해보세요."
+                title="이 날짜에는 아직 TODO가 없어요."
+              />
             ) : null}
           </div>
         </section>

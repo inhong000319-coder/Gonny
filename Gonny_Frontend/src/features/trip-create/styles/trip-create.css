@@ -1291,6 +1291,7 @@
 .tc-calendar {
   display: grid;
   gap: var(--space-3);
+  max-width: 380px;
   padding: var(--space-4);
   border: 1px solid var(--tc-line);
   border-radius: var(--tc-radius-md);
@@ -1334,6 +1335,12 @@
   outline-offset: 2px;
 }
 
+.tc-calendar-nav:disabled {
+  color: var(--tc-muted);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .tc-calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -1346,7 +1353,9 @@
 .tc-calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: var(--space-1);
+  /* 세로(요일 줄 사이)는 기존 간격을 유지하되, 가로(같은 줄 안)는 붙여서
+     범위 띠(.is-in-range::before)가 칸 사이 틈 없이 이어져 보이게 한다. */
+  gap: var(--space-1) 0;
 }
 
 .tc-calendar-cell-blank {
@@ -1354,10 +1363,11 @@
 }
 
 .tc-calendar-day {
+  position: relative;
   display: grid;
   place-items: center;
   width: 100%;
-  aspect-ratio: 1;
+  height: 42px;
   min-width: 0;
   border: 1px solid transparent;
   border-radius: var(--tc-radius-sm);
@@ -1376,9 +1386,18 @@
   font-weight: 700;
 }
 
-.tc-calendar-day.is-in-range {
+/* 범위 중간 날짜는 칸 전체가 아니라 가운데를 가로지르는 얇은 띠로만
+   이어 보이게 한다(::before는 글자보다 먼저 그려지므로 날짜 숫자 위로
+   올라오지 않는다 - z-index 불필요). 시작/종료일(.is-range-edge)은 이
+   띠 대신 기존 전체 채움을 그대로 유지한다. */
+.tc-calendar-day.is-in-range:not(.is-range-edge)::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  bottom: 30%;
+  left: 0;
+  right: 0;
   background: var(--brand-soft);
-  border-radius: 0;
 }
 
 .tc-calendar-day.is-range-edge {
@@ -1410,5 +1429,18 @@
 
   .tc-calendar-day {
     font-size: var(--font-caption);
+  }
+}
+
+/* 모바일은 폭에 맞춰 채우는 정사각형 칸으로 그대로 둔다(기존 동작
+   유지) - 최대 너비 제한과 고정 높이는 데스크톱에서만 적용한다. */
+@media (max-width: 479px) {
+  .tc-calendar {
+    max-width: none;
+  }
+
+  .tc-calendar-day {
+    height: auto;
+    aspect-ratio: 1;
   }
 }

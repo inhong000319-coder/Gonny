@@ -160,13 +160,19 @@ export function DateRangeCalendar({ startDate, nights, onChange }: DateRangeCale
   const rangeEnd = pendingStart ?? confirmedEnd;
 
   const cells = useMemo(() => buildMonthGrid(viewMonth), [viewMonth]);
+  // 오늘이 속한 달보다 더 과거로는 갈 수 없다 - 그 이전 달은 전부 지난
+  // 날짜뿐이라 보여줘도 고를 게 없다.
+  const isAtCurrentMonth =
+    viewMonth.getFullYear() === today.getFullYear() && viewMonth.getMonth() === today.getMonth();
 
   return (
     <div className="tc-calendar">
       <div className="tc-calendar-head">
         <button
+          aria-disabled={isAtCurrentMonth}
           aria-label="이전 달"
           className="tc-calendar-nav"
+          disabled={isAtCurrentMonth}
           onClick={() => setViewMonth((month) => addMonths(month, -1))}
           type="button"
         >

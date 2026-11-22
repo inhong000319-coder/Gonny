@@ -624,6 +624,18 @@ function labelStyleDesc(value: TripStyle) {
   return "동선 효율과 접근성을 우선해요.";
 }
 
+// 도시 표시 이름(toCityLabel) 뒤에 붙는 한국어 주제 조사(은/는) - 마지막
+// 글자의 받침 유무로 고른다("서울은"/"부산은"/"제주는" 전부 올바르게).
+function withTopicParticle(label: string) {
+  const lastChar = label[label.length - 1] ?? "";
+  const code = lastChar.codePointAt(0) ?? 0;
+  if (code < 0xac00 || code > 0xd7a3) {
+    return `${label}는`;
+  }
+  const hasFinalConsonant = (code - 0xac00) % 28 !== 0;
+  return `${label}${hasFinalConsonant ? "은" : "는"}`;
+}
+
 function labelCompanion(value: CompanionType) {
   if (value === "solo") return "혼자";
   if (value === "couple") return "커플";
@@ -2806,8 +2818,8 @@ export function TripCreateForm() {
                       </p>
                       {selectedCatalogCity?.recommended_max_days && selectedNights + 1 > selectedCatalogCity.recommended_max_days ? (
                         <p className="tc-note">
-                          {toCityLabel(selectedCatalogCity.city)}는 {selectedCatalogCity.recommended_max_days}일차까지 장소를
-                          채울 수 있어요. 그 이후 날은 식사 중심이거나 비어 있을 수 있어요.
+                          {withTopicParticle(toCityLabel(selectedCatalogCity.city))} {selectedCatalogCity.recommended_max_days}
+                          일차까지 장소를 채울 수 있어요. 그 이후 날은 식사 중심이거나 비어 있을 수 있어요.
                         </p>
                       ) : null}
                     </div>

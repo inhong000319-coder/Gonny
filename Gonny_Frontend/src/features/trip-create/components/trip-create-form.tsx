@@ -58,6 +58,16 @@ import {
   canBuildFixedSlotsForRecalculate,
   type AccommodationStayForRecalculate,
 } from "../utils/recalculate-request";
+import {
+  addDaysToISODate,
+  buildDurationLabel,
+  feasibleArrivalsForDeparture,
+  feasibleDeparturesForArrival,
+  formatDurationLabel,
+  isDayTripCombinationFeasible,
+  toLocalISODate,
+} from "../utils/trip-duration";
+import { DateRangeCalendar } from "./date-range-calendar";
 
 type CatalogCityOption = {
   continent: string;
@@ -65,6 +75,9 @@ type CatalogCityOption = {
   city: string;
   aliases: string[];
   accommodation_type_counts?: Partial<Record<AccommodationTypeLabel, number>>;
+  // 장소가 3슬롯을 다 채울 수 있는 최대 일수(기본 0 = 안내 없음). 0/없음이면
+  // 표시하지 않는다 - 넘겨도 오류는 아니고 식사 위주 빈 날이 생길 뿐이다.
+  recommended_max_days?: number;
 };
 
 type RuleItineraryCatalogResponse = {
@@ -471,7 +484,16 @@ const travelerOptions = [
   { value: 4, label: "넷이서 여행" },
   { value: 5, label: "5인 이상 여행" },
 ];
-const nightsOptions = [1, 2, 3, 4, 5, 6];
+// 여행 날짜 빠른 선택 칩 - 나중에 바꾸기 쉽게 상수로 둔다(5박 6일은
+// 의도적으로 뺀 목록 - 작업 지시 그대로).
+const QUICK_DURATION_OPTIONS: { nights: number; label: string }[] = [
+  { nights: 0, label: "당일치기" },
+  { nights: 1, label: "1박 2일" },
+  { nights: 2, label: "2박 3일" },
+  { nights: 3, label: "3박 4일" },
+  { nights: 4, label: "4박 5일" },
+  { nights: 6, label: "6박 7일" },
+];
 // Trip.budget is a required integer on save, but the planner no longer
 // collects a won amount. 0 is what the backend's report/expense code
 // already treats as "no budget set" (see TripService.get_trip_report).
@@ -480,7 +502,9 @@ const UNSET_TRIP_BUDGET = 0;
 const initialForm: PlannerFormState = {
   city: "",
   travelers: 2,
-  start_date: new Date().toISOString().slice(0, 10),
+  // 로컬(브라우저) 자정 기준 오늘 - toISOString()은 쓰지 않는다(KST에서
+  // UTC 자정 전후로 하루 밀리는 문제, trip-duration.ts 모듈 설명 참고).
+  start_date: toLocalISODate(new Date()),
   duration_label: "2박 3일",
   budget_band: "medium",
   concepts: ["sightseeing", "food"],
@@ -598,6 +622,18 @@ function labelStyleDesc(value: TripStyle) {
   if (value === "easy") return "이동 부담을 줄이고 흐름을 부드럽게 잡아요.";
   if (value === "near-stay") return "한 지역에 머물며 편하게 즐겨요.";
   return "동선 효율과 접근성을 우선해요.";
+}
+
+// 도시 표시 이름(toCityLabel) 뒤에 붙는 한국어 주제 조사(은/는) - 마지막
+// 글자의 받침 유무로 고른다("서울은"/"부산은"/"제주는" 전부 올바르게).
+function withTopicParticle(label: string) {
+  const lastChar = label[label.length - 1] ?? "";
+  const code = lastChar.codePointAt(0) ?? 0;
+  if (code < 0xac00 || code > 0xd7a3) {
+    return `${label}는`;
+  }
+  const hasFinalConsonant = (code - 0xac00) % 28 !== 0;
+  return `${label}${hasFinalConsonant ? "은" : "는"}`;
 }
 
 function labelCompanion(value: CompanionType) {
@@ -745,19 +781,8 @@ function labelPlaceCategory(value: string): string | null {
   return NON_CONCEPT_CATEGORY_LABELS[value] ?? null;
 }
 
-function buildDurationLabel(nights: number) {
-  return `${nights}박 ${nights + 1}일`;
-}
-
-function buildEndDate(startDate: string, nights: number) {
-  const parsed = new Date(startDate);
-  if (Number.isNaN(parsed.getTime())) {
-    return startDate;
-  }
-  parsed.setDate(parsed.getDate() + nights);
-  return parsed.toISOString().slice(0, 10);
-}
-
+// buildDurationLabel/buildEndDate는 이제 ../utils/trip-duration에서
+// 가져온다(로컬 날짜 계산으로 교체 - requirements #1).
 function parseNights(value: string) {
   const match = value.match(/(\d+)\s*박/);
   if (!match) {
@@ -2063,6 +2088,14 @@ export function TripCreateForm() {
   // 새 /generate 결과에서는 이 플래그가 세팅되지 않으므로 기존대로
   // 초기화된다.
   const preserveDayTravelModeOnNextResultRef = useRef(false);
+  // 당일치기(0박)로 바뀌면 숙소 관련 선택을 요청에서 완전히 빼야 하므로
+  // 폼 값도 비운다 - 다시 1박 이상으로 돌아왔을 때 방금 전 선택을
+  // 복원하기 위해 직전 값을 여기 들고 있는다(updateField의 duration_label
+  // 분기 참고). 세션 중 한 번도 당일치기였던 적이 없으면 null.
+  const savedAccommodationPrefsRef = useRef<{
+    accommodation_types: AccommodationTypeLabel[];
+    accommodation_budget_band: BudgetBand | null;
+  } | null>(null);
   const hasResult = result !== null;
 
   useEffect(() => {
@@ -2180,7 +2213,8 @@ export function TripCreateForm() {
   const availableAccommodationTypes = accommodationTypeOptions.filter(
     (type) => (selectedCatalogCity?.accommodation_type_counts?.[type] ?? 0) > 0,
   );
-  const endDate = buildEndDate(form.start_date, selectedNights);
+  const endDate = addDaysToISODate(form.start_date, selectedNights);
+  const isDayTrip = selectedNights === 0;
   const unusedSelectedTransportModes = form.transport_modes.filter(
     (mode) => !form.transport_by_day.includes(mode),
   );
@@ -2244,6 +2278,50 @@ export function TripCreateForm() {
     };
   }, [result]);
 
+  // duration_label이 바뀔 때(여행 기간 자체가 바뀔 때) 같이 조정해야 하는
+  // 다른 필드들 - updateField("duration_label", ...)와 달력의 onChange
+  // (시작일+박수를 한 번에 확정) 둘 다 이 로직을 타야 해서 분리했다.
+  const applyNightsSideEffects = (prev: PlannerFormState, nights: number): Partial<PlannerFormState> => {
+    const days = nights + 1;
+    const patch: Partial<PlannerFormState> = {
+      transport_by_day: resizeTransportByDay(prev.transport_by_day, days, prev.transport_modes),
+    };
+    // #133 - 1~2박으로 줄이면 숙소 구성 선택지 자체가 숨겨지므로, 값도
+    // "한 곳"으로 되돌린다(숨겨진 선택을 그대로 들고 있다가 나중에
+    // 다시 보일 때 어색하게 남는 걸 막는다).
+    if (nights < MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT) {
+      patch.accommodation_split = "single";
+    }
+
+    const wasDayTrip = parseNights(prev.duration_label) === 0;
+    const isNowDayTrip = nights === 0;
+    if (isNowDayTrip && !wasDayTrip) {
+      // 당일치기로 들어가는 순간의 숙소 선택을 저장해 둔다 - 숙소 관련
+      // 입력 자체를 숨기고 요청에서도 빼야 하므로(requirements #6).
+      savedAccommodationPrefsRef.current = {
+        accommodation_types: prev.accommodation_types,
+        accommodation_budget_band: prev.accommodation_budget_band,
+      };
+      patch.accommodation_types = [];
+      patch.accommodation_budget_band = null;
+    } else if (!isNowDayTrip && wasDayTrip && savedAccommodationPrefsRef.current) {
+      // 다시 1박 이상으로 돌아오면 직전 선택을 복원한다.
+      patch.accommodation_types = savedAccommodationPrefsRef.current.accommodation_types;
+      patch.accommodation_budget_band = savedAccommodationPrefsRef.current.accommodation_budget_band;
+    }
+
+    const nextArrival = (patch.arrival_period ?? prev.arrival_period) as ArrivalPeriod | null;
+    const nextDeparture = (patch.departure_period ?? prev.departure_period) as DeparturePeriod | null;
+    if (isNowDayTrip && !isDayTripCombinationFeasible(nextArrival, nextDeparture)) {
+      // 당일치기로 바뀌며 기존 도착·출발 조합이 더는 불가능해지면 출발
+      // 선택을 비운다(requirements #6 - "이미 고른 출발이 불가능해지면
+      // 출발 선택을 비운다").
+      patch.departure_period = null;
+    }
+
+    return patch;
+  };
+
   const updateField = <K extends keyof PlannerFormState>(key: K, value: PlannerFormState[K]) => {
     setForm((prev) => {
       const next: PlannerFormState = { ...prev, [key]: value };
@@ -2257,19 +2335,36 @@ export function TripCreateForm() {
       }
 
       if (key === "duration_label") {
-        const nights = parseNights(value as string);
-        const days = nights + 1;
-        next.transport_by_day = resizeTransportByDay(prev.transport_by_day, days, prev.transport_modes);
-        // #133 - 1~2박으로 줄이면 숙소 구성 선택지 자체가 숨겨지므로, 값도
-        // "한 곳"으로 되돌린다(숨겨진 선택을 그대로 들고 있다가 나중에
-        // 다시 보일 때 어색하게 남는 걸 막는다).
-        if (nights < MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT) {
-          next.accommodation_split = "single";
+        Object.assign(next, applyNightsSideEffects(prev, parseNights(value as string)));
+      }
+
+      // 당일치기일 때만 도착·출발 조합 제약이 있다 - 방금 바꾼 쪽 때문에
+      // 이미 골라둔 반대쪽이 더는 불가능해지면 반대쪽을 비운다(requirements
+      // #6, 양방향 동일 규칙).
+      if (parseNights(next.duration_label) === 0) {
+        if (key === "arrival_period" && !isDayTripCombinationFeasible(next.arrival_period, prev.departure_period)) {
+          next.departure_period = null;
+        }
+        if (key === "departure_period" && !isDayTripCombinationFeasible(prev.arrival_period, next.departure_period)) {
+          next.arrival_period = null;
         }
       }
 
       return next;
     });
+  };
+
+  // 달력에서 시작일~종료일(또는 당일치기)을 한 번에 확정했을 때 - 두 필드
+  // (start_date, duration_label)를 한 번의 setForm으로 같이 바꿔야
+  // updateField를 두 번 호출할 때 생기는 중간 상태(옛 시작일 + 새 박수 등)
+  // 없이 항상 유효한 값을 유지한다(requirements #2).
+  const handleDateRangeChange = (nextStartDate: string, nextNights: number) => {
+    setForm((prev) => ({
+      ...prev,
+      start_date: nextStartDate,
+      duration_label: buildDurationLabel(nextNights),
+      ...applyNightsSideEffects(prev, nextNights),
+    }));
   };
 
   const toggleAccommodationType = (type: AccommodationTypeLabel) => {
@@ -2603,7 +2698,7 @@ export function TripCreateForm() {
       // accommodation_id만(숙소가 없으면 아무 키도 없음) 보낸다 - 둘을
       // 같이 보내면 서버가 422로 거부한다.
       const createdTrip = await createTrip({
-        title: `${toCityLabel(result.city)} ${form.duration_label} 일정`,
+        title: `${toCityLabel(result.city)} ${formatDurationLabel(result.nights)} 일정`,
         destination: result.city,
         start_date: form.start_date,
         end_date: endDate,
@@ -2702,13 +2797,31 @@ export function TripCreateForm() {
                     </div>
 
                     <div className="tc-field">
-                      <span className="tc-field-label">여행 시작일</span>
-                      <input
-                        className="tc-date-input"
-                        onChange={(event) => updateField("start_date", event.target.value)}
-                        type="date"
-                        value={form.start_date}
-                      />
+                      <span className="tc-field-label">여행 날짜</span>
+                      <div className="tc-chip-row" role="radiogroup" aria-label="여행 날짜 빠른 선택">
+                        {QUICK_DURATION_OPTIONS.map((option) => (
+                          <button
+                            aria-checked={selectedNights === option.nights}
+                            className={`tc-chip ${selectedNights === option.nights ? "is-selected" : ""}`}
+                            key={option.nights}
+                            onClick={() => updateField("duration_label", buildDurationLabel(option.nights))}
+                            role="radio"
+                            type="button"
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                      <DateRangeCalendar nights={selectedNights} onChange={handleDateRangeChange} startDate={form.start_date} />
+                      <p className="tc-note">
+                        현재 선택: {formatDurationLabel(selectedNights)} · {form.start_date} ~ {endDate}
+                      </p>
+                      {selectedCatalogCity?.recommended_max_days && selectedNights + 1 > selectedCatalogCity.recommended_max_days ? (
+                        <p className="tc-note">
+                          {withTopicParticle(toCityLabel(selectedCatalogCity.city))} {selectedCatalogCity.recommended_max_days}
+                          일차까지 장소를 채울 수 있어요. 그 이후 날은 식사 중심이거나 비어 있을 수 있어요.
+                        </p>
+                      ) : null}
                     </div>
 
                     <div className="tc-field">
@@ -2730,62 +2843,60 @@ export function TripCreateForm() {
                     </div>
 
                     <div className="tc-field">
-                      <span className="tc-field-label">여행 기간</span>
-                      <div className="tc-chip-row" role="radiogroup" aria-label="여행 기간">
-                        {nightsOptions.map((night) => (
-                          <button
-                            aria-checked={selectedNights === night}
-                            className={`tc-chip ${selectedNights === night ? "is-selected" : ""}`}
-                            key={night}
-                            onClick={() => updateField("duration_label", buildDurationLabel(night))}
-                            role="radio"
-                            type="button"
-                          >
-                            {night}박
-                          </button>
-                        ))}
-                      </div>
-                      <p className="tc-note">
-                        현재 선택: {form.duration_label} · {form.start_date} ~ {endDate}
-                      </p>
-                    </div>
-
-                    <div className="tc-field">
                       <span className="tc-field-label">도착·출발 시간</span>
                       <div className="tc-field">
                         <span className="tc-field-sublabel">도착 시간</span>
                         <div className="tc-chip-row" role="radiogroup" aria-label="도착 시간">
-                          {arrivalPeriodOptions.map((option) => (
-                            <button
-                              aria-checked={form.arrival_period === option}
-                              className={`tc-chip ${form.arrival_period === option ? "is-selected" : ""}`}
-                              key={option ?? "none"}
-                              onClick={() => updateField("arrival_period", option)}
-                              role="radio"
-                              type="button"
-                            >
-                              {labelArrivalPeriod(option)}
-                            </button>
-                          ))}
+                          {arrivalPeriodOptions.map((option) => {
+                            const isInfeasible =
+                              isDayTrip &&
+                              option !== null &&
+                              !feasibleArrivalsForDeparture(form.departure_period).includes(option);
+                            return (
+                              <button
+                                aria-checked={form.arrival_period === option}
+                                className={`tc-chip ${form.arrival_period === option ? "is-selected" : ""}`}
+                                disabled={isInfeasible}
+                                key={option ?? "none"}
+                                onClick={() => updateField("arrival_period", option)}
+                                role="radio"
+                                title={isInfeasible ? "당일치기는 도착 후 이어지는 시간대에만 출발할 수 있어요" : undefined}
+                                type="button"
+                              >
+                                {labelArrivalPeriod(option)}
+                              </button>
+                            );
+                          })}
                         </div>
                         <p className="tc-note">도착 시간에 맞춰 첫날 일정이 줄어들어요.</p>
+                        {isDayTrip ? (
+                          <p className="tc-note">당일치기는 도착 후 이어지는 시간대에만 출발할 수 있어요.</p>
+                        ) : null}
                       </div>
 
                       <div className="tc-field">
                         <span className="tc-field-sublabel">출발 시간</span>
                         <div className="tc-chip-row" role="radiogroup" aria-label="출발 시간">
-                          {departurePeriodOptions.map((option) => (
-                            <button
-                              aria-checked={form.departure_period === option}
-                              className={`tc-chip ${form.departure_period === option ? "is-selected" : ""}`}
-                              key={option ?? "none"}
-                              onClick={() => updateField("departure_period", option)}
-                              role="radio"
-                              type="button"
-                            >
-                              {labelDeparturePeriod(option)}
-                            </button>
-                          ))}
+                          {departurePeriodOptions.map((option) => {
+                            const isInfeasible =
+                              isDayTrip &&
+                              option !== null &&
+                              !feasibleDeparturesForArrival(form.arrival_period).includes(option);
+                            return (
+                              <button
+                                aria-checked={form.departure_period === option}
+                                className={`tc-chip ${form.departure_period === option ? "is-selected" : ""}`}
+                                disabled={isInfeasible}
+                                key={option ?? "none"}
+                                onClick={() => updateField("departure_period", option)}
+                                role="radio"
+                                title={isInfeasible ? "당일치기는 도착 후 이어지는 시간대에만 출발할 수 있어요" : undefined}
+                                type="button"
+                              >
+                                {labelDeparturePeriod(option)}
+                              </button>
+                            );
+                          })}
                         </div>
                         <p className="tc-note">출발 시간에 맞춰 마지막 날 일정이 줄어들어요.</p>
                       </div>
@@ -2826,7 +2937,7 @@ export function TripCreateForm() {
                       </p>
                     </div>
 
-                    {availableAccommodationTypes.length > 0 ? (
+                    {!isDayTrip && availableAccommodationTypes.length > 0 ? (
                       <div className="tc-field">
                         <span className="tc-field-label">숙소 유형 (선택, 여러 개 가능)</span>
                         <div className="tc-chip-row">
@@ -2845,29 +2956,31 @@ export function TripCreateForm() {
                       </div>
                     ) : null}
 
-                    <div className="tc-field">
-                      <span className="tc-field-label">숙소 등급 (선택)</span>
-                      <p className="tc-note">
-                        숙소 가격은 시기와 객실에 따라 차이가 커서 정확하게 안내드리기 어려워요. 가격은 예약
-                        사이트에서 직접 확인해 주세요. 아래 선택은 가격이 아니라 원하는 숙소 등급(실속·보통·고급)을
-                        고르는 거예요.
-                      </p>
-                      <div className="tc-choice-grid tc-choice-grid-4">
-                        {accommodationGradeOptions.map((option) => (
-                          <button
-                            aria-checked={form.accommodation_budget_band === option.value}
-                            className={`tc-choice-card ${form.accommodation_budget_band === option.value ? "is-selected" : ""}`}
-                            key={option.label}
-                            onClick={() => updateField("accommodation_budget_band", option.value)}
-                            role="radio"
-                            type="button"
-                          >
-                            <strong>{option.label}</strong>
-                            <small>{option.description}</small>
-                          </button>
-                        ))}
+                    {!isDayTrip ? (
+                      <div className="tc-field">
+                        <span className="tc-field-label">숙소 등급 (선택)</span>
+                        <p className="tc-note">
+                          숙소 가격은 시기와 객실에 따라 차이가 커서 정확하게 안내드리기 어려워요. 가격은 예약
+                          사이트에서 직접 확인해 주세요. 아래 선택은 가격이 아니라 원하는 숙소 등급(실속·보통·고급)을
+                          고르는 거예요.
+                        </p>
+                        <div className="tc-choice-grid tc-choice-grid-4">
+                          {accommodationGradeOptions.map((option) => (
+                            <button
+                              aria-checked={form.accommodation_budget_band === option.value}
+                              className={`tc-choice-card ${form.accommodation_budget_band === option.value ? "is-selected" : ""}`}
+                              key={option.label}
+                              onClick={() => updateField("accommodation_budget_band", option.value)}
+                              role="radio"
+                              type="button"
+                            >
+                              <strong>{option.label}</strong>
+                              <small>{option.description}</small>
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    ) : null}
 
                     {selectedNights >= MIN_NIGHTS_FOR_ACCOMMODATION_SPLIT ? (
                       <div className="tc-field">
@@ -3030,7 +3143,7 @@ export function TripCreateForm() {
                       <div className="tc-summary-item">
                         <span className="tc-summary-label">기간과 인원</span>
                         <span className="tc-summary-value">
-                          {form.duration_label || "2박 3일"} · {form.travelers === 5 ? "5인 이상" : `${form.travelers}명`}
+                          {formatDurationLabel(selectedNights)} · {form.travelers === 5 ? "5인 이상" : `${form.travelers}명`}
                         </span>
                         <span className="tc-summary-note">일정 길이에 맞춰 하루 단위로 나눠 생성합니다.</span>
                       </div>
@@ -3153,7 +3266,9 @@ export function TripCreateForm() {
             <div className="tc-card tc-result-header">
               <h1 className="tc-result-title">{toCityLabel(result.city)} 일정이 준비됐어요</h1>
               <p className="tc-result-desc">
-                {toCityLabel(result.city)}에서 {result.nights}박 {result.days}일 동안 {labelStyle(result.style)} 흐름으로 즐길 수 있게 정리했습니다.
+                {toCityLabel(result.city)}에서{" "}
+                {result.nights === 0 ? "당일치기로" : `${result.nights}박 ${result.days}일 동안`}{" "}
+                {labelStyle(result.style)} 흐름으로 즐길 수 있게 정리했습니다.
               </p>
               <div className="tc-tag-row">
                 <span className="tc-tag">{labelCompanion(result.companion_type)}</span>
@@ -3182,7 +3297,7 @@ export function TripCreateForm() {
                 <div className="tc-summary-item">
                   <span className="tc-summary-label">기간과 인원</span>
                   <span className="tc-summary-value">
-                    {result.nights}박 {result.days}일 · {result.travelers}명
+                    {formatDurationLabel(result.nights)} · {result.travelers}명
                   </span>
                 </div>
                 <div className="tc-summary-item">
@@ -3260,7 +3375,14 @@ export function TripCreateForm() {
                 const arrivalSlotLabel = isFirstDay ? arrivalEmptySlotLabel(result.arrival_period) : null;
                 const departureSlotLabel = isLastDay ? departureEmptySlotLabel(result.departure_period) : null;
 
-                if (dayItems.length === 0) {
+                // 도착 시간대가 "밤"이면 첫날 전체 슬롯이 제외되므로 이
+                // 케이스만 명확히 "도착일이라 비어있다"고 말할 수 있다 -
+                // 그 외(장소가 바닥난 30박 근처 등)는 아래 일반 렌더로
+                // 넘어가 식사가 있으면 그대로 보여주고, 안내 문구만
+                // 부드럽게 바꾼다(requirements #8).
+                const isFullyExcludedByArrival = isFirstDay && arrivalSlotLabel === "하루 종일";
+
+                if (dayItems.length === 0 && isFullyExcludedByArrival) {
                   return (
                     <div className="tc-day-card" key={dayNumber} style={dayColorStyle}>
                       <div className="tc-day-head">
@@ -3270,9 +3392,7 @@ export function TripCreateForm() {
                         </div>
                       </div>
                       <div className="tc-alert tc-alert-info">
-                        {isFirstDay
-                          ? "이날은 도착일이에요. 숙소에서 쉬면서 여행을 시작해 보세요."
-                          : "이 날은 등록된 일정이 없어요."}
+                        이날은 도착일이에요. 숙소에서 쉬면서 여행을 시작해 보세요.
                       </div>
                     </div>
                   );
@@ -3421,10 +3541,15 @@ export function TripCreateForm() {
                           ) : null}
                         </p>
                       ) : null}
-                      <p className="tc-day-route">{summarizeRoute(effectiveDayItems)}</p>
+                      {dayItems.length > 0 ? <p className="tc-day-route">{summarizeRoute(effectiveDayItems)}</p> : null}
                       {weatherLine ? <p className="tc-day-weather">{weatherLine}</p> : null}
                     </div>
                   </div>
+                  {dayItems.length === 0 ? (
+                    <p className="tc-note" style={{ marginBottom: 12 }}>
+                      이 날은 추천할 장소가 부족해요. 식사 위주로 구성됐어요.
+                    </p>
+                  ) : null}
                   {isAccommodationChangeDay ? (
                     <div className="tc-alert tc-alert-info" style={{ marginBottom: 12 }}>
                       이 날 숙소를 옮겨요: {effectiveStartAccommodationName} → {effectiveEndAccommodationName}

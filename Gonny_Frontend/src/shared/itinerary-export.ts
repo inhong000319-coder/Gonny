@@ -49,7 +49,7 @@ function groupItemsByDay(items: ItineraryItem[]) {
 function buildSummaryLines(result: ItineraryResult, labels: ExportLabels) {
   return [
     `${labels.cityLabel} 여행 일정`,
-    `${result.nights}박 ${result.days}일 · ${result.travelers}명`,
+    `${result.nights === 0 ? "당일치기" : `${result.nights}박 ${result.days}일`} · ${result.travelers}명`,
     `예산: ${labels.budgetLabel}`,
     `스타일: ${labels.styleLabel}`,
     `동행: ${labels.companionLabel}`,

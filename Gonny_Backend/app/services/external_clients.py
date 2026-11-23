@@ -387,6 +387,143 @@ class TourApiClient:
 
         return items if isinstance(items, list) else [items]
 
+    # 공공데이터포털의 전역/일일 요청 한도 초과 시 알려진 오류 메시지(문서
+    # 기준) - 아직 실제로 한도를 넘겨 받은 응답으로 검증하지는 못했다.
+    # resultCode가 "0000"이 아닌 일반 실패("api_error")와 구분해, 호출하는
+    # 쪽(collect_place_candidates.py)이 재시도 대신 즉시 중단하고 지금까지
+    # 모은 결과를 저장할 수 있게 한다.
+    _QUOTA_EXCEEDED_MARKER = "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR"
+
+    def fetch_area_based_list2(
+        self,
+        content_type_id: str,
+        area_code: str,
+        page_no: int,
+        num_rows: int = 100,
+    ) -> tuple[list[dict], int | None, str]:
+        """Generic single-page areaBasedList2 browse-by-region call for any
+        contentTypeId, ranked by popularity (arrange="P") - unlike
+        fetch_popular_destinations (hardcoded to contentTypeId=12, no
+        pagination), this takes contentTypeId/pageNo as arguments and
+        exposes totalCount so a caller can paginate across other content
+        types (see scripts/collect_place_candidates.py). Does not change
+        fetch_popular_destinations's own behavior.
+
+        Returns (items, total_count, status) where status is "ok",
+        "quota_exceeded" (see _QUOTA_EXCEEDED_MARKER), or "api_error" (any
+        other request/response failure).
+        """
+        if not self.api_key:
+            return [], None, "api_error"
+
+        url = f"{self.base_url}/areaBasedList2"
+        params = {
+            "serviceKey": self.api_key,
+            "numOfRows": num_rows,
+            "pageNo": page_no,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentTypeId": content_type_id,
+            "areaCode": area_code,
+            "arrange": "P",
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+            if self._QUOTA_EXCEEDED_MARKER in resp.text:
+                return [], None, "quota_exceeded"
+            resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return [], None, "api_error"
+            body = payload["body"]
+            total_count = body.get("totalCount")
+            items_body = body["items"]
+            items = items_body["item"] if items_body else []
+        except Exception:
+            return [], None, "api_error"
+
+        if not isinstance(items, list):
+            items = [items]
+        return items, total_count, "ok"
+
+    def fetch_detail_intro2(self, content_id: str, content_type_id: str) -> tuple[dict | None, str]:
+        """Raw detailIntro2 item for any contentTypeId, kept verbatim (no
+        field extraction) - unlike fetch_place_operating_hours, which only
+        pulls the hours/closed-day fields for a contentTypeId already
+        mapped in DETAIL_INTRO_HOURS_FIELDS_BY_CONTENT_TYPE. Returns
+        (item, status); item is None when not found or on failure."""
+        if not self.api_key:
+            return None, "api_error"
+
+        url = f"{self.base_url}/detailIntro2"
+        params = {
+            "serviceKey": self.api_key,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentId": content_id,
+            "contentTypeId": content_type_id,
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+            if self._QUOTA_EXCEEDED_MARKER in resp.text:
+                return None, "quota_exceeded"
+            resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None, "api_error"
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None, "api_error"
+
+        if not isinstance(items, list):
+            items = [items]
+        return (items[0] if items else None), "ok"
+
+    def fetch_detail_common2(self, content_id: str, content_type_id: str) -> tuple[dict | None, str]:
+        """Raw detailCommon2 item (homepage, overview, etc.) for a
+        content_id, kept verbatim. Returns (item, status)."""
+        if not self.api_key:
+            return None, "api_error"
+
+        url = f"{self.base_url}/detailCommon2"
+        params = {
+            "serviceKey": self.api_key,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentId": content_id,
+            "contentTypeId": content_type_id,
+            "defaultYN": "Y",
+            "overviewYN": "Y",
+            "firstImageYN": "N",
+            "addrinfoYN": "N",
+            "mapinfoYN": "N",
+            "areacodeYN": "N",
+            "catcodeYN": "N",
+        }
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+            if self._QUOTA_EXCEEDED_MARKER in resp.text:
+                return None, "quota_exceeded"
+            resp.raise_for_status()
+            payload = resp.json()["response"]
+            if payload["header"]["resultCode"] != "0000":
+                return None, "api_error"
+            body = payload["body"]["items"]
+            items = body["item"] if body else []
+        except Exception:
+            return None, "api_error"
+
+        if not isinstance(items, list):
+            items = [items]
+        return (items[0] if items else None), "ok"
+
     def fetch_lodging_candidates(self, city: str, num_rows: int = 50) -> list[dict] | None:
         """Browse-by-region listing of contentTypeId=32 (숙박) items for a
         city via areaBasedList2. Returns raw TourAPI items (title,

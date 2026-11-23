@@ -244,6 +244,10 @@ def fetch_type_candidates(
                 raise QuotaExceeded(call_counter[0])
             if status == "ok":
                 break
+            print(
+                f"    [{content_type_id}] page {page} 호출 실패(api_error) - 재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
+                flush=True,
+            )
             time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
         else:
             items = []
@@ -251,6 +255,11 @@ def fetch_type_candidates(
         if not items:
             break
         collected.extend(items)
+        print(
+            f"    [{content_type_id}] page {page}: {len(items)}건 (누적 {len(collected)}"
+            f"{f'/{total_count}' if total_count is not None else ''}, 총 API 호출 {call_counter[0]}회)",
+            flush=True,
+        )
         if total_count is not None and len(collected) >= total_count:
             break
         page += 1
@@ -293,16 +302,24 @@ def enrich_candidate(client: TourApiClient, item: dict, call_counter: list[int])
                 raise QuotaExceeded(call_counter[0])
             if status == "ok":
                 break
+            print(
+                f"    detailIntro2({content_id}) 호출 실패(api_error) - 재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
+                flush=True,
+            )
             time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
         time.sleep(REQUEST_INTERVAL_SECONDS)
 
         for attempt in range(MAX_RETRIES_ON_API_ERROR):
             call_counter[0] += 1
-            detail_common, status = client.fetch_detail_common2(content_id, content_type_id)
+            detail_common, status = client.fetch_detail_common2(content_id)
             if status == "quota_exceeded":
                 raise QuotaExceeded(call_counter[0])
             if status == "ok":
                 break
+            print(
+                f"    detailCommon2({content_id}) 호출 실패(api_error) - 재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
+                flush=True,
+            )
             time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
         time.sleep(REQUEST_INTERVAL_SECONDS)
 
@@ -360,28 +377,42 @@ def collect_place_candidates(client: TourApiClient, city: str, max_per_type: int
     partial = False
 
     for content_type_id, label in COLLECT_CONTENT_TYPE_LABELS.items():
+        print(f"=== {label}(contentTypeId={content_type_id}) 수집 시작 (최대 {max_per_type}건) ===", flush=True)
         try:
             raw_items = fetch_type_candidates(client, area_code, content_type_id, max_per_type, call_counter)
         except QuotaExceeded:
             partial = True
+            print("!! 요청 한도 초과 - 수집을 중단합니다.", flush=True)
             break
         normalized = [normalize_raw_item(raw, content_type_id) for raw in raw_items]
         kept, excluded = filter_by_coordinates(normalized)
         per_type_collected[label] = len(kept)
         all_kept.extend(kept)
         all_excluded.extend(excluded)
+        print(f"{label}: {len(kept)}건 통과, {len(excluded)}건 좌표 제외", flush=True)
 
     new_candidates, already_in_catalog = partition_duplicates(all_kept, existing_places)
     for item in new_candidates:
         item["suggested_area"], item["area_note"] = suggest_area(item["addr1"])
 
+    print(
+        f"\n중복 판정 완료: 기존 카탈로그 중복 {len(already_in_catalog)}건, 신규 후보 {len(new_candidates)}건",
+        flush=True,
+    )
+
     if not partial:
         enriched: list[dict] = []
         for index, item in enumerate(new_candidates):
+            print(
+                f"상세 보강 {index + 1}/{len(new_candidates)}: {item['title']} "
+                f"(총 API 호출 {call_counter[0]}회)",
+                flush=True,
+            )
             try:
                 enriched.append(enrich_candidate(client, item, call_counter))
             except QuotaExceeded:
                 partial = True
+                print("!! 상세 보강 중 요청 한도 초과 - 남은 후보는 상세 없이 저장합니다.", flush=True)
                 # 상세 보강은 못 받았지만 후보 자체는 그대로 남긴다 - 다음
                 # 실행에서 상세만 이어서 받을 수 있게.
                 enriched.append({**item, "detail_intro": None, "detail_common": None, "open_hours": None, "closed_days": None})

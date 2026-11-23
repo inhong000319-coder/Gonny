@@ -39,7 +39,7 @@ class FakeTourApiClient:
     def fetch_detail_intro2(self, content_id, content_type_id):
         return self._detail_intro_by_id.get(content_id, (None, "ok"))
 
-    def fetch_detail_common2(self, content_id, content_type_id):
+    def fetch_detail_common2(self, content_id):
         return self._detail_common_by_id.get(content_id, (None, "ok"))
 
 

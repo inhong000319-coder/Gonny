@@ -484,27 +484,30 @@ class TourApiClient:
             items = [items]
         return (items[0] if items else None), "ok"
 
-    def fetch_detail_common2(self, content_id: str, content_type_id: str) -> tuple[dict | None, str]:
+    def fetch_detail_common2(self, content_id: str) -> tuple[dict | None, str]:
         """Raw detailCommon2 item (homepage, overview, etc.) for a
-        content_id, kept verbatim. Returns (item, status)."""
+        content_id, kept verbatim. Returns (item, status).
+
+        No contentTypeId and no *YN flag params - verified live (2026-11-23,
+        contentId=2385686) that detailCommon2 rejects contentTypeId
+        ("INVALID_REQUEST_PARAMETER_ERROR(contentTypeId)") and also rejects
+        defaultYN once contentTypeId is removed
+        ("INVALID_REQUEST_PARAMETER_ERROR(defaultYN)") - unlike detailIntro2,
+        this endpoint takes only serviceKey/numOfRows/pageNo/MobileOS/
+        MobileApp/_type/contentId and returns every field (homepage,
+        overview, firstimage, ...) unconditionally."""
         if not self.api_key:
             return None, "api_error"
 
         url = f"{self.base_url}/detailCommon2"
         params = {
             "serviceKey": self.api_key,
+            "numOfRows": 1,
+            "pageNo": 1,
             "MobileOS": "ETC",
             "MobileApp": "Gonny",
             "_type": "json",
             "contentId": content_id,
-            "contentTypeId": content_type_id,
-            "defaultYN": "Y",
-            "overviewYN": "Y",
-            "firstImageYN": "N",
-            "addrinfoYN": "N",
-            "mapinfoYN": "N",
-            "areacodeYN": "N",
-            "catcodeYN": "N",
         }
         try:
             with httpx.Client(timeout=8.0) as client:

@@ -311,7 +311,7 @@ def enrich_candidate(client: TourApiClient, item: dict, call_counter: list[int])
 
         for attempt in range(MAX_RETRIES_ON_API_ERROR):
             call_counter[0] += 1
-            detail_common, status = client.fetch_detail_common2(content_id, content_type_id)
+            detail_common, status = client.fetch_detail_common2(content_id)
             if status == "quota_exceeded":
                 raise QuotaExceeded(call_counter[0])
             if status == "ok":

@@ -5,17 +5,31 @@
 
 배경: 부산 활동 후보가 25곳뿐이라 recommended_max_days가 8일로 짧다
 (compute_recommended_max_days 참고). 이 스크립트가 만든 결과(신규 후보/
-기존 중복/제외 사유/area 제안)는 사람이 검토한 뒤 실제 카탈로그 반영
-여부를 결정하는 원재료다.
+기존 중복/제외 사유/area 제안/품질 플래그)는 사람이 검토한 뒤 실제
+카탈로그 반영 여부를 결정하는 원재료다.
+
+지역 파라미터: areaCode가 아니라 lDongRegnCd(법정동 시도 코드)를 쓴다 -
+scripts/diagnose_area_based_list.py로 실제 호출해 확인한 결과, 부산
+areaCode=6은 contentTypeId별 totalCount가 15/4/12/3 수준으로 극히
+일부만 반환하지만 lDongRegnCd=26은 348/129/61/987을 반환한다(areaCode는
+areacode 필드가 빈 레코드를 조용히 빠뜨리는 기존에 알려진 문제).
 
 수집 대상: contentTypeId 12(관광지)·14(문화시설)·28(레포츠)·38(쇼핑).
 39(음식점)·32(숙박)는 수집하지 않는다.
 
+2단계 구조:
+  1단계(목록): areaBasedList2 수집 + 좌표/범위 필터 + 기존 카탈로그 중복
+    판정 + 품질 플래그 부여 + suggested_area 제안. 상세 호출 없음.
+  2단계(상세): 중복·제외·품질 플래그가 있는 후보를 제외한 나머지에
+    대해서만 detailIntro2/detailCommon2를 호출한다. 응답은
+    local_only/reports/place_detail_cache_busan.json에 contentid별로
+    캐시해 재실행 시 이미 받은 건 다시 호출하지 않는다(재개 가능).
+
 Usage:
-    python scripts/collect_place_candidates.py --help
+    python scripts/diagnose_area_based_list.py --help
     python scripts/collect_place_candidates.py --city busan
-    python scripts/collect_place_candidates.py --city busan --max-per-type 50 \
-        --out local_only/reports/my_run.json
+    python scripts/collect_place_candidates.py --city busan --list-only
+    python scripts/collect_place_candidates.py --city busan --out local_only/reports/my_run.json
 """
 from __future__ import annotations
 
@@ -39,7 +53,7 @@ from app.core.settings import Settings  # noqa: E402
 from app.domains.rule_planner.services.travel_estimate import haversine_distance_km  # noqa: E402
 from app.services.external_clients import (  # noqa: E402
     DETAIL_INTRO_HOURS_FIELDS_BY_CONTENT_TYPE,
-    TOUR_API_AREA_CODE_BY_CITY,
+    TOUR_API_LDONG_REGN_CD_BY_CITY,
     TourApiClient,
     _collapse_whitespace,
     _normalize_tour_api_title,
@@ -48,6 +62,7 @@ from app.services.external_clients import (  # noqa: E402
 DESTINATIONS_DIR = PROJECT_ROOT / "app" / "data" / "destinations"
 ENV_FILE = REPO_ROOT / ".env"
 DEFAULT_OUT_PATH = PROJECT_ROOT / "local_only" / "reports" / "place_candidates_busan_raw.json"
+DETAIL_CACHE_PATH = PROJECT_ROOT / "local_only" / "reports" / "place_detail_cache_busan.json"
 
 REQUEST_INTERVAL_SECONDS = 0.2
 MAX_RETRIES_ON_API_ERROR = 5
@@ -63,12 +78,24 @@ COLLECT_CONTENT_TYPE_LABELS: dict[str, str] = {
     "38": "쇼핑",
 }
 
+# 타입별 기본 최대 수집 건수 - 전체에 일괄 적용하던 --max-per-type 대신,
+# diagnose_area_based_list.py로 확인한 타입별 totalCount 규모(348/129/
+# 61/987)에 맞춰 타입마다 다르게 둔다. 쇼핑(38)은 987건 대부분이 약국·
+# 이불가게 같은 동네 상점이라 arrange="P"(조회순) 상위만 적게 가져온다.
+MAX_PER_TYPE_DEFAULTS: dict[str, int] = {
+    "12": 120,
+    "14": 60,
+    "28": 40,
+    "38": 30,
+}
+
 # 부산 대략 범위(작업 지시 Context 기준) - 이 범위 밖 좌표는 주소 오류나
 # 다른 지역 체인점 등 실제로는 부산이 아닌 레코드로 보고 제외한다.
 BUSAN_BOUNDS = {"lat_min": 34.9, "lat_max": 35.4, "lng_min": 128.7, "lng_max": 129.4}
 
 # addr1 키워드 -> 기존 destinations/busan.json의 6개 area(nampo/songdo/
-# haeundae/gwangalli/centum/dongnae) 제안용 매핑표. scripts/
+# haeundae/gwangalli/centum/dongnae) 제안용 매핑표 - lDongSignguCd가 없을
+# 때만 쓰는 폴백이다(주 판정 기준은 아래 SIGUNGU_CODE_TO_AREA). scripts/
 # fetch_accommodation_catalog.py의 AREA_MATCH_KEYWORDS["busan"]과 같은
 # 키워드를 쓴다 - 엔진 코드가 아니라 이 스크립트 안의 제안용 표이므로
 # 사람이 쉽게 고칠 수 있게 여기 그대로 둔다. 우선순위는 딕셔너리 순서
@@ -82,6 +109,57 @@ BUSAN_AREA_SUGGESTION_KEYWORDS: dict[str, list[str]] = {
     "centum": ["센텀"],
 }
 AREA_NEEDS_REVIEW_NOTE = "새 area 필요 여부 검토"
+
+# lDongSignguCd(시군구 코드) -> 한글 구/군 이름 - 작업 지시 Context의 16개
+# 전부를 담아, area 매핑 성공 여부와 무관하게 sigungu_name에 항상 사람이
+# 읽을 수 있는 이름을 남긴다.
+SIGUNGU_NAME_BY_CODE: dict[str, str] = {
+    "110": "중구",
+    "140": "서구",
+    "170": "동구",
+    "200": "영도구",
+    "230": "부산진구",
+    "260": "동래구",
+    "290": "남구",
+    "320": "북구",
+    "350": "해운대구",
+    "380": "사하구",
+    "410": "금정구",
+    "440": "강서구",
+    "470": "연제구",
+    "500": "수영구",
+    "530": "사상구",
+    "710": "기장군",
+}
+
+# lDongSignguCd -> 기존 6개 area. 1:1로 깔끔하게 대응하는 구만 담는다 -
+# "centum"은 해운대구(350) 안에 있지만 "haeundae"와 같은 구라서 시군구
+# 코드만으로는 구분하지 않는다(요구사항 6: "센텀 vs 해운대처럼 나뉘는
+# 경우는 판단하지 말고 구 단위 후보만 표시"). centum은 lDongSignguCd가
+# 없을 때의 주소 키워드 폴백(BUSAN_AREA_SUGGESTION_KEYWORDS)에서만 쓰인다.
+SIGUNGU_CODE_TO_AREA: dict[str, str] = {
+    "110": "nampo",  # 중구 - 남포동
+    "140": "songdo",  # 서구 - 송도해수욕장
+    "260": "dongnae",  # 동래구
+    "350": "haeundae",  # 해운대구(센텀시티 포함, 구분하지 않음)
+    "500": "gwangalli",  # 수영구 - 광안리해수욕장
+}
+
+# 품질 플래그 판정용 제목 패턴 - 삭제하지 않고 flags 배열로만 표시한다
+# (요구사항 5). "등"으로 열려 있던 목록이라 같은 범주의 가까운 동의어를
+# 몇 개 더 넣었지만, 의도적으로 좁게 유지했다 - 과도하게 넓히면 진짜
+# 관광 후보까지 오검출할 수 있어서다.
+NON_TOURIST_SUSPECT_PATTERNS = ["주식회사", "(주)", "약국", "안경", "부동산", "의원", "병원", "치과", "한의원", "공인중개사"]
+LODGING_LIKE_PATTERNS = ["캠핑", "글램핑", "카라반", "펜션", "오토캠핑", "민박"]
+FOOD_STREET_LIKE_PATTERNS = ["먹자골목", "맛집", "식당가", "포장마차"]
+SPORTS_FACILITY_LIKE_PATTERNS = ["골프", "컨트리클럽", "수련원", "수련관", "야영장"]
+
+QUALITY_FLAG_PATTERNS: dict[str, list[str]] = {
+    "non_tourist_suspect": NON_TOURIST_SUSPECT_PATTERNS,
+    "lodging_like": LODGING_LIKE_PATTERNS,
+    "food_street_like": FOOD_STREET_LIKE_PATTERNS,
+    "sports_facility_like": SPORTS_FACILITY_LIKE_PATTERNS,
+}
 
 
 class QuotaExceeded(Exception):
@@ -111,15 +189,39 @@ def mask_service_key(url: str) -> str:
     return re.sub(r"(serviceKey=)[^&]*", r"\1***", url)
 
 
-def suggest_area(addr1: str) -> tuple[str | None, str | None]:
-    """(suggested_area, area_note) - BUSAN_AREA_SUGGESTION_KEYWORDS 중
+def compute_quality_flags(title: str) -> list[str]:
+    """(요구사항 5) 제목 패턴만으로 판정하는 "의심" 플래그 목록. 삭제하지
+    않고 그대로 두되, 2단계 상세 보강 대상에서는 제외하는 용도로 쓴다.
+    한 제목이 여러 플래그에 동시에 걸릴 수 있다."""
+    return [flag for flag, patterns in QUALITY_FLAG_PATTERNS.items() if any(pattern in title for pattern in patterns)]
+
+
+def suggest_area_by_address(addr1: str) -> tuple[str | None, str | None]:
+    """lDongSignguCd가 없을 때만 쓰는 폴백 - BUSAN_AREA_SUGGESTION_KEYWORDS 중
     addr1에 포함된 첫 키워드의 area를 제안한다. 아무 키워드도 맞지 않으면
-    suggested_area=None, area_note=AREA_NEEDS_REVIEW_NOTE로 남겨, 기장군·
-    강서구처럼 기존 6개 area에 맞지 않는 곳을 사람이 검토하게 한다."""
+    suggested_area=None, area_note=AREA_NEEDS_REVIEW_NOTE로 남긴다."""
     for area, keywords in BUSAN_AREA_SUGGESTION_KEYWORDS.items():
         if any(keyword in addr1 for keyword in keywords):
             return area, None
     return None, AREA_NEEDS_REVIEW_NOTE
+
+
+def suggest_area(ldong_signgu_cd: str | None, addr1: str) -> tuple[str | None, str | None, str | None]:
+    """(요구사항 6) (suggested_area, area_note, sigungu_name). lDongSignguCd를
+    1차 근거로 쓰고, 없을 때만 주소 키워드 폴백(suggest_area_by_address)을
+    쓴다. 시군구 코드가 있어도 기존 6개 area표(SIGUNGU_CODE_TO_AREA)에
+    없으면(기장군·강서구 등) suggested_area=None, area_note로 남기고,
+    sigungu_name에는 어느 경우든 알고 있는 한글 구/군 이름을 보존한다."""
+    sigungu_name = SIGUNGU_NAME_BY_CODE.get(ldong_signgu_cd) if ldong_signgu_cd else None
+
+    if ldong_signgu_cd:
+        area = SIGUNGU_CODE_TO_AREA.get(ldong_signgu_cd)
+        if area is not None:
+            return area, None, sigungu_name
+        return None, AREA_NEEDS_REVIEW_NOTE, sigungu_name
+
+    area, note = suggest_area_by_address(addr1)
+    return area, note, sigungu_name
 
 
 def is_within_busan_bounds(lat: float, lng: float) -> bool:
@@ -131,8 +233,10 @@ def is_within_busan_bounds(lat: float, lng: float) -> bool:
 
 def normalize_raw_item(raw: dict, content_type_id: str) -> dict:
     """요구사항 3이 보존하라고 한 값만 꺼내고, 원본 응답 전체는 "raw"에
-    그대로 둔다. 좌표/범위 필터는 여기서 적용하지 않는다(필터 여부는
-    filter_by_coordinates가 결정) - 이 함수는 아무것도 제외하지 않는다."""
+    그대로 둔다. lDongSignguCd·lclsSystm1~3은 가공 없이 그대로 복사한다
+    (요구사항 5·6 - 이후 분류/지역 판정에 쓴다). 좌표/범위 필터는 여기서
+    적용하지 않는다(필터 여부는 filter_by_coordinates가 결정) - 이 함수는
+    아무것도 제외하지 않는다."""
     mapx = raw.get("mapx")
     mapy = raw.get("mapy")
     try:
@@ -141,10 +245,12 @@ def normalize_raw_item(raw: dict, content_type_id: str) -> dict:
     except (TypeError, ValueError):
         longitude = latitude = None
 
+    title = str(raw.get("title", "")).strip()
+
     return {
         "contentid": str(raw.get("contentid", "")).strip() or None,
         "contenttypeid": str(raw.get("contenttypeid", "")).strip() or content_type_id,
-        "title": str(raw.get("title", "")).strip(),
+        "title": title,
         "addr1": str(raw.get("addr1", "")).strip(),
         "addr2": str(raw.get("addr2", "")).strip(),
         "latitude": latitude,
@@ -153,6 +259,11 @@ def normalize_raw_item(raw: dict, content_type_id: str) -> dict:
         "cat2": raw.get("cat2") or None,
         "cat3": raw.get("cat3") or None,
         "has_firstimage": bool(str(raw.get("firstimage", "")).strip()),
+        "ldong_signgu_cd": str(raw.get("lDongSignguCd", "")).strip() or None,
+        "lcls_systm1": raw.get("lclsSystm1") or None,
+        "lcls_systm2": raw.get("lclsSystm2") or None,
+        "lcls_systm3": raw.get("lclsSystm3") or None,
+        "flags": compute_quality_flags(title),
         "raw": raw,
     }
 
@@ -221,16 +332,21 @@ def partition_duplicates(items: list[dict], existing_places: list[dict]) -> tupl
 
 def fetch_type_candidates(
     client: TourApiClient,
-    area_code: str,
+    ldong_regn_cd: str,
     content_type_id: str,
     max_items: int,
     call_counter: list[int],
-) -> list[dict]:
-    """contentTypeId 하나에 대해 areaBasedList2를 페이지네이션으로 호출해
-    최대 max_items건을 모은다. call_counter[0]는 실제 API 호출마다 늘어나며
+) -> tuple[list[dict], int | None]:
+    """contentTypeId 하나에 대해 areaBasedList2를 lDongRegnCd 기준으로
+    페이지네이션 호출해 최대 max_items건을 모은다 - areaCode는 쓰지 않는다
+    (모듈 docstring 참고). call_counter[0]는 실제 API 호출마다 늘어나며
     collect_place_candidates 전체에서 공유된다(요구사항 7의 "호출 횟수").
     quota_exceeded는 즉시 QuotaExceeded로 올리고, 그 외 api_error는 기존
-    스크립트들과 같은 백오프 재시도(MAX_RETRIES_ON_API_ERROR)를 쓴다."""
+    스크립트들과 같은 백오프 재시도(MAX_RETRIES_ON_API_ERROR)를 쓴다.
+
+    Returns (collected_items, total_count) - total_count는 API가 보고한
+    전체 건수(요구사항 7의 "타입별 totalCount")로, 마지막으로 성공한
+    응답의 값이다(한 번도 성공하지 못했으면 None)."""
     collected: list[dict] = []
     page = 1
     total_count: int | None = None
@@ -239,7 +355,9 @@ def fetch_type_candidates(
         items: list[dict] = []
         for attempt in range(MAX_RETRIES_ON_API_ERROR):
             call_counter[0] += 1
-            items, total_count, status = client.fetch_area_based_list2(content_type_id, area_code, page, page_size)
+            items, total_count, status = client.fetch_area_based_list2(
+                content_type_id, None, page, page_size, ldong_regn_cd=ldong_regn_cd
+            )
             if status == "quota_exceeded":
                 raise QuotaExceeded(call_counter[0])
             if status == "ok":
@@ -263,7 +381,7 @@ def fetch_type_candidates(
         if total_count is not None and len(collected) >= total_count:
             break
         page += 1
-    return collected[:max_items]
+    return collected[:max_items], total_count
 
 
 def extract_known_hours_fields(detail_intro: dict | None, content_type_id: str | None) -> tuple[str | None, str | None]:
@@ -284,13 +402,36 @@ def extract_known_hours_fields(detail_intro: dict | None, content_type_id: str |
     return open_hours, closed_days
 
 
-def enrich_candidate(client: TourApiClient, item: dict, call_counter: list[int]) -> dict:
+def load_detail_cache(path: Path = DETAIL_CACHE_PATH) -> dict[str, dict]:
+    """(요구사항 4) contentid -> {detail_intro, detail_common, open_hours,
+    closed_days} 캐시를 읽는다. 파일이 없거나 깨져 있으면 빈 캐시로
+    시작한다(캐시는 재개 가능성을 위한 최적화일 뿐, 없어도 정상 동작)."""
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def save_detail_cache(cache: dict[str, dict], path: Path = DETAIL_CACHE_PATH) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def enrich_candidate(client: TourApiClient, item: dict, call_counter: list[int], cache: dict[str, dict]) -> dict:
     """(요구사항 4) detailIntro2/detailCommon2를 호출해 원문 그대로
     detail_intro/detail_common에 담는다(파싱·가공 금지). open_hours/
-    closed_days는 이미 검증된 매핑만 재사용한 편의 추출(위 함수 참고).
-    content_id/content_type_id가 없으면 호출하지 않고 전부 None."""
+    closed_days는 이미 검증된 매핑만 재사용한 편의 추출(아래 함수 참고).
+    content_id가 cache에 이미 있으면 호출 자체를 생략하고 캐시 값을
+    그대로 쓴다(재개 가능성). content_id/content_type_id가 없으면 호출
+    하지 않고 전부 None."""
     content_id = item.get("contentid")
     content_type_id = item.get("contenttypeid")
+
+    if content_id and content_id in cache:
+        return {**item, **cache[content_id]}
+
     detail_intro: dict | None = None
     detail_common: dict | None = None
 
@@ -324,13 +465,15 @@ def enrich_candidate(client: TourApiClient, item: dict, call_counter: list[int])
         time.sleep(REQUEST_INTERVAL_SECONDS)
 
     open_hours, closed_days = extract_known_hours_fields(detail_intro, content_type_id)
-    return {
-        **item,
+    detail_fields = {
         "detail_intro": detail_intro,
         "detail_common": detail_common,
         "open_hours": open_hours,
         "closed_days": closed_days,
     }
+    if content_id:
+        cache[content_id] = detail_fields
+    return {**item, **detail_fields}
 
 
 def load_existing_places(city: str) -> list[dict]:
@@ -342,99 +485,153 @@ def load_existing_places(city: str) -> list[dict]:
 def build_summary(
     *,
     per_type_collected: dict[str, int],
+    per_type_total_count: dict[str, int | None],
     excluded: list[dict],
     already_in_catalog: list[dict],
     new_candidates: list[dict],
-    api_call_count: int,
+    stage1_api_call_count: int,
+    stage2_api_call_count: int,
     partial: bool,
 ) -> dict:
     exclude_reason_counts = Counter(item["exclude_reason"] for item in excluded)
     suggested_area_counts = Counter((item.get("suggested_area") or "(미정)") for item in new_candidates)
+    sigungu_counts = Counter((item.get("sigungu_name") or "(미상)") for item in new_candidates)
+    flag_counts: Counter = Counter()
+    for item in new_candidates:
+        for flag in item.get("flags") or []:
+            flag_counts[flag] += 1
+
     return {
         "collected_by_type": per_type_collected,
+        "total_count_by_type": per_type_total_count,
         "excluded_total": len(excluded),
         "excluded_by_reason": dict(exclude_reason_counts),
         "already_in_catalog_total": len(already_in_catalog),
         "new_candidates_total": len(new_candidates),
         "new_candidates_by_suggested_area": dict(suggested_area_counts),
-        "api_call_count": api_call_count,
+        "new_candidates_by_sigungu": dict(sigungu_counts),
+        "new_candidates_by_flag": dict(flag_counts),
+        "stage1_api_call_count": stage1_api_call_count,
+        "stage2_api_call_count": stage2_api_call_count,
+        "api_call_count_total": stage1_api_call_count + stage2_api_call_count,
         "partial_due_to_quota": partial,
     }
 
 
-def collect_place_candidates(client: TourApiClient, city: str, max_per_type: int) -> dict:
-    """전체 오케스트레이션: 수집 -> 좌표 필터 -> 중복 판정 -> area 제안 ->
-    상세 보강 -> 요약. 어느 단계에서든 QuotaExceeded가 나면 그 단계까지
-    모은 결과로 partial_due_to_quota=True를 세팅해 돌려준다 - 예외를
-    바깥으로 올리지 않는다(요구사항 8)."""
-    area_code = TOUR_API_AREA_CODE_BY_CITY[city]
+def collect_place_candidates(
+    client: TourApiClient,
+    city: str,
+    *,
+    skip_detail: bool = False,
+    max_per_type_by_content_type: dict[str, int] | None = None,
+) -> dict:
+    """전체 오케스트레이션:
+      1단계 - 수집(lDongRegnCd) -> 좌표 필터 -> 중복 판정 -> 품질 플래그
+        (이미 normalize_raw_item에서 부여됨) -> area 제안.
+      2단계 - 품질 플래그가 없는 신규 후보만 상세 보강(캐시 재사용).
+        skip_detail=True면 2단계를 아예 건너뛴다(요구사항 3의
+        --list-only/--skip-detail).
+    어느 단계에서든 QuotaExceeded가 나면 그 단계까지 모은 결과로
+    partial_due_to_quota=True를 세팅해 돌려준다 - 예외를 바깥으로 올리지
+    않는다(요구사항 8)."""
+    max_per_type = max_per_type_by_content_type or MAX_PER_TYPE_DEFAULTS
+    ldong_regn_cd = TOUR_API_LDONG_REGN_CD_BY_CITY[city]
     existing_places = load_existing_places(city)
 
     call_counter = [0]
     per_type_collected: dict[str, int] = {}
+    per_type_total_count: dict[str, int | None] = {}
     all_kept: list[dict] = []
     all_excluded: list[dict] = []
     partial = False
 
     for content_type_id, label in COLLECT_CONTENT_TYPE_LABELS.items():
-        print(f"=== {label}(contentTypeId={content_type_id}) 수집 시작 (최대 {max_per_type}건) ===", flush=True)
+        type_max = max_per_type.get(content_type_id, 0)
+        print(f"=== {label}(contentTypeId={content_type_id}) 수집 시작 (최대 {type_max}건) ===", flush=True)
         try:
-            raw_items = fetch_type_candidates(client, area_code, content_type_id, max_per_type, call_counter)
+            raw_items, total_count = fetch_type_candidates(client, ldong_regn_cd, content_type_id, type_max, call_counter)
         except QuotaExceeded:
             partial = True
             print("!! 요청 한도 초과 - 수집을 중단합니다.", flush=True)
             break
+        per_type_total_count[label] = total_count
         normalized = [normalize_raw_item(raw, content_type_id) for raw in raw_items]
         kept, excluded = filter_by_coordinates(normalized)
         per_type_collected[label] = len(kept)
         all_kept.extend(kept)
         all_excluded.extend(excluded)
-        print(f"{label}: {len(kept)}건 통과, {len(excluded)}건 좌표 제외", flush=True)
+        print(f"{label}: totalCount={total_count}, {len(kept)}건 통과, {len(excluded)}건 좌표 제외", flush=True)
+
+    stage1_api_call_count = call_counter[0]
 
     new_candidates, already_in_catalog = partition_duplicates(all_kept, existing_places)
     for item in new_candidates:
-        item["suggested_area"], item["area_note"] = suggest_area(item["addr1"])
+        item["suggested_area"], item["area_note"], item["sigungu_name"] = suggest_area(
+            item["ldong_signgu_cd"], item["addr1"]
+        )
 
     print(
-        f"\n중복 판정 완료: 기존 카탈로그 중복 {len(already_in_catalog)}건, 신규 후보 {len(new_candidates)}건",
+        f"\n1단계 완료: 기존 카탈로그 중복 {len(already_in_catalog)}건, 신규 후보 {len(new_candidates)}건 "
+        f"(1단계 API 호출 {stage1_api_call_count}회)",
         flush=True,
     )
 
-    if not partial:
-        enriched: list[dict] = []
+    stage2_api_call_count = 0
+    if skip_detail:
+        print("--list-only/--skip-detail 지정됨 - 상세 보강(2단계)을 건너뜁니다.", flush=True)
+    elif not partial:
+        # DETAIL_CACHE_PATH를 매번 모듈 전역에서 다시 읽는다(기본 인자로
+        # 한 번만 바인딩하지 않음) - 테스트가 이 경로를 monkeypatch로
+        # 바꿔치기할 수 있게 하기 위함이며, 실제 운영 동작은 그대로다.
+        cache = load_detail_cache(DETAIL_CACHE_PATH)
+        cache_hits = 0
+        enrichable_count = sum(1 for item in new_candidates if not item["flags"])
+        enriched_so_far = 0
         for index, item in enumerate(new_candidates):
+            if item["flags"]:
+                continue  # 의심 플래그가 있는 후보는 상세 호출을 하지 않는다(요구사항 3).
+            enriched_so_far += 1
+            if item.get("contentid") in cache:
+                cache_hits += 1
             print(
-                f"상세 보강 {index + 1}/{len(new_candidates)}: {item['title']} "
-                f"(총 API 호출 {call_counter[0]}회)",
+                f"상세 보강 {enriched_so_far}/{enrichable_count}: {item['title']} "
+                f"(총 API 호출 {call_counter[0]}회, 캐시 적중 {cache_hits}건)",
                 flush=True,
             )
             try:
-                enriched.append(enrich_candidate(client, item, call_counter))
+                new_candidates[index] = enrich_candidate(client, item, call_counter, cache)
+                save_detail_cache(cache, DETAIL_CACHE_PATH)
             except QuotaExceeded:
                 partial = True
-                print("!! 상세 보강 중 요청 한도 초과 - 남은 후보는 상세 없이 저장합니다.", flush=True)
-                # 상세 보강은 못 받았지만 후보 자체는 그대로 남긴다 - 다음
-                # 실행에서 상세만 이어서 받을 수 있게.
-                enriched.append({**item, "detail_intro": None, "detail_common": None, "open_hours": None, "closed_days": None})
-                enriched.extend(
-                    {**remaining, "detail_intro": None, "detail_common": None, "open_hours": None, "closed_days": None}
-                    for remaining in new_candidates[index + 1 :]
+                print(
+                    "!! 상세 보강 중 요청 한도 초과 - 지금까지 모은 결과와 상세 캐시를 저장했습니다. "
+                    "다시 실행하면 이어서 진행됩니다.",
+                    flush=True,
                 )
                 break
-        new_candidates = enriched
+        stage2_api_call_count = call_counter[0] - stage1_api_call_count
+
+    # 어느 경로를 거쳤든(건너뜀/정상 완료/quota 중단) 모든 후보가 같은
+    # 스키마를 갖도록 빠진 상세 필드를 None으로 채운다.
+    for item in new_candidates:
+        item.setdefault("detail_intro", None)
+        item.setdefault("detail_common", None)
+        item.setdefault("open_hours", None)
+        item.setdefault("closed_days", None)
 
     summary = build_summary(
         per_type_collected=per_type_collected,
+        per_type_total_count=per_type_total_count,
         excluded=all_excluded,
         already_in_catalog=already_in_catalog,
         new_candidates=new_candidates,
-        api_call_count=call_counter[0],
+        stage1_api_call_count=stage1_api_call_count,
+        stage2_api_call_count=stage2_api_call_count,
         partial=partial,
     )
 
     return {
         "city": city,
-        "max_per_type": max_per_type,
         "candidates": new_candidates,
         "excluded": all_excluded,
         "already_in_catalog": already_in_catalog,
@@ -451,8 +648,22 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         )
     )
     parser.add_argument("--city", default="busan", choices=["busan"], help="수집할 도시 (이번 단계는 busan만 지원, 기본: busan)")
-    parser.add_argument("--max-per-type", type=int, default=80, help="contentTypeId별 최대 수집 건수 (기본: 80)")
-    parser.add_argument("--out", type=Path, default=DEFAULT_OUT_PATH, help="결과 JSON 저장 경로 (기본: local_only/reports/place_candidates_busan_raw.json)")
+    parser.add_argument(
+        "--list-only",
+        action="store_true",
+        help="1단계(목록 수집·좌표 필터·중복 판정·품질 플래그·area 제안)만 하고 상세 보강(2단계)은 건너뜀",
+    )
+    parser.add_argument(
+        "--skip-detail",
+        action="store_true",
+        help="--list-only와 동일 - 상세 보강(2단계)을 건너뜀",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=DEFAULT_OUT_PATH,
+        help="결과 JSON 저장 경로 (기본: local_only/reports/place_candidates_busan_raw.json)",
+    )
     return parser.parse_args(argv)
 
 
@@ -466,23 +677,31 @@ def main(argv: list[str] | None = None) -> None:
 
     settings = Settings(tour_api_key=api_key)
     client = TourApiClient(settings)
+    skip_detail = args.list_only or args.skip_detail
 
-    result = collect_place_candidates(client, args.city, args.max_per_type)
+    result = collect_place_candidates(client, args.city, skip_detail=skip_detail)
 
     out_path = args.out if args.out.is_absolute() else PROJECT_ROOT / args.out
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     summary = result["summary"]
-    print(f"=== {args.city} 활동 후보 수집 결과 ===")
+    print(f"\n=== {args.city} 활동 후보 수집 결과 ===")
+    print(f"타입별 totalCount: {summary['total_count_by_type']}")
     print(f"타입별 수집(좌표 필터 통과): {summary['collected_by_type']}")
     print(f"좌표 제외: {summary['excluded_total']}건 {summary['excluded_by_reason']}")
     print(f"기존 카탈로그 중복: {summary['already_in_catalog_total']}건")
     print(f"신규 후보: {summary['new_candidates_total']}건")
-    print(f"신규 후보의 suggested_area 분포: {summary['new_candidates_by_suggested_area']}")
-    print(f"API 호출 횟수: {summary['api_call_count']}")
+    print(f"신규 후보 suggested_area 분포: {summary['new_candidates_by_suggested_area']}")
+    print(f"신규 후보 시군구 분포: {summary['new_candidates_by_sigungu']}")
+    print(f"신규 후보 품질 플래그 분포: {summary['new_candidates_by_flag']}")
+    print(
+        f"1단계 API 호출 {summary['stage1_api_call_count']}회, "
+        f"2단계 API 호출 {summary['stage2_api_call_count']}회, "
+        f"합계 {summary['api_call_count_total']}회"
+    )
     if summary["partial_due_to_quota"]:
-        print("\n!! TourAPI 요청 한도를 초과해 중단했습니다. 지금까지 모은 결과만 저장했습니다.")
+        print("\n!! TourAPI 요청 한도를 초과해 중단했습니다. 다시 실행하면 이어서 진행됩니다.")
     print(f"\n저장 위치: {out_path}")
 
 

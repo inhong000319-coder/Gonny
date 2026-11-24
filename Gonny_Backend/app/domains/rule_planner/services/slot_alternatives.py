@@ -18,6 +18,7 @@ alternative list is allowed to simply be short).
 """
 from __future__ import annotations
 
+from datetime import date
 from typing import Callable
 
 from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
@@ -26,6 +27,7 @@ from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleItinerar
 from .closed_days import is_confirmed_closed_on
 from .community_feedback import PlaceFeedbackSignal
 from .constants import ACTIVITY_CATEGORIES, TIME_SLOTS
+from .place_pool import is_in_season
 from .slot_scoring import day_phase, slot_score
 
 MAX_ALTERNATIVES = 3
@@ -89,6 +91,7 @@ def rank_slot_candidates(
     build_note: Callable[..., str],
     extra_predicate: Callable[[PlaceData], bool] | None = None,
     limit: int = MAX_ALTERNATIVES,
+    day_date: date | None = None,
 ) -> list[RuleSlotAlternative]:
     """Candidate selection + slot_score ranking, factored out of
     compute_item_alternatives so weather_alerts.py's indoor swap
@@ -97,13 +100,19 @@ def rank_slot_candidates(
     copy. extra_predicate=None (compute_item_alternatives' own call)
     reproduces the original candidate rule exactly - see
     local_only/reports/weather_alert_swap_backend.md for the invariance
-    check this depends on."""
+    check this depends on.
+
+    day_date=None (every pre-existing caller) never excludes on season -
+    see place_pool.is_in_season. Passing it filters out a place that's out
+    of season on that calendar day, same spirit as day_weekday excluding a
+    confirmed-closed place."""
     candidates = [
         place
         for place_id, place in scored_places_by_id.items()
         if place_id not in exclude_ids
         and time_slot in place.time_fit
         and _is_open_on_day(place, day_weekday)
+        and is_in_season(place, day_date)
         and (extra_predicate is None or extra_predicate(place))
     ]
     candidates = _filter_phase_candidates(places=candidates, request=request, day_number=day_number)
@@ -140,6 +149,7 @@ def rank_slot_candidates(
                 previous_place=previous_place,
             ),
             average_cost_krw=place.average_cost_krw,
+            booking=place.booking,
         )
         for place in ranked[:limit]
     ]
@@ -159,6 +169,7 @@ def compute_item_alternatives(
     localize_area: Callable[[str], str],
     resolve_item_category: Callable[[PlaceData, NormalizedRuleRequest], str],
     build_note: Callable[..., str],
+    day_dates: dict[int, date | None] | None = None,
 ) -> list[RuleItineraryItem]:
     """Returns a NEW list of items (same order, same other fields) with
     `alternatives` filled in on each non-full-day item. Pure function -
@@ -208,6 +219,7 @@ def compute_item_alternatives(
             localize_area=localize_area,
             resolve_item_category=resolve_item_category,
             build_note=build_note,
+            day_date=(day_dates or {}).get(item.day_number),
         )
         new_items.append(item.model_copy(update={"alternatives": alternatives}))
 

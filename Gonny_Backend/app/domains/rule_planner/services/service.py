@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import Callable, Literal, NamedTuple
 
 from fastapi import HTTPException, status
@@ -65,6 +65,7 @@ from .constants import (
     TIME_SLOTS,
 )
 from .note_generator import RuleNoteContext, build_rule_note_generator
+from .place_pool import is_in_season, is_main_pool_member
 from .policies.city import pick_day_area, preferred_area_order
 from .reasons import build_activity_reason_candidates, build_meal_reason_candidates, select_day_reasons
 from .recalculate import build_fixed_meals_lookup, build_fixed_slots_lookup, validate_stay_plan_request
@@ -287,6 +288,7 @@ class RuleItineraryService:
         _recommend_meals's own fixed_meals parameter."""
         if include_alternatives:
             day_weekdays = {day_number: self._day_weekday(normalized, day_number) for day_number in day_slot_places}
+            day_dates = {day_number: self._day_date(normalized, day_number) for day_number in day_slot_places}
             items = compute_item_alternatives(
                 items=items,
                 request=normalized,
@@ -296,6 +298,7 @@ class RuleItineraryService:
                 day_areas=day_areas,
                 feedback_signals=feedback_signals,
                 day_weekdays=day_weekdays,
+                day_dates=day_dates,
                 localize_place_name=self._localize_place_name,
                 localize_area=self._localize_area,
                 resolve_item_category=self._resolve_item_category,
@@ -569,8 +572,17 @@ class RuleItineraryService:
         # candidate pool here too. A food-tagged place that ISN'T
         # meal_eligible (e.g. a cafe/market unsuitable as a meal) is NOT
         # excluded here - see PlaceData.is_activity_candidate.
+        #
+        # is_main_pool_member additionally drops an "alternate"-tier place
+        # (PR-A's place expansion) unless the request's concepts promote it
+        # via theme_tags - see place_pool.py. Every place without
+        # mvp_tier="alternate" passes this unchanged, same as before.
         scored_places = sorted(
-            [place for place in city_catalog.places if place.is_active and place.is_activity_candidate],
+            [
+                place
+                for place in city_catalog.places
+                if place.is_active and place.is_activity_candidate and is_main_pool_member(place, request)
+            ],
             key=lambda place: self._base_score(place, request),
             reverse=True,
         )
@@ -597,6 +609,7 @@ class RuleItineraryService:
 
         for day_number in range(1, request.days + 1):
             day_weekday = self._day_weekday(request, day_number)
+            day_date = self._day_date(request, day_number)
             slot_rules = day_slot_rules(
                 arrival_period=request.arrival_period,
                 departure_period=request.departure_period,
@@ -614,6 +627,7 @@ class RuleItineraryService:
                     day_number=day_number,
                     allow_full_day=not full_day_used and len(slot_rules.allowed_slots) == len(TIME_SLOTS),
                     day_weekday=day_weekday,
+                    day_date=day_date,
                     closed_day_exclusions=closed_day_exclusions,
                     seen_exclusion_keys=seen_exclusion_keys,
                 )
@@ -663,6 +677,7 @@ class RuleItineraryService:
                             # to report - see RuleItineraryItem's docstring.
                             travel_minutes_from_previous=None,
                             average_cost_krw=full_day_place.average_cost_krw,
+                            booking=full_day_place.booking,
                         )
                     )
                 used_ids.add(full_day_place.id)
@@ -689,6 +704,7 @@ class RuleItineraryService:
                     day_area=day_area,
                     feedback_signals=feedback_signals,
                     day_weekday=day_weekday,
+                    day_date=day_date,
                     closed_day_exclusions=closed_day_exclusions,
                     seen_exclusion_keys=seen_exclusion_keys,
                     allowed_slots=slot_rules.allowed_slots,
@@ -702,6 +718,7 @@ class RuleItineraryService:
                     day_area=day_area,
                     feedback_signals=feedback_signals,
                     day_weekday=day_weekday,
+                    day_date=day_date,
                 )
             else:
                 # day_fixed_places was built above from slot_rules.allowed_slots
@@ -737,6 +754,7 @@ class RuleItineraryService:
                         ),
                         travel_minutes_from_previous=travel_minutes_from_previous,
                         average_cost_krw=chosen.average_cost_krw,
+                        booking=chosen.booking,
                     )
                 )
 
@@ -759,6 +777,7 @@ class RuleItineraryService:
         closed_day_exclusions: list[RuleClosedDayExclusion] | None,
         seen_exclusion_keys: set[tuple[int, str]] | None,
         allowed_slots: list[str],
+        day_date: date | None = None,
     ) -> list[tuple[str, PlaceData]]:
         """Greedy first pass: one slot at a time, in allowed_slots order
         (a subset of morning -> afternoon -> evening - see
@@ -782,6 +801,7 @@ class RuleItineraryService:
                 previous_place=previous_place,
                 feedback_signals=feedback_signals,
                 day_weekday=day_weekday,
+                day_date=day_date,
                 closed_day_exclusions=closed_day_exclusions,
                 seen_exclusion_keys=seen_exclusion_keys,
             )
@@ -791,11 +811,17 @@ class RuleItineraryService:
             slot_places.append((slot, chosen))
         return slot_places
 
-    def _is_open_on_day(self, place: PlaceData, day_weekday: int | None) -> bool:
-        """Silent (no exclusion-recording) closed-day check for the
+    def _is_open_on_day(
+        self, place: PlaceData, day_weekday: int | None, day_date: date | None = None
+    ) -> bool:
+        """Silent (no exclusion-recording) closed-day/season check for the
         speculative re-scoring below - unlike _select_first_open_candidate(),
         this evaluates candidates that mostly never end up placed, so it
-        must not add closed_day_exclusions noise implying a real attempt."""
+        must not add closed_day_exclusions noise implying a real attempt.
+        day_date=None (every pre-existing caller) never excludes on season -
+        see place_pool.is_in_season."""
+        if not is_in_season(place, day_date):
+            return False
         if day_weekday is None:
             return True
         return not is_confirmed_closed_on(place.closed_days, day_weekday)
@@ -811,6 +837,7 @@ class RuleItineraryService:
         day_area: str | None,
         feedback_signals: dict[str, PlaceFeedbackSignal] | None,
         day_weekday: int | None,
+        day_date: date | None = None,
     ) -> list[tuple[str, PlaceData]]:
         """2nd pass over an already-greedily-placed day: re-score each slot
         (except the day's last, which has no next place) against its now-
@@ -844,7 +871,7 @@ class RuleItineraryService:
             available = [
                 place
                 for place in scored_places
-                if place.id not in used_ids and self._is_open_on_day(place, day_weekday)
+                if place.id not in used_ids and self._is_open_on_day(place, day_weekday, day_date)
             ]
             if not available:
                 continue
@@ -888,6 +915,15 @@ class RuleItineraryService:
             return None
         return (request.start_date + timedelta(days=day_number - 1)).weekday()
 
+    def _day_date(self, request: NormalizedRuleRequest, day_number: int) -> date | None:
+        """Calendar date for this day_number, or None if the request has
+        no start_date (season filtering never triggers without it - same
+        rule as _day_weekday/closed-day exclusion, see
+        place_pool.is_in_season)."""
+        if request.start_date is None:
+            return None
+        return request.start_date + timedelta(days=day_number - 1)
+
     def _select_first_open_candidate(
         self,
         *,
@@ -896,15 +932,21 @@ class RuleItineraryService:
         day_weekday: int | None,
         closed_day_exclusions: list[RuleClosedDayExclusion] | None,
         seen_exclusion_keys: set[tuple[int, str]] | None,
+        day_date: date | None = None,
     ) -> PlaceData | None:
-        """Returns the highest-ranked candidate that isn't confirmed closed
-        on day_weekday, skipping (and recording) any confirmed-closed ones
-        ahead of it. When day_weekday is None (no start_date on the
-        request), this is a no-op passthrough to ranked_candidates[0]."""
-        if day_weekday is None:
-            return ranked_candidates[0] if ranked_candidates else None
-
+        """Returns the highest-ranked candidate that is in season for
+        day_date (see place_pool.is_in_season) and isn't confirmed closed
+        on day_weekday, skipping (and, for closed days only, recording)
+        any ineligible ones ahead of it. day_date=None (every caller
+        before season filtering existed) never excludes on season, same
+        spirit as day_weekday=None never excluding on closed days - with
+        both None this reproduces the original no-op passthrough to
+        ranked_candidates[0] exactly."""
         for candidate in ranked_candidates:
+            if not is_in_season(candidate, day_date):
+                continue
+            if day_weekday is None:
+                return candidate
             if not is_confirmed_closed_on(candidate.closed_days, day_weekday):
                 return candidate
 
@@ -1840,6 +1882,7 @@ class RuleItineraryService:
                         previous_place=previous_place,
                     ),
                     average_cost_krw=alternative.average_cost_krw,
+                    booking=alternative.booking,
                 )
                 for alternative in (alternatives or [])
             ],
@@ -1856,6 +1899,7 @@ class RuleItineraryService:
         day_weekday: int | None = None,
         closed_day_exclusions: list[RuleClosedDayExclusion] | None = None,
         seen_exclusion_keys: set[tuple[int, str]] | None = None,
+        day_date: date | None = None,
     ) -> PlaceData | None:
         if not allow_full_day or "activity" not in request.concepts:
             return None
@@ -1879,6 +1923,7 @@ class RuleItineraryService:
             day_weekday=day_weekday,
             closed_day_exclusions=closed_day_exclusions,
             seen_exclusion_keys=seen_exclusion_keys,
+            day_date=day_date,
         )
 
     def _group_area_scores(self, places: list[PlaceData], request: NormalizedRuleRequest) -> dict[str, int]:
@@ -1945,6 +1990,7 @@ class RuleItineraryService:
         day_weekday: int | None = None,
         closed_day_exclusions: list[RuleClosedDayExclusion] | None = None,
         seen_exclusion_keys: set[tuple[int, str]] | None = None,
+        day_date: date | None = None,
     ) -> PlaceData | None:
         available_places = [place for place in scored_places if place.id not in used_ids]
         slot_fitting_places = [place for place in available_places if time_slot in place.time_fit]
@@ -1974,6 +2020,7 @@ class RuleItineraryService:
             day_weekday=day_weekday,
             closed_day_exclusions=closed_day_exclusions,
             seen_exclusion_keys=seen_exclusion_keys,
+            day_date=day_date,
         )
 
     def _filter_phase_candidates(

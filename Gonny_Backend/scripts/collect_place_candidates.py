@@ -15,7 +15,12 @@ areaCode=6은 contentTypeId별 totalCount가 15/4/12/3 수준으로 극히
 areacode 필드가 빈 레코드를 조용히 빠뜨리는 기존에 알려진 문제).
 
 수집 대상: contentTypeId 12(관광지)·14(문화시설)·28(레포츠)·38(쇼핑).
-39(음식점)·32(숙박)는 수집하지 않는다.
+39(음식점)·32(숙박)는 수집하지 않는다. 관광지/문화시설/레포츠는 totalCount
+전체를, 쇼핑은 조회순 상위 60건을 목표로 한다 - totalCount를 먼저 알아낸
+뒤 한 번의 큰 호출로 받고, 응답이 목표보다 적으면(서버 상한 가능성)
+작은 페이지 크기로 페이지네이션 폴백한다. arrange="P" 정렬이 페이지를
+넘기면 불안정해 같은 항목이 여러 페이지에 또 나올 수 있어, 어느 경로든
+수집 후 contentid 기준 중복 제거를 항상 적용한다.
 
 2단계 구조:
   1단계(목록): areaBasedList2 수집 + 좌표/범위 필터 + 기존 카탈로그 중복
@@ -78,15 +83,19 @@ COLLECT_CONTENT_TYPE_LABELS: dict[str, str] = {
     "38": "쇼핑",
 }
 
-# 타입별 기본 최대 수집 건수 - 전체에 일괄 적용하던 --max-per-type 대신,
-# diagnose_area_based_list.py로 확인한 타입별 totalCount 규모(348/129/
-# 61/987)에 맞춰 타입마다 다르게 둔다. 쇼핑(38)은 987건 대부분이 약국·
-# 이불가게 같은 동네 상점이라 arrange="P"(조회순) 상위만 적게 가져온다.
-MAX_PER_TYPE_DEFAULTS: dict[str, int] = {
+# 쇼핑(38)만 totalCount 전체가 아니라 조회순 상위 N건을 목표로 한다 -
+# 987건 대부분이 약국·이불가게 같은 동네 상점이라(그중 상당수는 아래
+# LCLS_SYSTM2_FLAG_RULES로도 걸러진다) 전체를 받을 필요가 없다.
+SHOPPING_FIXED_TARGET = 60
+
+# totalCount 확인 호출이 재시도까지 전부 실패했을 때만 쓰는 안전망 - 이
+# 값이 실제 목표가 아니라, "totalCount를 아예 모를 때 그래도 뭔가는
+# 받아야 한다"는 최후의 수단이다(쇼핑은 SHOPPING_FIXED_TARGET 자체가
+# 이미 이 역할을 하므로 여기 없다).
+FALLBACK_TARGET_IF_PROBE_FAILS: dict[str, int] = {
     "12": 120,
     "14": 60,
     "28": 40,
-    "38": 30,
 }
 
 # 부산 대략 범위(작업 지시 Context 기준) - 이 범위 밖 좌표는 주소 오류나
@@ -132,16 +141,24 @@ SIGUNGU_NAME_BY_CODE: dict[str, str] = {
     "710": "기장군",
 }
 
-# lDongSignguCd -> 기존 6개 area. 1:1로 깔끔하게 대응하는 구만 담는다 -
-# "centum"은 해운대구(350) 안에 있지만 "haeundae"와 같은 구라서 시군구
-# 코드만으로는 구분하지 않는다(요구사항 6: "센텀 vs 해운대처럼 나뉘는
-# 경우는 판단하지 말고 구 단위 후보만 표시"). centum은 lDongSignguCd가
-# 없을 때의 주소 키워드 폴백(BUSAN_AREA_SUGGESTION_KEYWORDS)에서만 쓰인다.
+# lDongSignguCd -> 기존 6개 area(구 단위 추정 - suggest_area가 돌려주는
+# area_mapping="sigungu"로도 표시한다). "centum"은 해운대구(350) 안에
+# 있지만 "haeundae"와 같은 구라서 시군구 코드만으로는 구분하지 않는다
+# (요구사항 6: "센텀 vs 해운대처럼 나뉘는 경우는 판단하지 말고 구 단위
+# 후보만 표시"). centum은 lDongSignguCd가 없을 때의 주소 키워드 폴백
+# (BUSAN_AREA_SUGGESTION_KEYWORDS)에서만 쓰인다. 나머지 구(230 부산진구·
+# 710 기장군·320 북구·440 강서구·530 사상구·470 연제구 등)는 이 표에
+# 없으므로 suggested_area=None, area_note=AREA_NEEDS_REVIEW_NOTE로 남는다.
 SIGUNGU_CODE_TO_AREA: dict[str, str] = {
     "110": "nampo",  # 중구 - 남포동
     "140": "songdo",  # 서구 - 송도해수욕장
-    "260": "dongnae",  # 동래구
+    "170": "nampo",  # 동구
+    "200": "nampo",  # 영도구
+    "290": "gwangalli",  # 남구
     "350": "haeundae",  # 해운대구(센텀시티 포함, 구분하지 않음)
+    "380": "songdo",  # 사하구
+    "260": "dongnae",  # 동래구
+    "410": "dongnae",  # 금정구
     "500": "gwangalli",  # 수영구 - 광안리해수욕장
 }
 
@@ -160,6 +177,17 @@ QUALITY_FLAG_PATTERNS: dict[str, list[str]] = {
     "food_street_like": FOOD_STREET_LIKE_PATTERNS,
     "sports_facility_like": SPORTS_FACILITY_LIKE_PATTERNS,
 }
+
+# (contentTypeId, lclsSystm2) -> 플래그. 제목 패턴과 달리 TourAPI의 새
+# 분류 코드로 판정한다(요구사항 2) - 쇼핑 27곳 중 17곳이 SH04(백화점 내
+# 브랜드 매장)였던 걸 확인하고 추가했다. SH05(지하도상가)·SH06(거리·시장)은
+# 유용하다고 판단해 플래그를 붙이지 않는다.
+LCLS_SYSTM2_FLAG_RULES: list[tuple[str, str, str]] = [
+    ("38", "SH04", "brand_store"),  # 쇼핑 - 백화점 내 브랜드 매장
+    ("28", "AC05", "campground"),  # 레포츠 - 캠핑장
+    ("28", "VE10", "public_facility"),  # 레포츠 - 수련관·경기장
+    ("14", "VE09", "public_facility"),  # 문화시설 - 도서관
+]
 
 
 class QuotaExceeded(Exception):
@@ -189,11 +217,25 @@ def mask_service_key(url: str) -> str:
     return re.sub(r"(serviceKey=)[^&]*", r"\1***", url)
 
 
-def compute_quality_flags(title: str) -> list[str]:
-    """(요구사항 5) 제목 패턴만으로 판정하는 "의심" 플래그 목록. 삭제하지
-    않고 그대로 두되, 2단계 상세 보강 대상에서는 제외하는 용도로 쓴다.
-    한 제목이 여러 플래그에 동시에 걸릴 수 있다."""
-    return [flag for flag, patterns in QUALITY_FLAG_PATTERNS.items() if any(pattern in title for pattern in patterns)]
+def compute_lcls_systm2_flags(content_type_id: str | None, lcls_systm2: str | None) -> list[str]:
+    """(요구사항 2) 제목이 아니라 TourAPI의 새 분류 코드(lclsSystm2)로
+    판정하는 플래그. content_type_id나 lcls_systm2가 없으면 아무것도
+    매치하지 않는다(KeyError 없이 그냥 빈 목록)."""
+    if not content_type_id or not lcls_systm2:
+        return []
+    return [flag for ctid, code, flag in LCLS_SYSTM2_FLAG_RULES if ctid == content_type_id and lcls_systm2 == code]
+
+
+def compute_quality_flags(title: str, content_type_id: str | None = None, lcls_systm2: str | None = None) -> list[str]:
+    """(요구사항 2·5) 제목 패턴 플래그 + lclsSystm2 플래그를 합친다. 삭제
+    하지 않고 그대로 두되, 2단계 상세 보강 대상에서는 제외하는 용도로
+    쓴다. 한 항목이 여러 플래그에 동시에 걸릴 수 있다(중복 없이, 처음
+    매치된 순서대로)."""
+    flags = [flag for flag, patterns in QUALITY_FLAG_PATTERNS.items() if any(pattern in title for pattern in patterns)]
+    for flag in compute_lcls_systm2_flags(content_type_id, lcls_systm2):
+        if flag not in flags:
+            flags.append(flag)
+    return flags
 
 
 def suggest_area_by_address(addr1: str) -> tuple[str | None, str | None]:
@@ -206,22 +248,26 @@ def suggest_area_by_address(addr1: str) -> tuple[str | None, str | None]:
     return None, AREA_NEEDS_REVIEW_NOTE
 
 
-def suggest_area(ldong_signgu_cd: str | None, addr1: str) -> tuple[str | None, str | None, str | None]:
-    """(요구사항 6) (suggested_area, area_note, sigungu_name). lDongSignguCd를
-    1차 근거로 쓰고, 없을 때만 주소 키워드 폴백(suggest_area_by_address)을
-    쓴다. 시군구 코드가 있어도 기존 6개 area표(SIGUNGU_CODE_TO_AREA)에
-    없으면(기장군·강서구 등) suggested_area=None, area_note로 남기고,
-    sigungu_name에는 어느 경우든 알고 있는 한글 구/군 이름을 보존한다."""
+def suggest_area(ldong_signgu_cd: str | None, addr1: str) -> tuple[str | None, str | None, str | None, str | None]:
+    """(요구사항 3·6) (suggested_area, area_note, sigungu_name, area_mapping).
+    lDongSignguCd를 1차 근거로 쓰고, 없을 때만 주소 키워드 폴백
+    (suggest_area_by_address)을 쓴다. 시군구 코드가 있어도 기존 6개
+    area표(SIGUNGU_CODE_TO_AREA)에 없으면(기장군·강서구 등)
+    suggested_area=None, area_note로 남기고, sigungu_name에는 어느 경우든
+    알고 있는 한글 구/군 이름을 보존한다. area_mapping은 suggested_area가
+    실제로 어떤 방식으로 나왔는지 표시한다 - "sigungu"(구 단위 추정),
+    "address_keyword"(주소 키워드 폴백), 또는 None(둘 다 실패)."""
     sigungu_name = SIGUNGU_NAME_BY_CODE.get(ldong_signgu_cd) if ldong_signgu_cd else None
 
     if ldong_signgu_cd:
         area = SIGUNGU_CODE_TO_AREA.get(ldong_signgu_cd)
         if area is not None:
-            return area, None, sigungu_name
-        return None, AREA_NEEDS_REVIEW_NOTE, sigungu_name
+            return area, None, sigungu_name, "sigungu"
+        return None, AREA_NEEDS_REVIEW_NOTE, sigungu_name, None
 
     area, note = suggest_area_by_address(addr1)
-    return area, note, sigungu_name
+    area_mapping = "address_keyword" if area is not None else None
+    return area, note, sigungu_name, area_mapping
 
 
 def is_within_busan_bounds(lat: float, lng: float) -> bool:
@@ -246,10 +292,12 @@ def normalize_raw_item(raw: dict, content_type_id: str) -> dict:
         longitude = latitude = None
 
     title = str(raw.get("title", "")).strip()
+    effective_content_type_id = str(raw.get("contenttypeid", "")).strip() or content_type_id
+    lcls_systm2 = raw.get("lclsSystm2") or None
 
     return {
         "contentid": str(raw.get("contentid", "")).strip() or None,
-        "contenttypeid": str(raw.get("contenttypeid", "")).strip() or content_type_id,
+        "contenttypeid": effective_content_type_id,
         "title": title,
         "addr1": str(raw.get("addr1", "")).strip(),
         "addr2": str(raw.get("addr2", "")).strip(),
@@ -261,9 +309,9 @@ def normalize_raw_item(raw: dict, content_type_id: str) -> dict:
         "has_firstimage": bool(str(raw.get("firstimage", "")).strip()),
         "ldong_signgu_cd": str(raw.get("lDongSignguCd", "")).strip() or None,
         "lcls_systm1": raw.get("lclsSystm1") or None,
-        "lcls_systm2": raw.get("lclsSystm2") or None,
+        "lcls_systm2": lcls_systm2,
         "lcls_systm3": raw.get("lclsSystm3") or None,
-        "flags": compute_quality_flags(title),
+        "flags": compute_quality_flags(title, effective_content_type_id, lcls_systm2),
         "raw": raw,
     }
 
@@ -330,32 +378,95 @@ def partition_duplicates(items: list[dict], existing_places: list[dict]) -> tupl
     return new_candidates, already_in_catalog
 
 
-def fetch_type_candidates(
+def probe_total_count(
     client: TourApiClient,
     ldong_regn_cd: str,
     content_type_id: str,
-    max_items: int,
     call_counter: list[int],
-) -> tuple[list[dict], int | None]:
-    """contentTypeId 하나에 대해 areaBasedList2를 lDongRegnCd 기준으로
-    페이지네이션 호출해 최대 max_items건을 모은다 - areaCode는 쓰지 않는다
-    (모듈 docstring 참고). call_counter[0]는 실제 API 호출마다 늘어나며
-    collect_place_candidates 전체에서 공유된다(요구사항 7의 "호출 횟수").
-    quota_exceeded는 즉시 QuotaExceeded로 올리고, 그 외 api_error는 기존
-    스크립트들과 같은 백오프 재시도(MAX_RETRIES_ON_API_ERROR)를 쓴다.
+) -> int | None:
+    """(요구사항 1) totalCount만 싸게 알아보는 호출(numOfRows=1). 재시도까지
+    전부 실패하면 None(그래도 수집 자체는 FALLBACK_TARGET_IF_PROBE_FAILS로
+    계속 진행한다 - resolve_target_count 참고)."""
+    for attempt in range(MAX_RETRIES_ON_API_ERROR):
+        call_counter[0] += 1
+        _, total_count, status = client.fetch_area_based_list2(content_type_id, None, 1, 1, ldong_regn_cd=ldong_regn_cd)
+        if status == "quota_exceeded":
+            raise QuotaExceeded(call_counter[0])
+        if status == "ok":
+            time.sleep(REQUEST_INTERVAL_SECONDS)
+            return total_count
+        print(
+            f"    [{content_type_id}] totalCount 확인 호출 실패(api_error) - 재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
+            flush=True,
+        )
+        time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+    time.sleep(REQUEST_INTERVAL_SECONDS)
+    return None
 
-    Returns (collected_items, total_count) - total_count는 API가 보고한
-    전체 건수(요구사항 7의 "타입별 totalCount")로, 마지막으로 성공한
-    응답의 값이다(한 번도 성공하지 못했으면 None)."""
+
+def resolve_target_count(content_type_id: str, total_count: int | None, max_cap: int | None) -> int:
+    """쇼핑(38)은 SHOPPING_FIXED_TARGET(조회순 상위 N건)이 목표고, 나머지는
+    totalCount 전체가 목표다. totalCount를 못 알아냈으면
+    FALLBACK_TARGET_IF_PROBE_FAILS로 대신한다. max_cap이 주어지면(기존
+    --max-per-type 옵션의 의미를 이어받은 "타입별 상한") 그 값과 자연
+    목표값 중 작은 쪽을 쓴다."""
+    if content_type_id == "38":
+        natural = SHOPPING_FIXED_TARGET if total_count is None else min(SHOPPING_FIXED_TARGET, total_count)
+    else:
+        natural = total_count if total_count is not None else FALLBACK_TARGET_IF_PROBE_FAILS.get(content_type_id, 0)
+    if max_cap is not None:
+        return min(natural, max_cap)
+    return natural
+
+
+def fetch_type_candidates_single_call(
+    client: TourApiClient,
+    ldong_regn_cd: str,
+    content_type_id: str,
+    num_rows: int,
+    call_counter: list[int],
+) -> list[dict]:
+    """(요구사항 1) "한 번의 호출로 크게 받는다" - numOfRows=num_rows,
+    pageNo=1 딱 한 번. 실패 시 기존과 같은 백오프 재시도."""
+    items: list[dict] = []
+    for attempt in range(MAX_RETRIES_ON_API_ERROR):
+        call_counter[0] += 1
+        items, _, status = client.fetch_area_based_list2(content_type_id, None, 1, num_rows, ldong_regn_cd=ldong_regn_cd)
+        if status == "quota_exceeded":
+            raise QuotaExceeded(call_counter[0])
+        if status == "ok":
+            break
+        print(
+            f"    [{content_type_id}] 한 번에 받기(numOfRows={num_rows}) 호출 실패(api_error) - "
+            f"재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
+            flush=True,
+        )
+        time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+    else:
+        items = []
+    time.sleep(REQUEST_INTERVAL_SECONDS)
+    return items
+
+
+def fetch_type_candidates_paginated_fallback(
+    client: TourApiClient,
+    ldong_regn_cd: str,
+    content_type_id: str,
+    target: int,
+    call_counter: list[int],
+) -> list[dict]:
+    """한 번에 받기가 목표보다 적게 와서(서버 상한 가능성) 쓰는 폴백 -
+    작은 페이지 크기(PAGE_SIZE)로 다시 처음부터 페이지네이션한다. arrange=
+    "P" 정렬이 페이지마다 불안정해 겹치는 항목이 섞일 수 있지만, 호출부
+    (fetch_type_candidates)가 끝에 항상 contentid 중복 제거를 적용한다."""
     collected: list[dict] = []
     page = 1
-    total_count: int | None = None
-    while len(collected) < max_items:
-        page_size = min(PAGE_SIZE, max_items - len(collected))
+    while len(collected) < target:
+        page_size = min(PAGE_SIZE, target - len(collected))
         items: list[dict] = []
         for attempt in range(MAX_RETRIES_ON_API_ERROR):
             call_counter[0] += 1
-            items, total_count, status = client.fetch_area_based_list2(
+            items, _, status = client.fetch_area_based_list2(
                 content_type_id, None, page, page_size, ldong_regn_cd=ldong_regn_cd
             )
             if status == "quota_exceeded":
@@ -363,7 +474,7 @@ def fetch_type_candidates(
             if status == "ok":
                 break
             print(
-                f"    [{content_type_id}] page {page} 호출 실패(api_error) - 재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
+                f"    [{content_type_id}] 폴백 page {page} 호출 실패(api_error) - 재시도 {attempt + 1}/{MAX_RETRIES_ON_API_ERROR}",
                 flush=True,
             )
             time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
@@ -374,14 +485,59 @@ def fetch_type_candidates(
             break
         collected.extend(items)
         print(
-            f"    [{content_type_id}] page {page}: {len(items)}건 (누적 {len(collected)}"
-            f"{f'/{total_count}' if total_count is not None else ''}, 총 API 호출 {call_counter[0]}회)",
+            f"    [{content_type_id}] 폴백 page {page}: {len(items)}건 (누적 {len(collected)}, 총 API 호출 {call_counter[0]}회)",
             flush=True,
         )
-        if total_count is not None and len(collected) >= total_count:
-            break
         page += 1
-    return collected[:max_items], total_count
+    return collected
+
+
+def dedupe_by_contentid(items: list[dict]) -> tuple[list[dict], int]:
+    """(요구사항 1) contentid 기준 중복 제거(첫 항목 유지). contentid가
+    없는 항목은 서로 절대 중복 처리하지 않는다(비교할 식별자가 없으므로).
+    Returns (deduped_items, removed_count)."""
+    seen: set[str] = set()
+    deduped: list[dict] = []
+    for item in items:
+        content_id = str(item.get("contentid") or "")
+        if content_id:
+            if content_id in seen:
+                continue
+            seen.add(content_id)
+        deduped.append(item)
+    return deduped, len(items) - len(deduped)
+
+
+def fetch_type_candidates(
+    client: TourApiClient,
+    ldong_regn_cd: str,
+    content_type_id: str,
+    call_counter: list[int],
+    *,
+    max_cap: int | None = None,
+) -> tuple[list[dict], int | None, int]:
+    """contentTypeId 하나에 대해: ① totalCount를 알아내고 ② 그걸 목표로
+    한 번의 큰 호출로 받은 뒤 ③ 부족하면 페이지네이션으로 폴백하고 ④
+    contentid 기준 중복을 제거한다(요구사항 1). areaCode는 쓰지 않는다
+    (모듈 docstring 참고). call_counter[0]는 실제 API 호출마다 늘어나며
+    collect_place_candidates 전체에서 공유된다. quota_exceeded는 즉시
+    QuotaExceeded로 올린다.
+
+    Returns (deduped_items, total_count, duplicates_removed)."""
+    total_count = probe_total_count(client, ldong_regn_cd, content_type_id, call_counter)
+    target = resolve_target_count(content_type_id, total_count, max_cap)
+
+    items = fetch_type_candidates_single_call(client, ldong_regn_cd, content_type_id, target, call_counter) if target > 0 else []
+    if target > 0 and len(items) < target:
+        print(
+            f"!! [{content_type_id}] 한 번에 받은 건수({len(items)})가 목표({target})보다 적습니다 - "
+            "서버 상한일 수 있어 페이지네이션으로 폴백합니다.",
+            flush=True,
+        )
+        items = fetch_type_candidates_paginated_fallback(client, ldong_regn_cd, content_type_id, target, call_counter)
+
+    deduped, duplicates_removed = dedupe_by_contentid(items)
+    return deduped, total_count, duplicates_removed
 
 
 def extract_known_hours_fields(detail_intro: dict | None, content_type_id: str | None) -> tuple[str | None, str | None]:
@@ -486,6 +642,7 @@ def build_summary(
     *,
     per_type_collected: dict[str, int],
     per_type_total_count: dict[str, int | None],
+    per_type_duplicates_removed: dict[str, int],
     excluded: list[dict],
     already_in_catalog: list[dict],
     new_candidates: list[dict],
@@ -496,6 +653,7 @@ def build_summary(
     exclude_reason_counts = Counter(item["exclude_reason"] for item in excluded)
     suggested_area_counts = Counter((item.get("suggested_area") or "(미정)") for item in new_candidates)
     sigungu_counts = Counter((item.get("sigungu_name") or "(미상)") for item in new_candidates)
+    lcls_systm2_counts = Counter((item.get("lcls_systm2") or "(미상)") for item in new_candidates)
     flag_counts: Counter = Counter()
     for item in new_candidates:
         for flag in item.get("flags") or []:
@@ -504,12 +662,15 @@ def build_summary(
     return {
         "collected_by_type": per_type_collected,
         "total_count_by_type": per_type_total_count,
+        "duplicates_removed_by_type": per_type_duplicates_removed,
+        "duplicates_removed_total": sum(per_type_duplicates_removed.values()),
         "excluded_total": len(excluded),
         "excluded_by_reason": dict(exclude_reason_counts),
         "already_in_catalog_total": len(already_in_catalog),
         "new_candidates_total": len(new_candidates),
         "new_candidates_by_suggested_area": dict(suggested_area_counts),
         "new_candidates_by_sigungu": dict(sigungu_counts),
+        "new_candidates_by_lcls_systm2": dict(lcls_systm2_counts),
         "new_candidates_by_flag": dict(flag_counts),
         "stage1_api_call_count": stage1_api_call_count,
         "stage2_api_call_count": stage2_api_call_count,
@@ -534,39 +695,47 @@ def collect_place_candidates(
     어느 단계에서든 QuotaExceeded가 나면 그 단계까지 모은 결과로
     partial_due_to_quota=True를 세팅해 돌려준다 - 예외를 바깥으로 올리지
     않는다(요구사항 8)."""
-    max_per_type = max_per_type_by_content_type or MAX_PER_TYPE_DEFAULTS
+    max_per_type = max_per_type_by_content_type or {}
     ldong_regn_cd = TOUR_API_LDONG_REGN_CD_BY_CITY[city]
     existing_places = load_existing_places(city)
 
     call_counter = [0]
     per_type_collected: dict[str, int] = {}
     per_type_total_count: dict[str, int | None] = {}
+    per_type_duplicates_removed: dict[str, int] = {}
     all_kept: list[dict] = []
     all_excluded: list[dict] = []
     partial = False
 
     for content_type_id, label in COLLECT_CONTENT_TYPE_LABELS.items():
-        type_max = max_per_type.get(content_type_id, 0)
-        print(f"=== {label}(contentTypeId={content_type_id}) 수집 시작 (최대 {type_max}건) ===", flush=True)
+        max_cap = max_per_type.get(content_type_id)
+        print(f"=== {label}(contentTypeId={content_type_id}) 수집 시작 ===", flush=True)
         try:
-            raw_items, total_count = fetch_type_candidates(client, ldong_regn_cd, content_type_id, type_max, call_counter)
+            raw_items, total_count, duplicates_removed = fetch_type_candidates(
+                client, ldong_regn_cd, content_type_id, call_counter, max_cap=max_cap
+            )
         except QuotaExceeded:
             partial = True
             print("!! 요청 한도 초과 - 수집을 중단합니다.", flush=True)
             break
         per_type_total_count[label] = total_count
+        per_type_duplicates_removed[label] = duplicates_removed
         normalized = [normalize_raw_item(raw, content_type_id) for raw in raw_items]
         kept, excluded = filter_by_coordinates(normalized)
         per_type_collected[label] = len(kept)
         all_kept.extend(kept)
         all_excluded.extend(excluded)
-        print(f"{label}: totalCount={total_count}, {len(kept)}건 통과, {len(excluded)}건 좌표 제외", flush=True)
+        print(
+            f"{label}: totalCount={total_count}, 중복 제거 {duplicates_removed}건, "
+            f"{len(kept)}건 통과, {len(excluded)}건 좌표 제외",
+            flush=True,
+        )
 
     stage1_api_call_count = call_counter[0]
 
     new_candidates, already_in_catalog = partition_duplicates(all_kept, existing_places)
     for item in new_candidates:
-        item["suggested_area"], item["area_note"], item["sigungu_name"] = suggest_area(
+        item["suggested_area"], item["area_note"], item["sigungu_name"], item["area_mapping"] = suggest_area(
             item["ldong_signgu_cd"], item["addr1"]
         )
 
@@ -622,6 +791,7 @@ def collect_place_candidates(
     summary = build_summary(
         per_type_collected=per_type_collected,
         per_type_total_count=per_type_total_count,
+        per_type_duplicates_removed=per_type_duplicates_removed,
         excluded=all_excluded,
         already_in_catalog=already_in_catalog,
         new_candidates=new_candidates,
@@ -689,11 +859,16 @@ def main(argv: list[str] | None = None) -> None:
     print(f"\n=== {args.city} 활동 후보 수집 결과 ===")
     print(f"타입별 totalCount: {summary['total_count_by_type']}")
     print(f"타입별 수집(좌표 필터 통과): {summary['collected_by_type']}")
+    print(
+        f"contentid 중복 제거: 총 {summary['duplicates_removed_total']}건 "
+        f"{summary['duplicates_removed_by_type']}"
+    )
     print(f"좌표 제외: {summary['excluded_total']}건 {summary['excluded_by_reason']}")
     print(f"기존 카탈로그 중복: {summary['already_in_catalog_total']}건")
     print(f"신규 후보: {summary['new_candidates_total']}건")
     print(f"신규 후보 suggested_area 분포: {summary['new_candidates_by_suggested_area']}")
     print(f"신규 후보 시군구 분포: {summary['new_candidates_by_sigungu']}")
+    print(f"신규 후보 lclsSystm2 분포: {summary['new_candidates_by_lcls_systm2']}")
     print(f"신규 후보 품질 플래그 분포: {summary['new_candidates_by_flag']}")
     print(
         f"1단계 API 호출 {summary['stage1_api_call_count']}회, "

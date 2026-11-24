@@ -448,6 +448,78 @@ class TourApiClient:
             items = [items]
         return items, total_count, "ok"
 
+    def fetch_area_based_list2_raw(
+        self,
+        content_type_id: str,
+        region_params: dict[str, str],
+        arrange: str | None,
+        page_no: int = 1,
+        num_rows: int = 10,
+    ) -> dict:
+        """Diagnostic-only areaBasedList2 call for
+        scripts/diagnose_area_based_list.py - unlike fetch_area_based_list2
+        (used by collect_place_candidates.py, left untouched), this takes
+        an arbitrary region param dict (e.g. {"areaCode": "6"} or
+        {"lDongRegnCd": "26"}) and an optional arrange value (None omits
+        the arrange param entirely), and never collapses a failure into a
+        generic "api_error" string - the caller needs the actual
+        resultCode/resultMsg (or exception text) to compare combinations.
+
+        Returns a dict with one of these shapes:
+        - {"resultCode": ..., "resultMsg": ..., "items": [...], "total_count": ...}
+        - {"error": "quota_exceeded"} (see _QUOTA_EXCEEDED_MARKER)
+        - {"error": <exception message or "no_api_key">}
+        The caller (not this method) is responsible for masking serviceKey
+        out of anything derived from the error text before printing/saving.
+        """
+        if not self.api_key:
+            return {"error": "no_api_key"}
+
+        url = f"{self.base_url}/areaBasedList2"
+        params = {
+            "serviceKey": self.api_key,
+            "numOfRows": num_rows,
+            "pageNo": page_no,
+            "MobileOS": "ETC",
+            "MobileApp": "Gonny",
+            "_type": "json",
+            "contentTypeId": content_type_id,
+            **region_params,
+        }
+        if arrange is not None:
+            params["arrange"] = arrange
+
+        try:
+            with httpx.Client(timeout=8.0) as client:
+                resp = client.get(url, params=params)
+            if self._QUOTA_EXCEEDED_MARKER in resp.text:
+                return {"error": "quota_exceeded"}
+            resp.raise_for_status()
+            payload = resp.json()["response"]
+            header = payload["header"]
+            if header["resultCode"] != "0000":
+                return {
+                    "resultCode": header["resultCode"],
+                    "resultMsg": header.get("resultMsg"),
+                    "items": [],
+                    "total_count": None,
+                }
+            body = payload["body"]
+            total_count = body.get("totalCount")
+            items_body = body["items"]
+            items = items_body["item"] if items_body else []
+        except Exception as exc:
+            return {"error": str(exc)}
+
+        if not isinstance(items, list):
+            items = [items]
+        return {
+            "resultCode": header["resultCode"],
+            "resultMsg": header.get("resultMsg"),
+            "items": items,
+            "total_count": total_count,
+        }
+
     def fetch_detail_intro2(self, content_id: str, content_type_id: str) -> tuple[dict | None, str]:
         """Raw detailIntro2 item for any contentTypeId, kept verbatim (no
         field extraction) - unlike fetch_place_operating_hours, which only

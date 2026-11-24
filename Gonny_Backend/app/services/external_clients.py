@@ -146,6 +146,20 @@ TOUR_API_AREA_CODE_BY_CITY = {
     "jeju": "39",
 }
 
+# lDongRegnCd (법정동 시도 코드) values, an alternative region filter for
+# areaBasedList2. Verified live (scripts/diagnose_area_based_list.py,
+# 2026-11-24) that areaCode=6 (부산) under-returns badly for contentTypeId
+# 12/14/28/38 (totalCount 15/4/12/3) compared to lDongRegnCd=26 (348/129/
+# 61/987) - areaCode silently drops records whose areacode field is blank
+# (same root cause already documented for lodging in
+# add_tour_api_lodging.py's LDONG_REGN_CD_BY_CITY, which this duplicates
+# for general reuse via fetch_area_based_list2's ldong_regn_cd argument).
+TOUR_API_LDONG_REGN_CD_BY_CITY = {
+    "seoul": "11",
+    "busan": "26",
+    "jeju": "50",
+}
+
 # TourAPI's lclsSystm2 classification codes for contentTypeId=32 (숙박),
 # verified live via the lclsSystmCode2 endpoint (lclsSystm1=AC) - this is
 # the authoritative list, not a guess. There is no Airbnb/에어비앤비
@@ -397,9 +411,11 @@ class TourApiClient:
     def fetch_area_based_list2(
         self,
         content_type_id: str,
-        area_code: str,
+        area_code: str | None,
         page_no: int,
         num_rows: int = 100,
+        *,
+        ldong_regn_cd: str | None = None,
     ) -> tuple[list[dict], int | None, str]:
         """Generic single-page areaBasedList2 browse-by-region call for any
         contentTypeId, ranked by popularity (arrange="P") - unlike
@@ -409,6 +425,13 @@ class TourApiClient:
         types (see scripts/collect_place_candidates.py). Does not change
         fetch_popular_destinations's own behavior.
 
+        ldong_regn_cd (keyword-only, default None) lets a caller use the
+        lDongRegnCd region filter instead of areaCode - see
+        TOUR_API_LDONG_REGN_CD_BY_CITY for why (areaCode under-returns for
+        several contentTypeIds). When omitted, behavior is unchanged from
+        before this argument existed: area_code is sent as areaCode, same
+        as every existing caller already does.
+
         Returns (items, total_count, status) where status is "ok",
         "quota_exceeded" (see _QUOTA_EXCEEDED_MARKER), or "api_error" (any
         other request/response failure).
@@ -416,6 +439,7 @@ class TourApiClient:
         if not self.api_key:
             return [], None, "api_error"
 
+        region_param = {"lDongRegnCd": ldong_regn_cd} if ldong_regn_cd is not None else {"areaCode": area_code}
         url = f"{self.base_url}/areaBasedList2"
         params = {
             "serviceKey": self.api_key,
@@ -425,7 +449,7 @@ class TourApiClient:
             "MobileApp": "Gonny",
             "_type": "json",
             "contentTypeId": content_type_id,
-            "areaCode": area_code,
+            **region_param,
             "arrange": "P",
         }
         try:

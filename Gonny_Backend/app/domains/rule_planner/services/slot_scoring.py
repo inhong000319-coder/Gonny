@@ -12,6 +12,7 @@ from .constants import (
     SLOT_CATEGORY_PREFERENCE,
 )
 from .fitness_model import get_fitness_scorer
+from .place_pool import theme_tags_for_request
 from .policies.city import (
     evening_food_bonus,
     extreme_distance_penalty,
@@ -28,6 +29,12 @@ from .travel_estimate import coordinate_area_transition_bonus, coordinate_next_p
 # explicitly "transit" (request.transport_by_day) - see slot_score().
 TRANSIT_TAXI_NEEDED_PENALTY = -8
 TRANSIT_SUBWAY_FRIENDLY_BONUS = 3
+
+# Rule bonus (not an ML input) for a place whose theme_tags overlap the
+# request's theme_tags_for_request (e.g. a "walk"-themed alternate place on
+# a walk-concept request) - see PR-A's place_pool.py. Initial value, not
+# measured.
+THEME_MATCH_BONUS = 20
 
 
 def day_phase(request: NormalizedRuleRequest, day_number: int) -> str:
@@ -140,6 +147,8 @@ def slot_score(
     if request.style == "near-stay" and place.area == preferred_area:
         score += 3
     score += google_rating_bonus_score(place)
+    if set(place.theme_tags) & theme_tags_for_request(request):
+        score += THEME_MATCH_BONUS
 
     return score
 

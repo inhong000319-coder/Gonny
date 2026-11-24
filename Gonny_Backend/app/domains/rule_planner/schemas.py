@@ -9,7 +9,10 @@ from app.domains.destination_catalog.schemas import CatalogCityOption, FeaturedV
 
 
 BudgetBand = Literal["low", "medium", "high"]
-TripConcept = Literal["food", "shopping", "relax", "sightseeing", "culture", "nature", "activity", "nightlife", "onsen"]
+TripConcept = Literal[
+    "food", "shopping", "relax", "sightseeing", "culture", "nature", "activity", "nightlife", "onsen",
+    "walk", "sports",
+]
 TripStyle = Literal["tight", "easy", "near-stay", "mobility-first"]
 CompanionType = Literal["solo", "couple", "friend", "family"]
 AccommodationTypeLabel = Literal["호텔", "모텔", "호스텔", "펜션·민박", "콘도미니엄"]
@@ -173,6 +176,10 @@ class RuleSlotAlternative(BaseModel):
     area: str
     notes: str
     average_cost_krw: int | None = None
+    # Copied straight from the source PlaceData.booking - see that field's
+    # docstring. Additive, backward compatible; None for every place
+    # without a booking hint (every place saved before this field existed).
+    booking: Literal["required", "recommended"] | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -207,6 +214,10 @@ class RuleItineraryItem(BaseModel):
     # this" swap) and whenever generate() was called with
     # include_alternatives=False (e.g. compare_transport's scenario runs).
     alternatives: list[RuleSlotAlternative] = Field(default_factory=list)
+    # Copied straight from the source PlaceData.booking - see
+    # RuleSlotAlternative.booking's docstring for the same additive,
+    # backward-compatible contract.
+    booking: Literal["required", "recommended"] | None = None
 
     model_config = ConfigDict(str_strip_whitespace=True)
 

@@ -6,6 +6,7 @@ from pathlib import Path
 from fastapi import HTTPException, status
 
 from app.domains.destination_catalog.schemas import (
+    ALTERNATE_TIER,
     CatalogCityOption,
     CityPlaceCatalog,
     CreateDestinationRequest,
@@ -116,7 +117,11 @@ class DestinationCatalogRepository:
                 city=catalog.city,
                 aliases=catalog.aliases,
                 recommended_max_days=compute_recommended_max_days(
-                    sum(1 for place in catalog.places if place.is_active and place.is_activity_candidate)
+                    sum(
+                        1
+                        for place in catalog.places
+                        if place.is_active and place.is_activity_candidate and place.mvp_tier != ALTERNATE_TIER
+                    )
                 ),
             )
             for catalog in self.load_catalogs(visible_only=visible_only)

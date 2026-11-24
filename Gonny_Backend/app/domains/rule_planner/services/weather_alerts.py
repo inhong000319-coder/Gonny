@@ -331,6 +331,7 @@ def _build_alerts_from_forecast(
         affected_items = (
             _build_affected_items(
                 day_number=day_number,
+                day_date=day_date,
                 affected=affected,
                 request=request,
                 swap_context=swap_context,
@@ -358,6 +359,7 @@ def _build_alerts_from_forecast(
 def _build_affected_items(
     *,
     day_number: int,
+    day_date: date,
     affected: list[PlaceData],
     request: NormalizedRuleRequest,
     swap_context: WeatherSwapContext,
@@ -406,6 +408,7 @@ def _build_affected_items(
                     resolve_item_category=swap_context.resolve_item_category,
                     build_note=swap_context.build_note,
                     extra_predicate=lambda place: place.setting == "indoor",
+                    day_date=day_date,
                 )
             items.append(
                 RuleWeatherAffectedItem(

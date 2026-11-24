@@ -273,6 +273,8 @@ CONCEPT_LABEL_KO = {
     "activity": "액티비티",
     "nightlife": "나이트라이프",
     "onsen": "온천",
+    "walk": "걷기·산책",
+    "sports": "레저·스포츠",
 }
 COMPANION_REASON_KO = {
     "solo": "혼자서도 부담 없이 움직이기 좋습니다.",

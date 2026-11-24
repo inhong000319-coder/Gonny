@@ -1,7 +1,13 @@
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+
+# PlaceData.mvp_tier 값 중 하나 - 메인 추천 풀에는 기본적으로 들어가지 않고
+# 대안·우천 대체 후보로만 쓰이는 장소(부산 확장 278곳 등). 요청 컨셉이
+# place.theme_tags와 겹치면 메인 풀로 승격된다 - see
+# rule_planner/services/place_pool.is_main_pool_member.
+ALTERNATE_TIER = "alternate"
 
 ACTIVITY_TYPE_CODE_MAP = {
     "나이트라이프": "nightlife",
@@ -104,8 +110,27 @@ class PlaceData(BaseModel):
     mood_keywords: list[str] = Field(default_factory=list)
     highlight_tags: list[str] = Field(default_factory=list)
     note_templates: list[str] = Field(default_factory=list)
+    # 1~12월 중 이 장소가 어울리는 달. 비어 있으면(기본값) 연중 제약 없음 -
+    # see rule_planner/services/place_pool.is_in_season. 기존 카탈로그
+    # JSON에는 이 필드가 없으므로 전부 빈 리스트로 로드된다(연중 무관).
+    season_months: list[int] = Field(default_factory=list)
+    # 예약 필요 여부 힌트 - None은 "조사하지 않음/해당 없음". booking_hint(자유
+    # 텍스트)와 별개로, 프런트가 구조화된 배지를 보여줄 수 있게 추가.
+    booking: Literal["required", "recommended"] | None = None
+    # alternate 등급 장소가 특정 요청 컨셉(walk/sports 등)과 겹칠 때 메인
+    # 풀로 승격되는 데 쓰는 테마 태그 - activity_type/concept_tags와는 별도
+    # 축이다. 비어 있으면(기본값) 승격 대상이 아니다.
+    theme_tags: list[str] = Field(default_factory=list)
 
     model_config = ConfigDict(str_strip_whitespace=True)
+
+    @field_validator("season_months")
+    @classmethod
+    def _validate_season_months(cls, value: list[int]) -> list[int]:
+        for month in value:
+            if not 1 <= month <= 12:
+                raise ValueError(f"season_months는 1~12만 허용합니다: {month}")
+        return sorted(set(value))
 
     @property
     def activity_type_codes(self) -> list[str]:

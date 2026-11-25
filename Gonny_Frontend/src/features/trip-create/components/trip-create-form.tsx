@@ -102,7 +102,13 @@ type TripConcept =
   | "nature"
   | "activity"
   | "nightlife"
-  | "onsen";
+  | "onsen"
+  | "walk"
+  | "sports";
+
+// 백엔드 PlaceData.booking - null/undefined는 "예약 안내 없음"(아무것도
+// 렌더링하지 않음), 구버전 응답에도 안전하다.
+type BookingHint = "required" | "recommended";
 
 // A fact-based "why this place" tag - see the backend's RuleReason. code is
 // a stable key (not shown to the user); label is the ready-to-display
@@ -123,6 +129,9 @@ type RuleSlotAlternative = {
   area: string;
   notes: string;
   average_cost_krw?: number | null;
+  // 구버전 응답(캐시 등)에는 없을 수 있어 옵셔널 - 없거나 null이면
+  // 예약 안내를 표시하지 않는다(labelBookingHint).
+  booking?: BookingHint | null;
 };
 
 type RuleItineraryItem = {
@@ -151,6 +160,9 @@ type RuleItineraryItem = {
   // before this field existed, normalizeGenerateResponse defaults it to
   // [] the same way it does reasons. Always [] for a full-day item.
   alternatives: RuleSlotAlternative[];
+  // 구버전 응답(캐시 등)에는 없을 수 있어 옵셔널 - RuleSlotAlternative.booking과
+  // 같은 "없으면 표시 안 함" 규칙.
+  booking?: BookingHint | null;
 };
 
 type RuleDayDurationWarning = {
@@ -449,6 +461,8 @@ const conceptOptions: TripConcept[] = [
   "activity",
   "nightlife",
   "onsen",
+  "walk",
+  "sports",
 ];
 const budgetOptions: BudgetBand[] = ["low", "medium", "high"];
 // 숙소 등급(가격이 아니라 선호) - 과거엔 토글을 켜야 선택지가 나왔지만, 이제는
@@ -571,12 +585,20 @@ function toCityLabel(value: string) {
   return cityKo[value] ?? value;
 }
 
+// 현재 아무 데서도 호출하지 않는 죽은 코드지만(labelTripConcept만 쓰인다),
+// 새 컨셉이 "자연" 폴백으로 잘못 떨어지지 않도록 labelTripConcept과 똑같이
+// 맞춰 둔다.
 function labelConcept(value: TripConcept) {
   if (value === "food") return "미식";
   if (value === "shopping") return "쇼핑";
   if (value === "relax") return "휴양";
   if (value === "sightseeing") return "관광";
   if (value === "culture") return "문화";
+  if (value === "activity") return "액티비티";
+  if (value === "nightlife") return "나이트라이프";
+  if (value === "onsen") return "온천";
+  if (value === "walk") return "걷기·산책";
+  if (value === "sports") return "레저·스포츠";
   return "자연";
 }
 
@@ -589,6 +611,8 @@ function labelTripConcept(value: TripConcept) {
   if (value === "activity") return "액티비티";
   if (value === "nightlife") return "나이트라이프";
   if (value === "onsen") return "온천";
+  if (value === "walk") return "걷기·산책";
+  if (value === "sports") return "레저·스포츠";
   return "자연";
 }
 
@@ -826,7 +850,8 @@ function isRuleSlotAlternative(value: unknown): value is RuleSlotAlternative {
     typeof alternative.place_name === "string" &&
     typeof alternative.category === "string" &&
     typeof alternative.area === "string" &&
-    typeof alternative.notes === "string"
+    typeof alternative.notes === "string" &&
+    (alternative.booking === undefined || alternative.booking === null || typeof alternative.booking === "string")
   );
 }
 
@@ -846,7 +871,8 @@ function isRuleItineraryItem(value: unknown): value is RuleItineraryItem {
     (item.travel_minutes_from_previous === null || typeof item.travel_minutes_from_previous === "number") &&
     (item.place_id === undefined || item.place_id === null || typeof item.place_id === "string") &&
     (item.reasons === undefined || Array.isArray(item.reasons)) &&
-    (item.alternatives === undefined || item.alternatives === null || Array.isArray(item.alternatives))
+    (item.alternatives === undefined || item.alternatives === null || Array.isArray(item.alternatives)) &&
+    (item.booking === undefined || item.booking === null || typeof item.booking === "string")
   );
 }
 
@@ -1174,6 +1200,14 @@ function normalizeCompareTransportResponse(payload: unknown): RuleTransportCompa
 
 function formatCostLabel(value: number) {
   return value === 0 ? "무료" : `${value.toLocaleString("ko-KR")}원`;
+}
+
+// recommended는 추정값이라 단정하지 않는 문구를 쓴다 - required만 확정
+// 안내. null/undefined면 아무것도 보여주지 않는다(호출부에서 처리).
+function labelBookingHint(booking: BookingHint | null | undefined): string | null {
+  if (booking === "required") return "사전 예약 필요";
+  if (booking === "recommended") return "예약을 권장해요";
+  return null;
 }
 
 // 예상 비용 금액이 1인 기준이 아니라 전체 인원 합계라는 걸 보조 문구에
@@ -1681,6 +1715,9 @@ function SlotAlternativesPanel({
             >
               {alternative.place_name}
               <span className="tc-alt-chip-area"> · {alternative.area}</span>
+              {labelBookingHint(alternative.booking) ? (
+                <span className="tc-alt-chip-area"> · {labelBookingHint(alternative.booking)}</span>
+              ) : null}
             </button>
           );
         })}
@@ -3706,6 +3743,9 @@ export function TripCreateForm() {
                                 <p className="tc-stop-area">{item.area}</p>
                                 {item.average_cost_krw != null ? (
                                   <p className="tc-stop-cost">{formatCostLabel(item.average_cost_krw)}</p>
+                                ) : null}
+                                {labelBookingHint(item.booking) ? (
+                                  <p className="tc-stop-note-line">{labelBookingHint(item.booking)}</p>
                                 ) : null}
                                 <ReasonChips reasons={visibleReasons} />
                                 {note.headline ? <p className="tc-stop-note-lead">{note.headline}</p> : null}

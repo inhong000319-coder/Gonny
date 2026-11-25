@@ -15,6 +15,7 @@ export type SlotAlternative = {
   area: string;
   notes: string;
   average_cost_krw?: number | null;
+  booking?: "required" | "recommended" | null;
 };
 
 // Shape every call site actually needs - RuleItineraryItem satisfies this
@@ -29,6 +30,7 @@ export type SwappableItem = {
   average_cost_krw?: number | null;
   reasons?: unknown[];
   alternatives?: SlotAlternative[];
+  booking?: "required" | "recommended" | null;
 };
 
 // Keyed by `${day_number}:${time_slot}` - unique within one itinerary
@@ -95,6 +97,7 @@ export function getEffectiveItem<T extends SwappableItem>(item: T, swaps: SlotSw
     area: alternative.area,
     notes: alternative.notes,
     average_cost_krw: alternative.average_cost_krw ?? null,
+    booking: alternative.booking ?? null,
     reasons: [],
   };
 }

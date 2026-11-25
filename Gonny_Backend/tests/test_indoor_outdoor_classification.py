@@ -81,9 +81,16 @@ def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # own CSV, plus 31 Jeju restaurants merged in by
     # scripts/add_tour_api_restaurants_jeju.py, which (being restaurants,
     # like the 201 above) are also unclassified (setting=None).
+    #
+    # 649 = 365 + 284 Busan expansion places added by PR-C's
+    # scripts/add_busan_expansion_places.py (all is_active=false, but this
+    # test counts every place regardless of active status) - see
+    # test_all_109_korean_focus_places_are_classified below for why the
+    # classified/unclassified split moves by +284/+0 (all 284 carry a real
+    # setting value from their own TourAPI-based classification).
     ids = [place.id for place in load_korean_focus_places()]
 
-    assert len(ids) == 365
+    assert len(ids) == 649
     assert len(set(ids)) == len(ids), "duplicate place_id found across seoul/busan/jeju catalogs"
 
 
@@ -113,15 +120,22 @@ def test_all_109_korean_focus_places_are_classified() -> None:
     # The 31 Jeju restaurants merged in by
     # scripts/add_tour_api_restaurants_jeju.py carry no setting value
     # (restaurants, same as the 201 below) - 201+31=232 unclassified.
-    EXPECTED_SETTING_COUNTS = {"outdoor": 66, "indoor": 42, "mixed": 25}
-    EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 24
+    #
+    # PR-C's 284 Busan expansion places (scripts/add_busan_expansion_places.py)
+    # all carry a real setting value from their own TourAPI-based
+    # classification (outdoor 163 / indoor 96 / mixed 25, 72 with
+    # rain_sensitive_light=True) - added entirely to the classified side,
+    # never to unclassified: outdoor 66+163=229, indoor 42+96=138,
+    # mixed 25+25=50, rain_sensitive_light 24+72=96.
+    EXPECTED_SETTING_COUNTS = {"outdoor": 229, "indoor": 138, "mixed": 50}
+    EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 96
     EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 232
 
     places = load_korean_focus_places()
     classified_places = [place for place in places if place.setting is not None]
     unclassified_places = [place for place in places if place.setting is None]
 
-    assert len(classified_places) == 133
+    assert len(classified_places) == 417
     assert len(unclassified_places) == EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT
 
     setting_counts: dict[str, int] = {}

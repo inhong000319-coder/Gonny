@@ -280,11 +280,47 @@ def test_real_catalogs_have_exactly_the_9_meal_ineligible_places():
     # (food-stall alley) inside the market, see
     # local_only/reports/meal_eligibility_undetermined_places.md. Every
     # other place in the 3 catalogs must still default to meal_eligible=True.
+    #
+    # busan grew from 2 to 26 once PR-C's scripts/add_busan_expansion_places.py
+    # added 284 reviewed expansion places (scripts/data/busan_expansion_
+    # places.json) - 24 of them are food-tagged alleys/markets/cafe streets
+    # the user's own review already marked meal_eligible=False, same pattern
+    # as the original 2. All 284 are is_active=false, so this has no effect
+    # on real recommendations yet (is_activity_candidate/_pick_meal_place
+    # only ever see active places) - this test just tracks the raw catalog
+    # data, not recommendation behavior.
     import json
 
     EXPECTED_INELIGIBLE_IDS = {
         "seoul": {"insadong", "seongsu", "apgujeong-rodeo"},
-        "busan": {"millak-waterfront", "onjeoncheon-cafe"},
+        "busan": {
+            "millak-waterfront",
+            "onjeoncheon-cafe",
+            "bukmatgol",
+            "bupyeong-kkangtong-market",
+            "bupyeongdonghanbokgeori",
+            "bupyeongjokbalgolmok",
+            "busan-jagalchi-yanggopchang-golmok",
+            "busanyeok-pungmulgeori",
+            "chaekbangbombom",
+            "chaekbangowol",
+            "cheongsapo-hoetjipchon",
+            "dongju-chaekbang",
+            "geumjeongsanseongmaeul-meokgeorichon",
+            "gwangbok-jihadosangga",
+            "haeridan-gil",
+            "mangmidangil",
+            "marinsiti",
+            "munhwagolmok",
+            "ppangcheondong",
+            "sindonga-susanmulsijang",
+            "sinsegyebaekhwajeom-senteomsitijeom",
+            "sseudabukseu-x-wondeoreoseuteukeopi",
+            "the-bay-101",
+            "urigeulbang-bukkape",
+            "y-z-park",
+            "yeongjusijang",
+        },
         "jeju": {"woljeongri", "aewol-cafe", "osulloc", "delmoondo-gimnyeong"},
     }
     for city, expected_ids in EXPECTED_INELIGIBLE_IDS.items():

@@ -119,7 +119,13 @@ def test_real_catalog_candidate_counts_after_exclusion() -> None:
 
     for city, expected_count in expected_counts.items():
         catalog = provider.get_city_catalog(continent="asia", country="korea", city=city, visible_only=True)
-        food_places = [place for place in catalog.places if "food" in place.concept_tags]
+        # is_active 필터가 빠져 있었다 - 실제 추천 경로(_build_items의
+        # scored_places, _pick_meal_place가 받는 바로 그 리스트)는 이미
+        # is_active로 걸러진 뒤에만 is_breakfast_candidate를 적용하므로
+        # (service.py 참고), 비활성 장소는 애초에 후보가 될 수 없다. PR-C로
+        # 추가된 부산 확장 장소(전부 is_active=false)가 이 필터 없이는
+        # 잘못 섞여 드러난 기존 테스트 버그 - 프로덕션 코드는 멀쩽하다.
+        food_places = [place for place in catalog.places if place.is_active and "food" in place.concept_tags]
         candidates = [place for place in food_places if is_breakfast_candidate(place)]
 
         assert len(candidates) == expected_count, (city, [place.id for place in candidates])

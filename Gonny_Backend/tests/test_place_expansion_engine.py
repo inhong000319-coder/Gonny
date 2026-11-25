@@ -165,12 +165,29 @@ def test_create_place_request_accepts_new_fields():
 
 
 def test_existing_real_catalog_json_loads_with_new_fields_defaulted():
+    # PR-C(scripts/add_busan_expansion_places.py)가 busan.json에 season_months/
+    # booking/theme_tags를 실제로 채운 장소 284곳을 추가해, "카탈로그의 모든
+    # 장소가 이 필드에서 빈 값"은 더는 참이 아니다. 이 테스트의 원래
+    # 의도(raw JSON에 이 필드가 없는 기존 장소도 기본값으로 문제없이
+    # 로드된다 - 하위 호환)만 그대로 확인하도록, 키가 아예 없는 장소만
+    # 걸러서 검증한다.
     from app.domains.destination_catalog.services.provider import LocalJsonPlaceCatalogProvider
 
     provider = LocalJsonPlaceCatalogProvider()
+    destinations_dir = PROJECT_ROOT / "app" / "data" / "destinations"
     for city in ["seoul", "busan", "jeju"]:
         catalog = provider.get_city_catalog(continent=None, country=None, city=city, visible_only=True)
-        for place in catalog.places:
+        places_by_id = {place.id: place for place in catalog.places}
+        with (destinations_dir / f"{city}.json").open(encoding="utf-8") as f:
+            raw_catalog = json.load(f)
+        raw_places_without_new_fields = [
+            raw
+            for raw in raw_catalog["places"]
+            if "season_months" not in raw and "booking" not in raw and "theme_tags" not in raw
+        ]
+        assert raw_places_without_new_fields, f"{city}: 새 필드가 없는 기존 장소가 있어야 이 검증이 의미가 있다"
+        for raw in raw_places_without_new_fields:
+            place = places_by_id[raw["id"]]
             assert place.season_months == []
             assert place.booking is None
             assert place.theme_tags == []

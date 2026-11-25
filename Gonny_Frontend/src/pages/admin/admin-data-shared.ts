@@ -47,6 +47,10 @@ export type PlaceData = {
   mood_keywords?: string[];
   highlight_tags?: string[];
   note_templates?: string[];
+  // PR-A/A2 - 부산 장소 확장(백엔드 PlaceData.season_months/booking/theme_tags).
+  season_months?: number[] | null;
+  booking?: "required" | "recommended" | null;
+  theme_tags?: string[];
 };
 
 export type CityCatalog = {
@@ -101,6 +105,11 @@ export type PlaceEditorState = {
   full_day_notes_morning: string;
   full_day_notes_afternoon: string;
   full_day_notes_evening: string;
+  // PR-B: "" | "required" | "recommended" - select 입력이라 값 하나만 가진다.
+  booking: string;
+  // 쉼표 구분 입력("6, 7, 8, 9") - parseSeasonMonths로 1~12만 남긴다.
+  season_months: string;
+  theme_tags: string;
 };
 
 export const PLACE_PRIORITY_MIN = 1;
@@ -154,6 +163,11 @@ export const visibilityLevelOptions = [
   { value: "core", label: "대표 장소", description: "핵심 일정에 자주 노출됩니다." },
   { value: "standard", label: "일반 장소", description: "기본 추천 수준으로 노출됩니다." },
   { value: "hidden", label: "보조 장소", description: "조건이 잘 맞을 때만 드물게 노출됩니다." },
+  {
+    value: "alternate",
+    label: "대안 전용",
+    description: "메인 일정에는 나오지 않고 다른 추천·우천 대안에만 나옵니다. 걷기·레저 컨셉을 고르면 메인으로 올라옵니다.",
+  },
 ];
 
 export const continentLabels: Record<string, string> = {
@@ -293,6 +307,17 @@ export function parseLineList(value: string) {
     .filter(Boolean);
 }
 
+// 쉼표로 받은 월 목록 중 1~12만 남기고(그 밖의 값은 조용히 무시), 백엔드
+// PlaceData.season_months 검증(destination_catalog/schemas.py)과 같은
+// 방식으로 중복 제거·오름차순 정렬한다.
+export function parseSeasonMonths(value: string): number[] {
+  const months = value
+    .split(",")
+    .map((item) => Number.parseInt(item.trim(), 10))
+    .filter((month) => Number.isInteger(month) && month >= 1 && month <= 12);
+  return Array.from(new Set(months)).sort((a, b) => a - b);
+}
+
 export function toPositiveInteger(value: string, fallback: number) {
   const parsed = Number.parseInt(value.trim(), 10);
   return Number.isNaN(parsed) ? fallback : parsed;
@@ -372,6 +397,9 @@ export function toEditorState(place: PlaceData): PlaceEditorState {
       ? place.full_day_notes.afternoon.join("\n")
       : "",
     full_day_notes_evening: Array.isArray(place.full_day_notes?.evening) ? place.full_day_notes.evening.join("\n") : "",
+    booking: place.booking ?? "",
+    season_months: Array.isArray(place.season_months) ? place.season_months.join(", ") : "",
+    theme_tags: joinList(place.theme_tags),
   };
 }
 
@@ -405,6 +433,9 @@ export function emptyEditorState(defaultArea = ""): PlaceEditorState {
     full_day_notes_morning: "",
     full_day_notes_afternoon: "",
     full_day_notes_evening: "",
+    booking: "",
+    season_months: "",
+    theme_tags: "",
   };
 }
 
@@ -448,6 +479,11 @@ export function toPayload(state: PlaceEditorState): Partial<PlaceData> {
     mood_keywords: parseCommaList(state.mood_keywords),
     highlight_tags: parseCommaList(state.highlight_tags),
     note_templates: parseCommaList(state.note_templates),
+    // mood_keywords 등과 같은 방식(항상 키 포함) - 입력을 비우면 원본 값도
+    // {...원본, ...payload} 병합에서 지워진다.
+    booking: state.booking === "required" || state.booking === "recommended" ? state.booking : null,
+    season_months: parseSeasonMonths(state.season_months),
+    theme_tags: parseCommaList(state.theme_tags),
   };
 
   // 셋 다 비어있으면(원래 값이 없던 경우 toEditorState가 만들어내는 기본 상태) 키 자체를

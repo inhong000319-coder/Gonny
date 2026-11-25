@@ -225,6 +225,16 @@ export function AdminPlaceForm({
                   />
                 </label>
               </div>
+
+              <label>
+                <span>예약 필요 여부</span>
+                <select value={editor.booking} onChange={(event) => onChange("booking", event.target.value)}>
+                  <option value="">안내 없음</option>
+                  <option value="recommended">예약 권장</option>
+                  <option value="required">사전 예약 필요</option>
+                </select>
+                <small>일정 카드와 "다른 추천"에 작은 안내 문구로 표시됩니다. 예약 안내(자유 입력)와는 별개입니다.</small>
+              </label>
             </div>
           ) : null}
         </section>
@@ -412,6 +422,29 @@ export function AdminPlaceForm({
                   onChange={(event) => onChange("note_templates", event.target.value)}
                 />
               </label>
+
+              <div className="admin-form-grid">
+                <label>
+                  <span>활동 가능 시기(월)</span>
+                  <input
+                    placeholder="예: 6, 7, 8, 9 (비워두면 연중)"
+                    value={editor.season_months}
+                    onChange={(event) => onChange("season_months", event.target.value)}
+                  />
+                  <small>1~12 사이 숫자만 쉼표로 입력해주세요. 범위 밖의 값은 저장 시 무시됩니다.</small>
+                </label>
+                <label>
+                  <span>테마 태그</span>
+                  <input
+                    placeholder="예: walk, sports"
+                    value={editor.theme_tags}
+                    onChange={(event) => onChange("theme_tags", event.target.value)}
+                  />
+                  <small>
+                    대안 전용 장소가 걷기·레저 컨셉으로 메인에 올라오게 하려면 walk/sports를 넣어주세요.
+                  </small>
+                </label>
+              </div>
             </div>
           ) : null}
         </section>

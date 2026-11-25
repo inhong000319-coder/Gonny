@@ -21,7 +21,7 @@ from __future__ import annotations
 from datetime import date
 from typing import Callable
 
-from app.domains.destination_catalog.schemas import CityPlaceCatalog, PlaceData
+from app.domains.destination_catalog.schemas import ALTERNATE_TIER, CityPlaceCatalog, PlaceData
 from app.domains.rule_planner.schemas import NormalizedRuleRequest, RuleItineraryItem, RuleSlotAlternative
 
 from .closed_days import is_confirmed_closed_on
@@ -31,6 +31,14 @@ from .place_pool import is_in_season
 from .slot_scoring import day_phase, slot_score
 
 MAX_ALTERNATIVES = 3
+
+# PR-A2: alternate 등급 장소가 "다른 추천" 순위에서 받는 소폭 감점 - 메인
+# 후보가 있으면 메인이 먼저 나오고, alternate는 메인이 부족하거나 점수
+# 차이가 작을 때만 섞이게 한다. 정렬 키에만 적용되고 slot_score 자체나
+# 응답에 노출되는 값은 바꾸지 않는다(rank_slot_candidates의
+# alternate_rank_penalty 파라미터 참고). 초기값이며 실측(확장 데이터
+# 반영 후 대안 전용 비율·반복 장소 측정) 전의 값이다.
+ALTERNATE_RANK_PENALTY = 15
 
 
 def _filter_phase_candidates(
@@ -92,6 +100,7 @@ def rank_slot_candidates(
     extra_predicate: Callable[[PlaceData], bool] | None = None,
     limit: int = MAX_ALTERNATIVES,
     day_date: date | None = None,
+    alternate_rank_penalty: int = 0,
 ) -> list[RuleSlotAlternative]:
     """Candidate selection + slot_score ranking, factored out of
     compute_item_alternatives so weather_alerts.py's indoor swap
@@ -105,7 +114,17 @@ def rank_slot_candidates(
     day_date=None (every pre-existing caller) never excludes on season -
     see place_pool.is_in_season. Passing it filters out a place that's out
     of season on that calendar day, same spirit as day_weekday excluding a
-    confirmed-closed place."""
+    confirmed-closed place.
+
+    alternate_rank_penalty=0 (every pre-existing caller, incl.
+    weather_alerts.py's indoor swap - alternate places help there since
+    indoor candidates are scarce) never changes ranking order - see
+    ALTERNATE_RANK_PENALTY/compute_item_alternatives' own call. A nonzero
+    value only shifts the *ranking* key (subtracted for an alternate-tier
+    place before sorting); slot_score() itself and every exposed field
+    (notes, category, average_cost_krw, ...) are untouched, so this can
+    reorder which places make the top `limit` but never changes what's
+    reported about a place that does."""
     candidates = [
         place
         for place_id, place in scored_places_by_id.items()
@@ -117,21 +136,24 @@ def rank_slot_candidates(
     ]
     candidates = _filter_phase_candidates(places=candidates, request=request, day_number=day_number)
 
+    def _ranking_score(place: PlaceData) -> int:
+        score = slot_score(
+            place=place,
+            request=request,
+            time_slot=time_slot,
+            day_number=day_number,
+            preferred_area=preferred_area,
+            previous_place=previous_place,
+            next_place=next_place,
+            community_signal=(feedback_signals or {}).get(place.id),
+        )
+        if alternate_rank_penalty and place.mvp_tier == ALTERNATE_TIER:
+            score -= alternate_rank_penalty
+        return score
+
     ranked = sorted(
         candidates,
-        key=lambda place: (
-            -slot_score(
-                place=place,
-                request=request,
-                time_slot=time_slot,
-                day_number=day_number,
-                preferred_area=preferred_area,
-                previous_place=previous_place,
-                next_place=next_place,
-                community_signal=(feedback_signals or {}).get(place.id),
-            ),
-            place.id,
-        ),
+        key=lambda place: (-_ranking_score(place), place.id),
     )
 
     return [
@@ -220,6 +242,7 @@ def compute_item_alternatives(
             resolve_item_category=resolve_item_category,
             build_note=build_note,
             day_date=(day_dates or {}).get(item.day_number),
+            alternate_rank_penalty=ALTERNATE_RANK_PENALTY,
         )
         new_items.append(item.model_copy(update={"alternatives": alternatives}))
 

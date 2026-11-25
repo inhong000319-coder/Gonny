@@ -146,6 +146,7 @@ export function AdminDataPage() {
           return place.activity_type.includes("액티비티");
         }
         if (selectedView === "core") return (place.mvp_tier ?? "standard") === "core";
+        if (selectedView === "alternate") return (place.mvp_tier ?? "standard") === "alternate";
         return true;
       })
       .sort((left, right) => {
@@ -340,6 +341,7 @@ export function AdminDataPage() {
               { value: "inactive", label: "비활성만" },
               { value: "activity", label: "액티비티만" },
               { value: "core", label: "대표 장소만" },
+              { value: "alternate", label: "대안 전용만" },
             ].map((filter) => (
               <button
                 key={filter.value}

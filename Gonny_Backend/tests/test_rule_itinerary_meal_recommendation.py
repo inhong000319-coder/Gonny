@@ -281,14 +281,18 @@ def test_real_catalogs_have_exactly_the_9_meal_ineligible_places():
     # local_only/reports/meal_eligibility_undetermined_places.md. Every
     # other place in the 3 catalogs must still default to meal_eligible=True.
     #
-    # busan grew from 2 to 26 once PR-C's scripts/add_busan_expansion_places.py
-    # added 284 reviewed expansion places (scripts/data/busan_expansion_
-    # places.json) - 24 of them are food-tagged alleys/markets/cafe streets
+    # busan grew from 2 to 25 once PR-C's scripts/add_busan_expansion_places.py
+    # added 283 reviewed expansion places (scripts/data/busan_expansion_
+    # places.json) - 23 of them are food-tagged alleys/markets/cafe streets
     # the user's own review already marked meal_eligible=False, same pattern
-    # as the original 2. All 284 are is_active=false, so this has no effect
+    # as the original 2. All 283 are is_active=false, so this has no effect
     # on real recommendations yet (is_activity_candidate/_pick_meal_place
     # only ever see active places) - this test just tracks the raw catalog
     # data, not recommendation behavior.
+    #
+    # yeongjusijang(영주시장) was part of PR-C's initial 284 but is excluded
+    # from the final 283 - user decision (it dominated "다른 추천" slots),
+    # see the dedicated removal fix after PR #155.
     import json
 
     EXPECTED_INELIGIBLE_IDS = {
@@ -319,7 +323,6 @@ def test_real_catalogs_have_exactly_the_9_meal_ineligible_places():
             "the-bay-101",
             "urigeulbang-bukkape",
             "y-z-park",
-            "yeongjusijang",
         },
         "jeju": {"woljeongri", "aewol-cafe", "osulloc", "delmoondo-gimnyeong"},
     }

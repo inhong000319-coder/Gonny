@@ -90,9 +90,15 @@ def test_seoul_busan_jeju_catalogs_have_unique_place_ids() -> None:
     # setting value from their own TourAPI-based classification). PR-C's
     # original batch was 284 - yeongjusijang(영주시장) was removed by a
     # follow-up fix (user decision: it dominated "다른 추천" slots).
+    #
+    # 779 = 648 + 131 Busan phase-2 expansion places (#158) added by the
+    # same add_busan_expansion_places.py script (new areas seomyeon/gijang/
+    # gupo/gangseo/gadeok) - also all is_active=false, also all carrying a
+    # real setting value (see test_all_109_korean_focus_places_are_classified
+    # below).
     ids = [place.id for place in load_korean_focus_places()]
 
-    assert len(ids) == 648
+    assert len(ids) == 779
     assert len(set(ids)) == len(ids), "duplicate place_id found across seoul/busan/jeju catalogs"
 
 
@@ -131,15 +137,20 @@ def test_all_109_korean_focus_places_are_classified() -> None:
     # entirely to the classified side, never to unclassified:
     # outdoor 66+163=229, indoor 42+96=138, mixed 25+24=49,
     # rain_sensitive_light 24+72=96.
-    EXPECTED_SETTING_COUNTS = {"outdoor": 229, "indoor": 138, "mixed": 49}
-    EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 96
+    #
+    # #158's 131 Busan phase-2 places also all carry a real setting value
+    # (outdoor 84 / indoor 38 / mixed 9, 22 with rain_sensitive_light=True) -
+    # again added entirely to the classified side: outdoor 229+84=313,
+    # indoor 138+38=176, mixed 49+9=58, rain_sensitive_light 96+22=118.
+    EXPECTED_SETTING_COUNTS = {"outdoor": 313, "indoor": 176, "mixed": 58}
+    EXPECTED_RAIN_SENSITIVE_LIGHT_TRUE_COUNT = 118
     EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT = 232
 
     places = load_korean_focus_places()
     classified_places = [place for place in places if place.setting is not None]
     unclassified_places = [place for place in places if place.setting is None]
 
-    assert len(classified_places) == 416
+    assert len(classified_places) == 547
     assert len(unclassified_places) == EXPECTED_UNCLASSIFIED_RESTAURANT_COUNT
 
     setting_counts: dict[str, int] = {}

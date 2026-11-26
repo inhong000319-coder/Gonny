@@ -3675,7 +3675,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -3745,7 +3745,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -3816,7 +3816,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -3884,7 +3884,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -3956,7 +3956,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4028,7 +4028,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4098,7 +4098,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4171,7 +4171,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4242,7 +4242,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4312,7 +4312,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4382,7 +4382,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4453,7 +4453,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4522,7 +4522,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4595,7 +4595,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4664,7 +4664,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4734,7 +4734,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4808,7 +4808,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4880,7 +4880,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -4952,7 +4952,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5023,7 +5023,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5095,7 +5095,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5166,7 +5166,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5236,7 +5236,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5307,7 +5307,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5376,7 +5376,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5447,7 +5447,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5513,7 +5513,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5584,7 +5584,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5656,7 +5656,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5726,7 +5726,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5797,7 +5797,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5868,7 +5868,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -5939,7 +5939,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6010,7 +6010,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6081,7 +6081,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6152,7 +6152,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6221,7 +6221,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6291,7 +6291,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6360,7 +6360,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6427,7 +6427,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6494,7 +6494,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6562,7 +6562,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6633,7 +6633,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6701,7 +6701,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6771,7 +6771,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6842,7 +6842,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6913,7 +6913,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -6984,7 +6984,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7057,7 +7057,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7128,7 +7128,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7198,7 +7198,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7270,7 +7270,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7342,7 +7342,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7413,7 +7413,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7485,7 +7485,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7557,7 +7557,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7625,7 +7625,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7693,7 +7693,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7758,7 +7758,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7829,7 +7829,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7900,7 +7900,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -7972,7 +7972,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8041,7 +8041,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8113,7 +8113,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8182,7 +8182,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8254,7 +8254,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8325,7 +8325,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8396,7 +8396,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8463,7 +8463,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8534,7 +8534,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8603,7 +8603,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8674,7 +8674,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8745,7 +8745,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8816,7 +8816,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8886,7 +8886,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -8956,7 +8956,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9028,7 +9028,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9096,7 +9096,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9165,7 +9165,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9234,7 +9234,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9304,7 +9304,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9374,7 +9374,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9444,7 +9444,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9513,7 +9513,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9581,7 +9581,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9650,7 +9650,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9718,7 +9718,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9786,7 +9786,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 19000,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9854,7 +9854,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9922,7 +9922,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -9990,7 +9990,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10058,7 +10058,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10126,7 +10126,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10195,7 +10195,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10264,7 +10264,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10333,7 +10333,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10402,7 +10402,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10473,7 +10473,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10547,7 +10547,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10619,7 +10619,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10697,7 +10697,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10768,7 +10768,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10837,7 +10837,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10908,7 +10908,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -10979,7 +10979,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "standard",
       "slot_bias": {
@@ -11051,7 +11051,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11120,7 +11120,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11189,7 +11189,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11261,7 +11261,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11331,7 +11331,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11400,7 +11400,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11470,7 +11470,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11541,7 +11541,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11610,7 +11610,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11679,7 +11679,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11749,7 +11749,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11821,7 +11821,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11890,7 +11890,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -11960,7 +11960,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12025,7 +12025,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12095,7 +12095,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12164,7 +12164,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12236,7 +12236,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12308,7 +12308,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12375,7 +12375,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12443,7 +12443,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12512,7 +12512,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12581,7 +12581,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12650,7 +12650,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12721,7 +12721,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12789,7 +12789,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12860,7 +12860,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12927,7 +12927,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -12998,7 +12998,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13067,7 +13067,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13134,7 +13134,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13203,7 +13203,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13276,7 +13276,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13344,7 +13344,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13412,7 +13412,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13480,7 +13480,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13544,7 +13544,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13615,7 +13615,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13686,7 +13686,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13755,7 +13755,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13826,7 +13826,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13897,7 +13897,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -13966,7 +13966,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14037,7 +14037,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14106,7 +14106,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14175,7 +14175,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14244,7 +14244,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14312,7 +14312,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14381,7 +14381,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14448,7 +14448,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14515,7 +14515,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14584,7 +14584,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14654,7 +14654,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14724,7 +14724,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14794,7 +14794,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14863,7 +14863,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -14933,7 +14933,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15003,7 +15003,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15073,7 +15073,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15142,7 +15142,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15212,7 +15212,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15277,7 +15277,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15345,7 +15345,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15416,7 +15416,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15486,7 +15486,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15557,7 +15557,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15626,7 +15626,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15693,7 +15693,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15763,7 +15763,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15833,7 +15833,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15902,7 +15902,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -15975,7 +15975,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16046,7 +16046,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16115,7 +16115,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16184,7 +16184,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16255,7 +16255,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16319,7 +16319,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16386,7 +16386,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16458,7 +16458,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16531,7 +16531,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16595,7 +16595,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16659,7 +16659,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16728,7 +16728,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16796,7 +16796,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16864,7 +16864,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -16932,7 +16932,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17004,7 +17004,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17076,7 +17076,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17147,7 +17147,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17214,7 +17214,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17286,7 +17286,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17357,7 +17357,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17428,7 +17428,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17496,7 +17496,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17565,7 +17565,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17634,7 +17634,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17701,7 +17701,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17769,7 +17769,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17837,7 +17837,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17905,7 +17905,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 5000,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -17973,7 +17973,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18041,7 +18041,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18107,7 +18107,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18175,7 +18175,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18244,7 +18244,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18312,7 +18312,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18381,7 +18381,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18449,7 +18449,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18518,7 +18518,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18587,7 +18587,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18655,7 +18655,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18722,7 +18722,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18789,7 +18789,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18856,7 +18856,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18924,7 +18924,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -18992,7 +18992,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19060,7 +19060,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19128,7 +19128,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19195,7 +19195,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19263,7 +19263,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19331,7 +19331,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19399,7 +19399,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19466,7 +19466,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19534,7 +19534,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19601,7 +19601,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19668,7 +19668,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19735,7 +19735,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19803,7 +19803,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19872,7 +19872,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -19941,7 +19941,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20009,7 +20009,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20077,7 +20077,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 18000,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20144,7 +20144,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20213,7 +20213,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20281,7 +20281,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20349,7 +20349,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20417,7 +20417,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20484,7 +20484,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20552,7 +20552,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20620,7 +20620,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20687,7 +20687,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 14000,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20754,7 +20754,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20822,7 +20822,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20889,7 +20889,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 1000,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -20957,7 +20957,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21023,7 +21023,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21092,7 +21092,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": 0,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21159,7 +21159,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21227,7 +21227,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21295,7 +21295,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21367,7 +21367,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21436,7 +21436,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21516,7 +21516,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21584,7 +21584,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21652,7 +21652,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21726,7 +21726,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21800,7 +21800,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21868,7 +21868,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -21937,7 +21937,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22011,7 +22011,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22083,7 +22083,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22153,7 +22153,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22225,7 +22225,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22297,7 +22297,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22367,7 +22367,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22447,7 +22447,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22515,7 +22515,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22589,7 +22589,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22659,7 +22659,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22735,7 +22735,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22811,7 +22811,7 @@
       "setting": "outdoor",
       "rain_sensitive_light": true,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22886,7 +22886,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -22957,7 +22957,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -23026,7 +23026,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -23095,7 +23095,7 @@
       "setting": "mixed",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": true,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -23163,7 +23163,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -23231,7 +23231,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {
@@ -23299,7 +23299,7 @@
       "setting": "indoor",
       "rain_sensitive_light": false,
       "average_cost_krw": null,
-      "is_active": false,
+      "is_active": true,
       "meal_eligible": false,
       "mvp_tier": "alternate",
       "slot_bias": {

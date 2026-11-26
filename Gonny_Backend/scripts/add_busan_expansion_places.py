@@ -1,4 +1,6 @@
-"""검토가 끝난 부산 확장 장소(scripts/data/busan_expansion_places.json, 283/284곳)를
+"""검토가 끝난 부산 확장 장소(기본 입력 scripts/data/busan_expansion_places.json -
+--input으로 다른 배치 파일을 줄 수 있다. 1단계 283곳으로 처음 만들어졌고,
+2단계 131곳(#158) 등 이후 배치에도 그대로 재사용한다)를
 app/data/destinations/busan.json에 반영한다(PR-C).
 
 두 가지 모드:
@@ -110,7 +112,7 @@ def run_preflight_checks(
 
     bad_area = [(place["id"], place.get("area")) for place in input_places if place.get("area") not in BUSAN_AREA_ROUTE_ORDER]
     if bad_area:
-        raise PreflightError(f"area는 부산의 기존 6개 구역({BUSAN_AREA_ROUTE_ORDER}) 중 하나여야 합니다. 위반: {bad_area}")
+        raise PreflightError(f"area는 부산의 등록된 구역({BUSAN_AREA_ROUTE_ORDER}) 중 하나여야 합니다. 위반: {bad_area}")
 
     bad_coords = []
     for place in input_places:

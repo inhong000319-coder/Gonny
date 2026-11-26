@@ -54,22 +54,54 @@ BUSAN_AREA_ROUTE_ORDER = [
     "centum",
     "haeundae",
     "dongnae",
+    # Phase 2 (#158) - appended after the original 6, never reordering or
+    # reindexing them (tie-break order for the original 6 stays exactly
+    # the same).
+    "seomyeon",
+    "gijang",
+    "gupo",
+    "gangseo",
+    "gadeok",
 ]
 BUSAN_AREA_NEIGHBORS = {
-    "nampo": {"songdo"},
+    # nampo also borders seomyeon (Busanjin-gu, one subway-1 hop northeast
+    # of the old downtown nampo sits in).
+    "nampo": {"songdo", "seomyeon"},
     "songdo": {"nampo"},
     # gwangalli (Suyeong-gu) and centum (Haeundae-gu, Udong) sit directly
     # across Suyeong Bay from each other, connected by Gwangan Bridge.
-    "gwangalli": {"haeundae", "centum"},
+    # gwangalli also borders seomyeon (Suyeong-gu's western border is
+    # Busanjin-gu, where seomyeon sits).
+    "gwangalli": {"haeundae", "centum", "seomyeon"},
     # haeundae borders both centum (same Haeundae-gu, adjoining
-    # neighborhood) and dongnae (Dongnae-gu's eastern border is Haeundae-gu).
-    "haeundae": {"gwangalli", "centum", "dongnae"},
-    "centum": {"haeundae", "gwangalli"},
+    # neighborhood) and dongnae (Dongnae-gu's eastern border is
+    # Haeundae-gu). haeundae also borders gijang (Gijang-gun sits directly
+    # northeast of Haeundae-gu along the coast).
+    "haeundae": {"gwangalli", "centum", "dongnae", "gijang"},
+    # centum also borders gijang for the same Haeundae-gu-adjoining reason
+    # as haeundae above.
+    "centum": {"haeundae", "gwangalli", "gijang"},
     # dongnae is inland (Dongnae-gu), not on the coast like the other 5
-    # areas - its only real geographic adjacency here is haeundae, which
-    # it borders to the east. Not connected to nampo/songdo/gwangalli/
-    # centum, which are all a subway ride further southwest/south.
-    "dongnae": {"haeundae"},
+    # original areas - its only real geographic adjacency here was
+    # haeundae, which it borders to the east. dongnae also borders
+    # seomyeon (Dongnae-gu's southwestern border is Busanjin-gu).
+    "dongnae": {"haeundae", "seomyeon"},
+    # seomyeon (Busanjin-gu) is a central subway hub bordering nampo,
+    # dongnae and gwangalli (see each one's own comment above) and gupo
+    # (Buk-gu, one subway-2/3 hop northwest along the same corridor).
+    "seomyeon": {"nampo", "dongnae", "gwangalli", "gupo"},
+    # gupo (Buk-gu) sits between seomyeon (southeast) and gangseo
+    # (Gangseo-gu, across the Nakdong river to the west).
+    "gupo": {"seomyeon", "gangseo"},
+    # gangseo (Gangseo-gu) sits between gupo (east) and gadeok (further
+    # south along the same Gangseo-gu corridor).
+    "gangseo": {"gupo", "gadeok"},
+    # gadeok (Gadeokdo, an island/peninsula at the southern end of
+    # Gangseo-gu) is only reachable through gangseo.
+    "gadeok": {"gangseo"},
+    # gijang (Gijang-gun) borders both haeundae and centum - see each
+    # one's own comment above.
+    "gijang": {"haeundae", "centum"},
 }
 JEJU_AREA_ROUTE_ORDER = [
     "east-jeju",
@@ -195,6 +227,11 @@ AREA_LABEL_KO = {
     "gwangjin": "광진",
     "gwanak": "관악",
     "songdo": "송도",
+    "seomyeon": "서면",
+    "gupo": "구포·화명",
+    "gangseo": "강서",
+    "gadeok": "가덕도",
+    "gijang": "기장",
     "east-jeju": "제주 동부",
     "west-jeju": "제주 서부",
     "seogwipo-west": "서귀포 서부",

@@ -35,7 +35,12 @@ EXPECTED_STILL_MISSING = {
 
 CITY_BOUNDS = {
     "seoul": (37.4, 37.75, 126.75, 127.25),
-    "busan": (34.95, 35.35, 128.8, 129.35),
+    # busan's lat_max widened 35.35 -> 35.45 for #158's phase-2 Gijang-gun
+    # (기장군) places - Gijang-gun genuinely extends further north than the
+    # original 6-area box assumed (e.g. jangansa/장안사 at 35.3745), same
+    # bound add_busan_expansion_places.py's own preflight check already
+    # validates new Busan places against.
+    "busan": (34.95, 35.45, 128.8, 129.35),
     "jeju": (33.1, 33.6, 126.1, 127.0),
 }
 

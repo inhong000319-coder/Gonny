@@ -221,6 +221,43 @@ def test_area_not_in_busan_areas_aborts_without_writing(tmp_path):
     assert catalog_path.read_bytes() == before
 
 
+# --- 부산 확장 2단계(#158)가 추가한 새 구역도 area 검증을 통과한다 ----------
+
+
+def test_phase2_new_areas_pass_area_validation(tmp_path):
+    catalog_path = tmp_path / "busan.json"
+    input_path = tmp_path / "input.json"
+    write_catalog(catalog_path, [build_place(id="existing-a", content_id="1")])
+    write_input(
+        input_path,
+        [
+            build_place(id="new-seomyeon", content_id="2", area="seomyeon"),
+            build_place(id="new-gijang", content_id="3", area="gijang"),
+            build_place(id="new-gupo", content_id="4", area="gupo"),
+            build_place(id="new-gangseo", content_id="5", area="gangseo"),
+            build_place(id="new-gadeok", content_id="6", area="gadeok"),
+        ],
+    )
+
+    exit_code = run_add(make_args(input_path=input_path, catalog_path=catalog_path, apply=True))
+
+    assert exit_code == 0
+    assert len(read_catalog(catalog_path)["places"]) == 6
+
+
+def test_area_still_rejects_values_outside_all_eleven_busan_areas(tmp_path):
+    catalog_path = tmp_path / "busan.json"
+    input_path = tmp_path / "input.json"
+    write_catalog(catalog_path, [build_place(id="existing-a", content_id="1")])
+    write_input(input_path, [build_place(id="new-a", content_id="2", area="jeju-city")])
+
+    before = catalog_path.read_bytes()
+    exit_code = run_add(make_args(input_path=input_path, catalog_path=catalog_path, apply=True))
+
+    assert exit_code == 1
+    assert catalog_path.read_bytes() == before
+
+
 # --- 전무 종료: 좌표 범위 밖 --------------------------------------------------
 
 

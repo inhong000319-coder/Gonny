@@ -115,7 +115,13 @@ def test_real_catalog_candidate_counts_after_exclusion() -> None:
     # scripts/add_tour_api_restaurants_jeju.py added
     # jeju-restaurant-tour-4110105 ("캡틴클럽하우스 서귀포매일올레시장점"),
     # whose own name also embeds "시장" for the same reason.
-    expected_counts = {"seoul": 6, "busan": 5, "jeju": 5}
+    # busan: 5 -> 10 once scripts/add_busan_expansion_places.py --activate
+    # all made the 283 reviewed expansion places active - 5 of them
+    # (haeridan-gil, ppangcheondong, mangmidangil, sindonga-susanmulsijang,
+    # bupyeong-kkangtong-market) are genuinely new food-tagged places whose
+    # name/summary/mood_keywords match BREAKFAST_KEYWORDS or the market
+    # keyword pattern, same rule as every other candidate here.
+    expected_counts = {"seoul": 6, "busan": 10, "jeju": 5}
 
     for city, expected_count in expected_counts.items():
         catalog = provider.get_city_catalog(continent="asia", country="korea", city=city, visible_only=True)

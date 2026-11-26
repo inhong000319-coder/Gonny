@@ -293,6 +293,12 @@ def test_real_catalogs_have_exactly_the_9_meal_ineligible_places():
     # yeongjusijang(영주시장) was part of PR-C's initial 284 but is excluded
     # from the final 283 - user decision (it dominated "다른 추천" slots),
     # see the dedicated removal fix after PR #155.
+    #
+    # busan grew from 25 to 28 once #158's 131 phase-2 expansion places
+    # (scripts/data/busan_expansion_places_phase2.json) were added - 3 of
+    # them (jeonpo-cafe-street, obangmatgil, woljeonjangeoguichon) are the
+    # same kind of food-tagged alley/cafe-street the user's review already
+    # marked meal_eligible=False. All 131 are is_active=false.
     import json
 
     EXPECTED_INELIGIBLE_IDS = {
@@ -323,6 +329,9 @@ def test_real_catalogs_have_exactly_the_9_meal_ineligible_places():
             "the-bay-101",
             "urigeulbang-bukkape",
             "y-z-park",
+            "jeonpo-cafe-street",
+            "obangmatgil",
+            "woljeonjangeoguichon",
         },
         "jeju": {"woljeongri", "aewol-cafe", "osulloc", "delmoondo-gimnyeong"},
     }

@@ -1,0 +1,9056 @@
+{
+ "city": "busan",
+ "generated": "2026-11-26",
+ "source": "TourAPI lDongRegnCd=26 + 사용자 검토(1·2차 시트)",
+ "places": [
+  {
+   "id": "seomyeon1beonga",
+   "name": "서면1번가",
+   "activity_type": [
+    "쇼핑"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "서면1번가는 가볍게 구경하며 걷기 좋은 거리다.",
+   "latitude": 35.1535355425,
+   "longitude": 129.0582576708,
+   "content_id": "1046349",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "가볍게 구경하기 좋은",
+    "활기 있는",
+    "도시적인"
+   ],
+   "highlight_tags": [
+    "구경하는 재미",
+    "도심 번화가",
+    "가벼운 변화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busan-eorinidaegongwon",
+   "name": "부산 어린이대공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산 어린이대공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1872173955,
+   "longitude": 129.0426498591,
+   "content_id": "126119",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://bschildpark.bisco.or.kr/bschildpark/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "samgwangsa",
+   "name": "삼광사",
+   "activity_type": [
+    "문화·역사",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "삼광사는 고즈넉한 분위기 속에서 산책하기 좋은 사찰이다.",
+   "latitude": 35.175922244823,
+   "longitude": 129.043430749141,
+   "content_id": "127150",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.samkwangsa.or.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 5,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "차분한",
+    "고즈넉한",
+    "사진 찍기 좋은"
+   ],
+   "highlight_tags": [
+    "사찰 산책",
+    "고즈넉한 분위기",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeonpo-cafe-street",
+   "name": "전포카페거리",
+   "activity_type": [
+    "미식",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "전포카페거리는 카페와 가게를 둘러보며 쉬어 가기 좋은 거리다.",
+   "latitude": 35.15542,
+   "longitude": 129.067338,
+   "content_id": "1805965",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busanjin.go.kr/",
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": false,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": -2,
+    "afternoon": 6,
+    "evening": 5
+   },
+   "mood_keywords": [
+    "감각적인",
+    "로컬한",
+    "활기 있는"
+   ],
+   "highlight_tags": [
+    "카페 산책",
+    "현지 분위기",
+    "가벼운 변화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busan-citizens-park",
+   "name": "부산시민공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산시민공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1655426683,
+   "longitude": 129.0558397915,
+   "content_id": "2663341",
+   "open_hours": "05:00~24:00",
+   "closed_days": "연중무휴",
+   "official_url": "http://citizenpark.or.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "seongjigoksuwonji",
+   "name": "성지곡수원지",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "성지곡수원지는 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1853287241433,
+   "longitude": 129.0423888247,
+   "content_id": "2718728",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.heritage.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeonpogonggugil",
+   "name": "전포공구길",
+   "activity_type": [
+    "쇼핑"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "전포공구길은 가볍게 구경하며 걷기 좋은 거리다.",
+   "latitude": 35.1586890217,
+   "longitude": 129.0642539566,
+   "content_id": "2994179",
+   "open_hours": "매장별로 상이함",
+   "closed_days": "매장별로 상이함",
+   "official_url": "https://www.busanjin.go.kr",
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "가볍게 구경하기 좋은",
+    "활기 있는",
+    "도시적인"
+   ],
+   "highlight_tags": [
+    "구경하는 재미",
+    "도심 번화가",
+    "가벼운 변화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hwamyeongsaengtaegongwon",
+   "name": "화명생태공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "화명생태공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.2266627319,
+   "longitude": 129.0045406962,
+   "content_id": "2487931",
+   "open_hours": "06:00~21:00",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busan.go.kr/nakdong/hwamyungpark01",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "retcheureonpakeu-busangyeongnam",
+   "name": "렛츠런파크 부산경남",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "렛츠런파크 부산경남은 직접 보고 체험하며 즐길 수 있는 체험형 시설이다.",
+   "latitude": 35.1546043542,
+   "longitude": 128.8818963152,
+   "content_id": "2456224",
+   "open_hours": "09:30~18:00",
+   "closed_days": "매주 월요일~목요일",
+   "official_url": "https://www.instagram.com/letsrunpark_official/#",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "체험 요소",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daejeosaengtaegongwon",
+   "name": "대저생태공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대저생태공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.199412,
+   "longitude": 128.974342,
+   "content_id": "2487925",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busan.go.kr/nakdong/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "oeyangpo-pojinji",
+   "name": "외양포 포진지",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "외양포 포진지는 부산의 역사 이야기를 따라 둘러보기 좋은 유적·기념 공간이다.",
+   "latitude": 35.005598624,
+   "longitude": 128.8251723522,
+   "content_id": "2605602",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.bsgangseo.go.kr/visit/main.do",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "천천히 보기 좋은"
+   ],
+   "highlight_tags": [
+    "역사 탐방",
+    "부산 이야기",
+    "현지 감성"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gadeokdo",
+   "name": "가덕도",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "가덕도는 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.03987343745961,
+   "longitude": 128.82839001873035,
+   "content_id": "2715601",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.bsgangseo.go.kr/visit/비짓부산",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "oncheoncheonsimingongwon",
+   "name": "온천천시민공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "온천천시민공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.193006,
+   "longitude": 129.092543,
+   "content_id": "2789280",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.yeonje.go.kr/tour",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "samraksaengtaegongwon",
+   "name": "삼락생태공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "삼락생태공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1691043434,
+   "longitude": 128.9731762859,
+   "content_id": "1338947",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busan.go.kr/nakdong",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "ilgwanghaesuyokjang",
+   "name": "일광해수욕장",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "일광해수욕장은 탁 트인 바다를 보며 여유롭게 걷기 좋은 해변이다.",
+   "latitude": 35.2598,
+   "longitude": 129.234,
+   "content_id": "126098",
+   "open_hours": "- 상시 개방- 해수욕장 개장 09:00~18:00",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 2,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "여유로운",
+    "바다를 느끼는",
+    "산책하기 좋은"
+   ],
+   "highlight_tags": [
+    "해변 산책",
+    "부산다운 분위기",
+    "바다 전망"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jangansa",
+   "name": "장안사",
+   "activity_type": [
+    "문화·역사",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "장안사는 고즈넉한 분위기 속에서 산책하기 좋은 사찰이다.",
+   "latitude": 35.3745266718,
+   "longitude": 129.2328435381,
+   "content_id": "126831",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 5,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "차분한",
+    "고즈넉한",
+    "사진 찍기 좋은"
+   ],
+   "highlight_tags": [
+    "사찰 산책",
+    "고즈넉한 분위기",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "haedong-yonggungsa",
+   "name": "해동용궁사",
+   "activity_type": [
+    "문화·역사",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 8,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "해동용궁사는 고즈넉한 분위기 속에서 산책하기 좋은 사찰이다.",
+   "latitude": 35.1882428912,
+   "longitude": 129.2235301928,
+   "content_id": "126848",
+   "open_hours": "04:30~20:30",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.yongkungsa.or.kr",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 5,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "차분한",
+    "고즈넉한",
+    "사진 찍기 좋은"
+   ],
+   "highlight_tags": [
+    "사찰 산책",
+    "고즈넉한 분위기",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daebyeonmaeul",
+   "name": "대변마을",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대변마을은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.2247831626,
+   "longitude": 129.230364645,
+   "content_id": "129092",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "imranghaesuyokjang",
+   "name": "임랑해수욕장",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "임랑해수욕장은 탁 트인 바다를 보며 여유롭게 걷기 좋은 해변이다.",
+   "latitude": 35.315973018,
+   "longitude": 129.2620563517,
+   "content_id": "1939570",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 2,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "여유로운",
+    "바다를 느끼는",
+    "산책하기 좋은"
+   ],
+   "highlight_tags": [
+    "해변 산책",
+    "부산다운 분위기",
+    "바다 전망"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "ahopsan-forest",
+   "name": "아홉산숲",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 3,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "아홉산숲은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.2871407693,
+   "longitude": 129.1715589466,
+   "content_id": "2385686",
+   "open_hours": "09:00~18:00 (입장마감 17:00)<br>\n※ 사전 예약 필수",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.ahopsan.com/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": "required",
+   "theme_tags": []
+  },
+  {
+   "id": "gukripdareumsanjayeonhyuyangrim",
+   "name": "국립달음산자연휴양림",
+   "activity_type": [
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 3,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "국립달음산자연휴양림은 가볍게 걷거나 오르며 시원한 풍경을 즐기기 좋은 산이다.",
+   "latitude": 35.3027147997,
+   "longitude": 129.1854138742,
+   "content_id": "2606230",
+   "open_hours": "09:00~18:00",
+   "closed_days": "매주 화요일※ 성수기/공휴일 전 날은 제외",
+   "official_url": "https://www.foresttrip.go.kr",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 4,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "시원한",
+    "자연적인",
+    "상쾌한"
+   ],
+   "highlight_tags": [
+    "산책·등산 코스",
+    "자연 풍경",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busan-chiyuui-sup",
+   "name": "부산 치유의 숲",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "부산 치유의 숲은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.26896773,
+   "longitude": 129.1297811212,
+   "content_id": "2660770",
+   "open_hours": "08:00~17:00",
+   "closed_days": "설날·추석 당일",
+   "official_url": "https://www.busan.go.kr/green/hfprogram",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jukseong-dream-set",
+   "name": "죽성드림세트장",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "죽성드림세트장은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.240969,
+   "longitude": 129.248501,
+   "content_id": "2663155",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jukseonghang",
+   "name": "죽성항",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "죽성항은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.2426063741051,
+   "longitude": 129.246818167789,
+   "content_id": "2715654",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "chiramhang",
+   "name": "칠암항",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "칠암항은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.2985805894268,
+   "longitude": 129.260259786681,
+   "content_id": "2775570",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeotbyeongdeungdae",
+   "name": "젖병등대",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "젖병등대는 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.2137870973,
+   "longitude": 129.2230517454,
+   "content_id": "2775577",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "osiria-coastal-trail",
+   "name": "오시리아 해안산책로",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "오시리아 해안산책로는 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.1976,
+   "longitude": 129.2296,
+   "content_id": "2782658",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": [
+    "walk"
+   ]
+  },
+  {
+   "id": "lotte-world-adventure-busan",
+   "name": "롯데월드 어드벤처 부산",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 4,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "롯데월드 어드벤처 부산은 하루를 투자해 즐기는 대표 테마파크다.",
+   "latitude": 35.1960278871,
+   "longitude": 129.2129698479,
+   "content_id": "2815627",
+   "open_hours": "- 평일 10:00~20:00- 주말 10:00~21:00※ 자세한 사항은 홈페이지 참조",
+   "closed_days": "연중무휴",
+   "official_url": "https://adventurebusan.lotteworld.com/",
+   "setting": "mixed",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "신나는",
+    "재미 있는",
+    "친구와 가기 좋은"
+   ],
+   "highlight_tags": [
+    "부산 체험형 코스",
+    "테마파크",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "reonningmaen-busanjeom",
+   "name": "런닝맨 부산점",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "런닝맨 부산점은 직접 보고 체험하며 즐길 수 있는 체험형 시설이다.",
+   "latitude": 35.1529239696,
+   "longitude": 129.0596049051,
+   "content_id": "4154672",
+   "open_hours": "11:00~20:00 (입장 마감 19:00)",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.running-man.co.kr",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "체험 요소",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "dainamikmeijeu-busan",
+   "name": "다이나믹메이즈 부산",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "다이나믹메이즈 부산은 직접 보고 체험하며 즐길 수 있는 체험형 시설이다.",
+   "latitude": 35.1529239696,
+   "longitude": 129.0596049051,
+   "content_id": "4154720",
+   "open_hours": "11:00~20:00 (입장 마감 19:00)",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.dynamicmaze.com",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 16000,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "체험 요소",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "national-fisheries-science-museum",
+   "name": "국립수산과학관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "family",
+    "couple",
+    "friend"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "국립수산과학관은 부산의 역사와 문화를 실내에서 차분히 살펴보기 좋은 곳이다.",
+   "latitude": 35.1911175294,
+   "longitude": 129.2222830065,
+   "content_id": "130606",
+   "open_hours": "09:00~18:00 (입장 마감 17:30)",
+   "closed_days": "매주 월요일(단, 월요일이 공휴일인 경우 정상 개관) / 설·추석 연휴",
+   "official_url": "http://www.fsm.go.kr",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "전시 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gukripbusangwahakgwan",
+   "name": "국립부산과학관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "국립부산과학관은 부산의 역사와 문화를 실내에서 차분히 살펴보기 좋은 곳이다.",
+   "latitude": 35.2045740978,
+   "longitude": 129.2126863022,
+   "content_id": "2385666",
+   "open_hours": "09:30~17:30 (입장 마감 16:30)",
+   "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음날 휴관) / 1월 1일 / 설·추석 당일",
+   "official_url": "http://www.sciport.or.kr",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 3000,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "standard",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "전시 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gusangbanryeoam",
+   "name": "구상반려암 (부산 국가지질공원)",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "구상반려암 (부산 국가지질공원)은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1630791231,
+   "longitude": 129.072147778,
+   "content_id": "2614712",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busan.go.kr/geopark",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "baegyangsan",
+   "name": "백양산 (부산 국가지질공원)",
+   "activity_type": [
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 3,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "백양산 (부산 국가지질공원)은 가볍게 걷거나 오르며 시원한 풍경을 즐기기 좋은 산이다.",
+   "latitude": 35.1833317056,
+   "longitude": 129.0218903278,
+   "content_id": "2614723",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busan.go.kr/geopark/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 4,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "시원한",
+    "자연적인",
+    "상쾌한"
+   ],
+   "highlight_tags": [
+    "산책·등산 코스",
+    "자연 풍경",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hocheonmaeul",
+   "name": "호천마을",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "호천마을은 골목을 천천히 걸으며 색다른 분위기를 느끼기 좋은 마을이다.",
+   "latitude": 35.1442420605489,
+   "longitude": 129.051214140349,
+   "content_id": "2662531",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busanjin.go.kr/tour",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "감성적인",
+    "사진 찍기 좋은",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "골목 산책",
+    "현지 감성",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "kt-g-sangsangmadang-busan",
+   "name": "KT&G 상상마당 부산",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "KT&G 상상마당 부산은 전시와 문화 프로그램을 가볍게 즐기기 좋은 복합 문화공간이다.",
+   "latitude": 35.154277104,
+   "longitude": 129.0573021838,
+   "content_id": "2679008",
+   "open_hours": "08:00~22:00※ 시설별로 상이하므로 홈페이지 참조",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.sangsangmadang.com",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 3,
+    "afternoon": 6,
+    "evening": -2
+   },
+   "mood_keywords": [
+    "감각적인",
+    "실내에 강한",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "복합 문화공간",
+    "우천 대안",
+    "쉬어 가기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "songsanghyeongwangjang",
+   "name": "송상현광장",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "송상현광장은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1651139678,
+   "longitude": 129.0669317105,
+   "content_id": "2760809",
+   "open_hours": "07:00~24:00",
+   "closed_days": "연중무휴※ 실개천, 바닥분수는 매주 월요일 휴무",
+   "official_url": "https://www.bisco.or.kr/songsanghyeon/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gayagongwon",
+   "name": "가야공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "가야공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1483050312523,
+   "longitude": 129.027660668177,
+   "content_id": "2788410",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hwangryeongsanrepocheugongwon",
+   "name": "황령산레포츠공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "황령산레포츠공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.15704,
+   "longitude": 129.07644,
+   "content_id": "3014406",
+   "open_hours": "[공원]상시 개방[풋살장]07:00~21:00[테니스장]06:00~21:00[대운동장(축구장)]07:00~22:00※ 자세한 사항은 홈페이지 참조 및 전화 문의 요망",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busanjin.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gaegeumbeotkkotgil",
+   "name": "개금벚꽃길",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "개금벚꽃길은 봄철 벚꽃과 함께 걷기 좋은 길이다.",
+   "latitude": 35.146244,
+   "longitude": 129.016413,
+   "content_id": "3032396",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "봄 풍경",
+    "걷기 좋은",
+    "사진 찍기 좋은"
+   ],
+   "highlight_tags": [
+    "벚꽃 산책",
+    "봄 시즌",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [
+    3,
+    4
+   ],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busanjin-byeolbitsanchaekgil",
+   "name": "부산진 별빛산책길",
+   "activity_type": [
+    "쇼핑"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산진 별빛산책길은 가볍게 구경하며 걷기 좋은 거리다.",
+   "latitude": 35.1640385095,
+   "longitude": 129.0546280676,
+   "content_id": "3093625",
+   "open_hours": "일몰시간 이후",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "가볍게 구경하기 좋은",
+    "활기 있는",
+    "도시적인"
+   ],
+   "highlight_tags": [
+    "구경하는 재미",
+    "도심 번화가",
+    "가벼운 변화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busanjeongjunganggongwon",
+   "name": "부산정중앙공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산정중앙공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.170371,
+   "longitude": 129.036929,
+   "content_id": "3112467",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jobanghaesutang",
+   "name": "조방해수탕",
+   "activity_type": [
+    "온천"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "조방해수탕은 걷다 지친 몸을 풀기 좋은 휴식 공간이다.",
+   "latitude": 35.1418120027646,
+   "longitude": 129.062543707148,
+   "content_id": "662756",
+   "open_hours": "05:00~23:00",
+   "closed_days": "연중무휴 ※ 사우나는 설·추석 당일만 휴무",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "온천",
+    "편안한"
+   ],
+   "highlight_tags": [
+    "온천 체험",
+    "족욕",
+    "휴식 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeonpo-samgeori",
+   "name": "전포 삼거리",
+   "activity_type": [
+    "쇼핑"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "전포 삼거리는 가볍게 구경하며 걷기 좋은 거리다.",
+   "latitude": 35.1536149962,
+   "longitude": 129.071940736,
+   "content_id": "2944033",
+   "open_hours": "상시 개방",
+   "closed_days": null,
+   "official_url": null,
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "가볍게 구경하기 좋은",
+    "활기 있는",
+    "도시적인"
+   ],
+   "highlight_tags": [
+    "구경하는 재미",
+    "도심 번화가",
+    "가벼운 변화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daecheoncheon",
+   "name": "대천천",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "대천천은 더운 계절에 물소리를 들으며 시원하게 쉬어 가기 좋은 계곡이다.",
+   "latitude": 35.242191,
+   "longitude": 129.019174,
+   "content_id": "127891",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.bsbukgu.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "시원한",
+    "자연적인",
+    "물소리"
+   ],
+   "highlight_tags": [
+    "계곡 휴식",
+    "여름 피서",
+    "자연 풍경"
+   ],
+   "note_templates": [],
+   "season_months": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gupomansegeori",
+   "name": "구포만세거리",
+   "activity_type": [
+    "쇼핑"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "구포만세거리는 가볍게 구경하며 걷기 좋은 거리다.",
+   "latitude": 35.2066380865,
+   "longitude": 128.9977853588,
+   "content_id": "2662991",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.bsbukgu.go.kr/",
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "가볍게 구경하기 좋은",
+    "활기 있는",
+    "도시적인"
+   ],
+   "highlight_tags": [
+    "구경하는 재미",
+    "도심 번화가",
+    "가벼운 변화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jangmiwon",
+   "name": "장미원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "장미원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.2333557911,
+   "longitude": 129.0098877469,
+   "content_id": "2755657",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gupo-eorinigyotonggongwon",
+   "name": "구포 어린이교통공원",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "구포 어린이교통공원은 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.2010199859,
+   "longitude": 128.9999563862,
+   "content_id": "2755676",
+   "open_hours": "- 평일 10:00~18:00 (입장마감 16:00)- 주말 10:00~13:00 (입장마감 12:00)※ 평일 관람대상 : 단체체험교육※ 토요일 관람대상 : 개별자유관람",
+   "closed_days": "매주 일요일 / 법정공휴일",
+   "official_url": "https://www.bsbukgu.go.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hwamyeongsumogwon",
+   "name": "화명수목원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "화명수목원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.251012656,
+   "longitude": 129.042648087,
+   "content_id": "2756696",
+   "open_hours": "- 하절기(3월~10월) 09:00~18:00 (입장 마감 17:00)- 동절기(11월~2월) 09:00~17:00 (입장 마감 16:00)",
+   "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음날 휴무) / 설·추석 연휴 / 1월 1일",
+   "official_url": "https://www.busan.go.kr/green/index",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "geumgokdong-yulri-bawigeuneuryujeok",
+   "name": "금곡동 율리 바위그늘유적",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "금곡동 율리 바위그늘유적은 부산의 역사 이야기를 따라 둘러보기 좋은 유적·기념 공간이다.",
+   "latitude": 35.2505392944,
+   "longitude": 129.0204258972,
+   "content_id": "3414171",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.heritage.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "천천히 보기 좋은"
+   ],
+   "highlight_tags": [
+    "역사 탐방",
+    "부산 이야기",
+    "현지 감성"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busangihubyeonhwacheheomgyoyukgwan",
+   "name": "부산기후변화체험교육관",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "부산기후변화체험교육관은 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.2329164824,
+   "longitude": 129.0081354777,
+   "content_id": "3442423",
+   "open_hours": "화~일 09:30 - 17:30",
+   "closed_days": "매주 월요일 휴무",
+   "official_url": null,
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "geumbitnoeulbeuritji",
+   "name": "금빛노을브릿지",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "야경",
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gupo",
+   "duration_hours": 1,
+   "priority": 7,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "금빛노을브릿지는 부산의 풍경을 담기 좋은 랜드마크다.",
+   "latitude": 35.2097843,
+   "longitude": 129.0028719,
+   "content_id": "3545436",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴※ 기상악화시 출입폐쇄",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 4,
+    "evening": 8
+   },
+   "mood_keywords": [
+    "상징적인",
+    "도시적인",
+    "야경에 어울리는"
+   ],
+   "highlight_tags": [
+    "야경 카드",
+    "랜드마크 코스",
+    "도시 풍경"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daehang-eochoncheheom-hyuyangmaeul",
+   "name": "대항 어촌체험 휴양마을",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대항 어촌체험 휴양마을은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.0116812878,
+   "longitude": 128.8276636209,
+   "content_id": "128564",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gadeokdo-deungdae",
+   "name": "가덕도 등대",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "가덕도 등대는 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.0006076255,
+   "longitude": 128.8295665231,
+   "content_id": "129156",
+   "open_hours": "군부대 보안상 당분간 견학신청 불가(방문 전 문의)",
+   "closed_days": "군사지역 내 출입 제한(방문 전 문의)",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "maekdosaengtaegongwon",
+   "name": "맥도생태공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "맥도생태공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.1498,
+   "longitude": 128.9558,
+   "content_id": "2487927",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.busan.go.kr",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "mangsando-yujuam",
+   "name": "망산도·유주암",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "망산도·유주암은 부산의 역사 이야기를 따라 둘러보기 좋은 유적·기념 공간이다.",
+   "latitude": 35.0966850468,
+   "longitude": 128.8208980419,
+   "content_id": "250424",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.heritage.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "천천히 보기 좋은"
+   ],
+   "highlight_tags": [
+    "역사 탐방",
+    "부산 이야기",
+    "현지 감성"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gadeokdo-yeondaebong",
+   "name": "가덕도 연대봉",
+   "activity_type": [
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 3,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "가덕도 연대봉은 가볍게 걷거나 오르며 시원한 풍경을 즐기기 좋은 산이다.",
+   "latitude": 35.0317518247,
+   "longitude": 128.8216713782,
+   "content_id": "2726843",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 4,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "시원한",
+    "자연적인",
+    "상쾌한"
+   ],
+   "highlight_tags": [
+    "산책·등산 코스",
+    "자연 풍경",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "mulbitsaekseutyudio",
+   "name": "물빛색스튜디오",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "물빛색스튜디오는 직접 보고 체험하며 즐길 수 있는 체험형 시설이다.",
+   "latitude": 35.2093338526,
+   "longitude": 128.9797556207,
+   "content_id": "2732397",
+   "open_hours": "09:00~23:00※ 예약제로 운영",
+   "closed_days": "연중무휴",
+   "official_url": "https://mulbitsaek.co.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "체험 요소",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": "required",
+   "theme_tags": []
+  },
+  {
+   "id": "daehangjeonmangdae",
+   "name": "대항전망대",
+   "activity_type": [
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟",
+    "야경"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gadeok",
+   "duration_hours": 1,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대항전망대는 도시와 바다 풍경을 담기 좋은 전망 포인트다.",
+   "latitude": 35.0165,
+   "longitude": 128.8259,
+   "content_id": "2744553",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "전망이 좋은",
+    "도심적인",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "전망 포인트",
+    "도심 전망",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "cheonseonghang-bangpajedeungdae",
+   "name": "천성항 방파제등대",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "천성항 방파제등대는 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.0303,
+   "longitude": 128.8111,
+   "content_id": "2744560",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daejeosumun-saengtaegongwon",
+   "name": "대저수문 생태공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대저수문 생태공원은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.23,
+   "longitude": 128.9924,
+   "content_id": "2748838",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daehangseonchakjang",
+   "name": "대항선착장",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대항선착장은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.012289518339,
+   "longitude": 128.825972095374,
+   "content_id": "2785960",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "oeyangpohang",
+   "name": "외양포항",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "외양포항은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.0305597193427,
+   "longitude": 128.832923726846,
+   "content_id": "2788826",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "ulrimgongwon",
+   "name": "울림공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "울림공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1021,
+   "longitude": 128.9272,
+   "content_id": "2788827",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "sinhogongwon",
+   "name": "신호공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "신호공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.0821708614068,
+   "longitude": 128.8708641169917,
+   "content_id": "2788828",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "boramgongwon",
+   "name": "보람공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "보람공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.0881059141,
+   "longitude": 128.8432156387,
+   "content_id": "2789334",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "myeongjidonggeunringongwon",
+   "name": "명지동근린공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "명지동근린공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.0869933306,
+   "longitude": 128.9066291988,
+   "content_id": "2789340",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.bsgangseo.go.kr/portal/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hwajeongongwon",
+   "name": "화전공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "화전공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1056115145,
+   "longitude": 128.8791061045,
+   "content_id": "2791357",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "ekodeltasiti-jeonmangdae",
+   "name": "에코델타시티 전망대",
+   "activity_type": [
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟",
+    "야경"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "에코델타시티 전망대는 도시와 바다 풍경을 담기 좋은 전망 포인트다.",
+   "latitude": 35.136371136052,
+   "longitude": 128.922029182869,
+   "content_id": "2791383",
+   "open_hours": "- 평일 10:00~17:00- 토요일 10:00~15:00",
+   "closed_days": "매주 일요일 / 법정 공휴일",
+   "official_url": "https://www.kwater.or.kr",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "전망이 좋은",
+    "도심적인",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "전망 포인트",
+    "도심 전망",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "noksangohyangdongsan",
+   "name": "녹산고향동산",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "녹산고향동산은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1542766907,
+   "longitude": 128.8859737214,
+   "content_id": "2867934",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeonggeomaeul-munhwageori",
+   "name": "정거마을 문화거리",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "정거마을 문화거리는 골목을 천천히 걸으며 색다른 분위기를 느끼기 좋은 마을이다.",
+   "latitude": 35.068889,
+   "longitude": 128.852029,
+   "content_id": "3015202",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "감성적인",
+    "사진 찍기 좋은",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "골목 산책",
+    "현지 감성",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busanjayeongonchungmaeul",
+   "name": "부산자연곤충마을",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "부산자연곤충마을은 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.22155984537756,
+   "longitude": 128.9452222595901,
+   "content_id": "3015226",
+   "open_hours": "10:00~18:00",
+   "closed_days": "매주 토요일~일요일 / 법정공휴일",
+   "official_url": "https://blog.naver.com/3050909",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "durupam",
+   "name": "두루팜",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "두루팜은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1835081427817,
+   "longitude": 128.89938887366966,
+   "content_id": "3015247",
+   "open_hours": "10:00~17:00",
+   "closed_days": "연중무휴",
+   "official_url": "http://durufarm.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gangseocheyukgongwon",
+   "name": "강서체육공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "강서체육공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.20781783841302,
+   "longitude": 128.97386842118158,
+   "content_id": "3015292",
+   "open_hours": "[배드민턴장]- 06:00~22:00[트레이닝센터/탁구장]- 화요일~토요일 09:00~21:00- 일요일 09:00~18:00[수영장]- 화요일~토요일 06:00~20:00- 일요일 06:00~18:00",
+   "closed_days": "매주 월요일",
+   "official_url": "http://www.busan.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gadeokdooeyangpojeonmangdae",
+   "name": "가덕도외양포전망대",
+   "activity_type": [
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟",
+    "야경"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gadeok",
+   "duration_hours": 1,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "가덕도외양포전망대는 도시와 바다 풍경을 담기 좋은 전망 포인트다.",
+   "latitude": 34.989746769,
+   "longitude": 128.8289033948,
+   "content_id": "3015365",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "전망이 좋은",
+    "도심적인",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "전망 포인트",
+    "도심 전망",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "monseuteopakeu-busanmyeongjijeom",
+   "name": "몬스터파크 부산명지점",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "몬스터파크 부산명지점은 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.094240512051556,
+   "longitude": 128.90543623892688,
+   "content_id": "3038572",
+   "open_hours": "- 평일 11:00~19:00- 주말 10:00~20:00",
+   "closed_days": "연중무휴",
+   "official_url": "https://blog.naver.com/monsterpark_official",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "norikeulreop",
+   "name": "노리클럽",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "노리클럽은 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.097899751804434,
+   "longitude": 128.91838767465714,
+   "content_id": "3038622",
+   "open_hours": "10:00~19:00",
+   "closed_days": "설·추석 당일",
+   "official_url": "https://www.instagram.com/noriclub_2017",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "reobeulrigadeun",
+   "name": "러블리가든(사계, 나를심다)",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "러블리가든(사계, 나를심다)는 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1790829571,
+   "longitude": 128.9230898324,
+   "content_id": "4085879",
+   "open_hours": "10:00~16:00",
+   "closed_days": "매주 화요일",
+   "official_url": "https://lovelygarden.imweb.me/공식",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "obangmatgil",
+   "name": "오방맛길",
+   "activity_type": [
+    "미식"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "오방맛길은 현지 먹거리를 즐기기 좋은 골목이다.",
+   "latitude": 35.1859331756485,
+   "longitude": 129.083778371985,
+   "content_id": "2997123",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://ymrf.or.kr/",
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": false,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 4,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "먹거리",
+    "활기 있는",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "먹거리 골목",
+    "현지 식사",
+    "저녁 동선"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busan-yeonsandong-gobungun",
+   "name": "부산 연산동 고분군",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산 연산동 고분군은 부산의 역사 이야기를 따라 둘러보기 좋은 유적·기념 공간이다.",
+   "latitude": 35.18699,
+   "longitude": 129.091738,
+   "content_id": "3017254",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.yeonje.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "천천히 보기 좋은"
+   ],
+   "highlight_tags": [
+    "역사 탐방",
+    "부산 이야기",
+    "현지 감성"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "mahasa",
+   "name": "마하사",
+   "activity_type": [
+    "문화·역사",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "마하사는 고즈넉한 분위기 속에서 산책하기 좋은 사찰이다.",
+   "latitude": 35.1638654318,
+   "longitude": 129.0876574215,
+   "content_id": "304695",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 6,
+    "afternoon": 5,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "차분한",
+    "고즈넉한",
+    "사진 찍기 좋은"
+   ],
+   "highlight_tags": [
+    "사찰 산책",
+    "고즈넉한 분위기",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "baegyangsan-welbingsup",
+   "name": "백양산 웰빙숲",
+   "activity_type": [
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟",
+    "야경"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gupo",
+   "duration_hours": 1,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "백양산 웰빙숲은 도시와 바다 풍경을 담기 좋은 전망 포인트다.",
+   "latitude": 35.184,
+   "longitude": 129.0113,
+   "content_id": "2677748",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.sasang.go.kr/tour",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "전망이 좋은",
+    "도심적인",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "전망 포인트",
+    "도심 전망",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "sasanggeunringongwon",
+   "name": "사상근린공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "사상근린공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1521591854,
+   "longitude": 128.9768458561,
+   "content_id": "2785762",
+   "open_hours": "09:00~18:00",
+   "closed_days": "매주 월요일 (단, 월요일이 공휴일시 정상운영, 다음날 휴무)",
+   "official_url": "https://www.sasang.go.kr/tour/index.sasang",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gongsueochoncheheommaeul",
+   "name": "공수어촌체험마을",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "공수어촌체험마을은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.1844181086,
+   "longitude": 129.2111647849,
+   "content_id": "128610",
+   "open_hours": "10:00 ~ 17:00",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gijanghyanggyo",
+   "name": "기장향교",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "기장향교는 부산의 역사 이야기를 따라 둘러보기 좋은 유적·기념 공간이다.",
+   "latitude": 35.2578012222,
+   "longitude": 129.2158539613,
+   "content_id": "1953936",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "천천히 보기 좋은"
+   ],
+   "highlight_tags": [
+    "역사 탐방",
+    "부산 이야기",
+    "현지 감성"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "andereusen-donghwamaeul",
+   "name": "안데르센 동화마을",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "안데르센 동화마을은 골목을 천천히 걸으며 색다른 분위기를 느끼기 좋은 마을이다.",
+   "latitude": 35.3601199691,
+   "longitude": 129.2399148578,
+   "content_id": "2661452",
+   "open_hours": "09:00~18:00 (입장 마감 16:00)",
+   "closed_days": "매주 월요일",
+   "official_url": "https://www.gijang.go.kr/tour",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "감성적인",
+    "사진 찍기 좋은",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "골목 산책",
+    "현지 감성",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "woljeonpogu",
+   "name": "월전포구(월전방파제)",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "월전포구(월전방파제)는 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.2375231968,
+   "longitude": 129.2454307026,
+   "content_id": "2715652",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "yongsowelbinggongwon",
+   "name": "용소웰빙공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "용소웰빙공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.2467,
+   "longitude": 129.2045,
+   "content_id": "2729918",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "sodubanggongwon",
+   "name": "소두방공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "소두방공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.3291,
+   "longitude": 129.1843,
+   "content_id": "2758469",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "sinpyeongsogongwon",
+   "name": "신평소공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "신평소공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.2937,
+   "longitude": 129.2606,
+   "content_id": "2758477",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jangansagyegok",
+   "name": "장안사계곡",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "장안사계곡은 더운 계절에 물소리를 들으며 시원하게 쉬어 가기 좋은 계곡이다.",
+   "latitude": 35.3743933531,
+   "longitude": 129.2327852139,
+   "content_id": "2758489",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "시원한",
+    "자연적인",
+    "물소리"
+   ],
+   "highlight_tags": [
+    "계곡 휴식",
+    "여름 피서",
+    "자연 풍경"
+   ],
+   "note_templates": [],
+   "season_months": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hongyeonpokpo",
+   "name": "홍연폭포",
+   "activity_type": [
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "홍연폭포는 자연 풍경을 가볍게 즐기기 좋은 장소다.",
+   "latitude": 35.2975403351,
+   "longitude": 129.1652363137,
+   "content_id": "2758652",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.gijang.go.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "자연적인",
+    "상쾌한"
+   ],
+   "highlight_tags": [
+    "자연 풍경",
+    "가벼운 산책",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hakrihang",
+   "name": "학리항",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "학리항은 바다 풍경을 가볍게 즐기기 좋은 해안 명소다.",
+   "latitude": 35.2597433884,
+   "longitude": 129.2480212855,
+   "content_id": "2775565",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "시원한",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "해안 풍경",
+    "부산다운 분위기",
+    "시원한 장면"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gomnaeyeonbat",
+   "name": "곰내연밭",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "곰내연밭은 일정 사이에 쉬어 가기 좋은 공원·휴식 공간이다.",
+   "latitude": 35.2953681438,
+   "longitude": 129.1695155636,
+   "content_id": "2782765",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "도심 속 공원",
+    "여유로운 흐름",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "woljeonjangeoguichon",
+   "name": "월전장어구이촌",
+   "activity_type": [
+    "미식"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "월전장어구이촌은 현지 먹거리를 즐기기 좋은 골목이다.",
+   "latitude": 35.2381207407,
+   "longitude": 129.2441407653,
+   "content_id": "2789668",
+   "open_hours": "점포 별로 상이",
+   "closed_days": "점포 별로 상이",
+   "official_url": null,
+   "setting": "mixed",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": false,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 4,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "먹거리",
+    "활기 있는",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "먹거리 골목",
+    "현지 식사",
+    "저녁 동선"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "daeryongmaeul",
+   "name": "대룡마을",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 6,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "대룡마을은 골목을 천천히 걸으며 색다른 분위기를 느끼기 좋은 마을이다.",
+   "latitude": 35.37084904277479,
+   "longitude": 129.26348291402041,
+   "content_id": "3015416",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "감성적인",
+    "사진 찍기 좋은",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "골목 산책",
+    "현지 감성",
+    "사진 포인트"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hieorotemapakeu-jeonggwanjeom",
+   "name": "히어로테마파크 정관점",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "히어로테마파크 정관점은 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.32119130482397,
+   "longitude": 129.1782791808084,
+   "content_id": "3015559",
+   "open_hours": "- 평일 11:00~20:00- 주말 10:30~20:00",
+   "closed_days": "연중무휴",
+   "official_url": "http://herokidspark.co.kr/bbs",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "kaden96",
+   "name": "카덴96",
+   "activity_type": [
+    "온천"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "카덴96은 걷다 지친 몸을 풀기 좋은 휴식 공간이다.",
+   "latitude": 35.28936955936168,
+   "longitude": 129.23454877480128,
+   "content_id": "3015906",
+   "open_hours": "10:00~22:00 (휴게시간 18:00~18:30)",
+   "closed_days": "연중무휴",
+   "official_url": "http://www.kaden96.com/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "온천",
+    "편안한"
+   ],
+   "highlight_tags": [
+    "온천 체험",
+    "족욕",
+    "휴식 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "witgolgongwon",
+   "name": "윗골공원",
+   "activity_type": [
+    "휴양·힐링",
+    "자연·트레킹"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "윗골공원은 일정 사이에 잠깐 쉬어 가기 좋은 동네 공원이다.",
+   "latitude": 35.32389935635918,
+   "longitude": 129.17761101818007,
+   "content_id": "3015937",
+   "open_hours": "[공원]상시 개방[물놀이장]10:00~17:00",
+   "closed_days": "[공원]연중무휴[물놀이장]매주 월요일 / 매년 9월~5월",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "여유로운",
+    "편안한",
+    "가볍게 걷기 좋은"
+   ],
+   "highlight_tags": [
+    "동네 공원",
+    "쉬어 가기",
+    "가벼운 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "kiwikijeuraendeu",
+   "name": "키위키즈랜드",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "키위키즈랜드는 아이와 함께 보고 체험하기 좋은 시설이다.",
+   "latitude": 35.32126709863031,
+   "longitude": 129.2356423343507,
+   "content_id": "3060803",
+   "open_hours": "- 평일 11:00~19:00- 주말 10:00~19:00",
+   "closed_days": "매주 월요일",
+   "official_url": null,
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 7,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "재미 있는",
+    "체험 중심의",
+    "가족과 가기 좋은"
+   ],
+   "highlight_tags": [
+    "아이 체험",
+    "실내 대안",
+    "가족 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeonggwanoncheon",
+   "name": "정관온천",
+   "activity_type": [
+    "온천"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "정관온천은 걷다 지친 몸을 풀기 좋은 휴식 공간이다.",
+   "latitude": 35.32254781057412,
+   "longitude": 129.17787242339242,
+   "content_id": "3083341",
+   "open_hours": "[온천]06:00~22:00[피트니스]06:00~21:00",
+   "closed_days": "[온천]매달 마지막 주 화요일[피트니스]매주 일요일",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "온천",
+    "편안한"
+   ],
+   "highlight_tags": [
+    "온천 체험",
+    "족욕",
+    "휴식 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "eseuembi-welniseu-senteo",
+   "name": "에스엠비 웰니스 센터",
+   "activity_type": [
+    "온천"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "에스엠비 웰니스 센터는 걷다 지친 몸을 풀기 좋은 휴식 공간이다.",
+   "latitude": 35.2588823233,
+   "longitude": 129.243044732,
+   "content_id": "3526092",
+   "open_hours": "10:00~19:00 (휴게시간 12:00~13:00)",
+   "closed_days": "연중무휴",
+   "official_url": "https://smbwellness.co.kr",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "온천",
+    "편안한"
+   ],
+   "highlight_tags": [
+    "온천 체험",
+    "족욕",
+    "휴식 코스"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busanyeojadaehakgyo-chabakmulgwan",
+   "name": "부산여자대학교 차박물관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산여자대학교 차박물관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.1686798902,
+   "longitude": 129.0716173372,
+   "content_id": "129816",
+   "open_hours": "- 10:00~16:00- 준비시간 12:00~13:00",
+   "closed_days": "매주 토요일~일요일",
+   "official_url": "https://www.bwc.ac.kr",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busanjayuhoegwan",
+   "name": "부산자유회관(부산통일관)",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산자유회관(부산통일관)은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.1828346325,
+   "longitude": 129.0455469327,
+   "content_id": "130737",
+   "open_hours": "09:00~17:00",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busangwangyeoksigyoyukcheonghaksaengyesulmunhwahoegwan-norimaru",
+   "name": "부산광역시교육청학생예술문화회관 놀이마루",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산광역시교육청학생예술문화회관 놀이마루는 전시와 문화 프로그램을 가볍게 즐기기 좋은 복합 문화공간이다.",
+   "latitude": 35.1563611729,
+   "longitude": 129.0628882818,
+   "content_id": "2763856",
+   "open_hours": "[북카페/갤러리]- 화요일~토요일 09:30~17:30[운동장 개방]- 화요일~토요일 07:00~21:30- 일요일 09:00~21:30※ 단, 운동장은 09:30~15:00에 정문이 폐쇄되므로 자세한 사항은 홈페이지 참조",
+   "closed_days": "매주 월요일 / 법정공휴일 / 임시공휴일",
+   "official_url": "https://home.pen.go.kr/nrmr/main.do",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 3,
+    "afternoon": 6,
+    "evening": -2
+   },
+   "mood_keywords": [
+    "감각적인",
+    "실내에 강한",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "복합 문화공간",
+    "우천 대안",
+    "쉬어 가기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hanguksinbalgwan",
+   "name": "한국신발관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "한국신발관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.1573026527,
+   "longitude": 129.0257996358,
+   "content_id": "2788392",
+   "open_hours": "10:00~17:00",
+   "closed_days": "매주 일요일 / 법정공휴일",
+   "official_url": "http://www.k-shoes.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "hocheonmunhwapeulraetpom",
+   "name": "호천문화플랫폼",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "호천문화플랫폼은 전시와 문화 프로그램을 가볍게 즐기기 좋은 복합 문화공간이다.",
+   "latitude": 35.14421281108753,
+   "longitude": 129.05121061194302,
+   "content_id": "3014434",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.visitbusan.net/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 3,
+    "afternoon": 6,
+    "evening": -2
+   },
+   "mood_keywords": [
+    "감각적인",
+    "실내에 강한",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "복합 문화공간",
+    "우천 대안",
+    "쉬어 가기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busan-suhakmunhwagwan",
+   "name": "부산 수학문화관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산 수학문화관은 전시와 문화 프로그램을 가볍게 즐기기 좋은 복합 문화공간이다.",
+   "latitude": 35.156220398284376,
+   "longitude": 129.05182685976084,
+   "content_id": "3345515",
+   "open_hours": "09:30~16:30 (휴게시간 12:00~14:00)※ 주말 및 공휴일에만 자유관람 가능",
+   "closed_days": "매주 월요일 / 1월 1일 / 설·추석 연휴 / 선거일 / 대체공휴일",
+   "official_url": "https://home.pen.go.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 3,
+    "afternoon": 6,
+    "evening": -2
+   },
+   "mood_keywords": [
+    "감각적인",
+    "실내에 강한",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "복합 문화공간",
+    "우천 대안",
+    "쉬어 가기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": "required",
+   "theme_tags": []
+  },
+  {
+   "id": "busankonseoteuhol",
+   "name": "부산콘서트홀",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "seomyeon",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly"
+   ],
+   "summary": "부산콘서트홀은 공연 일정에 맞춰 문화생활을 즐기기 좋은 공연장이다.",
+   "latitude": 35.169373523823886,
+   "longitude": 129.05426378642062,
+   "content_id": "3507960",
+   "open_hours": "공연별로 상이함",
+   "closed_days": "매주 월요일 / 1월 1일",
+   "official_url": "https://classicbusan.busan.go.kr/Home/ko/Main공식",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -4,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "공연을 즐기는",
+    "실내에 강한",
+    "문화적인"
+   ],
+   "highlight_tags": [
+    "공연 관람",
+    "실내 대안",
+    "저녁 문화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busaneochonminsokgwan",
+   "name": "부산어촌민속관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "부산어촌민속관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.2337251649,
+   "longitude": 129.008437872,
+   "content_id": "1243628",
+   "open_hours": "09:00~18:00 (입장 마감 17:00)",
+   "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그  다음날 휴관) / 1월 1일",
+   "official_url": "https://www.busan.go.kr",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "busanbukgumunhwayesulhoegwan",
+   "name": "부산북구문화예술회관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "부산북구문화예술회관은 공연 일정에 맞춰 문화생활을 즐기기 좋은 공연장이다.",
+   "latitude": 35.2134392295,
+   "longitude": 129.0057519474,
+   "content_id": "1747913",
+   "open_hours": "09:00~18:00",
+   "closed_days": "매주 일요일",
+   "official_url": "https://www.bsbukgu.go.kr",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -4,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "공연을 즐기는",
+    "실내에 강한",
+    "문화적인"
+   ],
+   "highlight_tags": [
+    "공연 관람",
+    "실내 대안",
+    "저녁 문화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "geogadaegyo-hongbojeonsigwan",
+   "name": "거가대교 홍보전시관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gadeok",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "거가대교 홍보전시관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.0236,
+   "longitude": 128.8067,
+   "content_id": "2714515",
+   "open_hours": "- 하절기(5월~10월) 09:00~17:00- 동절기(11월~4월) 10:00~17:00",
+   "closed_days": "매주 월요일 / 공휴일 / 근로자의 날",
+   "official_url": "https://www.gklink.com",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": "required",
+   "theme_tags": []
+  },
+  {
+   "id": "busanjawonsunhwanhyeopryeoksenteo",
+   "name": "부산자원순환협력센터",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gangseo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "부산자원순환협력센터는 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.1331966817,
+   "longitude": 128.8822655527,
+   "content_id": "2764008",
+   "open_hours": "09:00~18:00 (입장 마감 17:00)",
+   "closed_days": "매주 월요일 / 1월 1일 / 설·추석 연휴 / 그 밖에 협력센터의 안전점검 및 유지보수 필요 시 휴관",
+   "official_url": "https://brc.beco.or.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "nakdongateusenteo",
+   "name": "낙동아트센터",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "낙동아트센터는 공연 일정에 맞춰 문화생활을 즐기기 좋은 공연장이다.",
+   "latitude": 35.102094818,
+   "longitude": 128.9039878915,
+   "content_id": "4081887",
+   "open_hours": "공연별로 상이함",
+   "closed_days": "공연별로 상이함",
+   "official_url": "https://bsgangseo.go.kr/nac/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -4,
+    "afternoon": 5,
+    "evening": 7
+   },
+   "mood_keywords": [
+    "공연을 즐기는",
+    "실내에 강한",
+    "문화적인"
+   ],
+   "highlight_tags": [
+    "공연 관람",
+    "실내 대안",
+    "저녁 문화"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "sasangsaenghwalsabakmulgwan",
+   "name": "사상생활사박물관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "사상생활사박물관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.1720227309,
+   "longitude": 128.9787187967,
+   "content_id": "3017191",
+   "open_hours": "09:00~18:00 (입장 마감 17:30)",
+   "closed_days": "매주 월요일 (단, 월요일이 법정공휴일이면 그 다음 날 휴관) / 1월 1일 / 설·추석 연휴",
+   "official_url": "http://www.sasang.go.kr/lmuseum/공식",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "kimseuateupildeumisulgwan",
+   "name": "킴스아트필드미술관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "킴스아트필드미술관은 전시와 예술을 가볍게 즐기기 좋은 갤러리다.",
+   "latitude": 35.1968766859,
+   "longitude": 129.2253226164,
+   "content_id": "1940446",
+   "open_hours": "11:00~18:00 (휴게시간 12:00~13:00)",
+   "closed_days": "매주 일요일, 월요일",
+   "official_url": null,
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 3,
+    "afternoon": 6,
+    "evening": -2
+   },
+   "mood_keywords": [
+    "차분한",
+    "전시 보기 좋은",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 전시",
+    "우천 대안",
+    "문화 카드"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "jeonggwanbakmulgwan",
+   "name": "정관박물관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "정관박물관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.3269,
+   "longitude": 129.1826,
+   "content_id": "2556598",
+   "open_hours": "9:00~18:00 (입장 마감 17:00)",
+   "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음 평일 휴관) / 1월 1일",
+   "official_url": "https://museum.busan.go.kr/jeonggwan/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "baktaejunginyeomgwan",
+   "name": "박태준기념관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "박태준기념관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.3168728962,
+   "longitude": 129.2612202932,
+   "content_id": "2823059",
+   "open_hours": "- 09:00~18:00- 입장 마감 17:30",
+   "closed_days": "매주 월요일 (단, 월요일이 공휴일인 경우 그 다음날) / 1월 1일 / 설·추석 당일",
+   "official_url": "https://www.gijang.go.kr/ptjmemorial/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "beurikkaempeoseu-busan",
+   "name": "브릭캠퍼스 부산",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "브릭캠퍼스 부산은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.1928227462032,
+   "longitude": 129.214955863598,
+   "content_id": "2825252",
+   "open_hours": "[월요일~목요일]10:30~20:00 (입장 마감 19:00)[금요일~일요일]10:30~20:30 (입장 마감 19:30)",
+   "closed_days": "설·추석 당일※ 롯데몰 메종 동부산 휴무일과 같음",
+   "official_url": "http://www.brickcampus.com",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 15000,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gyeongjeoncheol-hongbogwan",
+   "name": "경전철 홍보관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "경전철 홍보관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.2434825291906,
+   "longitude": 129.17744648288,
+   "content_id": "3015385",
+   "open_hours": "10:00~17:00",
+   "closed_days": "매주 토요일~일요일 / 법정공휴일",
+   "official_url": "https://www.humetro.busan.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "goriwonjaryeokhongbogwan",
+   "name": "고리원자력홍보관",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "고리원자력홍보관은 부산의 역사와 이야기를 짧게 둘러보기 좋은 소규모 전시 공간이다.",
+   "latitude": 35.3292,
+   "longitude": 129.2877,
+   "content_id": "3015483",
+   "open_hours": "- 월요일~금요일 09:00~17:00- 토요일 10:00~16:00",
+   "closed_days": "매주 일요일 / 법정공휴일",
+   "official_url": "https://www.khnp.co.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": 0,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 4,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "차분한",
+    "로컬한",
+    "실내에 강한"
+   ],
+   "highlight_tags": [
+    "실내 문화",
+    "우천 대안",
+    "짧게 둘러보기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "sirang",
+   "name": "시랑",
+   "activity_type": [
+    "문화·역사"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 1,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "시랑은 전시와 문화 프로그램을 가볍게 즐기기 좋은 복합 문화공간이다.",
+   "latitude": 35.1877059586015,
+   "longitude": 129.212396915489,
+   "content_id": "4041857",
+   "open_hours": "11:00~21:00 (마지막 주문 20:00)",
+   "closed_days": "매주 월요일",
+   "official_url": "https://www.instagram.com/c.rang_official",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 3,
+    "afternoon": 6,
+    "evening": -2
+   },
+   "mood_keywords": [
+    "감각적인",
+    "실내에 강한",
+    "로컬한"
+   ],
+   "highlight_tags": [
+    "복합 문화공간",
+    "우천 대안",
+    "쉬어 가기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": []
+  },
+  {
+   "id": "gupomujangaesupgil",
+   "name": "구포무장애숲길",
+   "activity_type": [
+    "자연·트레킹",
+    "휴양·힐링"
+   ],
+   "mood": [
+    "조용함"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [
+    "포토스팟"
+   ],
+   "budget_level": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 3,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "walkable",
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "구포무장애숲길은 바다와 도시 풍경을 따라 천천히 걷기 좋은 걷기 코스다.",
+   "latitude": 35.1977410078,
+   "longitude": 129.0004039606,
+   "content_id": "2755696",
+   "open_hours": "상시 개방",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.wheelbusan.or.kr/",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -3
+   },
+   "mood_keywords": [
+    "걷기 좋은",
+    "상쾌한",
+    "자연적인"
+   ],
+   "highlight_tags": [
+    "걷기 코스",
+    "천천히 걷기",
+    "풍경 산책"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": [
+    "walk"
+   ]
+  },
+  {
+   "id": "hwamyeongsusangrepocheutaun",
+   "name": "화명수상레포츠타운",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "화명수상레포츠타운은 여름철 바다와 강에서 즐기는 수상 레저 체험이다.",
+   "latitude": 35.2223680250652,
+   "longitude": 129.000675022863,
+   "content_id": "2756703",
+   "open_hours": "08:30~18:00",
+   "closed_days": "연중무휴",
+   "official_url": null,
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "경쾌한",
+    "체험 중심의",
+    "시원한"
+   ],
+   "highlight_tags": [
+    "수상 레포츠",
+    "여름 체험",
+    "시원한 활동"
+   ],
+   "note_templates": [],
+   "season_months": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "booking": "recommended",
+   "theme_tags": [
+    "water",
+    "leisure"
+   ]
+  },
+  {
+   "id": "busangwangyeoksi-busansilnaebingsangjang",
+   "name": "부산광역시 부산실내빙상장",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "부산광역시 부산실내빙상장은 몸을 움직이며 즐기는 스포츠·레저 체험 공간이다.",
+   "latitude": 35.213439224,
+   "longitude": 129.0057519347,
+   "content_id": "3080317",
+   "open_hours": "09:00~17:50 (입장 마감 17:20)",
+   "closed_days": "매주 월요일",
+   "official_url": "http://icerink.busan.kr/html/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "몸을 쓰는",
+    "재미 있는",
+    "체험 중심의"
+   ],
+   "highlight_tags": [
+    "스포츠 체험",
+    "레저 코스",
+    "함께 즐기기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": [
+    "sports"
+   ]
+  },
+  {
+   "id": "mongkimongkirolreojang",
+   "name": "몽키몽키롤러장",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gangseo",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "몽키몽키롤러장은 몸을 움직이며 즐기는 스포츠·레저 체험 공간이다.",
+   "latitude": 35.09368530634735,
+   "longitude": 128.9053722275591,
+   "content_id": "3060820",
+   "open_hours": "- 평일 10:00~20:00- 주말 10:00~22:00 ※ 방학기간에는 평일 및 주말 10:00~22:00",
+   "closed_days": "연중무휴",
+   "official_url": "https://www.instagram.com/monkeymonkey_rollerclub",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "몸을 쓰는",
+    "재미 있는",
+    "체험 중심의"
+   ],
+   "highlight_tags": [
+    "스포츠 체험",
+    "레저 코스",
+    "함께 즐기기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": [
+    "sports"
+   ]
+  },
+  {
+   "id": "samraksusangrepocheutaun",
+   "name": "삼락수상레포츠타운",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gupo",
+   "duration_hours": 2,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "subway-friendly",
+    "taxi-needed"
+   ],
+   "summary": "삼락수상레포츠타운은 여름철 바다와 강에서 즐기는 수상 레저 체험이다.",
+   "latitude": 35.1725448388,
+   "longitude": 128.9680345066,
+   "content_id": "2756707",
+   "open_hours": "09:00~18:00 (휴게시간 12:00~13:00)",
+   "closed_days": "매주 월요일 / 화요일",
+   "official_url": "http://www.삼락수상레포츠타운.com",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "경쾌한",
+    "체험 중심의",
+    "시원한"
+   ],
+   "highlight_tags": [
+    "수상 레포츠",
+    "여름 체험",
+    "시원한 활동"
+   ],
+   "note_templates": [],
+   "season_months": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "booking": "recommended",
+   "theme_tags": [
+    "water",
+    "leisure"
+   ]
+  },
+  {
+   "id": "bamoseuseungmakeulreop",
+   "name": "바모스승마클럽",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "바모스승마클럽은 몸을 움직이며 즐기는 스포츠·레저 체험 공간이다.",
+   "latitude": 35.342084380734235,
+   "longitude": 129.19562075758063,
+   "content_id": "3060159",
+   "open_hours": "09:00~18:00 (준비시간 12:00~14:00)",
+   "closed_days": "매주 화요일",
+   "official_url": "http://vamos.itrocks.kr/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "몸을 쓰는",
+    "재미 있는",
+    "체험 중심의"
+   ],
+   "highlight_tags": [
+    "스포츠 체험",
+    "레저 코스",
+    "함께 즐기기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": "recommended",
+   "theme_tags": [
+    "sports"
+   ]
+  },
+  {
+   "id": "seukairolreopakeu",
+   "name": "스카이롤러파크",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "스카이롤러파크는 몸을 움직이며 즐기는 스포츠·레저 체험 공간이다.",
+   "latitude": 35.32119130482397,
+   "longitude": 129.1782791808084,
+   "content_id": "3060196",
+   "open_hours": "- 평일 12:30~21:00- 주말 10:00~21:00",
+   "closed_days": "매주 월요일 (단, 월요일이 법정공휴일인 경우 정상운영)",
+   "official_url": "https://www.instagram.com/skyrollerpark_/",
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "몸을 쓰는",
+    "재미 있는",
+    "체험 중심의"
+   ],
+   "highlight_tags": [
+    "스포츠 체험",
+    "레저 코스",
+    "함께 즐기기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": null,
+   "theme_tags": [
+    "sports"
+   ]
+  },
+  {
+   "id": "busangijangseungmajang",
+   "name": "부산기장승마장",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "afternoon",
+    "evening"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 4,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "부산기장승마장은 몸을 움직이며 즐기는 스포츠·레저 체험 공간이다.",
+   "latitude": 35.338992854273805,
+   "longitude": 129.24087643576084,
+   "content_id": "3060213",
+   "open_hours": "09:00~20:00",
+   "closed_days": "매주 월요일",
+   "official_url": null,
+   "setting": "indoor",
+   "rain_sensitive_light": false,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": -3,
+    "afternoon": 6,
+    "evening": 6
+   },
+   "mood_keywords": [
+    "몸을 쓰는",
+    "재미 있는",
+    "체험 중심의"
+   ],
+   "highlight_tags": [
+    "스포츠 체험",
+    "레저 코스",
+    "함께 즐기기"
+   ],
+   "note_templates": [],
+   "season_months": [],
+   "booking": "recommended",
+   "theme_tags": [
+    "sports"
+   ]
+  },
+  {
+   "id": "jeonggwanakuadeurimpakeu",
+   "name": "정관아쿠아드림파크",
+   "activity_type": [
+    "액티비티"
+   ],
+   "mood": [
+    "활기참"
+   ],
+   "mood_evening_override": [],
+   "visual_feature": [],
+   "budget_level": [
+    "low",
+    "medium"
+   ],
+   "suitable_for": [
+    "solo",
+    "couple",
+    "friend",
+    "family"
+   ],
+   "time_fit": [
+    "morning",
+    "afternoon"
+   ],
+   "area": "gijang",
+   "duration_hours": 2,
+   "priority": 5,
+   "pace": [
+    "easy"
+   ],
+   "mobility": [
+    "taxi-needed"
+   ],
+   "summary": "정관아쿠아드림파크는 여름철 바다와 강에서 즐기는 수상 레저 체험이다.",
+   "latitude": 35.34128044482501,
+   "longitude": 129.1631036019735,
+   "content_id": "3060890",
+   "open_hours": "[수영장]- 평일 05:00~21:40- 토요일 05:00~17:40- 일요일 / 공휴일 08:40~17:40[헬스장]- 평일 06:00~21:10 (정비시간 13:00~14:00)- 토요일 06:00~17:00 (정비시간 11:00~12:30)- 일요일 / 공휴일 09:00~17:00 (정비시간 11:00~12:30)※ 헬스장은 주말에만 일일입장 가능※ 자세한 사항은 홈페이지 참조 및 전화 문의 요망",
+   "closed_days": "매주 월요일 / 1월 1일 / 설·추석 연휴",
+   "official_url": "https://www.gijangcmc.or.kr/dreampark/main",
+   "setting": "outdoor",
+   "rain_sensitive_light": true,
+   "average_cost_krw": null,
+   "is_active": false,
+   "meal_eligible": true,
+   "mvp_tier": "alternate",
+   "slot_bias": {
+    "morning": 5,
+    "afternoon": 6,
+    "evening": -4
+   },
+   "mood_keywords": [
+    "경쾌한",
+    "체험 중심의",
+    "시원한"
+   ],
+   "highlight_tags": [
+    "수상 레포츠",
+    "여름 체험",
+    "시원한 활동"
+   ],
+   "note_templates": [],
+   "season_months": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "booking": "recommended",
+   "theme_tags": [
+    "water",
+    "leisure"
+   ]
+  }
+ ]
+}

@@ -7605,7 +7605,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "haeundae",
+      "area": "centum",
       "duration_hours": 2,
       "priority": 6,
       "pace": [
@@ -7673,7 +7673,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "haeundae",
+      "area": "centum",
       "duration_hours": 2,
       "priority": 6,
       "pace": [
@@ -8444,7 +8444,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "haeundae",
+      "area": "centum",
       "duration_hours": 2,
       "priority": 6,
       "pace": [
@@ -14774,7 +14774,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "haeundae",
+      "area": "centum",
       "duration_hours": 2,
       "priority": 6,
       "pace": [
@@ -15257,7 +15257,7 @@
         "morning",
         "afternoon"
       ],
-      "area": "haeundae",
+      "area": "centum",
       "duration_hours": 2,
       "priority": 4,
       "pace": [
@@ -21917,7 +21917,7 @@
         "afternoon",
         "evening"
       ],
-      "area": "haeundae",
+      "area": "centum",
       "duration_hours": 2,
       "priority": 4,
       "pace": [

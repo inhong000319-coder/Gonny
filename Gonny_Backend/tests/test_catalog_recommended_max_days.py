@@ -6,22 +6,33 @@ RuleItineraryService.list_catalog_options()가 실제 도시 데이터로 그
 """
 from __future__ import annotations
 
+from app.domains.destination_catalog.schemas import ALTERNATE_TIER
 from app.domains.destination_catalog.services.provider import LocalJsonPlaceCatalogProvider
 from app.domains.destination_catalog.services.repository import compute_recommended_max_days
 from app.domains.rule_planner.services.service import RuleItineraryService
 
-# 현재 카탈로그 데이터 기준(2026-11-19 확인) - 데이터가 바뀌면 이 숫자도
-# 바뀔 수 있으므로, 아래 테스트는 이 값에 의존하지 않고 카탈로그에서
-# 직접 센 값과 비교한다. 여기 적어 두는 건 보고서와 같은 숫자인지
-# 눈으로도 바로 확인할 수 있게 하기 위함이다.
-EXPECTED_RECOMMENDED_MAX_DAYS = {"seoul": 14, "busan": 8, "jeju": 16}
+# 현재 카탈로그 데이터 기준(2026-11-26, 부산 확장 장소 283곳 활성화 후 확인) -
+# 데이터가 바뀌면 이 숫자도 바뀔 수 있으므로, 아래 테스트는 이 값에
+# 의존하지 않고 카탈로그에서 직접 센 값과 비교한다. 여기 적어 두는 건
+# 보고서와 같은 숫자인지 눈으로도 바로 확인할 수 있게 하기 위함이다.
+EXPECTED_RECOMMENDED_MAX_DAYS = {"seoul": 14, "busan": 43, "jeju": 16}
 
 
 def _activity_candidate_count(city: str) -> int:
     catalog = LocalJsonPlaceCatalogProvider().get_city_catalog(
         continent=None, country=None, city=city, visible_only=True
     )
-    return sum(1 for place in catalog.places if place.is_active and place.is_activity_candidate)
+    # mvp_tier != ALTERNATE_TIER가 빠져 있었다 - PR-A(#152)가
+    # repository.list_city_options의 실제 계산에 이 조건을 추가했지만,
+    # 그때는 어떤 실제 카탈로그에도 alternate 장소가 없어 이 헬퍼와의
+    # 차이가 드러나지 않았다. 부산 확장 장소(alternate 178곳 포함)를
+    # 활성화하면서 처음 드러난 테스트 쪽 버그 - 프로덕션 코드(repository.py)는
+    # 원래부터 문제없다.
+    return sum(
+        1
+        for place in catalog.places
+        if place.is_active and place.is_activity_candidate and place.mvp_tier != ALTERNATE_TIER
+    )
 
 
 def test_compute_recommended_max_days_is_floor_division_by_slot_count() -> None:

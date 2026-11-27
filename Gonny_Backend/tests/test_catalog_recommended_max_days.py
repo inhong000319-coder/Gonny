@@ -11,11 +11,12 @@ from app.domains.destination_catalog.services.provider import LocalJsonPlaceCata
 from app.domains.destination_catalog.services.repository import compute_recommended_max_days
 from app.domains.rule_planner.services.service import RuleItineraryService
 
-# 현재 카탈로그 데이터 기준(2026-11-26, 부산 확장 장소 283곳 활성화 후 확인) -
-# 데이터가 바뀌면 이 숫자도 바뀔 수 있으므로, 아래 테스트는 이 값에
-# 의존하지 않고 카탈로그에서 직접 센 값과 비교한다. 여기 적어 두는 건
-# 보고서와 같은 숫자인지 눈으로도 바로 확인할 수 있게 하기 위함이다.
-EXPECTED_RECOMMENDED_MAX_DAYS = {"seoul": 14, "busan": 43, "jeju": 16}
+# 현재 카탈로그 데이터 기준(2026-11-27, #160으로 부산 2단계 131곳 중 기장
+# 제외 85곳을 추가로 활성화한 후 확인) - 데이터가 바뀌면 이 숫자도 바뀔 수
+# 있으므로, 아래 테스트는 이 값에 의존하지 않고 카탈로그에서 직접 센 값과
+# 비교한다. 여기 적어 두는 건 보고서와 같은 숫자인지 눈으로도 바로 확인할
+# 수 있게 하기 위함이다.
+EXPECTED_RECOMMENDED_MAX_DAYS = {"seoul": 14, "busan": 48, "jeju": 16}
 
 
 def _activity_candidate_count(city: str) -> int:

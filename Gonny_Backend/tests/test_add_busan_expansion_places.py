@@ -14,6 +14,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from add_busan_expansion_places import (  # noqa: E402
     locate_places_array,
+    main,
     resolve_activation_targets,
     run_activate,
     run_add,
@@ -81,8 +82,17 @@ def read_catalog(path: Path) -> dict:
         return json.load(f)
 
 
-def make_args(*, input_path: Path, catalog_path: Path, apply: bool = False, activate: str | None = None) -> argparse.Namespace:
-    return argparse.Namespace(input=input_path, apply=apply, activate=activate, catalog=catalog_path)
+def make_args(
+    *,
+    input_path: Path,
+    catalog_path: Path,
+    apply: bool = False,
+    activate: str | None = None,
+    exclude_areas: str | None = None,
+) -> argparse.Namespace:
+    return argparse.Namespace(
+        input=input_path, apply=apply, activate=activate, catalog=catalog_path, exclude_areas=exclude_areas
+    )
 
 
 # --- 추가 모드: dry-run은 쓰지 않는다 ---------------------------------------
@@ -442,3 +452,104 @@ def test_resolve_activation_targets_main_excludes_alternate():
     ]
     assert resolve_activation_targets(places, "main") == {"a"}
     assert resolve_activation_targets(places, "all") == {"a", "b"}
+
+
+# --- --exclude-areas (활성화 모드 전용) --------------------------------------
+
+
+def test_resolve_activation_targets_exclude_areas_narrows_the_set():
+    places = [
+        build_place(id="a", mvp_tier="standard", area="gijang"),
+        build_place(id="b", mvp_tier=ALTERNATE_TIER, area="gijang"),
+        build_place(id="c", mvp_tier="standard", area="seomyeon"),
+    ]
+    assert resolve_activation_targets(places, "all", exclude_areas={"gijang"}) == {"c"}
+    assert resolve_activation_targets(places, "all") == {"a", "b", "c"}  # 기본값(None)은 기존 동작과 동일
+
+
+def test_activate_with_exclude_areas_has_correct_counts_and_report(tmp_path, capsys):
+    catalog_path = tmp_path / "busan.json"
+    input_path = tmp_path / "input.json"
+    phase2_places = [
+        build_place(id="gijang-a", content_id="2", area="gijang", mvp_tier="standard"),
+        build_place(id="gijang-b", content_id="3", area="gijang", mvp_tier=ALTERNATE_TIER),
+        build_place(id="seomyeon-a", content_id="4", area="seomyeon", mvp_tier="standard"),
+    ]
+    # 실제 흐름처럼 활성화 전에 이미 카탈로그에 비활성으로 들어있는 상태.
+    write_catalog(catalog_path, [build_place(id="existing-a", content_id="1"), *phase2_places])
+    write_input(input_path, phase2_places)
+
+    exit_code = run_activate(
+        make_args(input_path=input_path, catalog_path=catalog_path, apply=True, activate="all", exclude_areas="gijang")
+    )
+
+    assert exit_code == 0
+    catalog = read_catalog(catalog_path)
+    by_id = {p["id"]: p for p in catalog["places"]}
+    assert by_id["gijang-a"]["is_active"] is False
+    assert by_id["gijang-b"]["is_active"] is False
+    assert by_id["seomyeon-a"]["is_active"] is True
+    assert by_id["existing-a"]["is_active"] is False  # 입력 파일 밖은 절대 안 건드림
+
+    output = capsys.readouterr().out
+    assert "대상(입력 파일 기준): 1곳" in output
+    assert "제외된 장소: 2곳" in output
+    assert "'gijang': 2" in output
+
+
+def test_activate_without_exclude_areas_is_unaffected(tmp_path):
+    # exclude_areas를 안 주면(기존 호출부처럼) 기존 동작과 완전히 같다.
+    catalog_path = tmp_path / "busan.json"
+    input_path = tmp_path / "input.json"
+    phase2_places = [
+        build_place(id="gijang-a", content_id="2", area="gijang", mvp_tier="standard"),
+        build_place(id="seomyeon-a", content_id="3", area="seomyeon", mvp_tier="standard"),
+    ]
+    write_catalog(catalog_path, [build_place(id="existing-a", content_id="1"), *phase2_places])
+    write_input(input_path, phase2_places)
+
+    exit_code = run_activate(make_args(input_path=input_path, catalog_path=catalog_path, apply=True, activate="all"))
+
+    assert exit_code == 0
+    catalog = read_catalog(catalog_path)
+    by_id = {p["id"]: p for p in catalog["places"]}
+    assert by_id["gijang-a"]["is_active"] is True
+    assert by_id["seomyeon-a"]["is_active"] is True
+
+
+def test_exclude_areas_rejected_in_add_mode(tmp_path, monkeypatch, capsys):
+    catalog_path = tmp_path / "busan.json"
+    input_path = tmp_path / "input.json"
+    write_catalog(catalog_path, [build_place(id="existing-a", content_id="1")])
+    write_input(input_path, [build_place(id="new-a", content_id="2")])
+
+    before = catalog_path.read_bytes()
+    monkeypatch.setattr(
+        sys, "argv", ["add_busan_expansion_places.py", "--input", str(input_path), "--catalog", str(catalog_path), "--exclude-areas", "gijang"]
+    )
+    exit_code = main()
+
+    assert exit_code == 1
+    assert catalog_path.read_bytes() == before
+    assert "--activate 모드에서만" in capsys.readouterr().out
+
+
+def test_exclude_areas_rejects_unknown_area_without_writing(tmp_path):
+    catalog_path = tmp_path / "busan.json"
+    input_path = tmp_path / "input.json"
+    write_catalog(catalog_path, [build_place(id="existing-a", content_id="1", mvp_tier="standard", is_active=False)])
+    write_input(input_path, [build_place(id="existing-a", content_id="1", mvp_tier="standard")])
+
+    before = catalog_path.read_bytes()
+    exit_code = run_activate(
+        make_args(
+            input_path=input_path,
+            catalog_path=catalog_path,
+            apply=True,
+            activate="all",
+            exclude_areas="not-a-real-area",
+        )
+    )
+
+    assert exit_code == 1
+    assert catalog_path.read_bytes() == before

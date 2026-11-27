@@ -24,6 +24,7 @@ import argparse
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -361,21 +362,42 @@ def run_add(args: argparse.Namespace) -> int:
 def resolve_activation_targets(
     input_places: list[dict[str, Any]],
     mode: str,
+    exclude_areas: set[str] | None = None,
 ) -> set[str]:
-    """activate 대상 id 집합 - main은 alternate 제외, all은 전부."""
+    """activate 대상 id 집합 - main은 alternate 제외, all은 전부.
+    exclude_areas가 있으면(기본 None - 기존 동작과 완전히 동일) 그 area의
+    장소를 대상에서 뺀다 - 식당 보강 등 이유로 특정 지역만 나중에 켜고
+    싶을 때 쓴다(예: 기장 - see add_busan_expansion_places.py 모듈 docstring)."""
     if mode == "all":
-        return {place["id"] for place in input_places}
-    if mode == "main":
-        return {place["id"] for place in input_places if place.get("mvp_tier") != ALTERNATE_TIER}
-    raise ValueError(f"알 수 없는 activate 모드: {mode}")
+        ids = {place["id"] for place in input_places}
+    elif mode == "main":
+        ids = {place["id"] for place in input_places if place.get("mvp_tier") != ALTERNATE_TIER}
+    else:
+        raise ValueError(f"알 수 없는 activate 모드: {mode}")
+
+    if exclude_areas:
+        ids -= {place["id"] for place in input_places if place.get("area") in exclude_areas}
+    return ids
 
 
 def run_activate(args: argparse.Namespace) -> int:
     input_path = Path(args.input)
     catalog_path = Path(args.catalog) if getattr(args, "catalog", None) else DEFAULT_CATALOG_PATH
 
+    exclude_areas: set[str] = set()
+    raw_exclude_areas = getattr(args, "exclude_areas", None)
+    if raw_exclude_areas:
+        exclude_areas = {area.strip() for area in raw_exclude_areas.split(",") if area.strip()}
+        unknown_areas = exclude_areas - set(BUSAN_AREA_ROUTE_ORDER)
+        if unknown_areas:
+            print(
+                f"=== --exclude-areas에 등록되지 않은 구역이 있습니다 - 아무것도 쓰지 않습니다 ===\n"
+                f"알 수 없는 구역: {sorted(unknown_areas)} (등록된 구역: {BUSAN_AREA_ROUTE_ORDER})"
+            )
+            return 1
+
     _input_data, input_places = load_input_places(input_path)
-    target_ids = resolve_activation_targets(input_places, args.activate)
+    target_ids = resolve_activation_targets(input_places, args.activate, exclude_areas)
 
     catalog = load_json_dict(catalog_path)
     places = catalog.get("places", [])
@@ -388,6 +410,12 @@ def run_activate(args: argparse.Namespace) -> int:
     print(f"대상(입력 파일 기준): {len(target_ids)}곳")
     print(f"이미 활성 상태: {len(already_active)}곳")
     print(f"새로 활성화할 장소: {len(to_activate)}곳")
+    if exclude_areas:
+        pre_exclude_ids = resolve_activation_targets(input_places, args.activate)
+        excluded_ids = pre_exclude_ids - target_ids
+        excluded_places = [place for place in input_places if place["id"] in excluded_ids]
+        excluded_area_counts = Counter(place["area"] for place in excluded_places)
+        print(f"제외된 장소: {len(excluded_places)}곳 ({dict(excluded_area_counts)})")
     if not_found:
         print(f"카탈로그에 아직 없는 대상(먼저 추가 모드로 반영 필요): {len(not_found)}곳 - {not_found[:10]}")
 
@@ -437,11 +465,20 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help="테스트용 - busan.json 대신 쓸 카탈로그 경로 (기본: app/data/destinations/busan.json)",
     )
+    parser.add_argument(
+        "--exclude-areas",
+        default=None,
+        help="--activate와 함께만 쓴다 - 쉼표로 구분한 area 목록을 활성화 대상에서 뺀다 "
+        "(예: --exclude-areas gijang). 추가 모드에서 쓰면 오류로 거부한다.",
+    )
     return parser.parse_args(argv)
 
 
 def main() -> int:
     args = parse_args()
+    if args.exclude_areas and not args.activate:
+        print("=== --exclude-areas는 --activate 모드에서만 쓸 수 있습니다 - 아무것도 쓰지 않습니다 ===")
+        return 1
     if args.activate:
         return run_activate(args)
     return run_add(args)

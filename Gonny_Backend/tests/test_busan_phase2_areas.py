@@ -183,44 +183,51 @@ def test_nurimaru_and_busan_film_street_were_not_moved():
     assert places_by_id["busan-yeonghwaui-geori"].area == "haeundae"
 
 
-def test_phase2_places_are_present_but_all_inactive():
+def test_gijang_places_are_present_but_still_inactive():
+    # #160 - 2단계 131곳 중 기장(gijang) 46곳은 식당 데이터 보강 전까지
+    # --exclude-areas gijang으로 활성화에서 뺐다. 나머지 85곳
+    # (seomyeon/gupo/gangseo/gadeok)은 활성화됐다.
     catalog = _load_real_busan_catalog()
     places_by_id = {place.id: place for place in catalog.places}
 
     with PHASE2_INPUT_PATH.open(encoding="utf-8") as f:
-        phase2_ids = {place["id"] for place in json.load(f)["places"]}
+        phase2_places = json.load(f)["places"]
+    gijang_ids = {p["id"] for p in phase2_places if p["area"] == "gijang"}
+    non_gijang_ids = {p["id"] for p in phase2_places if p["area"] != "gijang"}
 
-    assert phase2_ids <= set(places_by_id), "2단계 131곳이 busan.json에 전부 있어야 한다"
-    for place_id in phase2_ids:
+    assert len(gijang_ids) == 46
+    assert len(non_gijang_ids) == 85
+    for place_id in gijang_ids:
         assert places_by_id[place_id].is_active is False, place_id
+    for place_id in non_gijang_ids:
+        assert places_by_id[place_id].is_active is True, place_id
 
 
-def test_phase2_places_are_not_in_the_active_candidate_pool():
-    # 활성화 전이므로, 2단계 131곳은 어떤 활성 후보 풀에도 안 들어온다 -
+def test_gijang_places_are_not_in_the_active_candidate_pool():
+    # 기장은 여전히 비활성이므로, 어떤 활성 후보 풀에도 안 들어온다 -
     # is_active 필터를 쓰는 모든 real pool이 같은 방식으로 걸러진다.
     catalog = _load_real_busan_catalog()
     with PHASE2_INPUT_PATH.open(encoding="utf-8") as f:
-        phase2_ids = {place["id"] for place in json.load(f)["places"]}
+        gijang_ids = {p["id"] for p in json.load(f)["places"] if p["area"] == "gijang"}
 
     active_ids = {place.id for place in catalog.places if place.is_active}
-    assert active_ids.isdisjoint(phase2_ids)
+    assert active_ids.isdisjoint(gijang_ids)
 
 
-def test_busan_activity_candidate_count_and_recommended_max_days_unchanged():
-    # 2단계 131곳이 전부 비활성이므로, 1단계 활성화 직후 값(활동 후보 130,
-    # recommended_max_days 43)과 정확히 같아야 한다 - 센텀 이동(area만
-    # 바뀜)도 활성/티어에는 영향이 없다.
+def test_busan_activity_candidate_count_and_recommended_max_days_after_partial_activation():
+    # #160으로 85곳(메인 32 포함)이 추가로 활성화됐다: 활동 후보
+    # 130 -> 146, recommended_max_days 43 -> 48(146 // 3).
     catalog = _load_real_busan_catalog()
     active_count = sum(
         1
         for place in catalog.places
         if place.is_active and place.is_activity_candidate and place.mvp_tier != ALTERNATE_TIER
     )
-    assert active_count == 130
-    assert compute_recommended_max_days(active_count) == 43
+    assert active_count == 146
+    assert compute_recommended_max_days(active_count) == 48
 
 
-def test_busan_catalog_has_exactly_494_places_with_363_active():
+def test_busan_catalog_has_exactly_494_places_with_448_active():
     catalog = _load_real_busan_catalog()
     assert len(catalog.places) == 494
-    assert sum(1 for place in catalog.places if place.is_active) == 363
+    assert sum(1 for place in catalog.places if place.is_active) == 448

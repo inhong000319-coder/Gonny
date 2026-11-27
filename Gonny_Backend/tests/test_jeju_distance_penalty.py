@@ -123,19 +123,21 @@ def test_dispatcher_applies_jeju_penalty_for_a_real_extreme_distance() -> None:
     assert penalty < 0
 
 
-# --- (2) Seoul/Busan are completely unaffected -------------------------------
+# --- (2) Seoul is completely unaffected -------------------------------------
 
 
-def test_dispatcher_is_always_zero_for_seoul_and_busan_regardless_of_distance() -> None:
-    # Same huge distance as the Jeju case above, just relabeled to
-    # seoul/busan - must stay 0 since neither policy module defines
-    # extreme_distance_penalty at all.
+def test_dispatcher_is_always_zero_for_seoul_regardless_of_distance() -> None:
+    # Same huge distance as the Jeju case above, just relabeled to seoul -
+    # must stay 0 since seoul's policy module doesn't define
+    # extreme_distance_penalty at all. busan *does* define it now (see
+    # policies/city/busan.py and tests/test_busan_distance_penalty.py) -
+    # this used to assert busan was 0 too, back when only jeju had the
+    # mechanism.
     far_other = build_place(id="far", latitude=33.45, longitude=126.90)
     place = build_place(id="near", latitude=33.39, longitude=126.24)
 
-    for city in ("seoul", "busan"):
-        request = build_request(city=city)
-        assert extreme_distance_penalty(request, far_other, place) == 0
+    request = build_request(city="seoul")
+    assert extreme_distance_penalty(request, far_other, place) == 0
 
 
 def test_dispatcher_is_zero_for_a_city_with_no_policy_module_at_all() -> None:

@@ -121,7 +121,10 @@ def test_real_catalog_candidate_counts_after_exclusion() -> None:
     # bupyeong-kkangtong-market) are genuinely new food-tagged places whose
     # name/summary/mood_keywords match BREAKFAST_KEYWORDS or the market
     # keyword pattern, same rule as every other candidate here.
-    expected_counts = {"seoul": 6, "busan": 10, "jeju": 5}
+    # 10 -> 11 once #160 activated 85 of the phase-2 131 (excluding gijang,
+    # pending restaurant data) - jeonpo-cafe-street (seomyeon) is the one
+    # newly-active place matching the same pattern.
+    expected_counts = {"seoul": 6, "busan": 11, "jeju": 5}
 
     for city, expected_count in expected_counts.items():
         catalog = provider.get_city_catalog(continent="asia", country="korea", city=city, visible_only=True)

@@ -85,13 +85,14 @@ def extreme_distance_penalty(
     """Extra penalty for a transition whose real straight-line distance is
     large enough that no city's existing coordinate_area_transition_bonus
     FAR tier (capped at -6, see travel_estimate.py) meaningfully deters it
-    - see policies/city/jeju.py's own threshold/penalty constants for why
-    Jeju specifically needs this on top of the shared bonus.
+    - see policies/city/jeju.py's and policies/city/busan.py's own
+    threshold/penalty constants for why each needs this on top of the
+    shared bonus.
 
     0 for any city whose policy module doesn't define
     extreme_distance_penalty(distance_km) - today that's every city except
-    Jeju, so Seoul/Busan (and any city with no policy module at all) are
-    completely unaffected by construction, not just by convention.
+    Jeju and Busan, so Seoul (and any city with no policy module at all)
+    is completely unaffected by construction, not just by convention.
     """
     if other_place is None:
         return 0

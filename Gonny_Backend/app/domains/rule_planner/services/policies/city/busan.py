@@ -71,6 +71,36 @@ def evening_food_bonus(time_slot: str, categories: set[str]) -> int:
     return 0
 
 
+# 2단계 장소(기장·강서·가덕도 등, 전부 is_active=false라 아직 라이브에는
+# 영향 없음)가 활성화되면, 기존 coordinate_area_transition_bonus의 FAR
+# 페널티(-6 고정, travel_estimate.py)만으로는 같은 날 일정에서 먼 구역으로
+# 건너뛰는 이동을 억제하지 못한다 - 같은 메커니즘을 이미 쓰는 jeju.py 참고.
+#
+# 측정(임시 카탈로그에 2단계 131곳을 활성화해 84개 시나리오로 재측정,
+# local_only 보고서 - this PR는 실제 활성화를 하지 않는다): 감점 없이는
+# 자동차 90분 초과 구간 30건(최대 137분). 임계 12km/기본 -30/km당 -2를
+# 적용하면 60분 초과 0건(최대 59분)으로 줄고, 서로 다른 장소 수·상위
+# 장소 점유율(3.8%)은 그대로였다. 임계 15km는 110분짜리 구간이 1건
+# 남아서, 20km는 90분 이하이지만 60분 초과가 68건 남아서 채택하지
+# 않았다. 같은 값을 현재 라이브(2단계 비활성, 363곳)에 적용해도 60분
+# 초과가 38->0건으로 줄고 고유 장소 수(111)는 바뀌지 않았다.
+#
+# jeju.py와 값이 같은 건 우연이 아니라 측정으로 각자 찾은 결과지만,
+# accommodation_distance_score와 같은 이유(순환 임포트: jeju.py를
+# import하면 policies.city -> jeju -> policies.city 순환이 생긴다)로
+# 상수를 재사용하지 않고 독립적으로 둔다.
+EXTREME_DISTANCE_KM_THRESHOLD = 12.0
+EXTREME_DISTANCE_BASE_PENALTY = -30
+EXTREME_DISTANCE_PENALTY_PER_EXTRA_KM = -2
+
+
+def extreme_distance_penalty(distance_km: float) -> int:
+    if distance_km <= EXTREME_DISTANCE_KM_THRESHOLD:
+        return 0
+    overage_km = distance_km - EXTREME_DISTANCE_KM_THRESHOLD
+    return EXTREME_DISTANCE_BASE_PENALTY + round(overage_km * EXTREME_DISTANCE_PENALTY_PER_EXTRA_KM)
+
+
 # Measured (local_only/reports/headroom_and_variants_analysis.md): busan's
 # candidates already had a large reference_point score gap (median 8.0), so
 # an additive distance term at -0.6~-2.0/km never changed a single pick in
